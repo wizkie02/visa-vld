@@ -6,6 +6,7 @@ import { storage } from "./storage";
 import { personalInfoSchema } from "@shared/schema";
 import { nanoid } from "nanoid";
 import { analyzeDocument, validateDocumentsAgainstRequirements, getVisaRequirementsOnline } from "./openai-service";
+import { fetchCurrentVisaRequirements, generateRequirementsChecklist } from "./visa-requirements-service";
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
@@ -284,6 +285,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ results: validationResults });
     } catch (error: any) {
       res.status(500).json({ message: "Error validating documents: " + error.message });
+    }
+  });
+
+  // Get real-time visa requirements
+  app.get("/api/visa-requirements/:country/:visaType", async (req, res) => {
+    try {
+      const { country, visaType } = req.params;
+      const { nationality } = req.query;
+      
+      console.log(`Fetching real-time requirements for ${visaType} visa to ${country}${nationality ? ` for ${nationality} citizens` : ''}`);
+      
+      const requirements = await fetchCurrentVisaRequirements(
+        country, 
+        visaType, 
+        nationality as string
+      );
+      
+      res.json(requirements);
+    } catch (error: any) {
+      console.error("Error fetching visa requirements:", error);
+      res.status(500).json({ message: "Error fetching visa requirements: " + error.message });
+    }
+  });
+
+  // Download comprehensive requirements checklist
+  app.get("/api/visa-requirements/:country/:visaType/download", async (req, res) => {
+    try {
+      const { country, visaType } = req.params;
+      const { nationality } = req.query;
+      
+      console.log(`Generating downloadable checklist for ${visaType} visa to ${country}`);
+      
+      const requirements = await fetchCurrentVisaRequirements(
+        country, 
+        visaType, 
+        nationality as string
+      );
+      
+      const checklist = generateRequirementsChecklist(requirements);
+      
+      res.setHeader('Content-Type', 'text/plain');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.txt"`);
+      res.send(checklist);
+    } catch (error: any) {
+      console.error("Error generating requirements checklist:", error);
+      res.status(500).json({ message: "Error generating checklist: " + error.message });
     }
   });
 

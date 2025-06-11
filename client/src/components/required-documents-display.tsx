@@ -1,9 +1,41 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Download, FileText, CheckCircle, AlertCircle } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Download, FileText, CheckCircle, AlertCircle, RefreshCw, Globe, Clock, DollarSign } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { ValidationData } from '@/pages/validation';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
+
+interface VisaRequirement {
+  id: string;
+  title: string;
+  description: string;
+  required: boolean;
+  formats?: string[];
+  specificNotes?: string[];
+  category: 'document' | 'financial' | 'personal' | 'travel' | 'health';
+  processingTime?: string;
+  additionalInfo?: string;
+}
+
+interface ComprehensiveVisaRequirements {
+  country: string;
+  visaType: string;
+  lastUpdated: string;
+  officialSources: string[];
+  requirements: VisaRequirement[];
+  generalInfo: {
+    processingTime: string;
+    validity: string;
+    fees: string;
+    applicationMethods: string[];
+  };
+  importantNotes: string[];
+  recentChanges?: string[];
+}
 
 interface RequiredDocumentsDisplayProps {
   data: ValidationData;
@@ -11,8 +43,8 @@ interface RequiredDocumentsDisplayProps {
   onPrevious: () => void;
 }
 
-// Comprehensive visa requirements data
-const visaRequirements: Record<string, Record<string, any>> = {
+// Fallback requirements data (only used if API fails)
+const fallbackRequirements: Record<string, Record<string, any>> = {
   China: {
     Tourist: {
       general: [
