@@ -171,21 +171,165 @@ export const translations: Record<string, Record<string, string>> = {
     privacy: "Privacy Policy",
     terms: "Terms of Service",
     
-    // Required Documents
-    requiredDocuments: "Required Documents",
-    reviewRequiredDocs: "Please review the required documents before uploading",
-    destination: "Destination",
-    downloadChecklist: "Download Requirements Checklist",
-    required: "Required",
-    optional: "Optional",
-    acceptedFormats: "Accepted formats",
-    importantNotes: "Important Notes",
+    // Documents Section
+    reviewRequiredDocs: "Please review the required documents before uploading", 
+    documentsPreparation: "Documents Preparation",
     preparationTips: "Preparation Tips",
     tip1: "Ensure all documents are clear and legible",
     tip2: "Scan documents in high resolution (300 DPI or higher)",
     tip3: "Keep original documents for your appointment",
     tip4: "Verify all information matches across documents",
     proceedToUpload: "Proceed to Upload Documents"
+  },
+  
+  vi: {
+    // Header & Navigation
+    appName: "VisaValidator Pro",
+    back: "Quay lại",
+    next: "Tiếp theo", 
+    previous: "Trước đó",
+    
+    // Home Page
+    homeTitle: "Xác thực Tài liệu Visa Chuyên nghiệp",
+    homeSubtitle: "Xác minh tài liệu du lịch bằng công nghệ AI trước khi nộp đơn",
+    startValidation: "Bắt đầu Xác thực Tài liệu",
+    
+    // Workflow Steps
+    stepDestination: "Điểm đến",
+    stepNationality: "Quốc tịch", 
+    stepRequirements: "Yêu cầu",
+    stepUpload: "Tải lên",
+    stepInformation: "Thông tin",
+    stepReview: "Xem xét",
+    stepPayment: "Thanh toán",
+    
+    // Country & Visa Selection
+    selectCountry: "Chọn quốc gia đích",
+    selectNationality: "Chọn quốc tịch của bạn",
+    selectVisaType: "Chọn loại visa",
+    chooseDestination: "Chọn Điểm đến",
+    chooseNationality: "Chọn Quốc tịch của Bạn",
+    tourist: "Du lịch",
+    business: "Kinh doanh",
+    student: "Du học",
+    work: "Lao động",
+    
+    // Countries
+    china: "Trung Quốc",
+    japan: "Nhật Bản", 
+    usa: "Hoa Kỳ",
+    uk: "Vương quốc Anh",
+    germany: "Đức",
+    france: "Pháp",
+    netherlands: "Hà Lan",
+    vietnam: "Việt Nam",
+    
+    // Requirements
+    requiredDocuments: "Tài liệu Bắt buộc",
+    downloadChecklist: "Tải Danh sách Yêu cầu",
+    viewRequirements: "Xem Yêu cầu Chi tiết",
+    
+    // File Upload
+    uploadFiles: "Tải lên Tài liệu",
+    dragDropFiles: "Kéo thả tệp vào đây hoặc nhấp để chọn",
+    supportedFormats: "Định dạng hỗ trợ: PDF, JPG, PNG, DOCX",
+    analyzing: "Đang phân tích...",
+    uploadSuccess: "Tải lên thành công",
+    removeFile: "Xóa tệp",
+    
+    // Personal Information
+    personalInfo: "Thông tin Cá nhân",
+    fullName: "Họ và Tên",
+    passportNumber: "Số Hộ chiếu",
+    dateOfBirth: "Ngày sinh",
+    nationality: "Quốc tịch",
+    travelDate: "Ngày du lịch", 
+    stayDuration: "Thời gian lưu trú (ngày)",
+    
+    // Validation
+    startValidationBtn: "Bắt đầu Xác thực",
+    analyzingDocuments: "Đang phân tích Tài liệu...",
+    validationComplete: "Xác thực Hoàn tất",
+    validationFailed: "Xác thực Thất bại",
+    
+    // Results
+    validationResults: "Kết quả Xác thực",
+    validationPreview: "Xem trước Kết quả Xác thực",
+    overallScore: "Điểm Tổng thể",
+    preliminaryScore: "Điểm Xác thực Sơ bộ",
+    verifiedItems: "Mục đã Xác minh",
+    issuesFound: "Vấn đề đã Tìm thấy",
+    documentsFound: "Tài liệu đã Tìm thấy",
+    issuesDetected: "Vấn đề được Phát hiện",
+    recommendations: "Khuyến nghị",
+    downloadReport: "Tải Báo cáo",
+    downloadCompleteReport: "Tải Báo cáo Hoàn chỉnh",
+    missingRequiredDocs: "Thiếu Tài liệu Bắt buộc",
+    incompleteApplication: "Đơn chưa Đầy đủ - Thiếu Tài liệu Bắt buộc",
+    strongApplication: "Đơn Mạnh",
+    goodApplication: "Đơn Tốt với Vấn đề Nhỏ",
+    needsImprovement: "Đơn Cần Cải thiện",
+    
+    // Payment
+    payment: "Thanh toán",
+    paymentRequired: "Hoàn thành Thanh toán cho Báo cáo Đầy đủ",
+    paymentDescription: "Hoàn thành thanh toán để nhận báo cáo xác thực đầy đủ",
+    fullValidationReport: "Báo cáo Xác thực Đầy đủ",
+    completeAnalysis: "Phân tích và khuyến nghị hoàn chỉnh",
+    price: "$9.99",
+    oneTimeFee: "Phí một lần",
+    payNow: "Thanh toán Ngay",
+    payGetFullReport: "Thanh toán & Nhận Báo cáo Đầy đủ",
+    backToReview: "Quay lại Xem xét",
+    securePayment: "Thanh toán an toàn được hỗ trợ bởi Stripe. Báo cáo đầy đủ có sẵn ngay sau khi thanh toán.",
+    
+    // Completion
+    validationCompleteTitle: "Xác thực Hoàn tất!",
+    validationCompleteDesc: "Tài liệu của bạn đã được xác thực thành công. Bạn có thể tải báo cáo toàn diện.",
+    validateAnother: "Xác thực Điểm đến Khác",
+    returnHome: "Quay về Trang chủ",
+    thankYou: "Cảm ơn bạn đã sử dụng dịch vụ xác thực tài liệu visa. Giữ báo cáo cho đơn xin visa của bạn.",
+    
+    // Language Selection
+    selectLanguage: "Chọn Ngôn ngữ",
+    languagePreference: "Tùy chọn Ngôn ngữ",
+    changeLanguage: "Thay đổi Ngôn ngữ",
+    chooseLanguage: "Chọn ngôn ngữ ưa thích",
+    continueInLanguage: "Tiếp tục bằng {language}",
+    
+    // Toast Messages
+    reportDownloaded: "Đã Tải Báo cáo Chuyên nghiệp",
+    reportDownloadDesc: "Báo cáo xác thực toàn diện với logo và tuyên bố miễn trừ trách nhiệm đã được tải.",
+    downloadFailed: "Tải xuống Thất bại",
+    downloadFailedDesc: "Không thể tải báo cáo. Vui lòng thử lại.",
+    documentAnalysisComplete: "Phân tích tài liệu hoàn tất bằng công nghệ AI",
+    
+    // Documents Section
+    reviewRequiredDocs: "Vui lòng xem xét các tài liệu bắt buộc trước khi tải lên",
+    documentsPreparation: "Chuẩn bị Tài liệu",
+    preparationTips: "Mẹo Chuẩn bị",
+    tip1: "Đảm bảo tất cả tài liệu rõ ràng và dễ đọc",
+    tip2: "Quét tài liệu với độ phân giải cao (300 DPI trở lên)",
+    tip3: "Giữ tài liệu gốc cho cuộc hẹn",
+    tip4: "Xác minh tất cả thông tin khớp giữa các tài liệu",
+    proceedToUpload: "Tiến hành Tải lên Tài liệu",
+    
+    // Common
+    loading: "Đang tải...",
+    error: "Lỗi",
+    success: "Thành công",
+    close: "Đóng",
+    save: "Lưu",
+    cancel: "Hủy",
+    continue: "Tiếp tục",
+    required: "Bắt buộc",
+    optional: "Tùy chọn",
+    
+    // Footer
+    about: "Giới thiệu",
+    contact: "Liên hệ",
+    privacy: "Chính sách Bảo mật",
+    terms: "Điều khoản Dịch vụ",
   },
   
   zh: {
@@ -496,13 +640,6 @@ export const translations: Record<string, Record<string, string>> = {
     back: "뒤로",
     next: "다음",
     previous: "이전"
-  },
-  
-  vi: {
-    appName: "VisaValidator Pro",
-    back: "Quay lại",
-    next: "Tiếp theo",
-    previous: "Trước đó"
   }
 };
 

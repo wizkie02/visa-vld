@@ -1,16 +1,20 @@
+import { useLanguage } from "@/lib/i18n";
+
 interface StepIndicatorProps {
   currentStep: number;
 }
 
 export default function StepIndicator({ currentStep }: StepIndicatorProps) {
+  const { t } = useLanguage();
+  
   const steps = [
-    { number: 1, label: "Destination" },
-    { number: 2, label: "Nationality" },
-    { number: 3, label: "Requirements" },
-    { number: 4, label: "Upload" },
-    { number: 5, label: "Information" },
-    { number: 6, label: "Review" },
-    { number: 7, label: "Payment" },
+    { number: 1, label: t('stepDestination') },
+    { number: 2, label: t('stepNationality') },
+    { number: 3, label: t('stepRequirements') },
+    { number: 4, label: t('stepUpload') },
+    { number: 5, label: t('stepInformation') },
+    { number: 6, label: t('stepReview') },
+    { number: 7, label: t('stepPayment') },
   ];
 
   return (

@@ -18,12 +18,7 @@ export function generateValidationReportMarkdown(data: ReportData): string {
     day: 'numeric'
   });
 
-  const logoAscii = `
-    ╔══════════════════════════════════════╗
-    ║  🌍 VisaValidator Document Analysis  ║
-    ║     Professional Visa Validation     ║
-    ╚══════════════════════════════════════╝
-  `;
+
 
   return `
 ${logoAscii}
