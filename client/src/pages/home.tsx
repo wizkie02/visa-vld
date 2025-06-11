@@ -43,17 +43,25 @@ export default function Home() {
           </p>
           
           {/* Legal Disclaimer Card */}
-          <Card className="bg-yellow-50 border-yellow-200 mb-8 max-w-2xl mx-auto">
+          <Card className="bg-red-50 border-red-200 mb-8 max-w-3xl mx-auto">
             <CardContent className="pt-6">
               <div className="flex items-start space-x-3 text-left">
-                <AlertTriangle className="text-yellow-600 text-lg mt-1 flex-shrink-0" />
+                <AlertTriangle className="text-red-600 text-lg mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-yellow-800 mb-2">Important Legal Disclaimer</h3>
-                  <p className="text-sm text-yellow-700 leading-relaxed">
-                    This tool provides document validation assistance only. Results are not guaranteed to be 100% accurate. 
-                    Visa approval decisions remain solely with embassy officials. Always verify requirements with official sources 
-                    and consult immigration professionals for complex cases.
-                  </p>
+                  <h3 className="font-semibold text-red-800 mb-3">CRITICAL LEGAL DISCLAIMER</h3>
+                  <div className="text-sm text-red-700 leading-relaxed space-y-2">
+                    <p><strong>NO GUARANTEE OF VISA APPROVAL:</strong> VisaValidator Pro is a document preparation assistance tool only. We do not guarantee visa approval, represent any government agency, or influence embassy decisions.</p>
+                    <p><strong>ACCURACY LIMITATIONS:</strong> While our AI analyzes documents against known requirements, results may not be 100% accurate. Embassy requirements change frequently and vary by individual circumstances.</p>
+                    <p><strong>NOT OFFICIAL GUIDANCE:</strong> This service does not replace official embassy websites, consular advice, or immigration attorney consultation. Always verify current requirements with official sources.</p>
+                    <p><strong>INDIVIDUAL RESPONSIBILITY:</strong> Each traveler is solely responsible for ensuring their visa application meets all requirements. Visa approval decisions are made exclusively by embassy and consular officials.</p>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-red-200">
+                    <Link href="/about">
+                      <span className="text-red-600 hover:text-red-800 underline text-sm font-medium cursor-pointer">
+                        Read Full Disclaimer & Service Limitations →
+                      </span>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -69,9 +77,9 @@ export default function Home() {
 
       {/* How It Works Section */}
       <section id="how-it-works" className="py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">How It Works</h3>
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-5 gap-6">
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-700">1</span>
@@ -90,15 +98,22 @@ export default function Home() {
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-700">3</span>
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Pay & Validate</h4>
-              <p className="text-sm text-slate-600">Secure payment then AI analyzes your documents</p>
+              <h4 className="font-semibold text-gray-900 mb-2">Enter Details</h4>
+              <p className="text-sm text-slate-600">Fill in your personal information</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-700">4</span>
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Get Results</h4>
-              <p className="text-sm text-slate-600">Receive detailed validation report</p>
+              <h4 className="font-semibold text-gray-900 mb-2">Preview Results</h4>
+              <p className="text-sm text-slate-600">See validation preview before payment</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-blue-700">5</span>
+              </div>
+              <h4 className="font-semibold text-gray-900 mb-2">Pay & Download</h4>
+              <p className="text-sm text-slate-600">Complete payment for full detailed report</p>
             </div>
           </div>
         </div>
