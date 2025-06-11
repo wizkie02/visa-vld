@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Ticket, ArrowLeft } from "lucide-react";
 import StepIndicator from "@/components/step-indicator";
 import CountrySelection from "@/components/country-selection";
+import NationalitySelection from "@/components/nationality-selection";
 import RequiredDocumentsDisplay from "@/components/required-documents-display";
 import FileUpload from "@/components/file-upload";
 import PersonalInfoForm from "@/components/personal-info-form";
@@ -70,7 +71,7 @@ export default function Validation() {
   };
 
   const handleNext = () => {
-    if (currentStep < 6) {
+    if (currentStep < 7) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -214,10 +215,12 @@ For questions about this report, please contact support.
       case 1:
         return validationData.country && validationData.visaType;
       case 2:
-        return true; // Required documents review step
+        return validationData.personalInfo.nationality;
       case 3:
-        return validationData.uploadedFiles.length > 0;
+        return true; // Required documents review step
       case 4:
+        return validationData.uploadedFiles.length > 0;
+      case 5:
         return (
           validationData.personalInfo.applicantName &&
           validationData.personalInfo.passportNumber &&
@@ -226,9 +229,9 @@ For questions about this report, please contact support.
           validationData.personalInfo.travelDate &&
           validationData.personalInfo.stayDuration > 0
         );
-      case 5:
-        return true;
       case 6:
+        return true;
+      case 7:
         return true;
       default:
         return false;
@@ -277,6 +280,16 @@ For questions about this report, please contact support.
         )}
 
         {currentStep === 2 && (
+          <NationalitySelection
+            data={validationData}
+            onUpdate={updateValidationData}
+            onNext={handleNext}
+            onPrevious={handlePrevious}
+            canProceed={!!canProceed()}
+          />
+        )}
+
+        {currentStep === 3 && (
           <RequiredDocumentsDisplay
             data={validationData}
             onNext={handleNext}
@@ -284,7 +297,7 @@ For questions about this report, please contact support.
           />
         )}
 
-        {currentStep === 3 && (
+        {currentStep === 4 && (
           <FileUpload
             data={validationData}
             onUpdate={updateValidationData}
@@ -294,7 +307,7 @@ For questions about this report, please contact support.
           />
         )}
 
-        {currentStep === 4 && (
+        {currentStep === 5 && (
           <div className="space-y-8">
             <PersonalInfoForm
               data={validationData}
@@ -311,7 +324,7 @@ For questions about this report, please contact support.
           </div>
         )}
 
-        {currentStep === 5 && (
+        {currentStep === 6 && (
           <Card className="bg-white rounded-xl shadow-lg">
             <CardContent className="p-8">
               <h3 className="text-2xl font-semibold text-gray-900 mb-6">Review Your Information</h3>
