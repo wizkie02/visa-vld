@@ -82,6 +82,17 @@ export default function Validation() {
       const validationResponse = await apiRequest("POST", "/api/validate", { 
         sessionId: sessionResult.sessionId 
       });
+      
+      // Check if response is actually JSON
+      const contentType = validationResponse.headers.get("content-type");
+      console.log("Validation response content-type:", contentType);
+      
+      if (!contentType || !contentType.includes("application/json")) {
+        const textResponse = await validationResponse.text();
+        console.error("Expected JSON but got:", textResponse.substring(0, 200));
+        throw new Error("Server returned non-JSON response");
+      }
+      
       const validationResult = await validationResponse.json();
       
       console.log("OpenAI validation completed:", validationResult);
