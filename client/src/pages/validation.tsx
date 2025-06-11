@@ -128,6 +128,74 @@ export default function Validation() {
     setShowPaymentModal(true);
   };
 
+  const downloadValidationReport = async () => {
+    if (!sessionId) return;
+    
+    try {
+      const response = await apiRequest("GET", `/api/validation-results/${sessionId}`);
+      const data = await response.json();
+      
+      // Create a comprehensive report text
+      const reportContent = `
+VISA DOCUMENT VALIDATION REPORT
+Generated: ${new Date().toLocaleDateString()}
+Session ID: ${sessionId}
+
+DESTINATION INFORMATION
+Country: ${validationData.country}
+Visa Type: ${validationData.visaType}
+
+APPLICANT INFORMATION
+Name: ${validationData.personalInfo.applicantName}
+Passport Number: ${validationData.personalInfo.passportNumber}
+Nationality: ${validationData.personalInfo.nationality}
+Date of Birth: ${validationData.personalInfo.dateOfBirth}
+Travel Date: ${validationData.personalInfo.travelDate}
+Stay Duration: ${validationData.personalInfo.stayDuration} days
+
+UPLOADED DOCUMENTS
+${validationData.uploadedFiles.map((file, index) => `${index + 1}. ${file.originalName} (${file.mimetype})`).join('\n')}
+
+VALIDATION RESULTS
+Overall Score: ${data.results.score}%
+
+VERIFIED ITEMS:
+${data.results.verified.map((item: any) => `✓ ${item.type}: ${item.message}`).join('\n')}
+
+ISSUES IDENTIFIED:
+${data.results.issues.map((issue: any) => `⚠ ${issue.title}: ${issue.description}\n   Recommendation: ${issue.recommendation}`).join('\n\n')}
+
+COMPLETION TIME: ${data.results.completedAt}
+
+This report was generated using AI-powered document analysis technology.
+For questions about this report, please contact support.
+      `.trim();
+      
+      // Create and download the file
+      const blob = new Blob([reportContent], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `visa-validation-report-${sessionId}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      
+      toast({
+        title: "Report Downloaded",
+        description: "Your validation report has been downloaded successfully.",
+      });
+    } catch (error) {
+      console.error("Error downloading report:", error);
+      toast({
+        title: "Download Failed",
+        description: "Failed to download report. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const canProceed = () => {
     switch (currentStep) {
       case 1:
@@ -288,6 +356,9 @@ export default function Validation() {
 
         {currentStep === 4 && validationResults && (
           <div className="space-y-6">
+            {/* Visa Requirements Display */}
+            <VisaRequirementsDisplay data={validationData} />
+            
             {/* Validation Results Preview */}
             <Card className="bg-white rounded-xl shadow-lg">
               <CardContent className="p-8">
@@ -343,6 +414,20 @@ export default function Validation() {
                   <Button onClick={handlePayment} className="flex-1 bg-blue-700 hover:bg-blue-800">
                     Pay & Get Full Report
                   </Button>
+                </div>
+                
+                {/* Download button (shown after payment) */}
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <Button 
+                    onClick={downloadValidationReport} 
+                    variant="outline" 
+                    className="w-full"
+                  >
+                    Download Validation Report
+                  </Button>
+                  <p className="text-xs text-gray-500 text-center mt-2">
+                    Download a comprehensive report of your document validation results
+                  </p>
                 </div>
                 
                 <p className="text-xs text-gray-500 text-center mt-3">
