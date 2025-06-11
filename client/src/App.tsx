@@ -8,6 +8,9 @@ import About from "@/pages/about";
 import Validation from "@/pages/validation";
 import Results from "@/pages/results";
 import NotFound from "@/pages/not-found";
+import PrivacyPolicy from "@/pages/privacy-policy";
+import TermsOfService from "@/pages/terms-of-service";
+import Contact from "@/pages/contact";
 
 function Router() {
   return (
@@ -16,6 +19,9 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/validate" component={Validation} />
       <Route path="/results/:sessionId" component={Results} />
+      <Route path="/privacy-policy" component={PrivacyPolicy} />
+      <Route path="/terms-of-service" component={TermsOfService} />
+      <Route path="/contact" component={Contact} />
       <Route component={NotFound} />
     </Switch>
   );
