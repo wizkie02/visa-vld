@@ -69,50 +69,32 @@ export default function Validation() {
   };
 
   const handleValidate = async () => {
-    // Validate documents first, then show payment
+    setIsValidating(true);
     try {
-      const response = await fetch("/api/validation-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(validationData),
-      });
+      // Create validation session first
+      const sessionResponse = await apiRequest("POST", "/api/create-validation-session", validationData);
+      const sessionResult = await sessionResponse.json();
+      setSessionId(sessionResult.sessionId);
       
-      if (response.ok) {
-        const result = await response.json();
-        setSessionId(result.sessionId);
-        
-        // Run OpenAI validation
-        console.log("Starting OpenAI validation for session:", result.sessionId);
-        
-        const validationResponse = await fetch("/api/validate", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ sessionId: result.sessionId }),
-        });
-        
-        if (!validationResponse.ok) {
-          throw new Error("Validation failed");
-        }
-        
-        const validationResult = await validationResponse.json();
-        
-        console.log("OpenAI validation completed:", validationResult);
-        
-        setValidationResults(validationResult.validationResults);
-        
-        toast({
-          title: "Validation Complete",
-          description: "Document analysis completed using AI technology",
-        });
-        setCurrentStep(4); // Show results preview
-      }
+      console.log("Starting OpenAI validation for session:", sessionResult.sessionId);
+      
+      // Run OpenAI validation
+      const validationResponse = await apiRequest("POST", "/api/validate", { 
+        sessionId: sessionResult.sessionId 
+      });
+      const validationResult = await validationResponse.json();
+      
+      console.log("OpenAI validation completed:", validationResult);
+      
+      setValidationResults(validationResult.validationResults);
+      
+      toast({
+        title: "Validation Complete",
+        description: "Document analysis completed using AI technology",
+      });
+      setCurrentStep(4); // Show results preview
     } catch (error: any) {
       console.error("Validation error:", error);
-      setIsValidating(false);
       toast({
         title: "Validation Failed",
         description: error.message || "Failed to validate documents. Please try again.",
