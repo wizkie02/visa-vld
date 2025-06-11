@@ -100,15 +100,47 @@ export async function validateDocumentsAgainstRequirements(
   documents: DocumentAnalysis[],
   personalInfo: any,
   country: string,
-  visaType: string
+  visaType: string,
+  requiredDocuments?: any[]
 ): Promise<ValidationResult> {
   try {
+    // Get required documents for cross-referencing
+    const visaRequirements = await getVisaRequirementsOnline(country, visaType);
+    const requiredDocs = requiredDocuments || visaRequirements?.requirements || [];
+    
+    // Extract document types from uploaded documents
+    const uploadedDocTypes = documents.map(doc => doc.documentType.toLowerCase());
+    
+    // Check for missing required documents
+    const missingRequiredDocs = requiredDocs.filter((req: any) => {
+      if (!req.required) return false;
+      
+      const reqType = req.title.toLowerCase();
+      const isPresent = uploadedDocTypes.some(uploaded => {
+        return (
+          reqType.includes(uploaded) ||
+          uploaded.includes('passport') && reqType.includes('passport') ||
+          uploaded.includes('bank') && reqType.includes('financial') ||
+          uploaded.includes('employment') && reqType.includes('employment') ||
+          uploaded.includes('flight') && reqType.includes('itinerary') ||
+          uploaded.includes('hotel') && reqType.includes('accommodation')
+        );
+      });
+      return !isPresent;
+    });
+
+    // If missing required documents, set score to 0%
+    const hasAllRequiredDocs = missingRequiredDocs.length === 0;
+    const baseScore = hasAllRequiredDocs ? 75 : 0;
+
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
         {
           role: "system",
           content: `You are a visa requirements expert. Validate documents against official visa requirements for ${country} ${visaType} visa. 
+
+CRITICAL RULE: If any REQUIRED documents are missing, the visa likelihood score MUST be 0%.
 
 Check for:
 - Required document types (passport, photos, financial statements, etc.)
@@ -117,11 +149,13 @@ Check for:
 - Missing requirements
 - Quality and completeness
 
+Missing Required Documents: ${missingRequiredDocs.map((doc: any) => doc.title).join(', ') || 'None'}
+
 Respond with JSON in this format:
 {
   "verified": [{"type": "document_type", "message": "what was verified"}],
   "issues": [{"type": "issue_category", "title": "Issue Title", "description": "Description", "recommendation": "How to fix"}],
-  "score": number_0_to_100,
+  "score": ${baseScore},
   "completedAt": "ISO_timestamp"
 }`
         },
@@ -136,8 +170,15 @@ Nationality: ${personalInfo.nationality}
 Travel Date: ${personalInfo.travelDate}
 Stay Duration: ${personalInfo.stayDuration} days
 
+Required Documents for this visa:
+${requiredDocs.filter((doc: any) => doc.required).map((doc: any) => `- ${doc.title} (REQUIRED)`).join('\n')}
+
 Analyzed Documents Summary:
 ${documents.map(doc => `- ${doc.documentType}: ${doc.fullName || 'N/A'}, Confidence: ${doc.confidence}`).join('\n')}
+
+Missing Required Documents: ${missingRequiredDocs.map((doc: any) => doc.title).join(', ') || 'None'}
+
+${missingRequiredDocs.length > 0 ? 'WARNING: Missing required documents detected. Score must be 0%.' : ''}
 
 Provide detailed validation results including any issues found and recommendations.`
         }

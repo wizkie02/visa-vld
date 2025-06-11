@@ -7,13 +7,14 @@ import { personalInfoSchema } from "@shared/schema";
 import { nanoid } from "nanoid";
 import { analyzeDocument, validateDocumentsAgainstRequirements, getVisaRequirementsOnline } from "./openai-service";
 import { fetchCurrentVisaRequirements, generateRequirementsChecklist } from "./visa-requirements-service";
+import { generateValidationReport, generateRequirementsChecklist as generateChecklistHtml } from "./document-generator";
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
 }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2023-10-16",
+  apiVersion: "2025-05-28.basil",
 });
 
 // Configure multer for file uploads
@@ -154,7 +155,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "No analyzed documents found. Please upload and analyze documents first." });
       }
 
-      // Validate documents against requirements
+      // Validate documents against requirements with cross-referencing
       let validationResults;
       try {
         validationResults = await validateDocumentsAgainstRequirements(
@@ -168,7 +169,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             stayDuration: session.stayDuration
           },
           session.country,
-          session.visaType
+          session.visaType,
+          currentRequirements?.requirements
         );
       } catch (error: any) {
         console.error("OpenAI validation error:", error);
@@ -323,11 +325,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         nationality as string
       );
       
-      const checklist = generateRequirementsChecklist(requirements);
+      const checklistHtml = generateChecklistHtml(requirements);
       
-      res.setHeader('Content-Type', 'text/plain');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.txt"`);
-      res.send(checklist);
+      res.setHeader('Content-Type', 'text/html');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.html"`);
+      res.send(checklistHtml);
     } catch (error: any) {
       console.error("Error generating requirements checklist:", error);
       res.status(500).json({ message: "Error generating checklist: " + error.message });
@@ -351,6 +353,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ results: session.validationResults });
     } catch (error: any) {
       res.status(500).json({ message: "Error retrieving validation results: " + error.message });
+    }
+  });
+
+  // Download validation report with professional formatting
+  app.get("/api/validation-report/:sessionId/download", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      
+      const session = await storage.getValidationSession(sessionId);
+      if (!session) {
+        return res.status(404).json({ message: "Validation session not found" });
+      }
+
+      if (!session.validationResults) {
+        return res.status(404).json({ message: "Validation results not available" });
+      }
+
+      // Prepare report data
+      const reportData = {
+        validationResults: session.validationResults,
+        personalInfo: {
+          applicantName: session.applicantName,
+          passportNumber: session.passportNumber,
+          dateOfBirth: session.dateOfBirth,
+          travelDate: session.travelDate,
+          stayDuration: session.stayDuration
+        },
+        country: session.country,
+        visaType: session.visaType,
+        nationality: session.nationality,
+        requirements: session.validationResults.currentRequirements,
+        uploadedDocuments: Array.isArray(session.uploadedFiles) ? session.uploadedFiles : []
+      };
+
+      const reportHtml = generateValidationReport(reportData);
+      
+      res.setHeader('Content-Type', 'text/html');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.html"`);
+      res.send(reportHtml);
+    } catch (error: any) {
+      console.error("Error generating validation report:", error);
+      res.status(500).json({ message: "Error generating report: " + error.message });
     }
   });
 
