@@ -19,34 +19,25 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 interface PaymentModalProps {
   data: ValidationData;
+  sessionId: string;
   onClose: () => void;
 }
 
-function CheckoutForm({ data, onClose }: PaymentModalProps) {
+function CheckoutForm({ data, sessionId, onClose }: PaymentModalProps) {
   const stripe = useStripe();
   const elements = useElements();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const createSessionMutation = useMutation({
+  const paymentMutation = useMutation({
     mutationFn: async () => {
-      const response = await apiRequest("POST", "/api/validation-session", data);
+      const response = await apiRequest("POST", "/api/create-payment-intent", { sessionId });
       return response.json();
     },
-  });
-
-  const validateDocumentsMutation = useMutation({
-    mutationFn: async (sessionId: string) => {
-      const response = await apiRequest("POST", "/api/validate-documents", { sessionId });
-      return response.json();
-    },
-    onSuccess: (result, sessionId) => {
-      toast({
-        title: "Validation Complete",
-        description: "Your documents have been analyzed successfully!",
-      });
-      setLocation(`/results/${sessionId}`);
+    onSuccess: (result) => {
+      // Payment intent created successfully, proceed with payment
+      console.log("Payment intent created:", result.clientSecret);
     },
   });
 
@@ -60,10 +51,9 @@ function CheckoutForm({ data, onClose }: PaymentModalProps) {
     }
 
     try {
-      // First create the validation session
-      const sessionResult = await createSessionMutation.mutateAsync();
-      const sessionId = sessionResult.sessionId;
-
+      // Create payment intent for the existing session
+      const paymentResult = await paymentMutation.mutateAsync();
+      
       // Confirm the payment
       const { error } = await stripe.confirmPayment({
         elements,

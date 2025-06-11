@@ -275,7 +275,7 @@ export default function Validation() {
           </Card>
         )}
 
-        {currentStep === 5 && validationResults && (
+        {currentStep === 4 && validationResults && (
           <div className="space-y-6">
             {/* Validation Results Preview */}
             <Card className="bg-white rounded-xl shadow-lg">
@@ -344,9 +344,10 @@ export default function Validation() {
       </main>
 
       {/* Payment Modal */}
-      {showPaymentModal && (
+      {showPaymentModal && sessionId && (
         <PaymentModal
           data={validationData}
+          sessionId={sessionId}
           onClose={() => setShowPaymentModal(false)}
         />
       )}
