@@ -76,12 +76,16 @@ export default function Validation() {
       const sessionResult = await sessionResponse.json();
       setSessionId(sessionResult.sessionId);
       
+      console.log("Session created successfully:", sessionResult);
+      
       console.log("Starting OpenAI validation for session:", sessionResult.sessionId);
       
       // Run OpenAI validation
+      console.log("Making validation request to /api/validate with sessionId:", sessionResult.sessionId);
       const validationResponse = await apiRequest("POST", "/api/validate", { 
         sessionId: sessionResult.sessionId 
       });
+      console.log("Validation response received:", validationResponse.status, validationResponse.statusText);
       
       // Check if response is actually JSON
       const contentType = validationResponse.headers.get("content-type");
