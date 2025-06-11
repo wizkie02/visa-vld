@@ -24,6 +24,18 @@ interface UploadFile {
   uploadedAt: string;
   status: 'uploading' | 'uploaded' | 'error';
   progress: number;
+  analysis?: {
+    extractedText: string;
+    documentType: string;
+    issuingCountry?: string;
+    expirationDate?: string;
+    documentNumber?: string;
+    fullName?: string;
+    dateOfBirth?: string;
+    nationality?: string;
+    confidence: number;
+  };
+  error?: string;
 }
 
 export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProceed }: FileUploadProps) {
@@ -47,15 +59,30 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
       return response.json();
     },
     onSuccess: (result) => {
-      // Update files status to uploaded
-      setFiles(prev => prev.map(f => ({ ...f, status: 'uploaded' as const, progress: 100 })));
+      // Update files with analysis results
+      const analyzedFiles = result.files.map((file: any) => ({
+        file: files.find(f => f.originalName === file.originalName)?.file,
+        originalName: file.originalName,
+        mimetype: file.mimetype,
+        size: file.size,
+        uploadedAt: file.uploadedAt,
+        status: 'uploaded' as const,
+        progress: 100,
+        analysis: file.analysis,
+        error: file.error
+      }));
+      
+      setFiles(analyzedFiles);
       
       // Update validation data
       onUpdate({ uploadedFiles: result.files });
       
+      const successCount = result.files.filter((f: any) => f.analysis && !f.error).length;
+      const errorCount = result.files.filter((f: any) => f.error).length;
+      
       toast({
-        title: "Upload successful",
-        description: `${result.files.length} file(s) uploaded successfully`,
+        title: "Upload and Analysis Complete",
+        description: `${successCount} document(s) analyzed successfully${errorCount > 0 ? `, ${errorCount} failed` : ''}`,
       });
     },
     onError: (error) => {

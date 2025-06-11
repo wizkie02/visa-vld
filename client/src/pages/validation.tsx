@@ -8,6 +8,8 @@ import PersonalInfoForm from "@/components/personal-info-form";
 import PaymentModal from "@/components/payment-modal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 
 export interface ValidationData {
   country: string;
@@ -33,6 +35,8 @@ export default function Validation() {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [validationResults, setValidationResults] = useState<any>(null);
   const [sessionId, setSessionId] = useState("");
+  const [isValidating, setIsValidating] = useState(false);
+  const { toast } = useToast();
   const [validationData, setValidationData] = useState<ValidationData>({
     country: "",
     visaType: "",
@@ -78,41 +82,41 @@ export default function Validation() {
         const result = await response.json();
         setSessionId(result.sessionId);
         
-        // Simulate validation results for preview
-        const mockResults = {
-          verified: [
-            {
-              type: "passport",
-              message: `Passport validity confirmed`,
-            },
-            {
-              type: "photo",
-              message: "Photograph meets size requirements",
-            },
-          ],
-          issues: [
-            {
-              type: "ds160",
-              title: "Missing DS-160 confirmation",
-              description: "Required for US visa applications",
-              recommendation: "Visit ceac.state.gov to fill out the online application form and print the confirmation page.",
-            },
-            {
-              type: "itinerary",
-              title: "Travel itinerary not found",
-              description: "Flight bookings or travel plans recommended",
-              recommendation: "Include flight bookings, hotel reservations, or detailed travel plans to demonstrate your intended stay.",
-            },
-          ],
-          score: 75,
-          completedAt: new Date().toISOString(),
-        };
+        // Run OpenAI validation
+        console.log("Starting OpenAI validation for session:", result.sessionId);
         
-        setValidationResults(mockResults);
-        setCurrentStep(5); // Move to payment step
+        const validationResponse = await fetch("/api/validate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ sessionId: result.sessionId }),
+        });
+        
+        if (!validationResponse.ok) {
+          throw new Error("Validation failed");
+        }
+        
+        const validationResult = await validationResponse.json();
+        
+        console.log("OpenAI validation completed:", validationResult);
+        
+        setValidationResults(validationResult.validationResults);
+        
+        toast({
+          title: "Validation Complete",
+          description: "Document analysis completed using AI technology",
+        });
+        setCurrentStep(4); // Show results preview
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Validation error:", error);
+      setIsValidating(false);
+      toast({
+        title: "Validation Failed",
+        description: error.message || "Failed to validate documents. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -259,8 +263,12 @@ export default function Validation() {
                 <Button variant="outline" onClick={handlePrevious} className="flex-1">
                   Previous
                 </Button>
-                <Button onClick={handleValidate} className="flex-1 bg-blue-700 hover:bg-blue-800">
-                  Start Validation
+                <Button 
+                  onClick={handleValidate} 
+                  disabled={isValidating}
+                  className="flex-1 bg-blue-700 hover:bg-blue-800"
+                >
+                  {isValidating ? "Analyzing Documents..." : "Start Validation"}
                 </Button>
               </div>
             </CardContent>
