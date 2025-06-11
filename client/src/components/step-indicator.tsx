@@ -7,7 +7,8 @@ export default function StepIndicator({ currentStep }: StepIndicatorProps) {
     { number: 1, label: "Destination" },
     { number: 2, label: "Documents" },
     { number: 3, label: "Information" },
-    { number: 4, label: "Validate" },
+    { number: 4, label: "Review" },
+    { number: 5, label: "Payment" },
   ];
 
   return (

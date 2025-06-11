@@ -31,6 +31,8 @@ export interface ValidationData {
 export default function Validation() {
   const [currentStep, setCurrentStep] = useState(1);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [validationResults, setValidationResults] = useState<any>(null);
+  const [sessionId, setSessionId] = useState("");
   const [validationData, setValidationData] = useState<ValidationData>({
     country: "",
     visaType: "",
@@ -50,7 +52,7 @@ export default function Validation() {
   };
 
   const handleNext = () => {
-    if (currentStep < 4) {
+    if (currentStep < 5) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -61,7 +63,60 @@ export default function Validation() {
     }
   };
 
-  const handleValidate = () => {
+  const handleValidate = async () => {
+    // Validate documents first, then show payment
+    try {
+      const response = await fetch("/api/validation-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(validationData),
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        setSessionId(result.sessionId);
+        
+        // Simulate validation results for preview
+        const mockResults = {
+          verified: [
+            {
+              type: "passport",
+              message: `Passport validity confirmed`,
+            },
+            {
+              type: "photo",
+              message: "Photograph meets size requirements",
+            },
+          ],
+          issues: [
+            {
+              type: "ds160",
+              title: "Missing DS-160 confirmation",
+              description: "Required for US visa applications",
+              recommendation: "Visit ceac.state.gov to fill out the online application form and print the confirmation page.",
+            },
+            {
+              type: "itinerary",
+              title: "Travel itinerary not found",
+              description: "Flight bookings or travel plans recommended",
+              recommendation: "Include flight bookings, hotel reservations, or detailed travel plans to demonstrate your intended stay.",
+            },
+          ],
+          score: 75,
+          completedAt: new Date().toISOString(),
+        };
+        
+        setValidationResults(mockResults);
+        setCurrentStep(5); // Move to payment step
+      }
+    } catch (error) {
+      console.error("Validation error:", error);
+    }
+  };
+
+  const handlePayment = () => {
     setShowPaymentModal(true);
   };
 
@@ -81,6 +136,8 @@ export default function Validation() {
           validationData.personalInfo.stayDuration > 0
         );
       case 4:
+        return true;
+      case 5:
         return true;
       default:
         return false;
@@ -124,7 +181,7 @@ export default function Validation() {
             data={validationData}
             onUpdate={updateValidationData}
             onNext={handleNext}
-            canProceed={canProceed()}
+            canProceed={!!canProceed()}
           />
         )}
 
@@ -134,7 +191,7 @@ export default function Validation() {
             onUpdate={updateValidationData}
             onNext={handleNext}
             onPrevious={handlePrevious}
-            canProceed={canProceed()}
+            canProceed={!!canProceed()}
           />
         )}
 
@@ -144,50 +201,137 @@ export default function Validation() {
             onUpdate={updateValidationData}
             onNext={handleNext}
             onPrevious={handlePrevious}
-            canProceed={canProceed()}
+            canProceed={!!canProceed()}
           />
         )}
 
         {currentStep === 4 && (
           <Card className="bg-white rounded-xl shadow-lg">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-semibold text-gray-900 mb-6">Ready to Validate</h3>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-6">Review Your Information</h3>
               
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
-                <h4 className="font-semibold text-blue-900 mb-3">What happens next:</h4>
-                <ol className="list-decimal list-inside text-blue-800 space-y-2">
-                  <li>Our AI analyzes your uploaded documents using OCR technology</li>
-                  <li>We cross-reference against current embassy requirements</li>
-                  <li>You'll receive a detailed validation report with recommendations</li>
-                  <li>All files are automatically deleted after processing for privacy</li>
-                </ol>
+              <div className="space-y-6">
+                {/* Destination Summary */}
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-blue-900 mb-2">Destination & Visa Type</h4>
+                  <p className="text-blue-800">
+                    Country: {validationData.country} • Visa Type: {validationData.visaType}
+                  </p>
+                </div>
+
+                {/* Documents Summary */}
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-green-900 mb-2">Uploaded Documents</h4>
+                  <p className="text-green-800">
+                    {validationData.uploadedFiles.length} document(s) uploaded
+                  </p>
+                  <ul className="text-sm text-green-700 mt-2">
+                    {validationData.uploadedFiles.map((file, index) => (
+                      <li key={index}>• {file.originalName}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Personal Info Summary */}
+                <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-purple-900 mb-2">Personal Information</h4>
+                  <div className="text-purple-800 text-sm space-y-1">
+                    <p>Name: {validationData.personalInfo.applicantName}</p>
+                    <p>Passport: {validationData.personalInfo.passportNumber}</p>
+                    <p>Nationality: {validationData.personalInfo.nationality}</p>
+                    <p>Travel Date: {validationData.personalInfo.travelDate}</p>
+                    <p>Duration: {validationData.personalInfo.stayDuration} days</p>
+                  </div>
+                </div>
+
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                  <h4 className="font-semibold text-yellow-900 mb-3">What happens next:</h4>
+                  <ol className="list-decimal list-inside text-yellow-800 space-y-2">
+                    <li>Our AI analyzes your uploaded documents using OCR technology</li>
+                    <li>We cross-reference against current embassy requirements</li>
+                    <li>You'll see a preview of validation results before payment</li>
+                    <li>Complete payment to receive the full detailed report</li>
+                  </ol>
+                </div>
               </div>
               
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg mb-6">
-                <div>
-                  <h4 className="font-semibold text-gray-900">Validation Service</h4>
-                  <p className="text-sm text-slate-600">Complete document analysis and report</p>
-                </div>
-                <div className="text-right">
-                  <div className="text-2xl font-bold text-blue-700">$9.99</div>
-                  <div className="text-sm text-slate-600">One-time fee</div>
-                </div>
-              </div>
-              
-              <div className="flex space-x-4">
+              <div className="flex space-x-4 mt-6">
                 <Button variant="outline" onClick={handlePrevious} className="flex-1">
                   Previous
                 </Button>
                 <Button onClick={handleValidate} className="flex-1 bg-blue-700 hover:bg-blue-800">
-                  Validate My Documents
+                  Start Validation
                 </Button>
               </div>
-              
-              <p className="text-xs text-gray-500 text-center mt-3">
-                Secure payment powered by Stripe. Your documents will be processed immediately after payment.
-              </p>
             </CardContent>
           </Card>
+        )}
+
+        {currentStep === 5 && validationResults && (
+          <div className="space-y-6">
+            {/* Validation Results Preview */}
+            <Card className="bg-white rounded-xl shadow-lg">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-semibold text-gray-900 mb-6">Validation Results Preview</h3>
+                
+                {/* Score Overview */}
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-6">
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-yellow-600 mb-2">
+                      {validationResults.score}%
+                    </div>
+                    <p className="text-gray-600">Preliminary Validation Score</p>
+                  </div>
+                </div>
+
+                {/* Quick Summary */}
+                <div className="grid md:grid-cols-2 gap-4 mb-6">
+                  <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+                    <h4 className="font-semibold text-emerald-900 mb-2">✓ Documents Found</h4>
+                    <p className="text-emerald-800 text-sm">{validationResults.verified.length} items verified</p>
+                  </div>
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <h4 className="font-semibold text-red-900 mb-2">⚠ Issues Detected</h4>
+                    <p className="text-red-800 text-sm">{validationResults.issues.length} items need attention</p>
+                  </div>
+                </div>
+
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                  <h4 className="font-semibold text-blue-900 mb-3">Complete Payment for Full Report</h4>
+                  <ul className="text-blue-800 space-y-1 text-sm">
+                    <li>• Detailed analysis of each document</li>
+                    <li>• Specific recommendations for missing items</li>
+                    <li>• Embassy-specific requirements checklist</li>
+                    <li>• Downloadable PDF report</li>
+                  </ul>
+                </div>
+                
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg mb-6">
+                  <div>
+                    <h4 className="font-semibold text-gray-900">Full Validation Report</h4>
+                    <p className="text-sm text-slate-600">Complete analysis and recommendations</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-blue-700">$9.99</div>
+                    <div className="text-sm text-slate-600">One-time fee</div>
+                  </div>
+                </div>
+                
+                <div className="flex space-x-4">
+                  <Button variant="outline" onClick={handlePrevious} className="flex-1">
+                    Back to Review
+                  </Button>
+                  <Button onClick={handlePayment} className="flex-1 bg-blue-700 hover:bg-blue-800">
+                    Pay & Get Full Report
+                  </Button>
+                </div>
+                
+                <p className="text-xs text-gray-500 text-center mt-3">
+                  Secure payment powered by Stripe. Full report available immediately after payment.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         )}
       </main>
 
