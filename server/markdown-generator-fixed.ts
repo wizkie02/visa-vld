@@ -18,9 +18,12 @@ export function generateValidationReportMarkdown(data: ReportData): string {
     day: 'numeric'
   });
 
+  return `# 🌍 VisaValidator Professional Document Analysis
+*Comprehensive Visa Validation with AI Technology*
 
+---
 
-
+# Visa Document Validation Report
 
 **Generated:** ${currentDate}  
 **Destination:** ${data.country}  
@@ -135,15 +138,10 @@ export function generateRequirementsChecklistMarkdown(requirements: Comprehensiv
     day: 'numeric'
   });
 
-  const logoAscii = `
-    ╔══════════════════════════════════════╗
-    ║  🌍 VisaValidator Requirements Guide ║
-    ║     Official Visa Documentation      ║
-    ╚══════════════════════════════════════╝
-  `;
+  return `# 🌍 VisaValidator Requirements Guide
+*Official Visa Documentation Checklist*
 
-  return `
-${logoAscii}
+---
 
 # ${requirements.country} Visa Requirements Checklist
 
