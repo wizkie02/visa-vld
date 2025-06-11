@@ -5,6 +5,7 @@ import multer from "multer";
 import { storage } from "./storage";
 import { personalInfoSchema } from "@shared/schema";
 import { nanoid } from "nanoid";
+import { analyzeDocument, validateDocumentsAgainstRequirements, getVisaRequirementsOnline } from "./openai-service";
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
@@ -70,31 +71,112 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // File upload endpoint
+  // File upload endpoint with OpenAI analysis
   app.post("/api/upload", upload.array("files", 10), async (req, res) => {
     try {
       console.log("Upload request received");
-      console.log("req.files:", req.files);
-      console.log("req.file:", req.file);
-      console.log("Files array check:", Array.isArray(req.files));
       
       if (!req.files || !Array.isArray(req.files) || req.files.length === 0) {
         console.log("No files found in request");
         return res.status(400).json({ message: "No files uploaded" });
       }
 
-      const uploadedFiles = req.files.map((file: any) => ({
-        originalName: file.originalname,
-        mimetype: file.mimetype,
-        size: file.size,
-        uploadedAt: new Date().toISOString(),
-      }));
+      console.log(`Analyzing ${req.files.length} documents with OpenAI...`);
+      
+      // Analyze each document with OpenAI
+      const analyzedFiles = await Promise.all(
+        req.files.map(async (file: any) => {
+          try {
+            const analysis = await analyzeDocument(file.buffer, file.originalname, file.mimetype);
+            return {
+              originalName: file.originalname,
+              mimetype: file.mimetype,
+              size: file.size,
+              uploadedAt: new Date().toISOString(),
+              analysis: analysis,
+            };
+          } catch (error) {
+            console.error(`Error analyzing file ${file.originalname}:`, error);
+            return {
+              originalName: file.originalname,
+              mimetype: file.mimetype,
+              size: file.size,
+              uploadedAt: new Date().toISOString(),
+              analysis: null,
+              error: 'Failed to analyze document'
+            };
+          }
+        })
+      );
 
-      console.log("Successfully processed files:", uploadedFiles);
-      res.json({ files: uploadedFiles });
+      console.log("Document analysis completed:", analyzedFiles);
+      res.json({ files: analyzedFiles });
     } catch (error: any) {
       console.error("Upload error:", error);
       res.status(500).json({ message: "Error uploading files: " + error.message });
+    }
+  });
+
+  // Validate documents using OpenAI
+  app.post("/api/validate", async (req, res) => {
+    try {
+      const { sessionId } = req.body;
+      
+      if (!sessionId) {
+        return res.status(400).json({ message: "Session ID is required" });
+      }
+
+      const session = await storage.getValidationSession(sessionId);
+      if (!session) {
+        return res.status(404).json({ message: "Validation session not found" });
+      }
+
+      console.log("Starting comprehensive validation for session:", sessionId);
+      
+      // Get current visa requirements online
+      const currentRequirements = await getVisaRequirementsOnline(session.country, session.visaType);
+      console.log("Fetched current requirements:", currentRequirements);
+
+      // Extract document analyses from uploaded files
+      const uploadedFiles = Array.isArray(session.uploadedFiles) ? session.uploadedFiles : [];
+      const documentAnalyses = uploadedFiles
+        .filter((file: any) => file.analysis)
+        .map((file: any) => file.analysis);
+
+      if (documentAnalyses.length === 0) {
+        return res.status(400).json({ message: "No analyzed documents found. Please upload and analyze documents first." });
+      }
+
+      // Validate documents against requirements
+      const validationResults = await validateDocumentsAgainstRequirements(
+        documentAnalyses,
+        {
+          applicantName: session.applicantName,
+          passportNumber: session.passportNumber,
+          dateOfBirth: session.dateOfBirth,
+          nationality: session.nationality,
+          travelDate: session.travelDate,
+          stayDuration: session.stayDuration
+        },
+        session.country,
+        session.visaType
+      );
+
+      // Store validation results
+      const updatedSession = await storage.updateValidationResults(sessionId, {
+        ...validationResults,
+        currentRequirements
+      });
+
+      console.log("Validation completed for session:", sessionId);
+      res.json({
+        validationResults: validationResults,
+        currentRequirements: currentRequirements,
+        session: updatedSession
+      });
+    } catch (error: any) {
+      console.error("Validation error:", error);
+      res.status(500).json({ message: "Error during validation: " + error.message });
     }
   });
 
