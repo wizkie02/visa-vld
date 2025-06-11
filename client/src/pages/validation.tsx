@@ -214,8 +214,10 @@ For questions about this report, please contact support.
       case 1:
         return validationData.country && validationData.visaType;
       case 2:
-        return validationData.uploadedFiles.length > 0;
+        return true; // Required documents review step
       case 3:
+        return validationData.uploadedFiles.length > 0;
+      case 4:
         return (
           validationData.personalInfo.applicantName &&
           validationData.personalInfo.passportNumber &&
@@ -224,9 +226,9 @@ For questions about this report, please contact support.
           validationData.personalInfo.travelDate &&
           validationData.personalInfo.stayDuration > 0
         );
-      case 4:
-        return true;
       case 5:
+        return true;
+      case 6:
         return true;
       default:
         return false;
@@ -275,6 +277,14 @@ For questions about this report, please contact support.
         )}
 
         {currentStep === 2 && (
+          <RequiredDocumentsDisplay
+            data={validationData}
+            onNext={handleNext}
+            onPrevious={handlePrevious}
+          />
+        )}
+
+        {currentStep === 3 && (
           <FileUpload
             data={validationData}
             onUpdate={updateValidationData}
@@ -284,7 +294,7 @@ For questions about this report, please contact support.
           />
         )}
 
-        {currentStep === 3 && (
+        {currentStep === 4 && (
           <div className="space-y-8">
             <PersonalInfoForm
               data={validationData}
@@ -301,7 +311,7 @@ For questions about this report, please contact support.
           </div>
         )}
 
-        {currentStep === 4 && (
+        {currentStep === 5 && (
           <Card className="bg-white rounded-xl shadow-lg">
             <CardContent className="p-8">
               <h3 className="text-2xl font-semibold text-gray-900 mb-6">Review Your Information</h3>
@@ -367,7 +377,7 @@ For questions about this report, please contact support.
           </Card>
         )}
 
-        {currentStep === 4 && validationResults && (
+        {currentStep === 5 && validationResults && (
           <div className="space-y-6">
             {/* Visa Requirements Display */}
             <VisaRequirementsDisplay data={validationData} />
@@ -460,6 +470,12 @@ For questions about this report, please contact support.
           onClose={() => setShowPaymentModal(false)}
         />
       )}
+
+      {/* Language Selection Modal */}
+      <LanguageSelectionModal
+        isOpen={showLanguageModal}
+        onClose={() => setShowLanguageModal(false)}
+      />
     </div>
   );
 }
