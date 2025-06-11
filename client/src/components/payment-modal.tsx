@@ -70,8 +70,13 @@ function CheckoutForm({ data, sessionId, onClose }: PaymentModalProps) {
           variant: "destructive",
         });
       } else {
-        // Payment succeeded, validate documents
-        await validateDocumentsMutation.mutateAsync(sessionId);
+        // Payment succeeded, redirect to results
+        toast({
+          title: "Payment Successful",
+          description: "Redirecting to your validation results...",
+        });
+        setLocation(`/results/${sessionId}`);
+        onClose();
       }
     } catch (error: any) {
       toast({
@@ -160,7 +165,7 @@ export default function PaymentModal({ data, onClose }: PaymentModalProps) {
         </Card>
         
         <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <CheckoutForm data={data} onClose={onClose} />
+          <CheckoutForm data={data} sessionId={sessionId} onClose={onClose} />
         </Elements>
       </DialogContent>
     </Dialog>
