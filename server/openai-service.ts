@@ -67,16 +67,22 @@ export async function analyzeDocument(fileBuffer: Buffer, filename: string, mime
       // For text/PDF files, extract text first then analyze
       const textContent = fileBuffer.toString('utf-8');
       
+      // Truncate content if too long to avoid token limits
+      const maxContentLength = 50000; // Limit content to prevent token overflow
+      const truncatedContent = textContent.length > maxContentLength 
+        ? textContent.substring(0, maxContentLength) + "\n[Content truncated due to length]"
+        : textContent;
+      
       const response = await openai.chat.completions.create({
         model: "gpt-4o",
         messages: [
           {
             role: "system",
-            content: "You are a document analysis expert. Analyze travel documents and extract key information. Respond with JSON in this format: { 'extractedText': 'full text content', 'documentType': 'passport/visa/id/bank_statement/flight_itinerary/hotel_booking/other', 'issuingCountry': 'country name or null', 'expirationDate': 'YYYY-MM-DD or null', 'documentNumber': 'number or null', 'fullName': 'name or null', 'dateOfBirth': 'YYYY-MM-DD or null', 'nationality': 'nationality or null', 'confidence': number_0_to_1 }"
+            content: "You are a document analysis expert. Analyze travel documents and extract key information. Respond with JSON in this format: { 'extractedText': 'summary of relevant content', 'documentType': 'passport/visa/id/bank_statement/flight_itinerary/hotel_booking/employment_letter/payroll/contract/other', 'issuingCountry': 'country name or null', 'expirationDate': 'YYYY-MM-DD or null', 'documentNumber': 'number or null', 'fullName': 'name or null', 'dateOfBirth': 'YYYY-MM-DD or null', 'nationality': 'nationality or null', 'confidence': number_0_to_1 }"
           },
           {
             role: "user",
-            content: `Analyze this document content for visa application purposes:\n\nFilename: ${filename}\nContent:\n${textContent}`
+            content: `Analyze this document content for visa application purposes:\n\nFilename: ${filename}\nContent:\n${truncatedContent}`
           }
         ],
         response_format: { type: "json_object" },
@@ -124,10 +130,14 @@ Respond with JSON in this format:
           content: `Validate these documents for ${country} ${visaType} visa application:
 
 Personal Information:
-${JSON.stringify(personalInfo, null, 2)}
+Name: ${personalInfo.applicantName}
+Passport: ${personalInfo.passportNumber}
+Nationality: ${personalInfo.nationality}
+Travel Date: ${personalInfo.travelDate}
+Stay Duration: ${personalInfo.stayDuration} days
 
-Analyzed Documents:
-${JSON.stringify(documents, null, 2)}
+Analyzed Documents Summary:
+${documents.map(doc => `- ${doc.documentType}: ${doc.fullName || 'N/A'}, Confidence: ${doc.confidence}`).join('\n')}
 
 Provide detailed validation results including any issues found and recommendations.`
         }
@@ -142,7 +152,20 @@ Provide detailed validation results including any issues found and recommendatio
     };
   } catch (error) {
     console.error('Error validating documents:', error);
-    throw new Error('Failed to validate documents');
+    // Return fallback validation results instead of throwing
+    return {
+      verified: [],
+      issues: [
+        {
+          type: "validation_error", 
+          title: "Document Validation Temporarily Unavailable",
+          description: "AI validation service is currently unavailable. Your documents have been uploaded successfully.",
+          recommendation: "Please try again later or contact support for manual review."
+        }
+      ],
+      score: 0,
+      completedAt: new Date().toISOString()
+    };
   }
 }
 
