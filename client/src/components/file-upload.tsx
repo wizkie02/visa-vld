@@ -90,7 +90,7 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
 
     // Upload files
     const formData = new FormData();
-    selectedFiles.forEach(file => {
+    Array.from(selectedFiles).forEach(file => {
       formData.append('files', file);
     });
     
