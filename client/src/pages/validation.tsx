@@ -146,59 +146,25 @@ export default function Validation() {
     if (!sessionId) return;
     
     try {
-      const response = await apiRequest("GET", `/api/validation-results/${sessionId}`);
-      const data = await response.json();
+      const response = await fetch(`/api/validation-report/${sessionId}/download`);
+      if (!response.ok) {
+        throw new Error('Failed to download professional report');
+      }
       
-      // Create a comprehensive report text
-      const reportContent = `
-VISA DOCUMENT VALIDATION REPORT
-Generated: ${new Date().toLocaleDateString()}
-Session ID: ${sessionId}
-
-DESTINATION INFORMATION
-Country: ${validationData.country}
-Visa Type: ${validationData.visaType}
-
-APPLICANT INFORMATION
-Name: ${validationData.personalInfo.applicantName}
-Passport Number: ${validationData.personalInfo.passportNumber}
-Nationality: ${validationData.personalInfo.nationality}
-Date of Birth: ${validationData.personalInfo.dateOfBirth}
-Travel Date: ${validationData.personalInfo.travelDate}
-Stay Duration: ${validationData.personalInfo.stayDuration} days
-
-UPLOADED DOCUMENTS
-${validationData.uploadedFiles.map((file, index) => `${index + 1}. ${file.originalName} (${file.mimetype})`).join('\n')}
-
-VALIDATION RESULTS
-Overall Score: ${data.results.score}%
-
-VERIFIED ITEMS:
-${data.results.verified.map((item: any) => `✓ ${item.type}: ${item.message}`).join('\n')}
-
-ISSUES IDENTIFIED:
-${data.results.issues.map((issue: any) => `⚠ ${issue.title}: ${issue.description}\n   Recommendation: ${issue.recommendation}`).join('\n\n')}
-
-COMPLETION TIME: ${data.results.completedAt}
-
-This report was generated using AI-powered document analysis technology.
-For questions about this report, please contact support.
-      `.trim();
-      
-      // Create and download the file
-      const blob = new Blob([reportContent], { type: 'text/plain' });
+      const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
+      a.style.display = 'none';
       a.href = url;
-      a.download = `visa-validation-report-${sessionId}.txt`;
+      a.download = `visa-validation-report-${validationData.country}-${new Date().toISOString().split('T')[0]}.html`;
       document.body.appendChild(a);
       a.click();
-      document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
       
       toast({
-        title: "Report Downloaded",
-        description: "Your validation report has been downloaded successfully.",
+        title: "Professional Report Downloaded",
+        description: "Your comprehensive validation report with logo and disclaimer has been downloaded.",
       });
     } catch (error) {
       console.error("Error downloading report:", error);

@@ -370,9 +370,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Validation results not available" });
       }
 
+      // Parse validation results safely
+      const validationResults = typeof session.validationResults === 'string' 
+        ? JSON.parse(session.validationResults) 
+        : session.validationResults;
+
+      // Ensure validation results has required structure
+      const safeValidationResults = {
+        verified: validationResults?.verified || [],
+        issues: validationResults?.issues || [],
+        score: validationResults?.score || 0,
+        completedAt: validationResults?.completedAt || new Date().toISOString()
+      };
+
       // Prepare report data
       const reportData = {
-        validationResults: session.validationResults,
+        validationResults: safeValidationResults,
         personalInfo: {
           applicantName: session.applicantName,
           passportNumber: session.passportNumber,
@@ -383,7 +396,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         country: session.country,
         visaType: session.visaType,
         nationality: session.nationality,
-        requirements: session.validationResults.currentRequirements,
+        requirements: validationResults?.currentRequirements,
         uploadedDocuments: Array.isArray(session.uploadedFiles) ? session.uploadedFiles : []
       };
 
