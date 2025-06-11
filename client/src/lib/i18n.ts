@@ -44,20 +44,40 @@ export const translations: Record<string, Record<string, string>> = {
     homeSubtitle: "Get your travel documents verified by AI technology before applying",
     startValidation: "Start Document Validation",
     
-    // Validation Steps
-    step1Title: "Select Destination & Visa Type",
-    step2Title: "Upload Documents", 
-    step3Title: "Personal Information",
-    step4Title: "Review & Validate",
-    step5Title: "Results & Payment",
+    // Workflow Steps
+    stepDestination: "Destination",
+    stepNationality: "Nationality",
+    stepRequirements: "Requirements", 
+    stepUpload: "Upload",
+    stepInformation: "Information",
+    stepReview: "Review",
+    stepPayment: "Payment",
     
-    // Country Selection
+    // Country & Visa Selection
     selectCountry: "Select your destination country",
+    selectNationality: "Select your nationality",
     selectVisaType: "Select visa type",
+    chooseDestination: "Choose Destination",
+    chooseNationality: "Choose Your Nationality",
     tourist: "Tourist",
     business: "Business",
     student: "Student",
     work: "Work",
+    
+    // Countries
+    china: "China",
+    japan: "Japan",
+    usa: "United States",
+    uk: "United Kingdom", 
+    germany: "Germany",
+    france: "France",
+    netherlands: "Netherlands",
+    vietnam: "Vietnam",
+    
+    // Requirements
+    requiredDocuments: "Required Documents",
+    downloadChecklist: "Download Requirements Checklist",
+    viewRequirements: "View Detailed Requirements",
     
     // File Upload
     uploadFiles: "Upload Documents",
@@ -65,6 +85,7 @@ export const translations: Record<string, Record<string, string>> = {
     supportedFormats: "Supported formats: PDF, JPG, PNG, DOCX",
     analyzing: "Analyzing...",
     uploadSuccess: "Upload successful",
+    removeFile: "Remove file",
     
     // Personal Information
     personalInfo: "Personal Information",
@@ -75,19 +96,63 @@ export const translations: Record<string, Record<string, string>> = {
     travelDate: "Travel Date",
     stayDuration: "Stay Duration (days)",
     
-    // Validation Results
+    // Validation
+    startValidationBtn: "Start Validation",
+    analyzingDocuments: "Analyzing Documents...",
+    validationComplete: "Validation Complete",
+    validationFailed: "Validation Failed",
+    
+    // Results
     validationResults: "Validation Results",
+    validationPreview: "Validation Results Preview",
     overallScore: "Overall Score",
+    preliminaryScore: "Preliminary Validation Score",
     verifiedItems: "Verified Items",
     issuesFound: "Issues Found",
+    documentsFound: "Documents Found",
+    issuesDetected: "Issues Detected",
     recommendations: "Recommendations",
     downloadReport: "Download Report",
+    downloadCompleteReport: "Download Complete Report",
+    missingRequiredDocs: "Missing Required Documents",
+    incompleteApplication: "Incomplete Application - Missing Required Documents",
+    strongApplication: "Strong Application",
+    goodApplication: "Good Application with Minor Issues",
+    needsImprovement: "Application Needs Improvement",
     
     // Payment
     payment: "Payment",
+    paymentRequired: "Complete Payment for Full Report",
     paymentDescription: "Complete payment to receive your full validation report",
+    fullValidationReport: "Full Validation Report",
+    completeAnalysis: "Complete analysis and recommendations",
     price: "$9.99",
+    oneTimeFee: "One-time fee",
     payNow: "Pay Now",
+    payGetFullReport: "Pay & Get Full Report",
+    backToReview: "Back to Review",
+    securePayment: "Secure payment powered by Stripe. Full report available immediately after payment.",
+    
+    // Completion
+    validationCompleteTitle: "Validation Complete!",
+    validationCompleteDesc: "Your documents have been successfully validated. You can now download your comprehensive report.",
+    validateAnother: "Validate Another Destination",
+    returnHome: "Return to Home",
+    thankYou: "Thank you for using our visa document validation service. Keep your report for your visa application.",
+    
+    // Language Selection
+    selectLanguage: "Select Language",
+    languagePreference: "Language Preference",
+    changeLanguage: "Change Language",
+    chooseLanguage: "Choose your preferred language",
+    continueInLanguage: "Continue in {language}",
+    
+    // Toast Messages
+    reportDownloaded: "Professional Report Downloaded",
+    reportDownloadDesc: "Your comprehensive validation report with logo and disclaimer has been downloaded.",
+    downloadFailed: "Download Failed",
+    downloadFailedDesc: "Failed to download report. Please try again.",
+    documentAnalysisComplete: "Document analysis completed using AI technology",
     
     // Common
     loading: "Loading...",
@@ -96,6 +161,9 @@ export const translations: Record<string, Record<string, string>> = {
     close: "Close",
     save: "Save",
     cancel: "Cancel",
+    continue: "Continue",
+    required: "Required",
+    optional: "Optional",
     
     // Footer
     about: "About",

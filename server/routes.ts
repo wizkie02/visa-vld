@@ -8,6 +8,7 @@ import { nanoid } from "nanoid";
 import { analyzeDocument, validateDocumentsAgainstRequirements, getVisaRequirementsOnline } from "./openai-service";
 import { fetchCurrentVisaRequirements, generateRequirementsChecklist } from "./visa-requirements-service";
 import { generateValidationReport, generateRequirementsChecklist as generateChecklistHtml } from "./document-generator";
+import { generateValidationReportMarkdown, generateRequirementsChecklistMarkdown } from "./markdown-generator";
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
@@ -325,11 +326,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         nationality as string
       );
       
-      const checklistHtml = generateChecklistHtml(requirements);
+      const checklistMarkdown = generateRequirementsChecklistMarkdown(requirements);
       
-      res.setHeader('Content-Type', 'text/html');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.html"`);
-      res.send(checklistHtml);
+      res.setHeader('Content-Type', 'text/markdown');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.md"`);
+      res.send(checklistMarkdown);
     } catch (error: any) {
       console.error("Error generating requirements checklist:", error);
       res.status(500).json({ message: "Error generating checklist: " + error.message });
@@ -400,11 +401,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         uploadedDocuments: Array.isArray(session.uploadedFiles) ? session.uploadedFiles : []
       };
 
-      const reportHtml = generateValidationReport(reportData);
+      const reportMarkdown = generateValidationReportMarkdown(reportData);
       
-      res.setHeader('Content-Type', 'text/html');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.html"`);
-      res.send(reportHtml);
+      res.setHeader('Content-Type', 'text/markdown');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.md"`);
+      res.send(reportMarkdown);
     } catch (error: any) {
       console.error("Error generating validation report:", error);
       res.status(500).json({ message: "Error generating report: " + error.message });

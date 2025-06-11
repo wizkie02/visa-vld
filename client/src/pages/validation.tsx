@@ -121,7 +121,7 @@ export default function Validation() {
         title: "Validation Complete",
         description: "Document analysis completed using AI technology",
       });
-      setCurrentStep(4); // Show results preview
+      setCurrentStep(6); // Show results preview (step 6 in 7-step workflow)
     } catch (error: any) {
       console.error("Validation error:", error);
       console.error("Error details:", {
@@ -156,7 +156,7 @@ export default function Validation() {
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
-      a.download = `visa-validation-report-${validationData.country}-${new Date().toISOString().split('T')[0]}.html`;
+      a.download = `visa-validation-report-${validationData.country}-${new Date().toISOString().split('T')[0]}.md`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
