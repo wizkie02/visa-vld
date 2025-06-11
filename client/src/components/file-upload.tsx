@@ -33,7 +33,17 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
 
   const uploadMutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      const response = await apiRequest("POST", "/api/upload", formData);
+      console.log("Uploading files:", Array.from(formData.entries()));
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `Upload failed with status ${response.status}`);
+      }
+      
       return response.json();
     },
     onSuccess: (result) => {
@@ -49,6 +59,7 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
       });
     },
     onError: (error) => {
+      console.error("Upload error:", error);
       setFiles(prev => prev.map(f => ({ ...f, status: 'error' as const })));
       toast({
         title: "Upload failed",
@@ -59,7 +70,33 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
   });
 
   const handleFileSelect = (selectedFiles: FileList) => {
-    const newFiles: UploadFile[] = Array.from(selectedFiles).map(file => ({
+    console.log("Selected files:", selectedFiles);
+    console.log("Files count:", selectedFiles.length);
+    
+    if (selectedFiles.length === 0) {
+      toast({
+        title: "No files selected",
+        description: "Please select at least one file to upload.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate file types
+    const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'text/plain'];
+    const filesArray = Array.from(selectedFiles);
+    
+    const invalidFiles = filesArray.filter(file => !allowedTypes.includes(file.type));
+    if (invalidFiles.length > 0) {
+      toast({
+        title: "Invalid file type",
+        description: `Please upload only PDF, JPG, PNG, DOCX, DOC, or TXT files. Invalid files: ${invalidFiles.map(f => f.name).join(', ')}`,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const newFiles: UploadFile[] = filesArray.map(file => ({
       file,
       originalName: file.name,
       mimetype: file.type,
@@ -71,29 +108,14 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
 
     setFiles(prev => [...prev, ...newFiles]);
 
-    // Simulate upload progress
-    newFiles.forEach((_, index) => {
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += Math.random() * 30;
-        if (progress >= 90) {
-          clearInterval(interval);
-          progress = 90;
-        }
-        setFiles(prev => prev.map((f, i) => 
-          i >= prev.length - newFiles.length + index 
-            ? { ...f, progress } 
-            : f
-        ));
-      }, 200);
-    });
-
-    // Upload files
+    // Upload files immediately
     const formData = new FormData();
-    Array.from(selectedFiles).forEach(file => {
+    filesArray.forEach(file => {
+      console.log("Adding file to FormData:", file.name, file.type);
       formData.append('files', file);
     });
     
+    console.log("FormData entries:", Array.from(formData.entries()));
     uploadMutation.mutate(formData);
   };
 
@@ -164,7 +186,7 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
           ref={fileInputRef}
           type="file"
           multiple
-          accept=".pdf,.jpg,.jpeg,.png,.docx"
+          accept=".pdf,.jpg,.jpeg,.png,.docx,.doc,.txt"
           className="hidden"
           onChange={(e) => e.target.files && handleFileSelect(e.target.files)}
         />

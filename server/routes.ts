@@ -18,7 +18,26 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
-    fileSize: 10 * 1024 * 1024, // 10MB limit
+    fileSize: 10 * 1024 * 1024, // 10MB limit per file
+    files: 10, // Maximum 10 files
+  },
+  fileFilter: (req, file, cb) => {
+    // Allow common document and image formats
+    const allowedTypes = [
+      'application/pdf',
+      'image/jpeg',
+      'image/jpg', 
+      'image/png',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+      'application/msword', // .doc
+      'text/plain'
+    ];
+    
+    if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error(`File type ${file.mimetype} not supported. Please upload PDF, JPG, PNG, DOCX, DOC, or TXT files.`));
+    }
   },
 });
 
@@ -54,19 +73,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // File upload endpoint
   app.post("/api/upload", upload.array("files", 10), async (req, res) => {
     try {
-      if (!req.files || !Array.isArray(req.files)) {
+      console.log("Upload request received");
+      console.log("req.files:", req.files);
+      console.log("req.file:", req.file);
+      console.log("Files array check:", Array.isArray(req.files));
+      
+      if (!req.files || !Array.isArray(req.files) || req.files.length === 0) {
+        console.log("No files found in request");
         return res.status(400).json({ message: "No files uploaded" });
       }
 
-      const uploadedFiles = req.files.map((file) => ({
+      const uploadedFiles = req.files.map((file: any) => ({
         originalName: file.originalname,
         mimetype: file.mimetype,
         size: file.size,
         uploadedAt: new Date().toISOString(),
       }));
 
+      console.log("Successfully processed files:", uploadedFiles);
       res.json({ files: uploadedFiles });
     } catch (error: any) {
+      console.error("Upload error:", error);
       res.status(500).json({ message: "Error uploading files: " + error.message });
     }
   });
