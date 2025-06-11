@@ -108,16 +108,18 @@ function CheckoutForm({ data, sessionId, onClose }: PaymentModalProps) {
   );
 }
 
-export default function PaymentModal({ data, onClose }: PaymentModalProps) {
+export default function PaymentModal({ data, sessionId, onClose }: PaymentModalProps) {
   const [clientSecret, setClientSecret] = useState("");
   const { toast } = useToast();
 
   useEffect(() => {
+    if (!sessionId) return;
+    
     // Create PaymentIntent when modal opens
     const createPaymentIntent = async () => {
       try {
         const response = await apiRequest("POST", "/api/create-payment-intent", { 
-          sessionId: "temp-" + Date.now() // Temporary ID for payment intent
+          sessionId
         });
         const result = await response.json();
         setClientSecret(result.clientSecret);
@@ -131,7 +133,7 @@ export default function PaymentModal({ data, onClose }: PaymentModalProps) {
     };
 
     createPaymentIntent();
-  }, [toast]);
+  }, [sessionId, toast]);
 
   if (!clientSecret) {
     return (

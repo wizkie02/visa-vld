@@ -6,6 +6,7 @@ import CountrySelection from "@/components/country-selection";
 import FileUpload from "@/components/file-upload";
 import PersonalInfoForm from "@/components/personal-info-form";
 import PaymentModal from "@/components/payment-modal";
+import VisaRequirementsDisplay from "@/components/visa-requirements-display";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -200,13 +201,20 @@ export default function Validation() {
         )}
 
         {currentStep === 3 && (
-          <PersonalInfoForm
-            data={validationData}
-            onUpdate={updateValidationData}
-            onNext={handleNext}
-            onPrevious={handlePrevious}
-            canProceed={!!canProceed()}
-          />
+          <div className="space-y-8">
+            <PersonalInfoForm
+              data={validationData}
+              onUpdate={updateValidationData}
+              onNext={handleNext}
+              onPrevious={handlePrevious}
+              canProceed={!!canProceed()}
+            />
+            
+            {/* Show visa requirements after personal info is filled */}
+            {validationData.personalInfo.nationality && (
+              <VisaRequirementsDisplay data={validationData} />
+            )}
+          </div>
         )}
 
         {currentStep === 4 && (
