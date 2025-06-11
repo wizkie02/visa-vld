@@ -106,6 +106,12 @@ export default function Validation() {
       setCurrentStep(4); // Show results preview
     } catch (error: any) {
       console.error("Validation error:", error);
+      console.error("Error details:", {
+        message: error.message,
+        stack: error.stack,
+        name: error.name,
+        cause: error.cause
+      });
       toast({
         title: "Validation Failed",
         description: error.message || "Failed to validate documents. Please try again.",
