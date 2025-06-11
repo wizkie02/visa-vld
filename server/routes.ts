@@ -134,8 +134,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log("Starting comprehensive validation for session:", sessionId);
       
       // Get current visa requirements online
-      const currentRequirements = await getVisaRequirementsOnline(session.country, session.visaType);
-      console.log("Fetched current requirements:", currentRequirements);
+      let currentRequirements;
+      try {
+        currentRequirements = await getVisaRequirementsOnline(session.country, session.visaType);
+        console.log("Fetched current requirements:", currentRequirements);
+      } catch (error) {
+        console.error("Error fetching requirements:", error);
+        currentRequirements = { message: "Could not fetch current requirements" };
+      }
 
       // Extract document analyses from uploaded files
       const uploadedFiles = Array.isArray(session.uploadedFiles) ? session.uploadedFiles : [];
@@ -148,19 +154,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Validate documents against requirements
-      const validationResults = await validateDocumentsAgainstRequirements(
-        documentAnalyses,
-        {
-          applicantName: session.applicantName,
-          passportNumber: session.passportNumber,
-          dateOfBirth: session.dateOfBirth,
-          nationality: session.nationality,
-          travelDate: session.travelDate,
-          stayDuration: session.stayDuration
-        },
-        session.country,
-        session.visaType
-      );
+      let validationResults;
+      try {
+        validationResults = await validateDocumentsAgainstRequirements(
+          documentAnalyses,
+          {
+            applicantName: session.applicantName,
+            passportNumber: session.passportNumber,
+            dateOfBirth: session.dateOfBirth,
+            nationality: session.nationality,
+            travelDate: session.travelDate,
+            stayDuration: session.stayDuration
+          },
+          session.country,
+          session.visaType
+        );
+      } catch (error: any) {
+        console.error("OpenAI validation error:", error);
+        // Provide fallback validation results
+        validationResults = {
+          verified: [],
+          issues: [
+            {
+              type: "analysis_error",
+              title: "Document Analysis Temporarily Unavailable",
+              description: "AI document validation is currently unavailable. Your documents have been uploaded successfully.",
+              recommendation: "Please try again later or contact support for manual review."
+            }
+          ],
+          score: 0,
+          completedAt: new Date().toISOString()
+        };
+      }
 
       // Store validation results
       const updatedSession = await storage.updateValidationResults(sessionId, {
@@ -176,7 +201,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error: any) {
       console.error("Validation error:", error);
-      res.status(500).json({ message: "Error during validation: " + error.message });
+      res.status(500).json({ message: "Error during validation: " + (error.message || "Unknown error") });
     }
   });
 
