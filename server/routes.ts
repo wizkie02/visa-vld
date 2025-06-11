@@ -45,7 +45,7 @@ const upload = multer({
 export async function registerRoutes(app: Express): Promise<Server> {
   
   // Create validation session
-  app.post("/api/validation-session", async (req, res) => {
+  app.post("/api/create-validation-session", async (req, res) => {
     try {
       const { country, visaType, personalInfo, uploadedFiles } = req.body;
       
