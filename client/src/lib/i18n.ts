@@ -101,7 +101,23 @@ export const translations: Record<string, Record<string, string>> = {
     about: "About",
     contact: "Contact",
     privacy: "Privacy Policy",
-    terms: "Terms of Service"
+    terms: "Terms of Service",
+    
+    // Required Documents
+    requiredDocuments: "Required Documents",
+    reviewRequiredDocs: "Please review the required documents before uploading",
+    destination: "Destination",
+    downloadChecklist: "Download Requirements Checklist",
+    required: "Required",
+    optional: "Optional",
+    acceptedFormats: "Accepted formats",
+    importantNotes: "Important Notes",
+    preparationTips: "Preparation Tips",
+    tip1: "Ensure all documents are clear and legible",
+    tip2: "Scan documents in high resolution (300 DPI or higher)",
+    tip3: "Keep original documents for your appointment",
+    tip4: "Verify all information matches across documents",
+    proceedToUpload: "Proceed to Upload Documents"
   },
   
   zh: {

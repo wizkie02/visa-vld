@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { Ticket, ArrowLeft } from "lucide-react";
 import StepIndicator from "@/components/step-indicator";
 import CountrySelection from "@/components/country-selection";
+import RequiredDocumentsDisplay from "@/components/required-documents-display";
 import FileUpload from "@/components/file-upload";
 import PersonalInfoForm from "@/components/personal-info-form";
 import PaymentModal from "@/components/payment-modal";
 import VisaRequirementsDisplay from "@/components/visa-requirements-display";
+import LanguageSelectionModal from "@/components/language-selection-modal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/lib/i18n";
 import { apiRequest } from "@/lib/queryClient";
 
 export interface ValidationData {
@@ -37,7 +40,9 @@ export default function Validation() {
   const [validationResults, setValidationResults] = useState<any>(null);
   const [sessionId, setSessionId] = useState("");
   const [isValidating, setIsValidating] = useState(false);
+  const [showLanguageModal, setShowLanguageModal] = useState(false);
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [validationData, setValidationData] = useState<ValidationData>({
     country: "",
     visaType: "",
@@ -52,12 +57,20 @@ export default function Validation() {
     uploadedFiles: [],
   });
 
+  // Check if language has been selected before
+  useEffect(() => {
+    const languageSelected = localStorage.getItem('languageSelected');
+    if (!languageSelected) {
+      setShowLanguageModal(true);
+    }
+  }, []);
+
   const updateValidationData = (updates: Partial<ValidationData>) => {
     setValidationData(prev => ({ ...prev, ...updates }));
   };
 
   const handleNext = () => {
-    if (currentStep < 5) {
+    if (currentStep < 6) {
       setCurrentStep(currentStep + 1);
     }
   };
