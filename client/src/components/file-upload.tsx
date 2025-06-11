@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { CloudUpload, FileText, Image, X, CheckCircle } from "lucide-react";
+import { CloudUpload, FileText, Image, X, CheckCircle, AlertTriangle } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { ValidationData } from "@/pages/validation";
@@ -222,42 +222,104 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
         {files.length > 0 && (
           <div className="mt-6 space-y-3">
             {files.map((file, index) => (
-              <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div className="flex items-center space-x-3">
-                  {getFileIcon(file.mimetype)}
-                  <div>
-                    <span className="font-medium">{file.originalName}</span>
-                    <span className="text-sm text-slate-600 ml-2">({formatFileSize(file.size)})</span>
-                    {file.status === 'uploading' && (
-                      <Progress value={file.progress} className="w-24 mt-1" />
+              <div key={index} className="bg-gray-50 rounded-lg p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    {getFileIcon(file.mimetype)}
+                    <div>
+                      <span className="font-medium">{file.originalName}</span>
+                      <span className="text-sm text-slate-600 ml-2">({formatFileSize(file.size)})</span>
+                      {file.status === 'uploading' && (
+                        <Progress value={file.progress} className="w-24 mt-1" />
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    {file.status === 'uploaded' && file.analysis && (
+                      <div className="flex items-center text-emerald-600">
+                        <CheckCircle className="w-4 h-4 mr-1" />
+                        <span className="text-sm">Analyzed</span>
+                      </div>
                     )}
+                    {file.status === 'uploaded' && file.error && (
+                      <div className="flex items-center text-amber-600">
+                        <AlertTriangle className="w-4 h-4 mr-1" />
+                        <span className="text-sm">Analysis Failed</span>
+                      </div>
+                    )}
+                    {file.status === 'uploading' && (
+                      <div className="flex items-center text-blue-600">
+                        <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mr-1"></div>
+                        <span className="text-sm">Analyzing...</span>
+                      </div>
+                    )}
+                    {file.status === 'error' && (
+                      <span className="text-sm text-red-600">Upload Error</span>
+                    )}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => removeFile(index)}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      <X className="w-4 h-4" />
+                    </Button>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  {file.status === 'uploaded' && (
-                    <div className="flex items-center text-emerald-600">
-                      <CheckCircle className="w-4 h-4 mr-1" />
-                      <span className="text-sm">Uploaded</span>
+                
+                {file.analysis && (
+                  <div className="mt-3 p-3 bg-white rounded border">
+                    <h5 className="font-medium text-gray-800 mb-2">AI Analysis Results</h5>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div>
+                        <span className="font-medium text-gray-600">Document Type:</span>
+                        <p className="capitalize">{file.analysis.documentType || 'Unknown'}</p>
+                      </div>
+                      {file.analysis.issuingCountry && (
+                        <div>
+                          <span className="font-medium text-gray-600">Issuing Country:</span>
+                          <p>{file.analysis.issuingCountry}</p>
+                        </div>
+                      )}
+                      {file.analysis.fullName && (
+                        <div>
+                          <span className="font-medium text-gray-600">Name Found:</span>
+                          <p>{file.analysis.fullName}</p>
+                        </div>
+                      )}
+                      {file.analysis.documentNumber && (
+                        <div>
+                          <span className="font-medium text-gray-600">Document Number:</span>
+                          <p>{file.analysis.documentNumber}</p>
+                        </div>
+                      )}
+                      {file.analysis.expirationDate && (
+                        <div>
+                          <span className="font-medium text-gray-600">Expiry Date:</span>
+                          <p>{file.analysis.expirationDate}</p>
+                        </div>
+                      )}
+                      <div>
+                        <span className="font-medium text-gray-600">AI Confidence:</span>
+                        <p>{Math.round(file.analysis.confidence * 100)}%</p>
+                      </div>
                     </div>
-                  )}
-                  {file.status === 'uploading' && (
-                    <div className="flex items-center text-blue-600">
-                      <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mr-1"></div>
-                      <span className="text-sm">Processing...</span>
-                    </div>
-                  )}
-                  {file.status === 'error' && (
-                    <span className="text-sm text-red-600">Error</span>
-                  )}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => removeFile(index)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
-                </div>
+                    {file.analysis.extractedText && (
+                      <div className="mt-3">
+                        <span className="font-medium text-gray-600">Extracted Text (first 200 chars):</span>
+                        <p className="text-xs text-gray-500 mt-1 bg-gray-50 p-2 rounded">
+                          {file.analysis.extractedText.substring(0, 200)}...
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
+                
+                {file.error && (
+                  <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded">
+                    <p className="text-sm text-red-700">{file.error}</p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
