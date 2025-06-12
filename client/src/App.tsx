@@ -23,6 +23,12 @@ function Router() {
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route path="/terms-of-service" component={TermsOfService} />
       <Route path="/contact" component={Contact} />
+      <Route path="/language-test">
+        {() => {
+          const LanguageTest = require("@/components/language-test").default;
+          return <LanguageTest />;
+        }}
+      </Route>
       <Route component={NotFound} />
     </Switch>
   );
