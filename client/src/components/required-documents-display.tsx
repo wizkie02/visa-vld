@@ -118,8 +118,8 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
       });
     } catch (error) {
       toast({
-        title: t('downloadFailed'),
-        description: t('downloadFailedDescription'),
+        title: t('requirementsDownloadFailed'),
+        description: t('requirementsDownloadFailedDescription'),
         variant: "destructive",
       });
     } finally {
@@ -135,7 +135,7 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
           <h2 className="text-3xl font-bold">{t('requiredDocuments') || 'Required Documents'}</h2>
           <div className="flex items-center justify-center space-x-2 text-blue-600">
             <RefreshCw className="w-5 h-5 animate-spin" />
-            <span>Fetching current visa requirements online...</span>
+            <span>{t('fetchingRequirements')}</span>
           </div>
         </div>
         
@@ -162,15 +162,15 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
     return (
       <div className="max-w-4xl mx-auto p-6 space-y-6">
         <div className="text-center space-y-4">
-          <h2 className="text-3xl font-bold">{t('requiredDocuments') || 'Required Documents'}</h2>
+          <h2 className="text-3xl font-bold">{t('requiredDocuments')}</h2>
           <div className="bg-red-50 border border-red-200 rounded-lg p-4">
             <div className="flex items-center justify-center space-x-2 text-red-600 mb-4">
               <AlertCircle className="w-5 h-5" />
-              <span>Unable to fetch current visa requirements</span>
+              <span>{t('unableToFetchRequirements')}</span>
             </div>
             <Button onClick={() => refetch()} variant="outline" className="mx-auto block">
               <RefreshCw className="w-4 h-4 mr-2" />
-              Try Again
+              {t('tryAgain')}
             </Button>
           </div>
         </div>
@@ -183,18 +183,18 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       <div className="text-center space-y-4">
-        <h2 className="text-3xl font-bold">{t('requiredDocuments') || 'Required Documents'}</h2>
+        <h2 className="text-3xl font-bold">{t('requiredDocuments')}</h2>
         <p className="text-gray-600">
-          {t('reviewRequiredDocs') || 'Please review the current visa requirements before uploading documents'}
+          {t('reviewRequiredDocs')}
         </p>
         <div className="flex items-center justify-center space-x-4 text-sm text-gray-500">
           <span className="flex items-center space-x-1">
-            <span className="font-semibold">{t('destination') || 'Destination'}:</span>
+            <span className="font-semibold">{t('destination')}:</span>
             <span>{data.country}</span>
           </span>
           <span>•</span>
           <span className="flex items-center space-x-1">
-            <span className="font-semibold">{t('visaType') || 'Visa Type'}:</span>
+            <span className="font-semibold">{t('visaType')}:</span>
             <span>{data.visaType}</span>
           </span>
         </div>

@@ -84,8 +84,13 @@ export const translations: Record<string, Record<string, string>> = {
     viewRequirements: "View Detailed Requirements",
     downloadComplete: "Download Complete",
     checklistDownloadedSuccess: "Comprehensive requirements checklist downloaded with the latest information.",
-    downloadFailed: "Download Failed",
-    downloadFailedDescription: "Could not download the checklist. Please try again.",
+    requirementsDownloadFailed: "Download Failed",
+    requirementsDownloadFailedDescription: "Could not download the checklist. Please try again.",
+    reviewRequiredDocs: "Please review the current visa requirements before uploading documents",
+    destination: "Destination",
+    fetchingRequirements: "Fetching current visa requirements online...",
+    unableToFetchRequirements: "Unable to fetch current visa requirements",
+    tryAgain: "Try Again",
     
     // File Upload
     uploadFiles: "Upload Documents",
@@ -191,7 +196,6 @@ export const translations: Record<string, Record<string, string>> = {
     terms: "Terms of Service",
     
     // Documents Section
-    reviewRequiredDocs: "Please review the required documents before uploading", 
     documentsPreparation: "Documents Preparation",
     preparationTips: "Preparation Tips",
     tip1: "Ensure all documents are clear and legible",
