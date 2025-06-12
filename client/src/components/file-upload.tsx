@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { CloudUpload, FileText, Image, X, CheckCircle, AlertTriangle } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/lib/i18n";
 import type { ValidationData } from "@/pages/validation";
 
 interface FileUploadProps {

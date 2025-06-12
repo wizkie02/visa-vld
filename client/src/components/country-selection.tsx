@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 import type { ValidationData } from "@/pages/validation";
 
 interface CountrySelectionProps {

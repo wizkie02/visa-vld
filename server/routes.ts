@@ -10,6 +10,7 @@ import { fetchCurrentVisaRequirements, generateRequirementsChecklist } from "./v
 import { generateValidationReport, generateRequirementsChecklist as generateChecklistHtml } from "./document-generator";
 import { generateValidationReportMarkdown, generateRequirementsChecklistMarkdown } from "./markdown-generator-fixed";
 import { generateRequirementsChecklistBuffer } from "./simple-pdf-generator";
+import { generateValidationReportPDF, generateRequirementsChecklistPDF } from "./fixed-pdf-generator";
 import { checkVFSOutsourcing } from "./vfs-outsourcing-service";
 
 if (!process.env.STRIPE_SECRET_KEY) {

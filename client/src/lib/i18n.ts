@@ -654,12 +654,24 @@ export function useLanguage() {
     if (savedLanguage && SUPPORTED_LANGUAGES.some(lang => lang.code === savedLanguage)) {
       setCurrentLanguage(savedLanguage);
     }
+
+    // Listen for language change events
+    const handleLanguageChange = (event: CustomEvent) => {
+      setCurrentLanguage(event.detail);
+    };
+
+    window.addEventListener('languageChanged', handleLanguageChange as EventListener);
+    return () => {
+      window.removeEventListener('languageChanged', handleLanguageChange as EventListener);
+    };
   }, []);
 
   const changeLanguage = (languageCode: string) => {
     if (SUPPORTED_LANGUAGES.some(lang => lang.code === languageCode)) {
       setCurrentLanguage(languageCode);
       localStorage.setItem('preferredLanguage', languageCode);
+      // Trigger a window event to notify all components
+      window.dispatchEvent(new CustomEvent('languageChanged', { detail: languageCode }));
     }
   };
 
