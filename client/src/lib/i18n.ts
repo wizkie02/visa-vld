@@ -549,14 +549,40 @@ export const translations: Record<string, Record<string, string>> = {
     howItWorks: "工作流程",
     step1: "选择目的地",
     step1Desc: "选择您的目的地国家和签证类型",
-    step2: "上传文件", 
+    step2: "上传文件",
     step2Desc: "上传您的签证申请文件",
     step3: "输入详情",
     step3Desc: "填写您的个人信息",
     step4: "预览结果",
     step4Desc: "付款前查看验证预览",
     step5: "付款并下载",
-    step5Desc: "完成付款获取完整详细报告"
+    step5Desc: "完成付款获取完整详细报告",
+    
+    // Navigation
+    howItWorksNav: "工作流程",
+    pricing: "价格",
+    support: "支持",
+    
+    // Pricing Section
+    simplePricing: "简单透明的价格",
+    perValidation: "每次验证",
+    completeDocAnalysis: "完整文档分析",
+    detailedValidationReport: "详细验证报告",
+    recommendationsChecklist: "建议和检查清单",
+    secureHandling: "安全文档处理",
+    startValidationButton: "开始验证",
+    
+    // Footer
+    professionalService: "专业签证申请文档验证服务，覆盖全球。",
+    service: "服务",
+    supportedCountries: "支持的国家",
+    contactUs: "联系我们",
+    privacyPolicy: "隐私政策",
+    legal: "法律",
+    termsOfService: "服务条款",
+    disclaimer: "免责声明",
+    dataProtection: "数据保护",
+    copyright: "© 2024 签证验证专家。保留所有权利。本服务不隶属于任何政府机构。"
   },
   
   hi: {
