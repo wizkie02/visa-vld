@@ -279,7 +279,34 @@ export const translations: Record<string, Record<string, string>> = {
     step4: "Preview Results",
     step4Desc: "See validation preview before payment",
     step5: "Pay & Download",
-    step5Desc: "Complete payment for full detailed report"
+    step5Desc: "Complete payment for full detailed report",
+    
+    // Navigation and Header
+    documentValidationService: "Document Validation Service",
+    about: "About",
+    howItWorksNav: "How it Works",
+    pricing: "Pricing",
+    support: "Support",
+    
+    // Pricing Section
+    simplePricing: "Simple, Transparent Pricing",
+    perValidation: "Per validation",
+    completeAnalysis: "Complete document analysis",
+    detailedReport: "Detailed validation report",
+    recommendations: "Recommendations & checklist",
+    secureHandling: "Secure document handling",
+    
+    // Footer
+    professionalService: "Professional document validation service for visa applications worldwide.",
+    service: "Service",
+    supportedCountries: "Supported Countries",
+    contactUs: "Contact Us",
+    privacyPolicy: "Privacy Policy",
+    legal: "Legal",
+    termsOfService: "Terms of Service",
+    disclaimer: "Disclaimer",
+    dataProtection: "Data Protection",
+    copyright: "© 2024 VisaValidator Pro. All rights reserved. This service is not affiliated with any government agency."
   },
   
   vi: {
@@ -935,7 +962,44 @@ export const translations: Record<string, Record<string, string>> = {
     appName: "VisaValidator Pro",
     back: "Kembali",
     next: "Selanjutnya",
-    previous: "Sebelumnya"
+    previous: "Sebelumnya",
+    homeTitle: "Validasi Dokumen Visa Profesional",
+    homeSubtitle: "Validasi dokumen perjalanan Anda dengan teknologi AI sebelum aplikasi",
+    startValidation: "Mulai Validasi Dokumen",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "PENAFIAN HUKUM KRITIS",
+    noGuaranteeTitle: "TIDAK ADA JAMINAN PERSETUJUAN VISA:",
+    noGuaranteeText: "VisaValidator Pro hanya alat bantuan persiapan dokumen. Kami tidak menjamin persetujuan visa, tidak mewakili agen pemerintah manapun, atau mempengaruhi keputusan kedutaan.",
+    accuracyLimitationsTitle: "KETERBATASAN AKURASI:",
+    accuracyLimitationsText: "Meskipun AI kami menganalisis dokumen sesuai persyaratan yang diketahui, hasil mungkin tidak 100% akurat. Persyaratan kedutaan sering berubah dan bervariasi menurut keadaan individu.",
+    notOfficialGuidanceTitle: "BUKAN PANDUAN RESMI:",
+    notOfficialGuidanceText: "Layanan ini tidak menggantikan situs web kedutaan resmi, nasihat konsuler, atau konsultasi dengan pengacara imigrasi. Selalu verifikasi persyaratan terkini dengan sumber resmi.",
+    individualResponsibilityTitle: "TANGGUNG JAWAB INDIVIDU:",
+    individualResponsibilityText: "Setiap wisatawan sepenuhnya bertanggung jawab memastikan aplikasi visa mereka memenuhi semua persyaratan. Keputusan persetujuan visa dibuat secara eksklusif oleh pejabat kedutaan dan konsuler.",
+    readFullDisclaimer: "Baca Penafian Lengkap dan Keterbatasan Layanan →",
+    
+    // Features Section
+    whyChoose: "Mengapa Memilih VisaValidator Pro",
+    securePrivate: "Aman dan Pribadi",
+    securePrivateDesc: "Semua dokumen dihapus otomatis setelah validasi untuk privasi dan keamanan Anda.",
+    fastProcessing: "Pemrosesan Cepat",
+    fastProcessingDesc: "Dapatkan hasil validasi dalam hitungan menit, bukan hari.",
+    comprehensiveAnalysis: "Analisis Komprehensif",
+    comprehensiveAnalysisDesc: "Analisis dokumen bertenaga AI dengan rekomendasi detail dan verifikasi persyaratan.",
+    
+    // How it Works
+    howItWorks: "Cara Kerjanya",
+    step1: "Pilih Tujuan",
+    step1Desc: "Pilih negara tujuan dan jenis visa Anda",
+    step2: "Unggah Dokumen", 
+    step2Desc: "Unggah dokumen aplikasi visa Anda",
+    step3: "Masukkan Detail",
+    step3Desc: "Isi informasi pribadi Anda",
+    step4: "Pratinjau Hasil",
+    step4Desc: "Lihat pratinjau validasi sebelum pembayaran",
+    step5: "Bayar dan Unduh",
+    step5Desc: "Selesaikan pembayaran untuk laporan detail lengkap"
   },
   
   ur: {
@@ -1065,7 +1129,44 @@ export const translations: Record<string, Record<string, string>> = {
     appName: "VisaValidator Pro",
     back: "Geri",
     next: "İleri",
-    previous: "Önceki"
+    previous: "Önceki",
+    homeTitle: "Profesyonel Vize Doküman Doğrulama",
+    homeSubtitle: "Başvuru öncesi AI teknolojisi ile seyahat belgelerinizi doğrulayın",
+    startValidation: "Doküman Doğrulamayı Başlat",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "KRİTİK YASAL SORUMLULUK REDDİ",
+    noGuaranteeTitle: "VİZE ONAY GARANTİSİ YOK:",
+    noGuaranteeText: "VisaValidator Pro sadece bir doküman hazırlama yardım aracıdır. Vize onayı garanti etmez, herhangi bir devlet kurumunu temsil etmez veya büyükelçilik kararlarını etkilemez.",
+    accuracyLimitationsTitle: "DOĞRULUK SINIRLARI:",
+    accuracyLimitationsText: "AI'mız bilinen gereksinimlere göre dokümanları analiz ederken, sonuçlar %100 doğru olmayabilir. Büyükelçilik gereksinimleri sık sık değişir ve bireysel koşullara göre değişir.",
+    notOfficialGuidanceTitle: "RESMİ REHBERLİK DEĞİL:",
+    notOfficialGuidanceText: "Bu hizmet resmi büyükelçilik web sitelerini, konsolosluk tavsiyelerini veya göçmenlik avukatı danışmanlığını değiştirmez. Her zaman resmi kaynaklardan güncel gereksinimleri doğrulayın.",
+    individualResponsibilityTitle: "BİREYSEL SORUMLULUK:",
+    individualResponsibilityText: "Her yolcu vize başvurusunun tüm gereksinimleri karşıladığından emin olma konusunda tamamen sorumludur. Vize onay kararları yalnızca büyükelçilik ve konsolosluk yetkilileri tarafından verilir.",
+    readFullDisclaimer: "Tam Sorumluluk Reddi ve Hizmet Sınırlarını Okuyun →",
+    
+    // Features Section
+    whyChoose: "Neden VisaValidator Pro'yu Seçmelisiniz",
+    securePrivate: "Güvenli ve Özel",
+    securePrivateDesc: "Tüm dokümanlar gizliliğiniz ve güvenliğiniz için doğrulama sonrası otomatik olarak silinir.",
+    fastProcessing: "Hızlı İşlem",
+    fastProcessingDesc: "Doğrulama sonuçlarınızı günler değil dakikalar içinde alın.",
+    comprehensiveAnalysis: "Kapsamlı Analiz",
+    comprehensiveAnalysisDesc: "Detaylı öneriler ve gereksinim doğrulaması ile AI destekli doküman analizi.",
+    
+    // How it Works
+    howItWorks: "Nasıl Çalışır",
+    step1: "Hedef Seçin",
+    step1Desc: "Hedef ülkenizi ve vize türünüzü seçin",
+    step2: "Dokümanları Yükleyin", 
+    step2Desc: "Vize başvuru dokümanlarınızı yükleyin",
+    step3: "Detayları Girin",
+    step3Desc: "Kişisel bilgilerinizi doldurun",
+    step4: "Sonuçları Önizleyin",
+    step4Desc: "Ödeme öncesi doğrulama önizlemesini görün",
+    step5: "Ödeyin ve İndirin",
+    step5Desc: "Tam detaylı rapor için ödemeyi tamamlayın"
   },
   
   ko: {

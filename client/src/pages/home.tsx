@@ -20,7 +20,7 @@ export default function Home() {
               </div>
               <div>
                 <h1 className="text-xl font-bold text-gray-900">{t("appName")}</h1>
-                <p className="text-xs text-slate-600">Document Validation Service</p>
+                <p className="text-xs text-slate-600">{t("documentValidationService")}</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -28,9 +28,9 @@ export default function Home() {
                 <Link href="/about">
                   <span className="text-slate-600 hover:text-blue-700 transition-colors cursor-pointer">{t("about")}</span>
                 </Link>
-                <a href="#how-it-works" className="text-slate-600 hover:text-blue-700 transition-colors">How it Works</a>
-                <a href="#pricing" className="text-slate-600 hover:text-blue-700 transition-colors">Pricing</a>
-                <a href="#support" className="text-slate-600 hover:text-blue-700 transition-colors">Support</a>
+                <a href="#how-it-works" className="text-slate-600 hover:text-blue-700 transition-colors">{t("howItWorksNav")}</a>
+                <a href="#pricing" className="text-slate-600 hover:text-blue-700 transition-colors">{t("pricing")}</a>
+                <a href="#support" className="text-slate-600 hover:text-blue-700 transition-colors">{t("support")}</a>
               </nav>
 
             </div>
@@ -84,42 +84,42 @@ export default function Home() {
       {/* How It Works Section */}
       <section id="how-it-works" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">How It Works</h3>
+          <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">{t("howItWorks")}</h3>
           <div className="grid md:grid-cols-5 gap-6">
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-700">1</span>
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Select Destination</h4>
-              <p className="text-sm text-slate-600">Choose your destination country and visa type</p>
+              <h4 className="font-semibold text-gray-900 mb-2">{t("step1")}</h4>
+              <p className="text-sm text-slate-600">{t("step1Desc")}</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-700">2</span>
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Upload Documents</h4>
-              <p className="text-sm text-slate-600">Upload your visa application documents</p>
+              <h4 className="font-semibold text-gray-900 mb-2">{t("step2")}</h4>
+              <p className="text-sm text-slate-600">{t("step2Desc")}</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-700">3</span>
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Enter Details</h4>
-              <p className="text-sm text-slate-600">Fill in your personal information</p>
+              <h4 className="font-semibold text-gray-900 mb-2">{t("step3")}</h4>
+              <p className="text-sm text-slate-600">{t("step3Desc")}</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-700">4</span>
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Preview Results</h4>
-              <p className="text-sm text-slate-600">See validation preview before payment</p>
+              <h4 className="font-semibold text-gray-900 mb-2">{t("step4")}</h4>
+              <p className="text-sm text-slate-600">{t("step4Desc")}</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-700">5</span>
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Pay & Download</h4>
-              <p className="text-sm text-slate-600">Complete payment for full detailed report</p>
+              <h4 className="font-semibold text-gray-900 mb-2">{t("step5")}</h4>
+              <p className="text-sm text-slate-600">{t("step5Desc")}</p>
             </div>
           </div>
         </div>
