@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { Globe } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Globe } from 'lucide-react';
+
 import { useLanguage, SUPPORTED_LANGUAGES, type Language } from '@/lib/i18n';
 
 export default function PersistentLanguageSelector() {
@@ -21,16 +21,12 @@ export default function PersistentLanguageSelector() {
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="bg-white border shadow-sm hover:bg-gray-50"
-        >
+        <div className="flex items-center cursor-pointer bg-white border rounded-md px-3 py-1.5 shadow-sm hover:bg-gray-50">
           <Globe className="w-4 h-4 mr-2" />
           <span className="text-sm font-medium">
             {SUPPORTED_LANGUAGES.find(lang => lang.code === currentLanguage)?.nativeName || 'English'}
           </span>
-        </Button>
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48 max-h-64 overflow-y-auto">
         {SUPPORTED_LANGUAGES.map((lang) => (

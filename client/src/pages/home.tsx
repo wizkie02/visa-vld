@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tickets, Shield, Clock, CheckCircle, AlertTriangle } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
-import PersistentLanguageSelector from "@/components/persistent-language-selector";
+
 
 export default function Home() {
   const { t } = useLanguage();
@@ -32,7 +32,7 @@ export default function Home() {
                 <a href="#pricing" className="text-slate-600 hover:text-blue-700 transition-colors">Pricing</a>
                 <a href="#support" className="text-slate-600 hover:text-blue-700 transition-colors">Support</a>
               </nav>
-              <PersistentLanguageSelector />
+
             </div>
           </div>
         </div>

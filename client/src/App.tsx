@@ -33,7 +33,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <div className="min-h-screen bg-background">
-          <PersistentLanguageSelector />
+          <div className="fixed top-4 left-4 z-50">
+            <PersistentLanguageSelector />
+          </div>
           <Router />
         </div>
         <Toaster />
