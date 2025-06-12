@@ -44,11 +44,18 @@ Please provide detailed, accurate, and up-to-date information including:
 2. Financial requirements and proof needed
 3. Application procedures and timelines
 4. Recent changes or updates to requirements
-5. Official embassy/consulate sources
-6. Processing times and fees
-7. Validity periods and restrictions
+5. Official embassy/consulate sources WITH FULL WORKING URLs
+6. Official online visa application portals WITH FULL WORKING URLs (if available)
+7. Processing times and fees
+8. Validity periods and restrictions
 
-Focus on providing information that would be current as of 2024-2025. Be specific about document formats, financial amounts, and any nationality-specific requirements.
+IMPORTANT: For official sources, provide complete URLs including:
+- Official embassy websites (e.g., https://embassy-country.org)
+- Official consulate websites with locations
+- Official government visa application portals (e.g., https://visa.gov.country)
+- Official immigration department websites
+
+Focus on providing information that would be current as of 2024-2025. Be specific about document formats, financial amounts, and any nationality-specific requirements. Verify all URLs are accurate and working.
 
 Respond in JSON format with the following structure:
 {
