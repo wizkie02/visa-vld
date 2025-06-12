@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, XCircle, AlertTriangle } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 interface ValidationResult {
   verified: Array<{
@@ -21,6 +22,8 @@ interface ValidationResultsProps {
 }
 
 export default function ValidationResults({ results }: ValidationResultsProps) {
+  const { t } = useLanguage();
+  
   const getScoreColor = (score: number) => {
     if (score >= 80) return "text-emerald-600";
     if (score >= 60) return "text-yellow-600";

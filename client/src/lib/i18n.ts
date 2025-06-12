@@ -88,9 +88,8 @@ export const translations: Record<string, Record<string, string>> = {
     documentType: "Document Type",
     confidence: "confidence",
     uploaded: "Uploaded",
-    analyzing: "Analyzing",
-    uploadError: "Upload Error",
     analyzing: "Analyzing...",
+    uploadError: "Upload Error",
     uploadSuccess: "Upload successful",
     removeFile: "Remove file",
     

@@ -203,7 +203,7 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
   return (
     <Card className="bg-white rounded-xl shadow-lg">
       <CardContent className="p-8">
-        <h3 className="text-2xl font-semibold text-gray-900 mb-6">Upload Your Documents</h3>
+        <h3 className="text-2xl font-semibold text-gray-900 mb-6">{t('uploadFiles')}</h3>
         
         {/* Upload Area */}
         <div
@@ -213,11 +213,11 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
           onClick={() => fileInputRef.current?.click()}
         >
           <CloudUpload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h4 className="text-lg font-semibold text-gray-700 mb-2">Drag and drop your files here</h4>
-          <p className="text-slate-600 mb-4">or click to browse and select files</p>
-          <p className="text-sm text-gray-500">Supported formats: PDF, JPG, PNG, DOCX (Max 10MB per file)</p>
+          <h4 className="text-lg font-semibold text-gray-700 mb-2">{t('dragDropFiles')}</h4>
+          <p className="text-slate-600 mb-4">{t('dragDropFiles')}</p>
+          <p className="text-sm text-gray-500">{t('supportedFormats')}</p>
           <Button variant="outline" className="mt-4">
-            Choose Files
+            {t('uploadFiles')}
           </Button>
         </div>
 
