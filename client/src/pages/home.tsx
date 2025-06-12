@@ -2,8 +2,12 @@ import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tickets, Shield, Clock, CheckCircle, AlertTriangle } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
+import PersistentLanguageSelector from "@/components/persistent-language-selector";
 
 export default function Home() {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -15,18 +19,21 @@ export default function Home() {
                 <Tickets className="text-white text-lg" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">VisaValidator Pro</h1>
+                <h1 className="text-xl font-bold text-gray-900">{t("appName")}</h1>
                 <p className="text-xs text-slate-600">Document Validation Service</p>
               </div>
             </div>
-            <nav className="hidden md:flex space-x-6">
-              <Link href="/about">
-                <span className="text-slate-600 hover:text-blue-700 transition-colors cursor-pointer">About</span>
-              </Link>
-              <a href="#how-it-works" className="text-slate-600 hover:text-blue-700 transition-colors">How it Works</a>
-              <a href="#pricing" className="text-slate-600 hover:text-blue-700 transition-colors">Pricing</a>
-              <a href="#support" className="text-slate-600 hover:text-blue-700 transition-colors">Support</a>
-            </nav>
+            <div className="flex items-center space-x-4">
+              <nav className="hidden md:flex space-x-6">
+                <Link href="/about">
+                  <span className="text-slate-600 hover:text-blue-700 transition-colors cursor-pointer">{t("about")}</span>
+                </Link>
+                <a href="#how-it-works" className="text-slate-600 hover:text-blue-700 transition-colors">How it Works</a>
+                <a href="#pricing" className="text-slate-600 hover:text-blue-700 transition-colors">Pricing</a>
+                <a href="#support" className="text-slate-600 hover:text-blue-700 transition-colors">Support</a>
+              </nav>
+              <PersistentLanguageSelector />
+            </div>
           </div>
         </div>
       </header>
@@ -35,11 +42,10 @@ export default function Home() {
       <section className="bg-gradient-to-br from-blue-50 to-emerald-50 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">
-            Validate Your Visa Documents with Confidence
+            {t("homeTitle")}
           </h2>
           <p className="text-xl text-slate-600 mb-8 max-w-3xl mx-auto">
-            Our AI-powered tool analyzes your visa application documents against current embassy requirements, 
-            helping business and tourist travelers identify missing or incorrect documentation before submission.
+            {t("homeSubtitle")}
           </p>
           
           {/* Legal Disclaimer Card */}
@@ -69,7 +75,7 @@ export default function Home() {
 
           <Link href="/validate">
             <Button size="lg" className="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-4 px-8 text-lg transform hover:scale-105 transition-all duration-200 shadow-lg">
-              Start Document Validation
+              {t("startValidation")}
             </Button>
           </Link>
         </div>
