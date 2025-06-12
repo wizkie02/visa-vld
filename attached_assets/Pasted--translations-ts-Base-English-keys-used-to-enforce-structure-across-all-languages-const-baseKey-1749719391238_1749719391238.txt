@@ -1,0 +1,65 @@
+// translations.ts
+// Base English keys used to enforce structure across all languages
+const baseKeys = {
+  appName: "VisaValidator Pro",
+  back: "Back",
+  next: "Next",
+  previous: "Previous",
+  homeTitle: "Professional Visa Document Validation",
+  homeSubtitle: "Get your travel documents verified by AI technology before applying",
+  startValidation: "Start Document Validation",
+  selectCountry: "Select your destination country",
+  selectNationality: "Select your nationality",
+  tourist: "Tourist",
+  business: "Business",
+  student: "Student",
+  work: "Work",
+  uploadFiles: "Upload Documents",
+  analyzing: "Analyzing...",
+  uploadSuccess: "Upload successful",
+  personalInformation: "Personal Information",
+  fullName: "Full Name",
+  passportNumber: "Passport Number",
+  dateOfBirth: "Date of Birth",
+  nationality: "Nationality",
+  plannedTravelDate: "Planned Travel Date",
+  durationOfStay: "Duration of Stay (days)",
+  validationResults: "Validation Results",
+  overallScore: "Overall Score",
+  verifiedItems: "Verified Items",
+  issuesFound: "Issues Found",
+  recommendations: "Recommendations",
+  downloadReport: "Download Report",
+  payment: "Payment",
+  paymentDescription: "Complete payment to receive your full validation report",
+  price: "$9.99",
+  payNow: "Pay Now",
+  loading: "Loading...",
+  error: "Error",
+  success: "Success",
+  close: "Close",
+  save: "Save",
+  cancel: "Cancel",
+  continue: "Continue",
+  about: "About",
+  contact: "Contact",
+  privacy: "Privacy Policy",
+  terms: "Terms of Service"
+};
+
+const languages = [
+  "en", "vi", "zh", "hi", "es", "fr", "ar", "ru", "pt", "id", "de", "ja", "tr", "ko", "sw", "te", "mr", "ta", "ur", "bn"
+];
+
+export const translations: Record<string, Record<string, string>> = {};
+
+for (const lang of languages) {
+  translations[lang] = {};
+  for (const key in baseKeys) {
+    if (lang === "en") {
+      translations[lang][key] = baseKeys[key];
+    } else {
+      translations[lang][key] = `[${lang}] ${baseKeys[key]}`;
+    }
+  }
+}
