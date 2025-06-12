@@ -163,14 +163,14 @@ export default function Validation() {
       document.body.removeChild(a);
       
       toast({
-        title: "Professional Report Downloaded",
-        description: "Your comprehensive validation report with logo and disclaimer has been downloaded.",
+        title: t("reportDownloaded"),
+        description: t("reportDownloadDesc"),
       });
     } catch (error) {
       console.error("Error downloading report:", error);
       toast({
-        title: "Download Failed",
-        description: "Failed to download report. Please try again.",
+        title: t("downloadFailed"),
+        description: t("downloadFailedDesc"),
         variant: "destructive",
       });
     }

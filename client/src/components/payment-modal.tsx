@@ -6,9 +6,10 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CreditCard, X } from "lucide-react";
+import { CreditCard, X, Download } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/lib/i18n";
 import type { ValidationData } from "@/pages/validation";
 
 if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
@@ -27,8 +28,10 @@ function CheckoutForm({ data, sessionId, onClose }: PaymentModalProps) {
   const stripe = useStripe();
   const elements = useElements();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [, setLocation] = useLocation();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentSuccessful, setPaymentSuccessful] = useState(false);
 
   const paymentMutation = useMutation({
     mutationFn: async () => {
@@ -70,13 +73,12 @@ function CheckoutForm({ data, sessionId, onClose }: PaymentModalProps) {
           variant: "destructive",
         });
       } else {
-        // Payment succeeded, redirect to results
+        // Payment succeeded, show success state with download button
+        setPaymentSuccessful(true);
         toast({
-          title: "Payment Successful",
-          description: "Redirecting to your validation results...",
+          title: t("paymentSuccess"),
+          description: t("validationComplete"),
         });
-        setLocation(`/results/${sessionId}`);
-        onClose();
       }
     } catch (error: any) {
       toast({
@@ -89,19 +91,83 @@ function CheckoutForm({ data, sessionId, onClose }: PaymentModalProps) {
     }
   };
 
+  const downloadReport = async () => {
+    try {
+      const response = await apiRequest("POST", "/api/download-validation-report", { sessionId });
+      const blob = await response.blob();
+      
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = `visa-validation-report-${sessionId}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      
+      toast({
+        title: t("reportDownloaded"),
+        description: t("reportDownloadDesc"),
+      });
+    } catch (error) {
+      console.error("Error downloading report:", error);
+      toast({
+        title: t("downloadFailed"),
+        description: t("downloadFailedDesc"),
+        variant: "destructive",
+      });
+    }
+  };
+
+  if (paymentSuccessful) {
+    return (
+      <div className="space-y-6 text-center">
+        <div className="text-green-600">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-semibold">{t("paymentSuccess")}</h3>
+          <p className="text-sm text-gray-600">{t("validationComplete")}</p>
+        </div>
+        
+        <div className="space-y-3">
+          <Button 
+            onClick={downloadReport}
+            className="w-full bg-blue-700 hover:bg-blue-800"
+          >
+            <Download className="w-4 h-4 mr-2" />
+            {t("downloadReport")}
+          </Button>
+          
+          <Button 
+            type="button" 
+            variant="outline" 
+            onClick={onClose} 
+            className="w-full"
+          >
+            {t("close")}
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <PaymentElement />
       <div className="flex space-x-3">
         <Button type="button" variant="outline" onClick={onClose} className="flex-1">
-          Cancel
+          {t("cancel")}
         </Button>
         <Button 
           type="submit" 
           disabled={!stripe || isProcessing}
           className="flex-1 bg-blue-700 hover:bg-blue-800"
         >
-          {isProcessing ? "Processing..." : "Pay $9.99"}
+          {isProcessing ? t("processing") : t("payNow")}
         </Button>
       </div>
     </form>
