@@ -188,20 +188,16 @@ Respond with JSON in this format:
           role: "user",
           content: `Validate these documents for ${country} ${visaType} visa application:
 
-Personal Information:
-Name: ${personalInfo.applicantName}
-Passport: ${personalInfo.passportNumber}
-Nationality: ${personalInfo.nationality}
-Travel Date: ${personalInfo.travelDate}
-Stay Duration: ${personalInfo.stayDuration} days
+Personal Information: ${JSON.stringify(personalInfo)}
 
-Required Documents for this visa:
-${requiredDocs.filter((doc: any) => doc.required).map((doc: any) => `- ${doc.title} (REQUIRED)`).join('\n')}
+Documents uploaded: ${documents.map(doc => `${doc.documentType}: ${doc.extractedText?.substring(0, 200)}...`).join('\n\n')}
 
-Analyzed Documents Summary:
-${documents.map(doc => `- ${doc.documentType}: ${doc.fullName || 'N/A'}, Confidence: ${doc.confidence}`).join('\n')}
+Required documents: ${JSON.stringify(requiredDocs)}
 
-Missing Required Documents: ${missingRequiredDocs.map((doc: any) => doc.title).join(', ') || 'None'}
+Country-specific name formatting rules for ${country}:
+${nameFormattingRules.join('\n')}
+
+Name validation issues detected: ${nameValidationIssues.length > 0 ? nameValidationIssues.join(', ') : 'None'}
 
 ${missingRequiredDocs.length > 0 ? 'WARNING: Missing required documents detected. Score must be 0%.' : ''}
 

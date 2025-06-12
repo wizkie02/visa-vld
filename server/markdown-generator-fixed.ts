@@ -18,12 +18,7 @@ export function generateValidationReportMarkdown(data: ReportData): string {
     day: 'numeric'
   });
 
-  return `# 🌍 VisaValidator Professional Document Analysis
-*Comprehensive Visa Validation with AI Technology*
-
----
-
-# Visa Document Validation Report
+  return `# Visa Document Validation Report
 
 **Generated:** ${currentDate}  
 **Destination:** ${data.country}  
@@ -36,12 +31,12 @@ export function generateValidationReportMarkdown(data: ReportData): string {
 
 | Field | Value |
 |-------|-------|
-| **Name** | ${data.personalInfo.applicantName} |
+| **Name** | ${data.personalInfo.firstName || ''} ${data.personalInfo.lastName || ''} |
 | **Nationality** | ${data.nationality} |
-| **Passport Number** | ${data.personalInfo.passportNumber} |
-| **Date of Birth** | ${data.personalInfo.dateOfBirth} |
-| **Travel Date** | ${new Date(data.personalInfo.travelDate).toLocaleDateString()} |
-| **Stay Duration** | ${data.personalInfo.stayDuration} days |
+| **Passport Number** | ${data.personalInfo.passportNumber || 'Not provided'} |
+| **Date of Birth** | ${data.personalInfo.dateOfBirth || 'Not provided'} |
+| **Travel Date** | ${data.personalInfo.travelDate ? new Date(data.personalInfo.travelDate).toLocaleDateString() : 'Not provided'} |
+| **Stay Duration** | ${data.personalInfo.stayDuration || 'Not specified'} days |
 
 ---
 
@@ -51,196 +46,142 @@ export function generateValidationReportMarkdown(data: ReportData): string {
 
 ${data.validationResults.score === 0 ? 
   '⚠️ **CRITICAL**: Missing required documents - Visa application incomplete' :
-  data.validationResults.score >= 80 ? 
-  '✅ **EXCELLENT**: Strong application with all requirements met' :
-  data.validationResults.score >= 60 ?
-  '⚠️ **GOOD**: Application has minor issues to address' :
-  '❌ **NEEDS IMPROVEMENT**: Several issues require attention'
+  data.validationResults.score >= 90 ? 
+    '✅ **EXCELLENT**: Documents appear complete and properly formatted' :
+    data.validationResults.score >= 75 ?
+      '✅ **GOOD**: Documents mostly complete with minor issues' :
+      '⚠️ **NEEDS ATTENTION**: Several issues need to be addressed'
 }
 
 ---
 
-## Document Analysis Results
-
-### ✅ Verified Documents & Information
+## Verified Documents
 
 ${data.validationResults.verified.length > 0 ? 
-  data.validationResults.verified.map(item => `- **${item.type}**: ${item.message}`).join('\n') :
-  'No documents could be verified against requirements.'
+  data.validationResults.verified.map(item => `✅ **${item.type}**: ${item.message}`).join('\n') :
+  'No documents have been verified yet.'
 }
 
-### ⚠️ Issues Requiring Attention
+---
+
+## Issues Found
 
 ${data.validationResults.issues.length > 0 ? 
   data.validationResults.issues.map(issue => `
-#### ${issue.title}
-- **Type**: ${issue.type}
-- **Description**: ${issue.description}
-- **Recommendation**: ${issue.recommendation}
+### ⚠️ ${issue.title}
+
+**Category:** ${issue.type}  
+**Description:** ${issue.description}  
+**Recommendation:** ${issue.recommendation}
 `).join('\n') :
-  'No issues detected in the uploaded documents.'
+  '✅ No issues found in the uploaded documents.'
 }
 
 ---
 
-## Analyzed Documents Summary
+## Uploaded Documents
 
-${data.uploadedDocuments.map((doc, index) => `
-### ${index + 1}. ${doc.originalName}
-- **Document Type**: ${doc.analysis?.documentType || 'Unknown'}
-- **File Size**: ${(doc.size / 1024).toFixed(1)} KB
-- **Analysis Confidence**: ${doc.analysis?.confidence ? Math.round(doc.analysis.confidence * 100) + '%' : 'N/A'}
-- **Upload Date**: ${new Date(doc.uploadedAt).toLocaleDateString()}
-${doc.analysis?.extractedText ? `- **Content Summary**: ${doc.analysis.extractedText.substring(0, 100)}...` : ''}
-`).join('\n')}
-
----
-
-## Next Steps & Recommendations
-
-${data.validationResults.score === 0 ? 
-  '🚨 **IMMEDIATE ACTION REQUIRED**: Obtain and upload all required documents before proceeding with your visa application.' : ''
+${data.uploadedDocuments.length > 0 ?
+  data.uploadedDocuments.map((doc, index) => `
+${index + 1}. **${doc.originalName}**
+   - **Type:** ${doc.analysis?.documentType || 'Unknown'}
+   - **Status:** ${doc.status}
+   - **Confidence:** ${doc.analysis?.confidence ? Math.round(doc.analysis.confidence * 100) + '%' : 'N/A'}
+   ${doc.analysis?.issuingCountry ? `- **Issuing Country:** ${doc.analysis.issuingCountry}` : ''}
+   ${doc.analysis?.expirationDate ? `- **Expiration:** ${doc.analysis.expirationDate}` : ''}
+`).join('\n') :
+  'No documents uploaded yet.'
 }
 
-${data.validationResults.issues.length > 0 ? 
-  '📋 **Priority Actions**:\n' + data.validationResults.issues.map(issue => `- ${issue.recommendation}`).join('\n') : ''
-}
+---
 
-### General Recommendations:
-- Review official embassy requirements for the most current information
-- Ensure all documents are translated and certified if required
-- Keep all original documents for your embassy appointment
-- Apply well in advance of your planned travel date
-- Verify that your passport has sufficient validity and blank pages
+## Report Summary
+
+**Completion Status:** ${data.validationResults.score}% Complete  
+**Generated:** ${data.validationResults.completedAt}  
+**Next Steps:** ${data.validationResults.issues.length > 0 ? 'Address the issues listed above before submitting your visa application.' : 'Your documents appear ready for visa application submission.'}
 
 ---
 
-## Important Disclaimer
+*Generated by VisaValidator Requirements System*  
+*© 2024 VisaValidator - All rights reserved*
 
-> **LEGAL NOTICE**: This validation report is generated by AI analysis and is intended for informational purposes only. It should not be considered as official legal advice or a guarantee of visa approval. Visa requirements can change frequently, and final decisions rest with the respective embassy or consulate. Always verify current requirements with official government sources before submitting your application.
-
-**VisaValidator is not responsible for any visa application outcomes based on this report.**
-
----
-
-*Report completed at: ${data.validationResults.completedAt}*  
-*Generated by VisaValidator AI Document Analysis System*  
-*© ${new Date().getFullYear()} VisaValidator. All rights reserved.*
-
-**Contact Support**: For questions about this report or assistance with your visa application, please contact our support team.
+**Need Help?** Contact the official embassy or consulate for the most current requirements and assistance with your application.
 `;
 }
 
 export function generateRequirementsChecklistMarkdown(requirements: ComprehensiveVisaRequirements): string {
   const currentDate = new Date().toLocaleDateString('en-US', {
     year: 'numeric',
-    month: 'long',
+    month: 'long', 
     day: 'numeric'
   });
 
-  return `# 🌍 VisaValidator Requirements Guide
-*Official Visa Documentation Checklist*
+  return `# Visa Requirements Checklist
 
----
-
-# ${requirements.country} Visa Requirements Checklist
-
+**Country:** ${requirements.country}  
 **Visa Type:** ${requirements.visaType}  
-**Last Updated:** ${new Date(requirements.lastUpdated).toLocaleDateString()}  
+**Last Updated:** ${requirements.lastUpdated}  
 **Generated:** ${currentDate}
 
 ---
 
-## Quick Reference Information
+## Required Documents
 
-| Requirement | Details |
-|-------------|---------|
-| **Processing Time** | ${requirements.generalInfo.processingTime} |
-| **Visa Validity** | ${requirements.generalInfo.validity} |
-| **Application Fee** | ${requirements.generalInfo.fees} |
-| **Application Methods** | ${requirements.generalInfo.applicationMethods.join(', ')} |
+${requirements.requirements
+  .filter(req => req.required)
+  .map((req, index) => `
+### ${index + 1}. ${req.title} ${req.required ? '(REQUIRED)' : '(OPTIONAL)'}
+
+**Description:** ${req.description}
+
+${req.formats && req.formats.length > 0 ? `**Accepted Formats:** ${req.formats.join(', ')}` : ''}
+
+${req.specificNotes && req.specificNotes.length > 0 ? `
+**Important Notes:**
+${req.specificNotes.map(note => `- ${note}`).join('\n')}` : ''}
+
+${req.processingTime ? `**Processing Time:** ${req.processingTime}` : ''}
+
+${req.additionalInfo ? `**Additional Information:** ${req.additionalInfo}` : ''}
+
+---
+`).join('')}
+
+## General Information
+
+**Processing Time:** ${requirements.generalInfo.processingTime}  
+**Visa Validity:** ${requirements.generalInfo.validity}  
+**Fees:** ${requirements.generalInfo.fees}  
+**Application Methods:** ${requirements.generalInfo.applicationMethods.join(', ')}
 
 ---
 
-## Important Notes ⚠️
+## Important Notes
 
 ${requirements.importantNotes.map(note => `- ${note}`).join('\n')}
 
 ${requirements.recentChanges && requirements.recentChanges.length > 0 ? `
-### Recent Changes 🆕
+---
+
+## Recent Changes
+
 ${requirements.recentChanges.map(change => `- ${change}`).join('\n')}
 ` : ''}
 
 ---
 
-## Document Requirements Checklist
+## Official Sources
 
-${Object.entries(
-  requirements.requirements.reduce((acc, req) => {
-    if (!acc[req.category]) acc[req.category] = [];
-    acc[req.category].push(req);
-    return acc;
-  }, {} as Record<string, typeof requirements.requirements>)
-).map(([category, reqs]) => `
-### ${category.charAt(0).toUpperCase() + category.slice(1)} Documents
-
-${reqs.map(req => `
-#### ${req.required ? '🔴 **REQUIRED**' : '🔵 **OPTIONAL**'} - ${req.title}
-
-- **Description**: ${req.description}
-- **Category**: ${req.category}
-${req.formats ? `- **Accepted Formats**: ${req.formats.join(', ')}` : ''}
-${req.processingTime ? `- **Processing Time**: ${req.processingTime}` : ''}
-${req.specificNotes ? req.specificNotes.map(note => `- **Note**: ${note}`).join('\n') : ''}
-${req.additionalInfo ? `- **Additional Info**: ${req.additionalInfo}` : ''}
-
-**Status**: [ ] Obtained [ ] Reviewed [ ] Submitted
-
----
-`).join('')}
-`).join('')}
-
-## Application Process Steps
-
-1. **Document Preparation**
-   - Gather all required documents listed above
-   - Ensure documents meet format and validity requirements
-   - Translate documents if required
-
-2. **Application Submission**
-   - Complete visa application form
-   - Schedule appointment (if required)
-   - Submit documents and pay fees
-
-3. **Processing & Interview**
-   - Attend interview if requested
-   - Provide additional documents if requested
-   - Wait for processing completion
-
-4. **Collection**
-   - Collect passport with visa decision
-   - Review visa details for accuracy
-
----
-
-## Official Sources & Contacts
+For the most current and detailed information, please visit:
 
 ${requirements.officialSources.map(source => `- ${source}`).join('\n')}
 
 ---
 
-## Important Disclaimer
-
-> **LEGAL NOTICE**: This checklist is generated based on available information and is intended for guidance only. Visa requirements can change frequently without notice. Always verify current requirements with the official embassy or consulate before submitting your application.
-
-**VisaValidator is not responsible for any application outcomes based on this checklist.**
-
----
-
-*Checklist ID: CL-${Date.now()}*  
 *Generated by VisaValidator Requirements System*  
-*© ${new Date().getFullYear()} VisaValidator. All rights reserved.*
+*Last updated: ${requirements.lastUpdated}*
 
-**Need Help?** Contact the official embassy or consulate for the most current requirements and assistance with your application.
+**Disclaimer:** This checklist is for guidance only. Always verify requirements with official sources before applying.
 `;
 }

@@ -22,10 +22,12 @@ export function generateValidationReportMarkdown(data: ReportData): string {
 
 
 
+  return `# Visa Document Validation Report
+
 **Generated:** ${currentDate}  
 **Destination:** ${data.country}  
 **Visa Type:** ${data.visaType}  
-**Session ID:** VV-${Date.now()}
+**Session ID:** VV-${Date.now()}`;
 
 ---
 
