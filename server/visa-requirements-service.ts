@@ -55,7 +55,7 @@ Respond in JSON format with the following structure:
   "country": "${destinationCountry}",
   "visaType": "${visaType}",
   "lastUpdated": "current date",
-  "officialSources": ["embassy websites", "consulate sites"],
+  "officialSources": ["official embassy websites with URLs", "official consulate sites with URLs", "official online visa application portals with URLs"],
   "requirements": [
     {
       "id": "unique_id",

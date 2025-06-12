@@ -1,4 +1,4 @@
-const { jsPDF } = require('jspdf');
+import { jsPDF } from 'jspdf';
 
 interface ValidationResult {
   verified: Array<{

@@ -9,6 +9,7 @@ import { analyzeDocument, validateDocumentsAgainstRequirements, getVisaRequireme
 import { fetchCurrentVisaRequirements, generateRequirementsChecklist } from "./visa-requirements-service";
 import { generateValidationReport, generateRequirementsChecklist as generateChecklistHtml } from "./document-generator";
 import { generateValidationReportMarkdown, generateRequirementsChecklistMarkdown } from "./markdown-generator-fixed";
+import { generateValidationReportPDF } from "./jspdf-generator";
 import { generateRequirementsChecklistBuffer } from "./simple-pdf-generator";
 import { generateValidationReportHTML, generateRequirementsChecklistHTML } from "./working-pdf-generator";
 import puppeteer from "puppeteer";
@@ -413,11 +414,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         uploadedDocuments: Array.isArray(session.uploadedFiles) ? session.uploadedFiles : []
       };
 
-      const reportMarkdown = generateValidationReportMarkdown(reportData);
+      const pdfBuffer = generateValidationReportPDF(reportData);
       
-      res.setHeader('Content-Type', 'text/markdown');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.md"`);
-      res.send(Buffer.from(reportMarkdown, 'utf-8'));
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.pdf"`);
+      res.send(pdfBuffer);
     } catch (error: any) {
       console.error("Error generating validation report:", error);
       res.status(500).json({ message: "Error generating report: " + error.message });
