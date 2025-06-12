@@ -336,11 +336,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         );
       }
       
-      const checklistPDF = await generateRequirementsChecklistPDF(requirements);
+      const checklistBuffer = generateRequirementsChecklistBuffer(requirements);
       
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.pdf"`);
-      res.send(checklistPDF);
+      res.setHeader('Content-Type', 'text/plain');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.txt"`);
+      res.send(checklistBuffer);
     } catch (error: any) {
       console.error("Error generating requirements checklist:", error);
       res.status(500).json({ message: "Error generating checklist: " + error.message });
@@ -411,11 +411,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         uploadedDocuments: Array.isArray(session.uploadedFiles) ? session.uploadedFiles : []
       };
 
-      const reportPDF = await generateValidationReportPDF(reportData);
+      const reportMarkdown = generateValidationReportMarkdown(reportData);
       
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.pdf"`);
-      res.send(reportPDF);
+      res.setHeader('Content-Type', 'text/plain');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.txt"`);
+      res.send(Buffer.from(reportMarkdown, 'utf-8'));
     } catch (error: any) {
       console.error("Error generating validation report:", error);
       res.status(500).json({ message: "Error generating report: " + error.message });
