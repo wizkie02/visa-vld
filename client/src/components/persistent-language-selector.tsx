@@ -39,7 +39,7 @@ export default function PersistentLanguageSelector() {
               key={lang.code}
               onClick={() => handleLanguageChange(lang)}
               className={`flex items-center space-x-2 cursor-pointer ${
-                language === lang.code ? 'bg-blue-50 text-blue-700' : ''
+                currentLanguage === lang.code ? 'bg-blue-50 text-blue-700' : ''
               }`}
             >
               <span className="text-lg">{lang.flag}</span>

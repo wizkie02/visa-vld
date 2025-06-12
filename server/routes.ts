@@ -9,6 +9,8 @@ import { analyzeDocument, validateDocumentsAgainstRequirements, getVisaRequireme
 import { fetchCurrentVisaRequirements, generateRequirementsChecklist } from "./visa-requirements-service";
 import { generateValidationReport, generateRequirementsChecklist as generateChecklistHtml } from "./document-generator";
 import { generateValidationReportMarkdown, generateRequirementsChecklistMarkdown } from "./markdown-generator-fixed";
+import { generateValidationReportPDF, generateRequirementsChecklistPDF } from "./pdf-generator";
+import { checkVFSOutsourcing } from "./vfs-outsourcing-service";
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
@@ -326,11 +328,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         nationality as string
       );
       
-      const checklistMarkdown = generateRequirementsChecklistMarkdown(requirements);
+      // Check for VFS Global outsourcing
+      const vfsInfo = checkVFSOutsourcing(country, visaType);
+      if (vfsInfo.isOutsourced) {
+        requirements.importantNotes.unshift(
+          `⚠️ IMPORTANT: ${country} ${visaType} visa applications are outsourced to ${vfsInfo.provider}. You must submit your application through ${vfsInfo.applicationCenter}. Visit: ${vfsInfo.website}`
+        );
+      }
       
-      res.setHeader('Content-Type', 'text/markdown');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.md"`);
-      res.send(checklistMarkdown);
+      const checklistPDF = await generateRequirementsChecklistPDF(requirements);
+      
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.pdf"`);
+      res.send(checklistPDF);
     } catch (error: any) {
       console.error("Error generating requirements checklist:", error);
       res.status(500).json({ message: "Error generating checklist: " + error.message });
@@ -401,11 +411,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         uploadedDocuments: Array.isArray(session.uploadedFiles) ? session.uploadedFiles : []
       };
 
-      const reportMarkdown = generateValidationReportMarkdown(reportData);
+      const reportPDF = await generateValidationReportPDF(reportData);
       
-      res.setHeader('Content-Type', 'text/markdown');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.md"`);
-      res.send(reportMarkdown);
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.pdf"`);
+      res.send(reportPDF);
     } catch (error: any) {
       console.error("Error generating validation report:", error);
       res.status(500).json({ message: "Error generating report: " + error.message });
