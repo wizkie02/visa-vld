@@ -9,7 +9,7 @@ import { analyzeDocument, validateDocumentsAgainstRequirements, getVisaRequireme
 import { fetchCurrentVisaRequirements, generateRequirementsChecklist } from "./visa-requirements-service";
 import { generateValidationReport, generateRequirementsChecklist as generateChecklistHtml } from "./document-generator";
 import { generateValidationReportMarkdown, generateRequirementsChecklistMarkdown } from "./markdown-generator-fixed";
-import { generateValidationReportPDF, generateRequirementsChecklistPDF } from "./pdf-generator";
+import { generateValidationReportPDF, generateRequirementsChecklistPDF } from "./jspdf-generator";
 import { checkVFSOutsourcing } from "./vfs-outsourcing-service";
 
 if (!process.env.STRIPE_SECRET_KEY) {

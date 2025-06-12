@@ -156,7 +156,7 @@ export default function Validation() {
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
-      a.download = `visa-validation-report-${validationData.country}-${new Date().toISOString().split('T')[0]}.md`;
+      a.download = `visa-validation-report-${validationData.country}-${new Date().toISOString().split('T')[0]}.pdf`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
