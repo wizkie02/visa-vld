@@ -54,17 +54,17 @@ export default function Home() {
               <div className="flex items-start space-x-3 text-left">
                 <AlertTriangle className="text-red-600 text-lg mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-red-800 mb-3">CRITICAL LEGAL DISCLAIMER</h3>
+                  <h3 className="font-semibold text-red-800 mb-3">{t("criticalLegalDisclaimer")}</h3>
                   <div className="text-sm text-red-700 leading-relaxed space-y-2">
-                    <p><strong>NO GUARANTEE OF VISA APPROVAL:</strong> VisaValidator Pro is a document preparation assistance tool only. We do not guarantee visa approval, represent any government agency, or influence embassy decisions.</p>
-                    <p><strong>ACCURACY LIMITATIONS:</strong> While our AI analyzes documents against known requirements, results may not be 100% accurate. Embassy requirements change frequently and vary by individual circumstances.</p>
-                    <p><strong>NOT OFFICIAL GUIDANCE:</strong> This service does not replace official embassy websites, consular advice, or immigration attorney consultation. Always verify current requirements with official sources.</p>
-                    <p><strong>INDIVIDUAL RESPONSIBILITY:</strong> Each traveler is solely responsible for ensuring their visa application meets all requirements. Visa approval decisions are made exclusively by embassy and consular officials.</p>
+                    <p><strong>{t("noGuaranteeTitle")}</strong> {t("noGuaranteeText")}</p>
+                    <p><strong>{t("accuracyLimitationsTitle")}</strong> {t("accuracyLimitationsText")}</p>
+                    <p><strong>{t("notOfficialGuidanceTitle")}</strong> {t("notOfficialGuidanceText")}</p>
+                    <p><strong>{t("individualResponsibilityTitle")}</strong> {t("individualResponsibilityText")}</p>
                   </div>
                   <div className="mt-3 pt-3 border-t border-red-200">
                     <Link href="/about">
                       <span className="text-red-600 hover:text-red-800 underline text-sm font-medium cursor-pointer">
-                        Read Full Disclaimer & Service Limitations →
+                        {t("readFullDisclaimer")}
                       </span>
                     </Link>
                   </div>

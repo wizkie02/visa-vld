@@ -245,7 +245,41 @@ export const translations: Record<string, Record<string, string>> = {
     tip2: "Scan documents in high resolution (300 DPI or higher)",
     tip3: "Keep original documents for your appointment",
     tip4: "Verify all information matches across documents",
-    proceedToUpload: "Proceed to Upload Documents"
+    proceedToUpload: "Proceed to Upload Documents",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "CRITICAL LEGAL DISCLAIMER",
+    noGuaranteeTitle: "NO GUARANTEE OF VISA APPROVAL:",
+    noGuaranteeText: "VisaValidator Pro is a document preparation assistance tool only. We do not guarantee visa approval, represent any government agency, or influence embassy decisions.",
+    accuracyLimitationsTitle: "ACCURACY LIMITATIONS:",
+    accuracyLimitationsText: "While our AI analyzes documents against known requirements, results may not be 100% accurate. Embassy requirements change frequently and vary by individual circumstances.",
+    notOfficialGuidanceTitle: "NOT OFFICIAL GUIDANCE:",
+    notOfficialGuidanceText: "This service does not replace official embassy websites, consular advice, or immigration attorney consultation. Always verify current requirements with official sources.",
+    individualResponsibilityTitle: "INDIVIDUAL RESPONSIBILITY:",
+    individualResponsibilityText: "Each traveler is solely responsible for ensuring their visa application meets all requirements. Visa approval decisions are made exclusively by embassy and consular officials.",
+    readFullDisclaimer: "Read Full Disclaimer & Service Limitations →",
+    
+    // Features Section
+    whyChoose: "Why Choose VisaValidator Pro",
+    securePrivate: "Secure & Private",
+    securePrivateDesc: "All documents are automatically deleted after validation for your privacy and security.",
+    fastProcessing: "Fast Processing",
+    fastProcessingDesc: "Get your validation results within minutes, not days.",
+    comprehensiveAnalysis: "Comprehensive Analysis",
+    comprehensiveAnalysisDesc: "AI-powered document analysis with detailed recommendations and requirements checking.",
+    
+    // How it Works
+    howItWorks: "How it Works",
+    step1: "Choose Destination",
+    step1Desc: "Select your destination country and visa type",
+    step2: "Upload Documents", 
+    step2Desc: "Upload your visa application documents",
+    step3: "Enter Details",
+    step3Desc: "Fill in your personal information",
+    step4: "Preview Results",
+    step4Desc: "See validation preview before payment",
+    step5: "Pay & Download",
+    step5Desc: "Complete payment for full detailed report"
   },
   
   vi: {
@@ -396,6 +430,18 @@ export const translations: Record<string, Record<string, string>> = {
     contact: "Liên hệ",
     privacy: "Chính sách Bảo mật",
     terms: "Điều khoản Dịch vụ",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "TUYÊN BỐ PHÁP LÝ QUAN TRỌNG",
+    noGuaranteeTitle: "KHÔNG BẢO ĐẢMM PHÊ DUYỆT VISA:",
+    noGuaranteeText: "VisaValidator Pro chỉ là công cụ hỗ trợ chuẩn bị tài liệu. Chúng tôi không đảm bảo phê duyệt visa, không đại diện cho bất kỳ cơ quan chính phủ nào, hoặc ảnh hưởng đến quyết định của đại sứ quán.",
+    accuracyLimitationsTitle: "GIỚI HẠN ĐỘ CHÍNH XÁC:",
+    accuracyLimitationsText: "Mặc dù AI của chúng tôi phân tích tài liệu theo các yêu cầu đã biết, kết quả có thể không chính xác 100%. Yêu cầu của đại sứ quán thay đổi thường xuyên và khác nhau theo hoàn cảnh cá nhân.",
+    notOfficialGuidanceTitle: "KHÔNG PHẢI HƯỚNG DẪN CHÍNH THỨC:",
+    notOfficialGuidanceText: "Dịch vụ này không thay thế các trang web chính thức của đại sứ quán, tư vấn lãnh sự, hoặc tư vấn luật sư di trú. Luôn xác minh các yêu cầu hiện tại với các nguồn chính thức.",
+    individualResponsibilityTitle: "TRÁCH NHIỆM CÁ NHÂN:",
+    individualResponsibilityText: "Mỗi du khách hoàn toàn chịu trách nhiệm đảm bảo đơn xin visa của họ đáp ứng tất cả các yêu cầu. Quyết định phê duyệt visa được đưa ra độc quyền bởi các quan chức đại sứ quán và lãnh sự.",
+    readFullDisclaimer: "Đọc Toàn bộ Tuyên bố Miễn trừ & Giới hạn Dịch vụ →"
   },
   
   zh: {
@@ -448,7 +494,41 @@ export const translations: Record<string, Record<string, string>> = {
     about: "关于",
     contact: "联系",
     privacy: "隐私政策",
-    terms: "服务条款"
+    terms: "服务条款",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "重要法律免责声明",
+    noGuaranteeTitle: "不保证签证获批：",
+    noGuaranteeText: "签证验证专家仅为文件准备辅助工具。我们不保证签证获批，不代表任何政府机构，也不影响大使馆决定。",
+    accuracyLimitationsTitle: "准确性限制：",
+    accuracyLimitationsText: "虽然我们的AI会根据已知要求分析文件，但结果可能不是100%准确。大使馆要求经常变化，因个人情况而异。",
+    notOfficialGuidanceTitle: "非官方指导：",
+    notOfficialGuidanceText: "此服务不能替代官方大使馆网站、领事建议或移民律师咨询。请务必通过官方渠道核实当前要求。",
+    individualResponsibilityTitle: "个人责任：",
+    individualResponsibilityText: "每位旅行者都有独自确保其签证申请符合所有要求的责任。签证获批决定完全由大使馆和领事官员做出。",
+    readFullDisclaimer: "阅读完整免责声明和服务限制 →",
+    
+    // Features Section
+    whyChoose: "为什么选择签证验证专家",
+    securePrivate: "安全私密",
+    securePrivateDesc: "所有文件在验证后自动删除，保护您的隐私和安全。",
+    fastProcessing: "快速处理",
+    fastProcessingDesc: "几分钟内获得验证结果，而不是几天。",
+    comprehensiveAnalysis: "全面分析",
+    comprehensiveAnalysisDesc: "AI驱动的文件分析，提供详细建议和要求检查。",
+    
+    // How it Works
+    howItWorks: "工作流程",
+    step1: "选择目的地",
+    step1Desc: "选择您的目的地国家和签证类型",
+    step2: "上传文件", 
+    step2Desc: "上传您的签证申请文件",
+    step3: "输入详情",
+    step3Desc: "填写您的个人信息",
+    step4: "预览结果",
+    step4Desc: "付款前查看验证预览",
+    step5: "付款并下载",
+    step5Desc: "完成付款获取完整详细报告"
   },
   
   hi: {
