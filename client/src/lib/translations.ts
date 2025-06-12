@@ -209,7 +209,34 @@ const languages = [
 // Add basic translations for languages not in languageTranslations
 const additionalLanguageTranslations: Record<string, Record<string, string>> = {
   hi: {
-    // Hindi basic translations for critical UI elements
+    // Hindi complete translations
+    appName: "VisaValidator Pro",
+    back: "वापस",
+    next: "अगला",
+    previous: "पिछला",
+    homeTitle: "पेशेवर वीज़ा दस्तावेज़ सत्यापन",
+    homeSubtitle: "आवेदन करने से पहले AI तकनीक के साथ अपने यात्रा दस्तावेज़ों को सत्यापित करें",
+    startValidation: "दस्तावेज़ सत्यापन शुरू करें",
+    documentValidationService: "पेशेवर दस्तावेज़ सत्यापन",
+    
+    // Navigation
+    about: "के बारे में",
+    howItWorksNav: "यह कैसे काम करता है",
+    pricing: "मूल्य निर्धारण",
+    support: "सहायता",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "महत्वपूर्ण कानूनी अस्वीकरण",
+    noGuaranteeTitle: "वीज़ा अनुमोदन की कोई गारंटी नहीं:",
+    noGuaranteeText: "VisaValidator Pro केवल एक दस्तावेज़ तैयारी सहायता उपकरण है। हम वीज़ा अनुमोदन की गारंटी नहीं देते, किसी भी सरकारी एजेंसी का प्रतिनिधित्व नहीं करते, और दूतावास के निर्णयों को प्रभावित नहीं करते।",
+    accuracyLimitationsTitle: "सटीकता की सीमाएं:",
+    accuracyLimitationsText: "हालांकि हमारा AI ज्ञात आवश्यकताओं के अनुसार दस्तावेज़ों का विश्लेषण करता है, परिणाम 100% सटीक नहीं हो सकते। दूतावास की आवश्यकताएं अक्सर बदलती रहती हैं और व्यक्तिगत परिस्थितियों के अनुसार भिन्न होती हैं।",
+    notOfficialGuidanceTitle: "आधिकारिक मार्गदर्शन नहीं:",
+    notOfficialGuidanceText: "यह सेवा आधिकारिक दूतावास वेबसाइटों, वाणिज्य दूतावास की सलाह, या आप्रवासन वकील के साथ परामर्श का विकल्प नहीं है। हमेशा आधिकारिक स्रोतों के साथ वर्तमान आवश्यकताओं को सत्यापित करें।",
+    individualResponsibilityTitle: "व्यक्तिगत जिम्मेदारी:",
+    individualResponsibilityText: "प्रत्येक यात्री अपने वीज़ा आवेदन की सभी आवश्यकताओं को पूरा करने की पूरी जिम्मेदारी रखता है। वीज़ा अनुमोदन निर्णय केवल दूतावास और वाणिज्य दूतावास के अधिकारियों द्वारा लिए जाते हैं।",
+    readFullDisclaimer: "पूर्ण अस्वीकरण और सेवा सीमाएं पढ़ें →",
+    
     stepDestination: "गंतव्य",
     stepNationality: "राष्ट्रीयता",
     stepRequirements: "आवश्यकताएं",
@@ -222,12 +249,55 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     selectCountryPlaceholder: "अपना गंतव्य देश चुनें",
     visaType: "वीजा प्रकार",
     selectVisaTypePlaceholder: "वीजा प्रकार चुनें",
-    next: "अगला",
-    back: "पिछला",
-    continue: "जारी रखें"
+    continue: "जारी रखें",
+    
+    // Visa Types
+    tourist: "पर्यटक",
+    business: "व्यावसायिक",
+    student: "छात्र",
+    work: "कार्य",
+    transit: "पारगमन",
+    family: "पारिवारिक यात्रा",
+    
+    // Common
+    loading: "लोड हो रहा है...",
+    error: "त्रुटि",
+    success: "सफलता",
+    close: "बंद करें",
+    save: "सहेजें",
+    cancel: "रद्द करें",
+    required: "आवश्यक",
+    optional: "वैकल्पिक"
   },
   ar: {
-    // Arabic basic translations for critical UI elements
+    // Arabic complete translations
+    appName: "VisaValidator Pro",
+    back: "السابق",
+    next: "التالي",
+    previous: "السابق",
+    homeTitle: "التحقق المهني من وثائق التأشيرة",
+    homeSubtitle: "تحقق من وثائق السفر الخاصة بك بتكنولوجيا الذكاء الاصطناعي قبل التقديم",
+    startValidation: "بدء التحقق من الوثائق",
+    documentValidationService: "خدمة التحقق المهني من الوثائق",
+    
+    // Navigation
+    about: "حول",
+    howItWorksNav: "كيف يعمل",
+    pricing: "التسعير",
+    support: "الدعم",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "إخلاء مسؤولية قانوني مهم",
+    noGuaranteeTitle: "لا ضمان لموافقة التأشيرة:",
+    noGuaranteeText: "VisaValidator Pro هو مجرد أداة مساعدة لإعداد الوثائق. نحن لا نضمن موافقة التأشيرة، ولا نمثل أي وكالة حكومية، ولا نؤثر على قرارات السفارة.",
+    accuracyLimitationsTitle: "قيود الدقة:",
+    accuracyLimitationsText: "على الرغم من أن الذكاء الاصطناعي الخاص بنا يحلل الوثائق وفقاً للمتطلبات المعروفة، قد لا تكون النتائج دقيقة بنسبة 100%. متطلبات السفارة تتغير بشكل متكرر وتختلف حسب الظروف الفردية.",
+    notOfficialGuidanceTitle: "ليس إرشاداً رسمياً:",
+    notOfficialGuidanceText: "هذه الخدمة لا تحل محل المواقع الرسمية للسفارات، أو المشورة الق領事، أو التشاور مع محامي الهجرة. تحقق دائماً من المتطلبات الحالية مع المصادر الرسمية.",
+    individualResponsibilityTitle: "المسؤولية الفردية:",
+    individualResponsibilityText: "كل مسافر يتحمل المسؤولية الكاملة لضمان أن طلب التأشيرة الخاص به يلبي جميع المتطلبات. قرارات موافقة التأشيرة تُتخذ فقط من قبل مسؤولي السفارات والقنصليات.",
+    readFullDisclaimer: "اقرأ إخلاء المسؤولية الكامل وقيود الخدمة →",
+    
     stepDestination: "الوجهة",
     stepNationality: "الجنسية",
     stepRequirements: "المتطلبات",
@@ -240,12 +310,55 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     selectCountryPlaceholder: "اختر دولة الوجهة",
     visaType: "نوع التأشيرة",
     selectVisaTypePlaceholder: "اختر نوع التأشيرة",
-    next: "التالي",
-    back: "السابق",
-    continue: "متابعة"
+    continue: "متابعة",
+    
+    // Visa Types
+    tourist: "سياحي",
+    business: "أعمال",
+    student: "طالب",
+    work: "عمل",
+    transit: "عبور",
+    family: "زيارة عائلية",
+    
+    // Common
+    loading: "جارٍ التحميل...",
+    error: "خطأ",
+    success: "نجح",
+    close: "إغلاق",
+    save: "حفظ",
+    cancel: "إلغاء",
+    required: "مطلوب",
+    optional: "اختياري"
   },
   ru: {
-    // Russian basic translations for critical UI elements
+    // Russian complete translations
+    appName: "VisaValidator Pro",
+    back: "Назад",
+    next: "Далее",
+    previous: "Предыдущий",
+    homeTitle: "Профессиональная проверка визовых документов",
+    homeSubtitle: "Проверьте свои путевые документы с помощью ИИ-технологий перед подачей заявления",
+    startValidation: "Начать проверку документов",
+    documentValidationService: "Профессиональная служба проверки документов",
+    
+    // Navigation
+    about: "О нас",
+    howItWorksNav: "Как это работает",
+    pricing: "Цены",
+    support: "Поддержка",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "КРИТИЧЕСКОЕ ПРАВОВОЕ УВЕДОМЛЕНИЕ",
+    noGuaranteeTitle: "НЕТ ГАРАНТИИ ОДОБРЕНИЯ ВИЗЫ:",
+    noGuaranteeText: "VisaValidator Pro - это лишь инструмент помощи в подготовке документов. Мы не гарантируем одобрение визы, не представляем какие-либо государственные агентства и не влияем на решения посольства.",
+    accuracyLimitationsTitle: "ОГРАНИЧЕНИЯ ТОЧНОСТИ:",
+    accuracyLimitationsText: "Хотя наш ИИ анализирует документы согласно известным требованиям, результаты могут быть не на 100% точными. Требования посольств часто меняются и варьируются в зависимости от индивидуальных обстоятельств.",
+    notOfficialGuidanceTitle: "НЕ ОФИЦИАЛЬНОЕ РУКОВОДСТВО:",
+    notOfficialGuidanceText: "Эта служба не заменяет официальные веб-сайты посольств, консульские советы или консультации с иммиграционным адвокатом. Всегда проверяйте текущие требования через официальные источники.",
+    individualResponsibilityTitle: "ИНДИВИДУАЛЬНАЯ ОТВЕТСТВЕННОСТЬ:",
+    individualResponsibilityText: "Каждый путешественник несет полную ответственность за обеспечение соответствия своего визового заявления всем требованиям. Решения об одобрении визы принимаются исключительно должностными лицами посольств и консульств.",
+    readFullDisclaimer: "Читать полное уведомление и ограничения службы →",
+    
     stepDestination: "Назначение",
     stepNationality: "Национальность",
     stepRequirements: "Требования",
@@ -258,12 +371,55 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     selectCountryPlaceholder: "Выберите страну назначения",
     visaType: "Тип визы",
     selectVisaTypePlaceholder: "Выберите тип визы",
-    next: "Далее",
-    back: "Назад",
-    continue: "Продолжить"
+    continue: "Продолжить",
+    
+    // Visa Types
+    tourist: "Туристическая",
+    business: "Деловая",
+    student: "Студенческая",
+    work: "Рабочая",
+    transit: "Транзитная",
+    family: "Семейная поездка",
+    
+    // Common
+    loading: "Загрузка...",
+    error: "Ошибка",
+    success: "Успех",
+    close: "Закрыть",
+    save: "Сохранить",
+    cancel: "Отмена",
+    required: "Обязательно",
+    optional: "Необязательно"
   },
   pt: {
-    // Portuguese basic translations for critical UI elements
+    // Portuguese complete translations
+    appName: "VisaValidator Pro",
+    back: "Voltar",
+    next: "Próximo",
+    previous: "Anterior",
+    homeTitle: "Validação Profissional de Documentos de Visto",
+    homeSubtitle: "Verifique seus documentos de viagem com tecnologia IA antes de solicitar",
+    startValidation: "Iniciar Validação de Documentos",
+    documentValidationService: "Serviço Profissional de Validação de Documentos",
+    
+    // Navigation
+    about: "Sobre",
+    howItWorksNav: "Como Funciona",
+    pricing: "Preços",
+    support: "Suporte",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "AVISO LEGAL CRÍTICO",
+    noGuaranteeTitle: "NENHUMA GARANTIA DE APROVAÇÃO DE VISTO:",
+    noGuaranteeText: "VisaValidator Pro é apenas uma ferramenta de auxílio na preparação de documentos. Não garantimos aprovação de visto, não representamos qualquer agência governamental, nem influenciamos decisões de embaixadas.",
+    accuracyLimitationsTitle: "LIMITAÇÕES DE PRECISÃO:",
+    accuracyLimitationsText: "Embora nossa IA analise documentos de acordo com requisitos conhecidos, os resultados podem não ser 100% precisos. Os requisitos de embaixadas mudam frequentemente e variam conforme circunstâncias individuais.",
+    notOfficialGuidanceTitle: "NÃO É ORIENTAÇÃO OFICIAL:",
+    notOfficialGuidanceText: "Este serviço não substitui sites oficiais de embaixadas, conselhos consulares ou consulta com advogado de imigração. Sempre verifique requisitos atuais com fontes oficiais.",
+    individualResponsibilityTitle: "RESPONSABILIDADE INDIVIDUAL:",
+    individualResponsibilityText: "Cada viajante tem total responsabilidade por garantir que sua solicitação de visto atenda a todos os requisitos. Decisões de aprovação de visto são tomadas exclusivamente por funcionários de embaixadas e consulados.",
+    readFullDisclaimer: "Ler aviso completo e limitações do serviço →",
+    
     stepDestination: "Destino",
     stepNationality: "Nacionalidade",
     stepRequirements: "Requisitos",
@@ -276,12 +432,55 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     selectCountryPlaceholder: "Escolha seu país de destino",
     visaType: "Tipo de Visto",
     selectVisaTypePlaceholder: "Selecionar tipo de visto",
-    next: "Próximo",
-    back: "Voltar",
-    continue: "Continuar"
+    continue: "Continuar",
+    
+    // Visa Types
+    tourist: "Turista",
+    business: "Negócios",
+    student: "Estudante",
+    work: "Trabalho",
+    transit: "Trânsito",
+    family: "Visita Familiar",
+    
+    // Common
+    loading: "Carregando...",
+    error: "Erro",
+    success: "Sucesso",
+    close: "Fechar",
+    save: "Salvar",
+    cancel: "Cancelar",
+    required: "Obrigatório",
+    optional: "Opcional"
   },
   de: {
-    // German basic translations for critical UI elements
+    // German complete translations
+    appName: "VisaValidator Pro",
+    back: "Zurück",
+    next: "Weiter",
+    previous: "Vorherige",
+    homeTitle: "Professionelle Visa-Dokumentenvalidierung",
+    homeSubtitle: "Überprüfen Sie Ihre Reisedokumente mit KI-Technologie vor der Beantragung",
+    startValidation: "Dokumentenvalidierung starten",
+    documentValidationService: "Professioneller Dokumentenvalidierungsservice",
+    
+    // Navigation
+    about: "Über uns",
+    howItWorksNav: "Wie es funktioniert",
+    pricing: "Preise",
+    support: "Support",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "WICHTIGER RECHTLICHER HAFTUNGSAUSSCHLUSS",
+    noGuaranteeTitle: "KEINE GARANTIE FÜR VISA-GENEHMIGUNG:",
+    noGuaranteeText: "VisaValidator Pro ist nur ein Hilfswerkzeug zur Dokumentenvorbereitung. Wir garantieren keine Visa-Genehmigung, vertreten keine Regierungsbehörden und beeinflussen keine Botschaftsentscheidungen.",
+    accuracyLimitationsTitle: "GENAUIGKEITSBESCHRÄNKUNGEN:",
+    accuracyLimitationsText: "Obwohl unsere KI Dokumente nach bekannten Anforderungen analysiert, können die Ergebnisse nicht 100% genau sein. Botschaftsanforderungen ändern sich häufig und variieren je nach individuellen Umständen.",
+    notOfficialGuidanceTitle: "KEINE OFFIZIELLE BERATUNG:",
+    notOfficialGuidanceText: "Dieser Service ersetzt nicht offizielle Botschaftswebsites, konsularische Beratung oder Beratung durch einen Einwanderungsanwalt. Überprüfen Sie immer aktuelle Anforderungen bei offiziellen Quellen.",
+    individualResponsibilityTitle: "INDIVIDUELLE VERANTWORTUNG:",
+    individualResponsibilityText: "Jeder Reisende trägt die volle Verantwortung dafür, dass sein Visa-Antrag alle Anforderungen erfüllt. Visa-Genehmigungsentscheidungen werden ausschließlich von Botschafts- und Konsulatsbeamten getroffen.",
+    readFullDisclaimer: "Vollständigen Haftungsausschluss und Service-Beschränkungen lesen →",
+    
     stepDestination: "Ziel",
     stepNationality: "Staatsangehörigkeit",
     stepRequirements: "Anforderungen",
@@ -294,12 +493,55 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     selectCountryPlaceholder: "Wählen Sie Ihr Zielland",
     visaType: "Visum-Typ",
     selectVisaTypePlaceholder: "Visum-Typ auswählen",
-    next: "Weiter",
-    back: "Zurück",
-    continue: "Fortfahren"
+    continue: "Fortfahren",
+    
+    // Visa Types
+    tourist: "Tourist",
+    business: "Geschäftlich",
+    student: "Student",
+    work: "Arbeit",
+    transit: "Transit",
+    family: "Familienbesuch",
+    
+    // Common
+    loading: "Laden...",
+    error: "Fehler",
+    success: "Erfolg",
+    close: "Schließen",
+    save: "Speichern",
+    cancel: "Abbrechen",
+    required: "Erforderlich",
+    optional: "Optional"
   },
   ja: {
-    // Japanese basic translations for critical UI elements
+    // Japanese complete translations
+    appName: "VisaValidator Pro",
+    back: "戻る",
+    next: "次へ",
+    previous: "前へ",
+    homeTitle: "プロフェッショナルビザ書類検証",
+    homeSubtitle: "申請前にAI技術で旅行書類を検証します",
+    startValidation: "書類検証を開始",
+    documentValidationService: "プロフェッショナル書類検証サービス",
+    
+    // Navigation
+    about: "について",
+    howItWorksNav: "仕組み",
+    pricing: "料金",
+    support: "サポート",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "重要な法的免責事項",
+    noGuaranteeTitle: "ビザ承認の保証なし：",
+    noGuaranteeText: "VisaValidator Proは書類準備支援ツールに過ぎません。ビザ承認を保証せず、政府機関を代表せず、大使館の決定に影響を与えません。",
+    accuracyLimitationsTitle: "精度の制限：",
+    accuracyLimitationsText: "AIは既知の要件に従って書類を分析しますが、結果が100%正確とは限りません。大使館の要件は頻繁に変更され、個別の状況により異なります。",
+    notOfficialGuidanceTitle: "公式ガイダンスではありません：",
+    notOfficialGuidanceText: "このサービスは公式大使館ウェブサイト、領事アドバイス、入国管理弁護士との相談に代わるものではありません。常に公式情報源で最新の要件を確認してください。",
+    individualResponsibilityTitle: "個人責任：",
+    individualResponsibilityText: "各旅行者はビザ申請がすべての要件を満たすことを確保する完全な責任を負います。ビザ承認の決定は大使館・領事館職員のみが行います。",
+    readFullDisclaimer: "完全な免責事項とサービス制限を読む →",
+    
     stepDestination: "目的地",
     stepNationality: "国籍",
     stepRequirements: "要件",
@@ -312,12 +554,55 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     selectCountryPlaceholder: "目的地の国を選択してください",
     visaType: "ビザタイプ",
     selectVisaTypePlaceholder: "ビザタイプを選択",
-    next: "次へ",
-    back: "戻る",
-    continue: "続行"
+    continue: "続行",
+    
+    // Visa Types
+    tourist: "観光",
+    business: "ビジネス",
+    student: "学生",
+    work: "就労",
+    transit: "通過",
+    family: "家族訪問",
+    
+    // Common
+    loading: "読み込み中...",
+    error: "エラー",
+    success: "成功",
+    close: "閉じる",
+    save: "保存",
+    cancel: "キャンセル",
+    required: "必須",
+    optional: "任意"
   },
   tr: {
-    // Turkish basic translations for critical UI elements
+    // Turkish complete translations
+    appName: "VisaValidator Pro",
+    back: "Geri",
+    next: "İleri",
+    previous: "Önceki",
+    homeTitle: "Profesyonel Vize Belge Doğrulama",
+    homeSubtitle: "Başvuru yapmadan önce AI teknolojisi ile seyahat belgelerinizi doğrulayın",
+    startValidation: "Belge Doğrulamayı Başlat",
+    documentValidationService: "Profesyonel Belge Doğrulama Hizmeti",
+    
+    // Navigation
+    about: "Hakkında",
+    howItWorksNav: "Nasıl Çalışır",
+    pricing: "Fiyatlandırma",
+    support: "Destek",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "KRİTİK HUKUKI SORUMLULUK REDDİ",
+    noGuaranteeTitle: "VİZE ONAYLANMA GARANTİSİ YOK:",
+    noGuaranteeText: "VisaValidator Pro yalnızca bir belge hazırlama yardım aracıdır. Vize onayı garanti etmez, herhangi bir devlet kurumunu temsil etmez ve büyükelçilik kararlarını etkilemez.",
+    accuracyLimitationsTitle: "DOĞRULUK SINIRLARI:",
+    accuracyLimitationsText: "AI'mız bilinen gereksinimlere göre belgeleri analiz etse de, sonuçlar %100 doğru olmayabilir. Büyükelçilik gereksinimleri sık sık değişir ve bireysel koşullara göre farklılık gösterir.",
+    notOfficialGuidanceTitle: "RESMİ REHBERLİK DEĞİL:",
+    notOfficialGuidanceText: "Bu hizmet resmi büyükelçilik web sitelerini, konsolosluk tavsiyelerini veya göçmenlik avukatıyla danışmayı yerine geçmez. Her zaman güncel gereksinimleri resmi kaynaklardan doğrulayın.",
+    individualResponsibilityTitle: "BİREYSEL SORUMLULUK:",
+    individualResponsibilityText: "Her yolcu, vize başvurusunun tüm gereksinimleri karşıladığından emin olma konusunda tam sorumluluğa sahiptir. Vize onay kararları yalnızca büyükelçilik ve konsolosluk yetkilileri tarafından verilir.",
+    readFullDisclaimer: "Tam sorumluluk reddi ve hizmet sınırlarını okuyun →",
+    
     stepDestination: "Hedef",
     stepNationality: "Milliyet",
     stepRequirements: "Gereksinimler",
@@ -330,12 +615,55 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     selectCountryPlaceholder: "Hedef ülkenizi seçin",
     visaType: "Vize Türü",
     selectVisaTypePlaceholder: "Vize türünü seçin",
-    next: "İleri",
-    back: "Geri",
-    continue: "Devam Et"
+    continue: "Devam Et",
+    
+    // Visa Types
+    tourist: "Turist",
+    business: "İş",
+    student: "Öğrenci",
+    work: "Çalışma",
+    transit: "Transit",
+    family: "Aile Ziyareti",
+    
+    // Common
+    loading: "Yükleniyor...",
+    error: "Hata",
+    success: "Başarılı",
+    close: "Kapat",
+    save: "Kaydet",
+    cancel: "İptal",
+    required: "Gerekli",
+    optional: "İsteğe bağlı"
   },
   ko: {
-    // Korean basic translations for critical UI elements
+    // Korean complete translations
+    appName: "VisaValidator Pro",
+    back: "뒤로",
+    next: "다음",
+    previous: "이전",
+    homeTitle: "전문 비자 서류 검증",
+    homeSubtitle: "신청하기 전에 AI 기술로 여행 서류를 검증하세요",
+    startValidation: "서류 검증 시작",
+    documentValidationService: "전문 서류 검증 서비스",
+    
+    // Navigation
+    about: "소개",
+    howItWorksNav: "작동 방식",
+    pricing: "가격",
+    support: "지원",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "중요한 법적 면책조항",
+    noGuaranteeTitle: "비자 승인 보장 없음:",
+    noGuaranteeText: "VisaValidator Pro는 서류 준비 보조 도구일 뿐입니다. 비자 승인을 보장하지 않으며, 정부 기관을 대표하지 않고, 대사관 결정에 영향을 주지 않습니다.",
+    accuracyLimitationsTitle: "정확도 제한:",
+    accuracyLimitationsText: "AI가 알려진 요구사항에 따라 서류를 분석하지만, 결과가 100% 정확하지 않을 수 있습니다. 대사관 요구사항은 자주 변경되며 개별 상황에 따라 다릅니다.",
+    notOfficialGuidanceTitle: "공식 지침이 아님:",
+    notOfficialGuidanceText: "이 서비스는 공식 대사관 웹사이트, 영사 조언 또는 이민 변호사와의 상담을 대체하지 않습니다. 항상 공식 출처를 통해 현재 요구사항을 확인하세요.",
+    individualResponsibilityTitle: "개인 책임:",
+    individualResponsibilityText: "각 여행자는 비자 신청이 모든 요구사항을 충족하도록 하는 완전한 책임을 집니다. 비자 승인 결정은 대사관 및 영사관 직원만이 내립니다.",
+    readFullDisclaimer: "전체 면책조항 및 서비스 제한사항 읽기 →",
+    
     stepDestination: "목적지",
     stepNationality: "국적",
     stepRequirements: "요구사항",
@@ -348,9 +676,25 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     selectCountryPlaceholder: "목적지 국가를 선택하세요",
     visaType: "비자 유형",
     selectVisaTypePlaceholder: "비자 유형 선택",
-    next: "다음",
-    back: "이전",
-    continue: "계속"
+    continue: "계속",
+    
+    // Visa Types
+    tourist: "관광",
+    business: "비즈니스",
+    student: "학생",
+    work: "취업",
+    transit: "경유",
+    family: "가족 방문",
+    
+    // Common
+    loading: "로딩 중...",
+    error: "오류",
+    success: "성공",
+    close: "닫기",
+    save: "저장",
+    cancel: "취소",
+    required: "필수",
+    optional: "선택사항"
   }
 };
 
