@@ -68,7 +68,7 @@ function CheckoutForm({ data, sessionId, onClose }: PaymentModalProps) {
 
       if (error) {
         toast({
-          title: "Payment Failed",
+          title: t("paymentFailed"),
           description: error.message,
           variant: "destructive",
         });

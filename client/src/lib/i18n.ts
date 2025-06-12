@@ -153,6 +153,9 @@ export const translations: Record<string, Record<string, string>> = {
     downloadFailed: "Download Failed",
     downloadFailedDesc: "Failed to download report. Please try again.",
     documentAnalysisComplete: "Document analysis completed using AI technology",
+    paymentSuccess: "Payment Successful",
+    paymentFailed: "Payment Failed",
+    processing: "Processing...",
     
     // Common
     loading: "Loading...",
