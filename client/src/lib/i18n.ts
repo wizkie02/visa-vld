@@ -480,49 +480,6 @@ export const translations: Record<string, Record<string, string>> = {
     homeTitle: "专业签证文件验证",
     homeSubtitle: "使用AI技术在申请前验证您的旅行文件",
     startValidation: "开始文件验证",
-    step1Title: "选择目的地和签证类型",
-    step2Title: "上传文件",
-    step3Title: "个人信息",
-    step4Title: "审核和验证",
-    step5Title: "结果和付款",
-    selectCountry: "选择您的目的地国家",
-    selectVisaType: "选择签证类型",
-    tourist: "旅游",
-    business: "商务",
-    student: "学生",
-    work: "工作",
-    uploadFiles: "上传文件",
-    dragDropFiles: "拖放文件到此处，或点击选择",
-    supportedFormats: "支持格式：PDF、JPG、PNG、DOCX",
-    analyzing: "分析中...",
-    uploadSuccess: "上传成功",
-    personalInfo: "个人信息",
-    fullName: "全名",
-    passportNumber: "护照号码",
-    dateOfBirth: "出生日期",
-    nationality: "国籍",
-    travelDate: "旅行日期",
-    stayDuration: "停留天数",
-    validationResults: "验证结果",
-    overallScore: "总分",
-    verifiedItems: "已验证项目",
-    issuesFound: "发现的问题",
-    recommendations: "建议",
-    downloadReport: "下载报告",
-    payment: "付款",
-    paymentDescription: "完成付款以获取完整验证报告",
-    price: "$9.99",
-    payNow: "立即付款",
-    loading: "加载中...",
-    error: "错误",
-    success: "成功",
-    close: "关闭",
-    save: "保存",
-    cancel: "取消",
-    about: "关于",
-    contact: "联系",
-    privacy: "隐私政策",
-    terms: "服务条款",
     
     // Legal Disclaimer
     criticalLegalDisclaimer: "重要法律免责声明",
@@ -536,15 +493,6 @@ export const translations: Record<string, Record<string, string>> = {
     individualResponsibilityText: "每位旅行者都有独自确保其签证申请符合所有要求的责任。签证获批决定完全由大使馆和领事官员做出。",
     readFullDisclaimer: "阅读完整免责声明和服务限制 →",
     
-    // Features Section
-    whyChoose: "为什么选择签证验证专家",
-    securePrivate: "安全私密",
-    securePrivateDesc: "所有文件在验证后自动删除，保护您的隐私和安全。",
-    fastProcessing: "快速处理",
-    fastProcessingDesc: "几分钟内获得验证结果，而不是几天。",
-    comprehensiveAnalysis: "全面分析",
-    comprehensiveAnalysisDesc: "AI驱动的文件分析，提供详细建议和要求检查。",
-    
     // How it Works
     howItWorks: "工作流程",
     step1: "选择目的地",
@@ -557,6 +505,15 @@ export const translations: Record<string, Record<string, string>> = {
     step4Desc: "付款前查看验证预览",
     step5: "付款并下载",
     step5Desc: "完成付款获取完整详细报告",
+    
+    // Features Section
+    whyChoose: "为什么选择签证验证专家",
+    securePrivate: "安全私密",
+    securePrivateDesc: "所有文件在验证后自动删除，保护您的隐私和安全。",
+    fastProcessing: "快速处理",
+    fastProcessingDesc: "几分钟内获得验证结果，而不是几天。",
+    comprehensiveAnalysis: "全面分析",
+    comprehensiveAnalysisDesc: "AI驱动的文件分析，提供详细建议和要求检查。",
     
     // Navigation
     howItWorksNav: "工作流程",
@@ -582,7 +539,94 @@ export const translations: Record<string, Record<string, string>> = {
     termsOfService: "服务条款",
     disclaimer: "免责声明",
     dataProtection: "数据保护",
-    copyright: "© 2024 签证验证专家。保留所有权利。本服务不隶属于任何政府机构。"
+    copyright: "© 2024 签证验证专家。保留所有权利。本服务不隶属于任何政府机构。",
+    
+    // Step Indicators
+    stepDestination: "目的地",
+    stepNationality: "国籍",
+    stepRequirements: "要求",
+    stepUpload: "上传",
+    stepInformation: "信息",
+    stepReview: "审核",
+    stepPayment: "付款",
+    
+    // Country Selection
+    selectDestinationVisaType: "选择目的地和签证类型",
+    destinationCountry: "目的地国家",
+    selectCountryPlaceholder: "选择国家...",
+    visaType: "签证类型",
+    selectVisaTypePlaceholder: "选择签证类型...",
+    
+    // Nationality Selection  
+    selectNationality: "选择国籍",
+    yourNationality: "您的国籍",
+    selectNationalityPlaceholder: "选择国籍...",
+    
+    // File Upload
+    uploadDocuments: "上传文档",
+    dragDropFiles: "拖放文件到此处，或点击选择",
+    supportedFormats: "支持格式：PDF、JPG、PNG、DOCX",
+    maxFileSize: "最大文件大小：10MB",
+    analyzing: "分析中...",
+    uploadSuccess: "上传成功",
+    
+    // Personal Info
+    personalInformation: "个人信息",
+    applicantName: "申请人姓名",
+    fullName: "全名",
+    passportNumber: "护照号码",
+    dateOfBirth: "出生日期",
+    nationality: "国籍",
+    travelDate: "旅行日期",
+    stayDuration: "停留天数",
+    
+    // Common UI
+    continue: "继续",
+    required: "必需",
+    optional: "可选",
+    submit: "提交",
+    upload: "上传",
+    download: "下载",
+    loading: "加载中...",
+    error: "错误",
+    success: "成功",
+    close: "关闭",
+    save: "保存",
+    cancel: "取消",
+    about: "关于",
+    contact: "联系",
+    privacy: "隐私政策",
+    terms: "服务条款",
+    
+    // Validation Process
+    validating: "验证中...",
+    validationComplete: "验证完成",
+    validationFailed: "验证失败",
+    processingFiles: "处理文件中...",
+    validationResults: "验证结果",
+    overallScore: "总分",
+    verifiedItems: "已验证项目",
+    issuesFound: "发现的问题",
+    recommendations: "建议",
+    downloadReport: "下载报告",
+    
+    // Payment
+    payment: "付款",
+    paymentDescription: "完成付款以获取完整验证报告",
+    price: "$9.99",
+    payNow: "立即付款",
+    
+    // Document Requirements
+    requiredDocuments: "必需文档",
+    documentRequirements: "文档要求",
+    reviewRequiredDocs: "请查看必需文档",
+    proceedToUpload: "继续上传文档",
+    
+    // Visa Types
+    tourist: "旅游",
+    business: "商务",
+    student: "学生",
+    work: "工作"
   },
   
   hi: {
