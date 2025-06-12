@@ -206,6 +206,154 @@ const languages = [
   "en", "vi", "zh", "hi", "es", "fr", "ar", "ru", "pt", "id", "de", "ja", "tr", "ko", "sw", "te", "mr", "ta", "ur", "bn"
 ];
 
+// Add basic translations for languages not in languageTranslations
+const additionalLanguageTranslations: Record<string, Record<string, string>> = {
+  hi: {
+    // Hindi basic translations for critical UI elements
+    stepDestination: "गंतव्य",
+    stepNationality: "राष्ट्रीयता",
+    stepRequirements: "आवश्यकताएं",
+    stepUpload: "अपलोड",
+    stepInformation: "जानकारी",
+    stepReview: "समीक्षा",
+    stepPayment: "भुगतान",
+    selectDestinationVisa: "गंतव्य और वीजा प्रकार चुनें",
+    destinationCountry: "गंतव्य देश",
+    selectCountryPlaceholder: "अपना गंतव्य देश चुनें",
+    visaType: "वीजा प्रकार",
+    selectVisaTypePlaceholder: "वीजा प्रकार चुनें",
+    next: "अगला",
+    back: "पिछला",
+    continue: "जारी रखें"
+  },
+  ar: {
+    // Arabic basic translations for critical UI elements
+    stepDestination: "الوجهة",
+    stepNationality: "الجنسية",
+    stepRequirements: "المتطلبات",
+    stepUpload: "رفع",
+    stepInformation: "المعلومات",
+    stepReview: "مراجعة",
+    stepPayment: "الدفع",
+    selectDestinationVisa: "اختر الوجهة ونوع التأشيرة",
+    destinationCountry: "دولة المقصد",
+    selectCountryPlaceholder: "اختر دولة الوجهة",
+    visaType: "نوع التأشيرة",
+    selectVisaTypePlaceholder: "اختر نوع التأشيرة",
+    next: "التالي",
+    back: "السابق",
+    continue: "متابعة"
+  },
+  ru: {
+    // Russian basic translations for critical UI elements
+    stepDestination: "Назначение",
+    stepNationality: "Национальность",
+    stepRequirements: "Требования",
+    stepUpload: "Загрузить",
+    stepInformation: "Информация",
+    stepReview: "Обзор",
+    stepPayment: "Оплата",
+    selectDestinationVisa: "Выберите направление и тип визы",
+    destinationCountry: "Страна назначения",
+    selectCountryPlaceholder: "Выберите страну назначения",
+    visaType: "Тип визы",
+    selectVisaTypePlaceholder: "Выберите тип визы",
+    next: "Далее",
+    back: "Назад",
+    continue: "Продолжить"
+  },
+  pt: {
+    // Portuguese basic translations for critical UI elements
+    stepDestination: "Destino",
+    stepNationality: "Nacionalidade",
+    stepRequirements: "Requisitos",
+    stepUpload: "Carregar",
+    stepInformation: "Informações",
+    stepReview: "Revisão",
+    stepPayment: "Pagamento",
+    selectDestinationVisa: "Selecionar Destino e Tipo de Visto",
+    destinationCountry: "País de Destino",
+    selectCountryPlaceholder: "Escolha seu país de destino",
+    visaType: "Tipo de Visto",
+    selectVisaTypePlaceholder: "Selecionar tipo de visto",
+    next: "Próximo",
+    back: "Voltar",
+    continue: "Continuar"
+  },
+  de: {
+    // German basic translations for critical UI elements
+    stepDestination: "Ziel",
+    stepNationality: "Staatsangehörigkeit",
+    stepRequirements: "Anforderungen",
+    stepUpload: "Hochladen",
+    stepInformation: "Informationen",
+    stepReview: "Überprüfung",
+    stepPayment: "Zahlung",
+    selectDestinationVisa: "Ziel und Visum-Typ auswählen",
+    destinationCountry: "Zielland",
+    selectCountryPlaceholder: "Wählen Sie Ihr Zielland",
+    visaType: "Visum-Typ",
+    selectVisaTypePlaceholder: "Visum-Typ auswählen",
+    next: "Weiter",
+    back: "Zurück",
+    continue: "Fortfahren"
+  },
+  ja: {
+    // Japanese basic translations for critical UI elements
+    stepDestination: "目的地",
+    stepNationality: "国籍",
+    stepRequirements: "要件",
+    stepUpload: "アップロード",
+    stepInformation: "情報",
+    stepReview: "レビュー",
+    stepPayment: "支払い",
+    selectDestinationVisa: "目的地とビザタイプを選択",
+    destinationCountry: "目的地の国",
+    selectCountryPlaceholder: "目的地の国を選択してください",
+    visaType: "ビザタイプ",
+    selectVisaTypePlaceholder: "ビザタイプを選択",
+    next: "次へ",
+    back: "戻る",
+    continue: "続行"
+  },
+  tr: {
+    // Turkish basic translations for critical UI elements
+    stepDestination: "Hedef",
+    stepNationality: "Milliyet",
+    stepRequirements: "Gereksinimler",
+    stepUpload: "Yükle",
+    stepInformation: "Bilgi",
+    stepReview: "İnceleme",
+    stepPayment: "Ödeme",
+    selectDestinationVisa: "Hedef ve Vize Türünü Seçin",
+    destinationCountry: "Hedef Ülke",
+    selectCountryPlaceholder: "Hedef ülkenizi seçin",
+    visaType: "Vize Türü",
+    selectVisaTypePlaceholder: "Vize türünü seçin",
+    next: "İleri",
+    back: "Geri",
+    continue: "Devam Et"
+  },
+  ko: {
+    // Korean basic translations for critical UI elements
+    stepDestination: "목적지",
+    stepNationality: "국적",
+    stepRequirements: "요구사항",
+    stepUpload: "업로드",
+    stepInformation: "정보",
+    stepReview: "검토",
+    stepPayment: "결제",
+    selectDestinationVisa: "목적지 및 비자 유형 선택",
+    destinationCountry: "목적지 국가",
+    selectCountryPlaceholder: "목적지 국가를 선택하세요",
+    visaType: "비자 유형",
+    selectVisaTypePlaceholder: "비자 유형 선택",
+    next: "다음",
+    back: "이전",
+    continue: "계속"
+  }
+};
+
 // Language-specific translations
 const languageTranslations: Record<string, Record<string, string>> = {
   vi: {
@@ -345,7 +493,69 @@ const languageTranslations: Record<string, Record<string, string>> = {
     // Additional
     contact: "Liên hệ",
     privacy: "Chính sách Bảo mật",
-    terms: "Điều khoản Dịch vụ"
+    terms: "Điều khoản Dịch vụ",
+    
+    // Step Indicator
+    stepDestination: "Điểm đến",
+    stepNationality: "Quốc tịch", 
+    stepRequirements: "Yêu cầu",
+    stepUpload: "Tải lên",
+    stepInformation: "Thông tin",
+    stepReview: "Xem lại",
+    stepPayment: "Thanh toán",
+    
+    // Country Selection
+    selectDestinationVisa: "Chọn Điểm đến & Loại Visa",
+    destinationCountry: "Quốc gia Đích",
+    selectCountryPlaceholder: "Chọn quốc gia đích của bạn",
+    visaType: "Loại Visa",
+    selectVisaTypePlaceholder: "Chọn loại visa",
+    commonRequirementsFor: "Yêu cầu chung cho",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "Chọn quốc tịch của bạn",
+    daysPlaceholder: "Nhập số ngày",
+    
+    // File Upload
+    uploadAnalysisComplete: "Tải lên và Phân tích Hoàn tất",
+    documentsAnalyzedSuccessfully: "tài liệu được phân tích thành công",
+    documentsFailed: "thất bại",
+    uploadFailed: "Tải lên thất bại",
+    
+    // Validation Results
+    validationScore: "Điểm Xác thực",
+    completedOn: "Hoàn thành vào",
+    documentsVerified: "Tài liệu Đã Xác minh",
+    
+    // Language Modal
+    chooseYourLanguage: "Chọn Ngôn ngữ của Bạn",
+    selectPreferredLanguage: "Chọn ngôn ngữ ưa thích của bạn cho ứng dụng xác thực visa",
+    continueButton: "Tiếp tục",
+    
+    // Extended Visa Types
+    medical: "Y tế",
+    conference: "Hội nghị",
+    journalist: "Nhà báo", 
+    religious: "Tôn giáo",
+    cultural: "Văn hóa",
+    research: "Nghiên cứu",
+    training: "Đào tạo",
+    diplomatic: "Ngoại giao",
+    crew: "Phi hành đoàn",
+    investment: "Đầu tư",
+    retirement: "Nghỉ hưu",
+    volunteer: "Tình nguyện",
+    sports: "Thể thao",
+    other: "Khác",
+    
+    // Document Requirements
+    validPassportMinimum: "Hộ chiếu hợp lệ (tối thiểu 6 tháng có hiệu lực)",
+    ds160ConfirmationPage: "Trang xác nhận DS-160",
+    passportStylePhotograph: "Ảnh kiểu hộ chiếu", 
+    financialDocuments: "Tài liệu tài chính (sao kê ngân hàng, bằng chứng thu nhập)",
+    travelItineraryAccommodation: "Lịch trình du lịch và bằng chứng chỗ ở",
+    completedVisaApplication: "Mẫu đơn xin visa đã hoàn thành",
+    supportingDocuments: "Tài liệu hỗ trợ (khác nhau theo loại visa)"
   },
   
   zh: {
@@ -485,7 +695,69 @@ const languageTranslations: Record<string, Record<string, string>> = {
     // Additional
     contact: "联系",
     privacy: "隐私政策",
-    terms: "服务条款"
+    terms: "服务条款",
+    
+    // Step Indicator
+    stepDestination: "目的地",
+    stepNationality: "国籍", 
+    stepRequirements: "要求",
+    stepUpload: "上传",
+    stepInformation: "信息",
+    stepReview: "审查",
+    stepPayment: "付款",
+    
+    // Country Selection
+    selectDestinationVisa: "选择目的地和签证类型",
+    destinationCountry: "目的地国家",
+    selectCountryPlaceholder: "选择您的目的地国家",
+    visaType: "签证类型",
+    selectVisaTypePlaceholder: "选择签证类型",
+    commonRequirementsFor: "常见要求",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "选择您的国籍",
+    daysPlaceholder: "输入天数",
+    
+    // File Upload
+    uploadAnalysisComplete: "上传和分析完成",
+    documentsAnalyzedSuccessfully: "文档分析成功",
+    documentsFailed: "失败",
+    uploadFailed: "上传失败",
+    
+    // Validation Results
+    validationScore: "验证分数",
+    completedOn: "完成于",
+    documentsVerified: "文档已验证",
+    
+    // Language Modal
+    chooseYourLanguage: "选择您的语言",
+    selectPreferredLanguage: "为签证验证应用程序选择您的首选语言",
+    continueButton: "继续",
+    
+    // Extended Visa Types
+    medical: "医疗",
+    conference: "会议",
+    journalist: "记者", 
+    religious: "宗教",
+    cultural: "文化",
+    research: "研究",
+    training: "培训",
+    diplomatic: "外交",
+    crew: "船员",
+    investment: "投资",
+    retirement: "退休",
+    volunteer: "志愿者",
+    sports: "体育",
+    other: "其他",
+    
+    // Document Requirements
+    validPassportMinimum: "有效护照（至少6个月有效期）",
+    ds160ConfirmationPage: "DS-160确认页面",
+    passportStylePhotograph: "护照风格照片", 
+    financialDocuments: "财务文件（银行对账单，收入证明）",
+    travelItineraryAccommodation: "旅行行程和住宿证明",
+    completedVisaApplication: "完成的签证申请表",
+    supportingDocuments: "支持文件（因签证类型而异）"
   },
   
   es: {
@@ -1104,11 +1376,16 @@ for (const lang of languages) {
   // Use language-specific translations if available, otherwise use base English or placeholder
   for (const key in baseKeys) {
     if (languageTranslations[lang] && languageTranslations[lang][key]) {
+      // Use full language-specific translations first
       translations[lang][key] = languageTranslations[lang][key];
+    } else if (additionalLanguageTranslations[lang] && additionalLanguageTranslations[lang][key]) {
+      // Use additional basic translations for critical UI elements
+      translations[lang][key] = additionalLanguageTranslations[lang][key];
     } else if (lang === "en") {
+      // Use base English for English language
       translations[lang][key] = (baseKeys as any)[key];
     } else {
-      // Use placeholder format for languages without specific translations
+      // Use placeholder format for languages without any translations
       translations[lang][key] = `[${lang}] ${(baseKeys as any)[key]}`;
     }
   }
