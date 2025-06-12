@@ -57,6 +57,8 @@ export const translations: Record<string, Record<string, string>> = {
     selectCountry: "Select your destination country",
     selectNationality: "Select your nationality",
     selectVisaType: "Select visa type",
+    selectDestinationVisa: "Select Destination & Visa Type",
+    destinationCountry: "Destination Country",
     chooseDestination: "Choose Destination",
     chooseNationality: "Choose Your Nationality",
     tourist: "Tourist",

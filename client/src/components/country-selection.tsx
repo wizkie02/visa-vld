@@ -237,11 +237,11 @@ export default function CountrySelection({ data, onUpdate, onNext, canProceed }:
   return (
     <Card className="bg-white rounded-xl shadow-lg">
       <CardContent className="p-8">
-        <h3 className="text-2xl font-semibold text-gray-900 mb-6">Select Destination & Visa Type</h3>
+        <h3 className="text-2xl font-semibold text-gray-900 mb-6">{t('selectDestinationVisa')}</h3>
         
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Destination Country</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">{t('destinationCountry')}</label>
             <Select
               value={data.country}
               onValueChange={(value) => onUpdate({ country: value, visaType: "" })}

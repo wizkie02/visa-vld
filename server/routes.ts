@@ -338,25 +338,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         );
       }
       
-      const checklistHTML = generateRequirementsChecklistHTML(requirements);
+      const checklistMarkdown = generateRequirementsChecklistMarkdown(requirements);
       
-      // Generate PDF using Puppeteer
-      const browser = await puppeteer.launch({ 
-        headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-      });
-      const page = await browser.newPage();
-      await page.setContent(checklistHTML);
-      const pdfBuffer = await page.pdf({ 
-        format: 'A4',
-        printBackground: true,
-        margin: { top: '20mm', bottom: '20mm', left: '15mm', right: '15mm' }
-      });
-      await browser.close();
-      
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.pdf"`);
-      res.send(pdfBuffer);
+      res.setHeader('Content-Type', 'text/markdown');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.md"`);
+      res.send(Buffer.from(checklistMarkdown, 'utf-8'));
     } catch (error: any) {
       console.error("Error generating requirements checklist:", error);
       res.status(500).json({ message: "Error generating checklist: " + error.message });
@@ -427,25 +413,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         uploadedDocuments: Array.isArray(session.uploadedFiles) ? session.uploadedFiles : []
       };
 
-      const reportHTML = generateValidationReportHTML(reportData);
+      const reportMarkdown = generateValidationReportMarkdown(reportData);
       
-      // Generate PDF using Puppeteer
-      const browser = await puppeteer.launch({ 
-        headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-      });
-      const page = await browser.newPage();
-      await page.setContent(reportHTML);
-      const pdfBuffer = await page.pdf({ 
-        format: 'A4',
-        printBackground: true,
-        margin: { top: '20mm', bottom: '20mm', left: '15mm', right: '15mm' }
-      });
-      await browser.close();
-      
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.pdf"`);
-      res.send(pdfBuffer);
+      res.setHeader('Content-Type', 'text/markdown');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.md"`);
+      res.send(Buffer.from(reportMarkdown, 'utf-8'));
     } catch (error: any) {
       console.error("Error generating validation report:", error);
       res.status(500).json({ message: "Error generating report: " + error.message });
