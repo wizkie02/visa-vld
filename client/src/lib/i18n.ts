@@ -232,8 +232,8 @@ export const translations: Record<string, Record<string, string>> = {
     noResults: "No results found",
     pleaseWait: "Please wait",
     
-    // Footer
-    about: "About",
+    // Footer Links
+    aboutFooter: "About",
     contact: "Contact",
     privacy: "Privacy Policy",
     terms: "Terms of Service",
@@ -291,10 +291,11 @@ export const translations: Record<string, Record<string, string>> = {
     // Pricing Section
     simplePricing: "Simple, Transparent Pricing",
     perValidation: "Per validation",
-    completeAnalysis: "Complete document analysis",
-    detailedReport: "Detailed validation report",
-    recommendations: "Recommendations & checklist",
+    completeDocAnalysis: "Complete document analysis",
+    detailedValidationReport: "Detailed validation report",
+    recommendationsChecklist: "Recommendations & checklist",
     secureHandling: "Secure document handling",
+    startValidationButton: "Start Validation",
     
     // Footer
     professionalService: "Professional document validation service for visa applications worldwide.",

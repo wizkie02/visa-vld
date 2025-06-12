@@ -128,27 +128,27 @@ export default function Home() {
       {/* Features Section */}
       <section className="py-16 bg-slate-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">Why Choose VisaValidator Pro</h3>
+          <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">{t("whyChoose")}</h3>
           <div className="grid md:grid-cols-3 gap-8">
             <Card>
               <CardContent className="pt-6">
                 <Shield className="w-8 h-8 text-blue-700 mb-4" />
-                <h4 className="font-semibold text-gray-900 mb-2">Secure & Private</h4>
-                <p className="text-sm text-slate-600">All documents are automatically deleted after validation for your privacy and security.</p>
+                <h4 className="font-semibold text-gray-900 mb-2">{t("securePrivate")}</h4>
+                <p className="text-sm text-slate-600">{t("securePrivateDesc")}</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6">
                 <Clock className="w-8 h-8 text-blue-700 mb-4" />
-                <h4 className="font-semibold text-gray-900 mb-2">Fast Processing</h4>
-                <p className="text-sm text-slate-600">Get your validation results within minutes, not days.</p>
+                <h4 className="font-semibold text-gray-900 mb-2">{t("fastProcessing")}</h4>
+                <p className="text-sm text-slate-600">{t("fastProcessingDesc")}</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6">
                 <CheckCircle className="w-8 h-8 text-blue-700 mb-4" />
-                <h4 className="font-semibold text-gray-900 mb-2">Comprehensive Analysis</h4>
-                <p className="text-sm text-slate-600">AI-powered analysis against current embassy requirements from official sources.</p>
+                <h4 className="font-semibold text-gray-900 mb-2">{t("comprehensiveAnalysis")}</h4>
+                <p className="text-sm text-slate-600">{t("comprehensiveAnalysisDesc")}</p>
               </CardContent>
             </Card>
           </div>
@@ -158,33 +158,33 @@ export default function Home() {
       {/* Pricing Section */}
       <section id="pricing" className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h3 className="text-3xl font-bold text-gray-900 mb-8">Simple, Transparent Pricing</h3>
+          <h3 className="text-3xl font-bold text-gray-900 mb-8">{t("simplePricing")}</h3>
           <Card className="max-w-md mx-auto">
             <CardContent className="pt-6">
               <div className="text-center">
                 <div className="text-4xl font-bold text-blue-700 mb-2">$9.99</div>
-                <div className="text-slate-600 mb-6">Per validation</div>
+                <div className="text-slate-600 mb-6">{t("perValidation")}</div>
                 <ul className="text-left space-y-2 mb-6">
                   <li className="flex items-center text-sm">
                     <CheckCircle className="w-4 h-4 text-emerald-600 mr-2" />
-                    Complete document analysis
+                    {t("completeDocAnalysis")}
                   </li>
                   <li className="flex items-center text-sm">
                     <CheckCircle className="w-4 h-4 text-emerald-600 mr-2" />
-                    Detailed validation report
+                    {t("detailedValidationReport")}
                   </li>
                   <li className="flex items-center text-sm">
                     <CheckCircle className="w-4 h-4 text-emerald-600 mr-2" />
-                    Recommendations & checklist
+                    {t("recommendationsChecklist")}
                   </li>
                   <li className="flex items-center text-sm">
                     <CheckCircle className="w-4 h-4 text-emerald-600 mr-2" />
-                    Secure document handling
+                    {t("secureHandling")}
                   </li>
                 </ul>
                 <Link href="/validate">
                   <Button className="w-full bg-blue-700 hover:bg-blue-800">
-                    Start Validation
+                    {t("startValidationButton")}
                   </Button>
                 </Link>
               </div>
@@ -205,36 +205,36 @@ export default function Home() {
                 <span className="text-lg font-bold">VisaValidator Pro</span>
               </div>
               <p className="text-gray-400 text-sm">
-                Professional document validation service for visa applications worldwide.
+                {t("professionalService")}
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Service</h4>
+              <h4 className="font-semibold mb-4">{t("service")}</h4>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#how-it-works" className="hover:text-white transition-colors">How it Works</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Supported Countries</a></li>
-                <li><a href="#pricing" className="hover:text-white transition-colors">Pricing</a></li>
+                <li><a href="#how-it-works" className="hover:text-white transition-colors">{t("howItWorksNav")}</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">{t("supportedCountries")}</a></li>
+                <li><a href="#pricing" className="hover:text-white transition-colors">{t("pricing")}</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Support</h4>
+              <h4 className="font-semibold mb-4">{t("support")}</h4>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
-                <li><Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
-                <li><Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/about" className="hover:text-white transition-colors">{t("about")}</Link></li>
+                <li><Link href="/contact" className="hover:text-white transition-colors">{t("contactUs")}</Link></li>
+                <li><Link href="/privacy-policy" className="hover:text-white transition-colors">{t("privacyPolicy")}</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Legal</h4>
+              <h4 className="font-semibold mb-4">{t("legal")}</h4>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><Link href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link></li>
-                <li><Link href="/about" className="hover:text-white transition-colors">Disclaimer</Link></li>
-                <li><Link href="/privacy-policy" className="hover:text-white transition-colors">Data Protection</Link></li>
+                <li><Link href="/terms-of-service" className="hover:text-white transition-colors">{t("termsOfService")}</Link></li>
+                <li><Link href="/about" className="hover:text-white transition-colors">{t("disclaimer")}</Link></li>
+                <li><Link href="/privacy-policy" className="hover:text-white transition-colors">{t("dataProtection")}</Link></li>
               </ul>
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 mt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2024 VisaValidator Pro. All rights reserved. This service is not affiliated with any government agency.</p>
+            <p>{t("copyright")}</p>
           </div>
         </div>
       </footer>
