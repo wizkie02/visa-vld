@@ -695,6 +695,372 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     cancel: "취소",
     required: "필수",
     optional: "선택사항"
+  },
+  sw: {
+    // Swahili complete translations
+    appName: "VisaValidator Pro",
+    back: "Kurudi",
+    next: "Ijayo",
+    previous: "Iliyopita",
+    homeTitle: "Uthibitisho wa Kitaaluma wa Hati za Visa",
+    homeSubtitle: "Hakikisha hati zako za usafiri kwa teknolojia ya AI kabla ya kuomba",
+    startValidation: "Anza Uthibitisho wa Hati",
+    documentValidationService: "Huduma ya Kitaaluma ya Uthibitisho wa Hati",
+    
+    // Navigation
+    about: "Kuhusu",
+    howItWorksNav: "Jinsi Inavyofanya Kazi",
+    pricing: "Bei",
+    support: "Msaada",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "ONYO MUHIMU LA KISHERIA",
+    noGuaranteeTitle: "HAKUNA DHAMANA YA IDHINI YA VISA:",
+    noGuaranteeText: "VisaValidator Pro ni chombo cha msaada wa maandalizi ya hati tu. Hatudhamini idhini ya visa, hatuwakilishi shirika lolote la serikali, na hatuathiri maamuzi ya ubalozi.",
+    accuracyLimitationsTitle: "VIKWAZO VYA USAHIHI:",
+    accuracyLimitationsText: "Ingawa AI yetu inachambua hati kulingana na mahitaji yanayojulikana, matokeo yanaweza yasikuwe sahihi 100%. Mahitaji ya ubalozi yanabadilika mara kwa mara na yanatofautiana kulingana na mazingira ya kibinafsi.",
+    notOfficialGuidanceTitle: "SI MWONGOZO RASMI:",
+    notOfficialGuidanceText: "Huduma hii haichukui nafasi ya tovuti rasmi za ubalozi, ushauri wa ukonsuli, au mashauriano na mwanasheria wa uhamiaji. Hakikisha mahitaji ya sasa kupitia vyanzo rasmi.",
+    individualResponsibilityTitle: "UWAJIBIKAJI WA KIBINAFSI:",
+    individualResponsibilityText: "Kila msafiri ana jukumu kamili la kuhakikisha kwamba ombi lake la visa linakidhi mahitaji yote. Maamuzi ya idhini ya visa yanafanywa na maafisa wa ubalozi na ukonsuli pekee.",
+    readFullDisclaimer: "Soma onyo kamili na vikwazo vya huduma →",
+    
+    stepDestination: "Marudio",
+    stepNationality: "Utaifa",
+    stepRequirements: "Mahitaji",
+    stepUpload: "Pakia",
+    stepInformation: "Maelezo",
+    stepReview: "Mapitio",
+    stepPayment: "Malipo",
+    selectDestinationVisa: "Chagua Marudio na Aina ya Visa",
+    destinationCountry: "Nchi ya Marudio",
+    selectCountryPlaceholder: "Chagua nchi yako ya marudio",
+    visaType: "Aina ya Visa",
+    selectVisaTypePlaceholder: "Chagua aina ya visa",
+    continue: "Endelea",
+    
+    // Visa Types
+    tourist: "Utalii",
+    business: "Biashara",
+    student: "Mwanafunzi",
+    work: "Kazi",
+    transit: "Mpito",
+    family: "Ziara ya Familia",
+    
+    // Common
+    loading: "Inapakia...",
+    error: "Hitilafu",
+    success: "Mafanikio",
+    close: "Funga",
+    save: "Hifadhi",
+    cancel: "Ghairi",
+    required: "Lazima",
+    optional: "Hiari"
+  },
+  te: {
+    // Telugu complete translations
+    appName: "VisaValidator Pro",
+    back: "వెనుకకు",
+    next: "తరువాత",
+    previous: "మునుపటి",
+    homeTitle: "వృత్తిపరమైన వీసా డాక్యుమెంట్ ధృవీకరణ",
+    homeSubtitle: "దరఖాస్తు చేయడానికి ముందు AI సాంకేతికతతో మీ ప్రయాణ పత్రాలను ధృవీకరించండి",
+    startValidation: "డాక్యుమెంట్ ధృవీకరణ ప్రారంభించండి",
+    documentValidationService: "వృత్తిపరమైన డాక్యుమెంట్ ధృవీకరణ సేవ",
+    
+    // Navigation
+    about: "గురించి",
+    howItWorksNav: "ఎలా పని చేస్తుంది",
+    pricing: "ధరలు",
+    support: "మద్దతు",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "క్రిటికల్ లీగల్ డిస్క్లైమర్",
+    noGuaranteeTitle: "వీసా ఆమోదానికి హామీ లేదు:",
+    noGuaranteeText: "VisaValidator Pro కేవలం డాక్యుమెంట్ తయారీ సహాయ సాధనం. మేము వీసా ఆమోదానికి హామీ ఇవ్వము, ఏ ప్రభుత్వ ఏజెన్సీకి ప్రాతినిధ్యం వహించము మరియు రాయబార కార్యాలయ నిర్णయాలను ప్రభావితం చేయము.",
+    accuracyLimitationsTitle: "ఖచ్చితత్వ పరిమితులు:",
+    accuracyLimitationsText: "మా AI తెలిసిన అవసరాల ప్రకారం డాక్యుమెంట్లను విశ్లేషిస్తున్నప్పటికీ, ఫలితాలు 100% ఖచ్చితమైనవి కాకపోవచ్చు. రాయబార కార్యాలయ అవసరాలు తరచుగా మారుతూ ఉంటాయి మరియు వ్యక్తిగత పరిస్థితుల ప్రకారం మారుతాయి.",
+    notOfficialGuidanceTitle: "అధికారిక మార్గదర్శకత్వం కాదు:",
+    notOfficialGuidanceText: "ఈ సేవ అధికారిక రాయబార కార్యాలయ వెబ్‌సైట్లు, కాన్సులర్ సలహా లేదా ఇమ్మిగ్రేషన్ న్యాయవాదితో సంప్రదింపులకు ప్రత్యామ్నాయం కాదు. ఎల్లప్పుడూ అధికారిక మూలాధారాల ద్వారా ప్రస్తుత అవసరాలను ధృవీకరించండి.",
+    individualResponsibilityTitle: "వ్యక్తిగత బాధ్యత:",
+    individualResponsibilityText: "ప్రతి ప్రయాణికుడు తమ వీసా దరఖాస్తు అన్ని అవసరాలను తీరుస్తుందని నిర్ధారించడంలో పూర్తి బాధ్యత వహిస్తారు. వీసా ఆమోద నిర్णయాలు రాయబార కార్యాలయం మరియు కాన్సులేట్ అధికారులు మాత్రమే తీసుకుంటారు.",
+    readFullDisclaimer: "పూర్తి నిరాకరణ మరియు సేవా పరిమితులను చదవండి →",
+    
+    stepDestination: "గమ్యస్థానం",
+    stepNationality: "జాతీయత",
+    stepRequirements: "అవసరాలు",
+    stepUpload: "అప్‌లోడ్",
+    stepInformation: "సమాచారం",
+    stepReview: "సమీక్ష",
+    stepPayment: "చెల్లింపు",
+    selectDestinationVisa: "గమ్యస్థానం మరియు వీసా రకాన్ని ఎంచుకోండి",
+    destinationCountry: "గమ్యస్థాన దేశం",
+    selectCountryPlaceholder: "మీ గమ్యస్థాన దేశాన్ని ఎంచుకోండి",
+    visaType: "వీసా రకం",
+    selectVisaTypePlaceholder: "వీసా రకాన్ని ఎంచుకోండి",
+    continue: "కొనసాగించు",
+    
+    // Visa Types
+    tourist: "పర్యాటక",
+    business: "వ్యాపార",
+    student: "విద్యార్థి",
+    work: "పని",
+    transit: "రవాణా",
+    family: "కుటుంబ సందర్శన",
+    
+    // Common
+    loading: "లోడ్ అవుతోంది...",
+    error: "లోపం",
+    success: "విజయం",
+    close: "మూసివేయి",
+    save: "సేవ్ చేయి",
+    cancel: "రద్దు చేయి",
+    required: "అవసరం",
+    optional: "ఐచ్ఛికం"
+  },
+  mr: {
+    // Marathi complete translations
+    appName: "VisaValidator Pro",
+    back: "मागे",
+    next: "पुढे",
+    previous: "मागील",
+    homeTitle: "व्यावसायिक व्हिसा दस्तऐवज प्रमाणीकरण",
+    homeSubtitle: "अर्ज करण्यापूर्वी AI तंत्रज्ञानाने आपले प्रवास दस्तऐवज प्रमाणित करा",
+    startValidation: "दस्तऐवज प्रमाणीकरण सुरू करा",
+    documentValidationService: "व्यावसायिक दस्तऐवज प्रमाणीकरण सेवा",
+    
+    // Navigation
+    about: "बद्दल",
+    howItWorksNav: "हे कसे कार्य करते",
+    pricing: "किंमत",
+    support: "सहाय्य",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "गंभीर कायदेशीर अस्वीकरण",
+    noGuaranteeTitle: "व्हिसा मंजुरीची हमी नाही:",
+    noGuaranteeText: "VisaValidator Pro हे केवळ दस्तऐवज तयारी सहाय्यक साधन आहे. आम्ही व्हिसा मंजुरीची हमी देत नाही, कोणत्याही सरकारी एजन्सीचे प्रतिनिधित्व करत नाही आणि दूतावासाच्या निर्णयांवर प्रभाव टाकत नाही.",
+    accuracyLimitationsTitle: "अचूकतेच्या मर्यादा:",
+    accuracyLimitationsText: "आमचे AI ज्ञात आवश्यकतांनुसार दस्तऐवजांचे विश्लेषण करते, परंतु परिणाम 100% अचूक असू शकत नाहीत. दूतावासाच्या आवश्यकता वारंवार बदलत राहतात आणि व्यक्तिगत परिस्थितीनुसार भिन्न असतात.",
+    notOfficialGuidanceTitle: "अधिकृत मार्गदर्शन नाही:",
+    notOfficialGuidanceText: "ही सेवा अधिकृत दूतावास वेबसाइट्स, वाणिज्य दूतावासाच्या सल्ल्याचा किंवा इमिग्रेशन वकीलाशी सल्लामसलत करण्याचा पर्याय नाही. नेहमी अधिकृत स्रोतांकडून वर्तमान आवश्यकता तपासा.",
+    individualResponsibilityTitle: "वैयक्तिक जबाबदारी:",
+    individualResponsibilityText: "प्रत्येक प्रवाशाची व्हिसा अर्ज सर्व आवश्यकता पूर्ण करत असल्याची खात्री करण्याची संपूर्ण जबाबदारी आहे. व्हिसा मंजुरीचे निर्णय केवळ दूतावास आणि वाणिज्य दूतावासाचे अधिकारी घेतात.",
+    readFullDisclaimer: "संपूर्ण अस्वीकरण आणि सेवा मर्यादा वाचा →",
+    
+    stepDestination: "गंतव्य",
+    stepNationality: "राष्ट्रीयत्व",
+    stepRequirements: "आवश्यकता",
+    stepUpload: "अपलोड",
+    stepInformation: "माहिती",
+    stepReview: "पुनरावलोकन",
+    stepPayment: "पेमेंट",
+    selectDestinationVisa: "गंतव्य आणि व्हिसा प्रकार निवडा",
+    destinationCountry: "गंतव्य देश",
+    selectCountryPlaceholder: "तुमचा गंतव्य देश निवडा",
+    visaType: "व्हिसा प्रकार",
+    selectVisaTypePlaceholder: "व्हिसा प्रकार निवडा",
+    continue: "सुरू ठेवा",
+    
+    // Visa Types
+    tourist: "पर्यटन",
+    business: "व्यवसाय",
+    student: "विद्यार्थी",
+    work: "काम",
+    transit: "पारगमन",
+    family: "कुटुंब भेट",
+    
+    // Common
+    loading: "लोड होत आहे...",
+    error: "त्रुटी",
+    success: "यश",
+    close: "बंद करा",
+    save: "जतन करा",
+    cancel: "रद्द करा",
+    required: "आवश्यक",
+    optional: "पर्यायी"
+  },
+  ta: {
+    // Tamil complete translations
+    appName: "VisaValidator Pro",
+    back: "பின்",
+    next: "அடுத்து",
+    previous: "முந்தைய",
+    homeTitle: "தொழில்முறை வீசா ஆவண சரிபார்ப்பு",
+    homeSubtitle: "விண்ணப்பிக்கும் முன் AI தொழில்நுட்பத்துடன் உங்கள் பயண ஆவணங்களை சரிபார்க்கவும்",
+    startValidation: "ஆவண சரிபார்ப்பைத் தொடங்கவும்",
+    documentValidationService: "தொழில்முறை ஆவண சரிபார்ப்பு சேவை",
+    
+    // Navigation
+    about: "பற்றி",
+    howItWorksNav: "இது எப்படி வேலை செய்கிறது",
+    pricing: "விலை நிர்ணயம்",
+    support: "ஆதரவு",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "முக்கியமான சட்ட மறுப்பு",
+    noGuaranteeTitle: "வீசா ஒப்புதலுக்கு உத்தரவாதம் இல்லை:",
+    noGuaranteeText: "VisaValidator Pro வெறும் ஆவண தயாரிப்பு உதவி கருவி மட்டுமே. நாங்கள் வீசா ஒப்புதலுக்கு உத்தரவாதம் அளிக்கவில்லை, எந்த அரசு நிறுவனத்தையும் பிரதிநிதித்துவப்படுத்துவதில்லை, மற்றும் தூதரக முடிவுகளை பாதிக்கவில்லை.",
+    accuracyLimitationsTitle: "துல்லியத்தின் வரம்புகள்:",
+    accuracyLimitationsText: "எங்கள் AI அறியப்பட்ட தேவைகளின்படி ஆவணங்களை பகுப்பாய்வு செய்தாலும், முடிவுகள் 100% துல்லியமாக இருக்காது. தூதரக தேவைகள் அடிக்கடி மாறுகின்றன மற்றும் தனிப்பட்ட சூழ்நிலைகளைப் பொறுத்து மாறுபடும்.",
+    notOfficialGuidanceTitle: "அதிகாரப்பூர்வ வழிகாட்டுதல் அல்ல:",
+    notOfficialGuidanceText: "இந்த சேவை அதிகாரப்பூர்வ தூதரக வலைத்தளங்கள், தூதரக ஆலோசனை அல்லது குடியுரிமை வழக்கறிஞருடன் ஆலோசனைக்கு மாற்றாக இல்லை. எப்போதும் அதிகாரப்பூர்வ ஆதாரங்களுடன் தற்போதைய தேவைகளை சரிபார்க்கவும்.",
+    individualResponsibilityTitle: "தனிப்பட்ட பொறுப்பு:",
+    individualResponsibilityText: "ஒவ்வொரு பயணியும் தங்கள் வீசா விண்ணப்பம் அனைத்து தேவைகளையும் பூர்த்தி செய்வதை உறுதி செய்வதில் முழு பொறுப்பு உடையவர். வீசா ஒப்புதல் முடிவுகள் தூதரகம் மற்றும் தூதரக அதிகாரிகளால் மட்டுமே எடுக்கப்படுகின்றன.",
+    readFullDisclaimer: "முழு மறுப்பு மற்றும் சேவை வரம்புகளைப் படிக்கவும் →",
+    
+    stepDestination: "இலக்கு",
+    stepNationality: "தேசியம்",
+    stepRequirements: "தேவைகள்",
+    stepUpload: "பதிவேற்று",
+    stepInformation: "தகவல்",
+    stepReview: "மீளாய்வு",
+    stepPayment: "கட்டணம்",
+    selectDestinationVisa: "இலக்கு மற்றும் வீசா வகையைத் தேர்ந்தெடுக்கவும்",
+    destinationCountry: "இலக்கு நாடு",
+    selectCountryPlaceholder: "உங்கள் இலக்கு நாட்டைத் தேர்ந்தெடுக்கவும்",
+    visaType: "வீசா வகை",
+    selectVisaTypePlaceholder: "வீசா வகையைத் தேர்ந்தெடுக்கவும்",
+    continue: "தொடரவும்",
+    
+    // Visa Types
+    tourist: "சுற்றுலா",
+    business: "வணிகம்",
+    student: "மாணவர்",
+    work: "வேலை",
+    transit: "போக்குவரத்து",
+    family: "குடும்ப வருகை",
+    
+    // Common
+    loading: "ஏற்றப்படுகிறது...",
+    error: "பிழை",
+    success: "வெற்றி",
+    close: "மூடு",
+    save: "சேமி",
+    cancel: "ரத்து செய்",
+    required: "தேவையான",
+    optional: "விருப்பமான"
+  },
+  ur: {
+    // Urdu complete translations
+    appName: "VisaValidator Pro",
+    back: "واپس",
+    next: "اگلا",
+    previous: "پچھلا",
+    homeTitle: "پیشہ ورانہ ویزا دستاویز کی تصدیق",
+    homeSubtitle: "درخواست دینے سے پہلے AI ٹیکنالوجی کے ساتھ اپنے سفری دستاویزات کی تصدیق کریں",
+    startValidation: "دستاویز کی تصدیق شروع کریں",
+    documentValidationService: "پیشہ ورانہ دستاویز تصدیق کی سروس",
+    
+    // Navigation
+    about: "کے بارے میں",
+    howItWorksNav: "یہ کیسے کام کرتا ہے",
+    pricing: "قیمتوں کا تعین",
+    support: "سپورٹ",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "اہم قانونی دستبرداری",
+    noGuaranteeTitle: "ویزا کی منظوری کی کوئی ضمانت نہیں:",
+    noGuaranteeText: "VisaValidator Pro صرف دستاویز کی تیاری میں مدد کرنے والا آلہ ہے۔ ہم ویزا کی منظوری کی ضمانت نہیں دیتے، کسی بھی سرکاری ایجنسی کی نمائندگی نہیں کرتے، اور سفارت خانے کے فیصلوں کو متاثر نہیں کرتے۔",
+    accuracyLimitationsTitle: "درستگی کی حدود:",
+    accuracyLimitationsText: "اگرچہ ہمارا AI معلوم ضروریات کے مطابق دستاویزات کا تجزیہ کرتا ہے، لیکن نتائج 100% درست نہیں ہو سکتے۔ سفارت خانے کی ضروریات اکثر تبدیل ہوتی رہتی ہیں اور انفرادی حالات کے مطابق مختلف ہوتی ہیں۔",
+    notOfficialGuidanceTitle: "سرکاری رہنمائی نہیں:",
+    notOfficialGuidanceText: "یہ سروس سرکاری سفارت خانے کی ویب سائٹس، قونصلی مشورے، یا امیگریشن وکیل کے ساتھ مشاورت کا متبادل نہیں ہے۔ ہمیشہ سرکاری ذرائع سے موجودہ ضروریات کی تصدیق کریں۔",
+    individualResponsibilityTitle: "انفرادی ذمہ داری:",
+    individualResponsibilityText: "ہر مسافر اپنی ویزا درخواست تمام ضروریات کو پورا کرنے کو یقینی بنانے کی مکمل ذمہ داری رکھتا ہے۔ ویزا کی منظوری کے فیصلے صرف سفارت خانے اور قونصل خانے کے افسران کرتے ہیں۔",
+    readFullDisclaimer: "مکمل دستبرداری اور سروس کی حدود پڑھیں →",
+    
+    stepDestination: "منزل",
+    stepNationality: "قومیت",
+    stepRequirements: "ضروریات",
+    stepUpload: "اپ لوڈ",
+    stepInformation: "معلومات",
+    stepReview: "جائزہ",
+    stepPayment: "ادائیگی",
+    selectDestinationVisa: "منزل اور ویزا کی قسم منتخب کریں",
+    destinationCountry: "منزل کا ملک",
+    selectCountryPlaceholder: "اپنے منزل کا ملک منتخب کریں",
+    visaType: "ویزا کی قسم",
+    selectVisaTypePlaceholder: "ویزا کی قسم منتخب کریں",
+    continue: "جاری رکھیں",
+    
+    // Visa Types
+    tourist: "سیاحتی",
+    business: "کاروباری",
+    student: "طالب علم",
+    work: "کام",
+    transit: "ٹرانزٹ",
+    family: "خاندانی ملاقات",
+    
+    // Common
+    loading: "لوڈ ہو رہا ہے...",
+    error: "خرابی",
+    success: "کامیابی",
+    close: "بند کریں",
+    save: "محفوظ کریں",
+    cancel: "منسوخ کریں",
+    required: "ضروری",
+    optional: "اختیاری"
+  },
+  bn: {
+    // Bengali complete translations
+    appName: "VisaValidator Pro",
+    back: "পিছনে",
+    next: "পরবর্তী",
+    previous: "পূর্ববর্তী",
+    homeTitle: "পেশাদার ভিসা ডকুমেন্ট যাচাইকরণ",
+    homeSubtitle: "আবেদন করার আগে AI প্রযুক্তি দিয়ে আপনার ভ্রমণ ডকুমেন্ট যাচাই করুন",
+    startValidation: "ডকুমেন্ট যাচাইকরণ শুরু করুন",
+    documentValidationService: "পেশাদার ডকুমেন্ট যাচাইকরণ সেবা",
+    
+    // Navigation
+    about: "সম্পর্কে",
+    howItWorksNav: "এটি কীভাবে কাজ করে",
+    pricing: "মূল্য নির্ধারণ",
+    support: "সহায়তা",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "গুরুত্বপূর্ণ আইনি দাবিত্যাগ",
+    noGuaranteeTitle: "ভিসা অনুমোদনের কোনো গ্যারান্টি নেই:",
+    noGuaranteeText: "VisaValidator Pro শুধুমাত্র একটি ডকুমেন্ট প্রস্তুতি সহায়ক টুল। আমরা ভিসা অনুমোদনের গ্যারান্টি দিই না, কোনো সরকারি সংস্থার প্রতিনিধিত্ব করি না, এবং দূতাবাসের সিদ্ধান্তকে প্রভাবিত করি না।",
+    accuracyLimitationsTitle: "নির্ভুলতার সীমাবদ্ধতা:",
+    accuracyLimitationsText: "যদিও আমাদের AI জানা প্রয়োজনীয়তা অনুযায়ী ডকুমেন্ট বিশ্লেষণ করে, ফলাফল ১০০% নির্ভুল নাও হতে পারে। দূতাবাসের প্রয়োজনীয়তা প্রায়ই পরিবর্তিত হয় এবং ব্যক্তিগত পরিস্থিতি অনুযায়ী ভিন্ন হয়।",
+    notOfficialGuidanceTitle: "সরকারি নির্দেশনা নয়:",
+    notOfficialGuidanceText: "এই সেবা সরকারি দূতাবাস ওয়েবসাইট, কনস্যুলার পরামর্শ, বা ইমিগ্রেশন আইনজীবীর সাথে পরামর্শের বিকল্প নয়। সর্বদা সরকারি সূত্রের সাথে বর্তমান প্রয়োজনীয়তা যাচাই করুন।",
+    individualResponsibilityTitle: "ব্যক্তিগত দায়বদ্ধতা:",
+    individualResponsibilityText: "প্রত্যেক ভ্রমণকারী তাদের ভিসা আবেদন সমস্ত প্রয়োজনীয়তা পূরণ করে তা নিশ্চিত করার সম্পূর্ণ দায়বদ্ধতা বহন করে। ভিসা অনুমোদনের সিদ্ধান্ত শুধুমাত্র দূতাবাস এবং কনস্যুলেট কর্মকর্তারা গ্রহণ করেন।",
+    readFullDisclaimer: "সম্পূর্ণ দাবিত্যাগ এবং সেবার সীমাবদ্ধতা পড়ুন →",
+    
+    stepDestination: "গন্তব্য",
+    stepNationality: "জাতীয়তা",
+    stepRequirements: "প্রয়োজনীয়তা",
+    stepUpload: "আপলোড",
+    stepInformation: "তথ্য",
+    stepReview: "পর্যালোচনা",
+    stepPayment: "পেমেন্ট",
+    selectDestinationVisa: "গন্তব্য এবং ভিসার ধরন নির্বাচন করুন",
+    destinationCountry: "গন্তব্য দেশ",
+    selectCountryPlaceholder: "আপনার গন্তব্য দেশ নির্বাচন করুন",
+    visaType: "ভিসার ধরন",
+    selectVisaTypePlaceholder: "ভিসার ধরন নির্বাচন করুন",
+    continue: "চালিয়ে যান",
+    
+    // Visa Types
+    tourist: "পর্যটন",
+    business: "ব্যবসায়িক",
+    student: "ছাত্র",
+    work: "কাজ",
+    transit: "ট্রানজিট",
+    family: "পারিবারিক সফর",
+    
+    // Common
+    loading: "লোড হচ্ছে...",
+    error: "ত্রুটি",
+    success: "সফলতা",
+    close: "বন্ধ করুন",
+    save: "সংরক্ষণ করুন",
+    cancel: "বাতিল করুন",
+    required: "প্রয়োজনীয়",
+    optional: "ঐচ্ছিক"
   }
 };
 
