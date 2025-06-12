@@ -113,13 +113,13 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
       window.URL.revokeObjectURL(url);
       
       toast({
-        title: "Download Complete",
-        description: "Comprehensive requirements checklist downloaded with the latest information.",
+        title: t('downloadComplete'),
+        description: t('checklistDownloadedSuccess'),
       });
     } catch (error) {
       toast({
-        title: "Download Failed",
-        description: "Could not download the checklist. Please try again.",
+        title: t('downloadFailed'),
+        description: t('downloadFailedDescription'),
         variant: "destructive",
       });
     } finally {

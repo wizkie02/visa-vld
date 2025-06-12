@@ -232,6 +232,7 @@ const getRequirements = (country: string, visaType: string) => {
 };
 
 export default function CountrySelection({ data, onUpdate, onNext, canProceed }: CountrySelectionProps) {
+  const { t } = useLanguage();
   const requirements = data.country && data.visaType ? getRequirements(data.country, data.visaType) : [];
 
   return (
@@ -247,7 +248,7 @@ export default function CountrySelection({ data, onUpdate, onNext, canProceed }:
               onValueChange={(value) => onUpdate({ country: value, visaType: "" })}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a country..." />
+                <SelectValue placeholder={t('selectCountryPlaceholder')} />
               </SelectTrigger>
               <SelectContent>
                 {countries.map((country) => (
@@ -260,14 +261,14 @@ export default function CountrySelection({ data, onUpdate, onNext, canProceed }:
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Visa Type</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">{t('visaType')}</label>
             <Select
               value={data.visaType}
               onValueChange={(value) => onUpdate({ visaType: value })}
               disabled={!data.country}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select visa type..." />
+                <SelectValue placeholder={t('selectVisaTypePlaceholder')} />
               </SelectTrigger>
               <SelectContent>
                 {visaTypes.map((type) => (

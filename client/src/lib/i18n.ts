@@ -59,6 +59,8 @@ export const translations: Record<string, Record<string, string>> = {
     selectVisaType: "Select visa type",
     selectDestinationVisa: "Select Destination & Visa Type",
     destinationCountry: "Destination Country",
+    selectCountryPlaceholder: "Select a country...",
+    selectVisaTypePlaceholder: "Select visa type...",
     chooseDestination: "Choose Destination",
     chooseNationality: "Choose Your Nationality",
     tourist: "Tourist",
@@ -80,6 +82,10 @@ export const translations: Record<string, Record<string, string>> = {
     requiredDocuments: "Required Documents",
     downloadChecklist: "Download Requirements Checklist",
     viewRequirements: "View Detailed Requirements",
+    downloadComplete: "Download Complete",
+    checklistDownloadedSuccess: "Comprehensive requirements checklist downloaded with the latest information.",
+    downloadFailed: "Download Failed",
+    downloadFailedDescription: "Could not download the checklist. Please try again.",
     
     // File Upload
     uploadFiles: "Upload Documents",
@@ -160,8 +166,8 @@ export const translations: Record<string, Record<string, string>> = {
     // Toast Messages
     reportDownloaded: "Professional Report Downloaded",
     reportDownloadDesc: "Your comprehensive validation report with logo and disclaimer has been downloaded.",
-    downloadFailed: "Download Failed",
-    downloadFailedDesc: "Failed to download report. Please try again.",
+    reportDownloadFailed: "Download Failed",
+    reportDownloadFailedDesc: "Failed to download report. Please try again.",
     documentAnalysisComplete: "Document analysis completed using AI technology",
     paymentSuccess: "Payment Successful",
     paymentFailed: "Payment Failed",
