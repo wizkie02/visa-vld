@@ -143,7 +143,17 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
     });
     
     console.log("FormData entries:", Array.from(formData.entries()));
-    uploadMutation.mutate(formData);
+    uploadMutation.mutate(formData, {
+      onSuccess: (response) => {
+        // Keep existing uploaded files and add new ones
+        const existingFiles = data.uploadedFiles || [];
+        const newFiles = response.files || [];
+        
+        onUpdate({
+          uploadedFiles: [...existingFiles, ...newFiles]
+        });
+      }
+    });
   };
 
   const handleDrop = (e: React.DragEvent) => {
