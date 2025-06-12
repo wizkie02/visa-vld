@@ -78,7 +78,7 @@ export default function ValidationResults({ results }: ValidationResultsProps) {
           <CardContent className="pt-6">
             <h3 className="font-semibold text-red-900 mb-4 flex items-center">
               <XCircle className="w-5 h-5 text-red-600 mr-2" />
-              Issues Found ({results.issues.length})
+              {t('issuesFound')} ({results.issues.length})
             </h3>
             <ul className="space-y-3">
               {results.issues.map((issue, index) => (

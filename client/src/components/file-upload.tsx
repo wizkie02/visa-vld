@@ -213,7 +213,7 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
           onClick={() => fileInputRef.current?.click()}
         >
           <CloudUpload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h4 className="text-lg font-semibold text-gray-700 mb-2">{t('dragDropFiles')}</h4>
+          <h4 className="text-lg font-semibold text-gray-700 mb-2">{t('selectFiles')}</h4>
           <p className="text-slate-600 mb-4">{t('dragDropFiles')}</p>
           <p className="text-sm text-gray-500">{t('supportedFormats')}</p>
           <Button variant="outline" className="mt-4">
@@ -283,7 +283,7 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
                     {file.status === 'uploaded' && file.analysis && (
                       <div className="flex items-center text-emerald-600">
                         <CheckCircle className="w-4 h-4 mr-1" />
-                        <span className="text-sm">Analyzed</span>
+                        <span className="text-sm">{t('documentAnalyzed')}</span>
                       </div>
                     )}
                     {file.status === 'uploaded' && file.error && (
@@ -295,11 +295,11 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
                     {file.status === 'uploading' && (
                       <div className="flex items-center text-blue-600">
                         <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mr-1"></div>
-                        <span className="text-sm">Analyzing...</span>
+                        <span className="text-sm">{t('analyzing')}</span>
                       </div>
                     )}
                     {file.status === 'error' && (
-                      <span className="text-sm text-red-600">Upload Error</span>
+                      <span className="text-sm text-red-600">{t('uploadError')}</span>
                     )}
                     <Button
                       variant="ghost"
