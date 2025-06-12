@@ -394,12 +394,17 @@ export const translations: Record<string, Record<string, string>> = {
     removeFile: "Xóa tệp",
     
     // Personal Information
+    personalInformation: "Thông tin Cá nhân",
     personalInfo: "Thông tin Cá nhân",
     fullName: "Họ và Tên",
     passportNumber: "Số Hộ chiếu",
     dateOfBirth: "Ngày sinh",
     nationality: "Quốc tịch",
-    travelDate: "Ngày du lịch", 
+    selectNationalityPlaceholder: "Chọn quốc tịch...",
+    plannedTravelDate: "Ngày Du lịch Dự kiến",
+    travelDate: "Ngày du lịch",
+    durationOfStay: "Thời gian Lưu trú (ngày)",
+    daysPlaceholder: "ví dụ: 14",
     stayDuration: "Thời gian lưu trú (ngày)",
     
     // Validation
@@ -588,7 +593,6 @@ export const translations: Record<string, Record<string, string>> = {
     // Nationality Selection  
     selectNationality: "选择国籍",
     yourNationality: "您的国籍",
-    selectNationalityPlaceholder: "选择国籍...",
     
     // File Upload
     uploadDocuments: "上传文档",
@@ -605,7 +609,11 @@ export const translations: Record<string, Record<string, string>> = {
     passportNumber: "护照号码",
     dateOfBirth: "出生日期",
     nationality: "国籍",
+    selectNationalityPlaceholder: "选择国籍...",
+    plannedTravelDate: "计划旅行日期",
     travelDate: "旅行日期",
+    durationOfStay: "停留时间（天）",
+    daysPlaceholder: "例如：14",
     stayDuration: "停留天数",
     
     // Common UI
@@ -768,12 +776,17 @@ export const translations: Record<string, Record<string, string>> = {
     supportedFormats: "Formatos soportados: PDF, JPG, PNG, DOCX",
     analyzing: "Analizando...",
     uploadSuccess: "Subida exitosa",
+    personalInformation: "Información Personal",
     personalInfo: "Información Personal",
     fullName: "Nombre Completo",
     passportNumber: "Número de Pasaporte",
     dateOfBirth: "Fecha de Nacimiento",
     nationality: "Nacionalidad",
+    selectNationalityPlaceholder: "Seleccionar nacionalidad...",
+    plannedTravelDate: "Fecha de Viaje Planeada",
     travelDate: "Fecha de Viaje",
+    durationOfStay: "Duración de Estadía (días)",
+    daysPlaceholder: "ej: 14",
     stayDuration: "Duración de Estadía (días)",
     validationResults: "Resultados de Validación",
     overallScore: "Puntuación General",
@@ -1157,12 +1170,17 @@ export const translations: Record<string, Record<string, string>> = {
     
     // Personal Info
     personalInformation: "Informasi Pribadi",
+    personalInfo: "Informasi Pribadi",
     applicantName: "Nama Pemohon",
     fullName: "Nama Lengkap",
     passportNumber: "Nomor Paspor",
     dateOfBirth: "Tanggal Lahir",
     nationality: "Kewarganegaraan",
+    selectNationalityPlaceholder: "Pilih kewarganegaraan...",
+    plannedTravelDate: "Tanggal Perjalanan yang Direncanakan",
     travelDate: "Tanggal Perjalanan",
+    durationOfStay: "Durasi Tinggal (hari)",
+    daysPlaceholder: "contoh: 14",
     stayDuration: "Durasi Tinggal",
     
     // Common UI
