@@ -1,4 +1,4 @@
-import jsPDF from 'jspdf';
+const { jsPDF } = require('jspdf');
 
 interface ValidationResult {
   verified: Array<{
@@ -54,7 +54,7 @@ interface ReportData {
 }
 
 export function generateValidationReportPDF(data: ReportData): Buffer {
-  const doc = new (jsPDF as any)();
+  const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 20;
   let yPosition = 30;
@@ -140,7 +140,7 @@ export function generateValidationReportPDF(data: ReportData): Buffer {
 }
 
 export function generateRequirementsChecklistPDF(requirements: ComprehensiveVisaRequirements): Buffer {
-  const doc = new (jsPDF as any)('p', 'mm', 'a4');
+  const doc = new jsPDF('p', 'mm', 'a4');
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 20;
   let yPosition = 30;
