@@ -796,7 +796,44 @@ export const translations: Record<string, Record<string, string>> = {
     appName: "مدقق التأشيرة المحترف",
     back: "رجوع",
     next: "التالي",
-    previous: "السابق"
+    previous: "السابق",
+    homeTitle: "التحقق المهني من وثائق التأشيرة",
+    homeSubtitle: "تحقق من وثائق السفر بتقنية الذكاء الاصطناعي قبل التقديم",
+    startValidation: "بدء التحقق من الوثائق",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "إخلاء مسؤولية قانوني مهم",
+    noGuaranteeTitle: "لا ضمان لموافقة التأشيرة:",
+    noGuaranteeText: "مدقق التأشيرة المحترف هو مجرد أداة مساعدة لإعداد الوثائق. لا نضمن موافقة التأشيرة، ولا نمثل أي وكالة حكومية، ولا نؤثر على قرارات السفارة.",
+    accuracyLimitationsTitle: "قيود الدقة:",
+    accuracyLimitationsText: "بينما يحلل الذكاء الاصطناعي الوثائق وفقاً للمتطلبات المعروفة، قد لا تكون النتائج دقيقة بنسبة 100%. متطلبات السفارة تتغير بكثرة وتختلف حسب الظروف الفردية.",
+    notOfficialGuidanceTitle: "ليس إرشاداً رسمياً:",
+    notOfficialGuidanceText: "هذه الخدمة لا تحل محل مواقع السفارات الرسمية، أو الاستشارة القنصلية، أو استشارة محامي الهجرة. تحقق دائماً من المتطلبات الحالية مع المصادر الرسمية.",
+    individualResponsibilityTitle: "المسؤولية الفردية:",
+    individualResponsibilityText: "كل مسافر مسؤول بالكامل عن ضمان أن طلب التأشيرة يلبي جميع المتطلبات. قرارات موافقة التأشيرة تتخذ حصرياً من قبل مسؤولي السفارة والقنصلية.",
+    readFullDisclaimer: "اقرأ إخلاء المسؤولية الكامل وقيود الخدمة ←",
+    
+    // Features Section
+    whyChoose: "لماذا تختار مدقق التأشيرة المحترف",
+    securePrivate: "آمن وخاص",
+    securePrivateDesc: "جميع الوثائق تُحذف تلقائياً بعد التحقق لحماية خصوصيتك وأمانك.",
+    fastProcessing: "معالجة سريعة",
+    fastProcessingDesc: "احصل على نتائج التحقق في دقائق، وليس أيام.",
+    comprehensiveAnalysis: "تحليل شامل",
+    comprehensiveAnalysisDesc: "تحليل وثائق مدعوم بالذكاء الاصطناعي مع توصيات مفصلة وفحص المتطلبات.",
+    
+    // How it Works
+    howItWorks: "كيف يعمل",
+    step1: "اختر الوجهة",
+    step1Desc: "اختر بلد الوجهة ونوع التأشيرة",
+    step2: "رفع الوثائق", 
+    step2Desc: "ارفع وثائق طلب التأشيرة",
+    step3: "إدخال التفاصيل",
+    step3Desc: "املأ معلوماتك الشخصية",
+    step4: "معاينة النتائج",
+    step4Desc: "اطلع على معاينة التحقق قبل الدفع",
+    step5: "الدفع والتحميل",
+    step5Desc: "أكمل الدفع للحصول على التقرير المفصل الكامل"
   },
   
   bn: {
@@ -810,14 +847,88 @@ export const translations: Record<string, Record<string, string>> = {
     appName: "VisaValidator Pro",
     back: "Назад",
     next: "Далее",
-    previous: "Предыдущий"
+    previous: "Предыдущий",
+    homeTitle: "Профессиональная проверка визовых документов",
+    homeSubtitle: "Проверьте ваши документы для путешествий с помощью ИИ перед подачей заявления",
+    startValidation: "Начать проверку документов",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "КРИТИЧЕСКОЕ ПРАВОВОЕ ПРЕДУПРЕЖДЕНИЕ",
+    noGuaranteeTitle: "НЕТ ГАРАНТИИ ОДОБРЕНИЯ ВИЗЫ:",
+    noGuaranteeText: "VisaValidator Pro - это только инструмент помощи в подготовке документов. Мы не гарантируем одобрение визы, не представляем никакие государственные агентства и не влияем на решения посольства.",
+    accuracyLimitationsTitle: "ОГРАНИЧЕНИЯ ТОЧНОСТИ:",
+    accuracyLimitationsText: "Хотя наш ИИ анализирует документы согласно известным требованиям, результаты могут быть не на 100% точными. Требования посольства часто меняются и варьируются в зависимости от индивидуальных обстоятельств.",
+    notOfficialGuidanceTitle: "НЕ ОФИЦИАЛЬНОЕ РУКОВОДСТВО:",
+    notOfficialGuidanceText: "Эта услуга не заменяет официальные сайты посольств, консульские советы или консультацию с иммиграционным адвокатом. Всегда проверяйте текущие требования с официальными источниками.",
+    individualResponsibilityTitle: "ИНДИВИДУАЛЬНАЯ ОТВЕТСТВЕННОСТЬ:",
+    individualResponsibilityText: "Каждый путешественник полностью несет ответственность за обеспечение соответствия своего заявления на визу всем требованиям. Решения об одобрении визы принимаются исключительно должностными лицами посольства и консульства.",
+    readFullDisclaimer: "Читать полное предупреждение и ограничения услуг →",
+    
+    // Features Section
+    whyChoose: "Почему выбрать VisaValidator Pro",
+    securePrivate: "Безопасно и приватно",
+    securePrivateDesc: "Все документы автоматически удаляются после проверки для вашей конфиденциальности и безопасности.",
+    fastProcessing: "Быстрая обработка",
+    fastProcessingDesc: "Получите результаты проверки за минуты, а не дни.",
+    comprehensiveAnalysis: "Всесторонний анализ",
+    comprehensiveAnalysisDesc: "Анализ документов с помощью ИИ с подробными рекомендациями и проверкой требований.",
+    
+    // How it Works
+    howItWorks: "Как это работает",
+    step1: "Выбрать направление",
+    step1Desc: "Выберите страну назначения и тип визы",
+    step2: "Загрузить документы", 
+    step2Desc: "Загрузите документы для заявления на визу",
+    step3: "Ввести данные",
+    step3Desc: "Заполните вашу личную информацию",
+    step4: "Предварительный просмотр результатов",
+    step4Desc: "Посмотрите предварительный просмотр проверки перед оплатой",
+    step5: "Оплатить и скачать",
+    step5Desc: "Завершите оплату для получения полного подробного отчета"
   },
   
   pt: {
     appName: "VisaValidator Pro",
     back: "Voltar",
     next: "Próximo",
-    previous: "Anterior"
+    previous: "Anterior",
+    homeTitle: "Validação Profissional de Documentos de Visto",
+    homeSubtitle: "Valide seus documentos de viagem com tecnologia IA antes da aplicação",
+    startValidation: "Iniciar Validação de Documentos",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "AVISO LEGAL CRÍTICO",
+    noGuaranteeTitle: "SEM GARANTIA DE APROVAÇÃO DE VISTO:",
+    noGuaranteeText: "VisaValidator Pro é apenas uma ferramenta de assistência para preparação de documentos. Não garantimos aprovação de visto, não representamos nenhuma agência governamental, nem influenciamos decisões de embaixada.",
+    accuracyLimitationsTitle: "LIMITAÇÕES DE PRECISÃO:",
+    accuracyLimitationsText: "Embora nossa IA analise documentos de acordo com requisitos conhecidos, os resultados podem não ser 100% precisos. Requisitos de embaixada mudam frequentemente e variam conforme circunstâncias individuais.",
+    notOfficialGuidanceTitle: "NÃO É ORIENTAÇÃO OFICIAL:",
+    notOfficialGuidanceText: "Este serviço não substitui sites oficiais de embaixadas, aconselhamento consular, ou consulta com advogado de imigração. Sempre verifique requisitos atuais com fontes oficiais.",
+    individualResponsibilityTitle: "RESPONSABILIDADE INDIVIDUAL:",
+    individualResponsibilityText: "Cada viajante é inteiramente responsável por garantir que sua aplicação de visto atenda todos os requisitos. Decisões de aprovação de visto são tomadas exclusivamente por funcionários de embaixada e consulares.",
+    readFullDisclaimer: "Ler Aviso Completo e Limitações do Serviço →",
+    
+    // Features Section
+    whyChoose: "Por que Escolher VisaValidator Pro",
+    securePrivate: "Seguro e Privado",
+    securePrivateDesc: "Todos os documentos são automaticamente deletados após validação para sua privacidade e segurança.",
+    fastProcessing: "Processamento Rápido",
+    fastProcessingDesc: "Obtenha seus resultados de validação em minutos, não dias.",
+    comprehensiveAnalysis: "Análise Abrangente",
+    comprehensiveAnalysisDesc: "Análise de documentos alimentada por IA com recomendações detalhadas e verificação de requisitos.",
+    
+    // How it Works
+    howItWorks: "Como Funciona",
+    step1: "Escolher Destino",
+    step1Desc: "Selecione seu país de destino e tipo de visto",
+    step2: "Enviar Documentos", 
+    step2Desc: "Envie seus documentos de aplicação de visto",
+    step3: "Inserir Detalhes",
+    step3Desc: "Preencha suas informações pessoais",
+    step4: "Visualizar Resultados",
+    step4Desc: "Veja a prévia de validação antes do pagamento",
+    step5: "Pagar e Baixar",
+    step5Desc: "Complete o pagamento para relatório detalhado completo"
   },
   
   id: {
@@ -838,14 +949,88 @@ export const translations: Record<string, Record<string, string>> = {
     appName: "VisaValidator Pro",
     back: "Zurück",
     next: "Weiter",
-    previous: "Vorherige"
+    previous: "Vorherige",
+    homeTitle: "Professionelle Visa-Dokument-Validierung",
+    homeSubtitle: "Validieren Sie Ihre Reisedokumente mit KI-Technologie vor der Antragstellung",
+    startValidation: "Dokument-Validierung starten",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "KRITISCHER RECHTLICHER HAFTUNGSAUSSCHLUSS",
+    noGuaranteeTitle: "KEINE GARANTIE FÜR VISA-GENEHMIGUNG:",
+    noGuaranteeText: "VisaValidator Pro ist nur ein Hilfswerkzeug zur Dokumentenvorbereitung. Wir garantieren keine Visa-Genehmigung, vertreten keine Regierungsbehörde und beeinflussen keine Botschaftsentscheidungen.",
+    accuracyLimitationsTitle: "GENAUIGKEITSBESCHRÄNKUNGEN:",
+    accuracyLimitationsText: "Obwohl unsere KI Dokumente nach bekannten Anforderungen analysiert, können die Ergebnisse nicht 100% genau sein. Botschaftsanforderungen ändern sich häufig und variieren je nach individuellen Umständen.",
+    notOfficialGuidanceTitle: "KEINE OFFIZIELLE BERATUNG:",
+    notOfficialGuidanceText: "Dieser Service ersetzt nicht offizielle Botschaftswebsites, konsularische Beratung oder Beratung durch Einwanderungsanwälte. Überprüfen Sie immer aktuelle Anforderungen bei offiziellen Quellen.",
+    individualResponsibilityTitle: "INDIVIDUELLE VERANTWORTUNG:",
+    individualResponsibilityText: "Jeder Reisende ist allein verantwortlich dafür sicherzustellen, dass sein Visa-Antrag alle Anforderungen erfüllt. Visa-Genehmigungsentscheidungen werden ausschließlich von Botschafts- und Konsularbeamten getroffen.",
+    readFullDisclaimer: "Vollständigen Haftungsausschluss und Service-Beschränkungen lesen →",
+    
+    // Features Section
+    whyChoose: "Warum VisaValidator Pro wählen",
+    securePrivate: "Sicher und Privat",
+    securePrivateDesc: "Alle Dokumente werden nach der Validierung automatisch gelöscht für Ihre Privatsphäre und Sicherheit.",
+    fastProcessing: "Schnelle Verarbeitung",
+    fastProcessingDesc: "Erhalten Sie Ihre Validierungsergebnisse in Minuten, nicht Tagen.",
+    comprehensiveAnalysis: "Umfassende Analyse",
+    comprehensiveAnalysisDesc: "KI-gestützte Dokumentenanalyse mit detaillierten Empfehlungen und Anforderungsüberprüfung.",
+    
+    // How it Works
+    howItWorks: "Wie es funktioniert",
+    step1: "Ziel wählen",
+    step1Desc: "Wählen Sie Ihr Zielland und Visa-Typ",
+    step2: "Dokumente hochladen", 
+    step2Desc: "Laden Sie Ihre Visa-Antragsdokumente hoch",
+    step3: "Details eingeben",
+    step3Desc: "Füllen Sie Ihre persönlichen Informationen aus",
+    step4: "Ergebnisse vorschau",
+    step4Desc: "Sehen Sie die Validierungsvorschau vor der Zahlung",
+    step5: "Zahlen und herunterladen",
+    step5Desc: "Zahlung abschließen für vollständigen detaillierten Bericht"
   },
   
   ja: {
     appName: "ビザバリデータープロ",
     back: "戻る",
     next: "次へ",
-    previous: "前へ"
+    previous: "前へ",
+    homeTitle: "プロフェッショナルビザ書類検証",
+    homeSubtitle: "申請前にAI技術で旅行書類を検証",
+    startValidation: "書類検証を開始",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "重要な法的免責事項",
+    noGuaranteeTitle: "ビザ承認の保証なし：",
+    noGuaranteeText: "VisaValidator Proは書類準備支援ツールに過ぎません。ビザ承認を保証せず、政府機関を代表せず、大使館の決定に影響を与えません。",
+    accuracyLimitationsTitle: "精度の制限：",
+    accuracyLimitationsText: "AIは既知の要件に従って書類を分析しますが、結果が100%正確でない場合があります。大使館の要件は頻繁に変更され、個別の状況によって異なります。",
+    notOfficialGuidanceTitle: "公式ガイダンスではありません：",
+    notOfficialGuidanceText: "このサービスは公式大使館ウェブサイト、領事アドバイス、または移民弁護士相談の代替ではありません。常に公式ソースで現在の要件を確認してください。",
+    individualResponsibilityTitle: "個人の責任：",
+    individualResponsibilityText: "各旅行者は、ビザ申請がすべての要件を満たすことを確実にする完全な責任を負います。ビザ承認決定は大使館および領事館職員によってのみ行われます。",
+    readFullDisclaimer: "完全な免責事項とサービス制限を読む →",
+    
+    // Features Section
+    whyChoose: "なぜVisaValidator Proを選ぶのか",
+    securePrivate: "安全でプライベート",
+    securePrivateDesc: "プライバシーとセキュリティのため、すべての書類は検証後に自動的に削除されます。",
+    fastProcessing: "高速処理",
+    fastProcessingDesc: "数日ではなく数分で検証結果を取得。",
+    comprehensiveAnalysis: "包括的分析",
+    comprehensiveAnalysisDesc: "詳細な推奨事項と要件確認を備えたAI駆動の書類分析。",
+    
+    // How it Works
+    howItWorks: "仕組み",
+    step1: "目的地を選択",
+    step1Desc: "目的地国とビザタイプを選択",
+    step2: "書類をアップロード", 
+    step2Desc: "ビザ申請書類をアップロード",
+    step3: "詳細を入力",
+    step3Desc: "個人情報を記入",
+    step4: "結果をプレビュー",
+    step4Desc: "支払い前に検証プレビューを確認",
+    step5: "支払いとダウンロード",
+    step5Desc: "完全な詳細レポートのために支払いを完了"
   },
   
   sw: {
@@ -887,7 +1072,44 @@ export const translations: Record<string, Record<string, string>> = {
     appName: "비자검증기 프로",
     back: "뒤로",
     next: "다음",
-    previous: "이전"
+    previous: "이전",
+    homeTitle: "전문 비자 서류 검증",
+    homeSubtitle: "신청 전 AI 기술로 여행 서류를 검증하세요",
+    startValidation: "서류 검증 시작",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "중요한 법적 면책조항",
+    noGuaranteeTitle: "비자 승인 보장 없음:",
+    noGuaranteeText: "VisaValidator Pro는 서류 준비 지원 도구일 뿐입니다. 비자 승인을 보장하지 않으며, 정부 기관을 대표하지 않고, 대사관 결정에 영향을 주지 않습니다.",
+    accuracyLimitationsTitle: "정확도 제한:",
+    accuracyLimitationsText: "AI가 알려진 요구사항에 따라 서류를 분석하지만, 결과가 100% 정확하지 않을 수 있습니다. 대사관 요구사항은 자주 변경되며 개별 상황에 따라 달라집니다.",
+    notOfficialGuidanceTitle: "공식 안내가 아님:",
+    notOfficialGuidanceText: "이 서비스는 공식 대사관 웹사이트, 영사 조언, 또는 이민 변호사 상담을 대체하지 않습니다. 항상 공식 출처에서 현재 요구사항을 확인하세요.",
+    individualResponsibilityTitle: "개인 책임:",
+    individualResponsibilityText: "각 여행자는 비자 신청이 모든 요구사항을 충족하는지 확인할 전적인 책임이 있습니다. 비자 승인 결정은 대사관 및 영사관 직원에 의해서만 이루어집니다.",
+    readFullDisclaimer: "전체 면책조항 및 서비스 제한사항 읽기 →",
+    
+    // Features Section
+    whyChoose: "왜 VisaValidator Pro를 선택해야 하나요",
+    securePrivate: "안전하고 비공개",
+    securePrivateDesc: "개인정보 보호와 보안을 위해 모든 서류는 검증 후 자동으로 삭제됩니다.",
+    fastProcessing: "빠른 처리",
+    fastProcessingDesc: "며칠이 아닌 몇 분 만에 검증 결과를 받으세요.",
+    comprehensiveAnalysis: "포괄적 분석",
+    comprehensiveAnalysisDesc: "상세한 권장사항과 요구사항 확인이 포함된 AI 기반 서류 분석.",
+    
+    // How it Works
+    howItWorks: "작동 방식",
+    step1: "목적지 선택",
+    step1Desc: "목적지 국가와 비자 유형을 선택하세요",
+    step2: "서류 업로드", 
+    step2Desc: "비자 신청 서류를 업로드하세요",
+    step3: "세부사항 입력",
+    step3Desc: "개인 정보를 입력하세요",
+    step4: "결과 미리보기",
+    step4Desc: "결제 전 검증 미리보기를 확인하세요",
+    step5: "결제 및 다운로드",
+    step5Desc: "전체 상세 보고서를 위한 결제를 완료하세요"
   }
 };
 
