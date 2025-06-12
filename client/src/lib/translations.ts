@@ -162,6 +162,40 @@ const languageTranslations: Record<string, Record<string, string>> = {
     pricing: "Bảng giá",
     support: "Hỗ trợ",
     
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "TUYÊN BỐ PHÁP LÝ QUAN TRỌNG",
+    noGuaranteeTitle: "KHÔNG BẢO ĐẢÁM PHÊ DUYỆT VISA:",
+    noGuaranteeText: "VisaValidator Pro chỉ là công cụ hỗ trợ chuẩn bị tài liệu. Chúng tôi không bảo đảm việc phê duyệt visa, không đại diện cho bất kỳ cơ quan chính phủ nào, và không ảnh hưởng đến quyết định của đại sứ quán.",
+    accuracyLimitationsTitle: "HẠN CHẾ ĐỘ CHÍNH XÁC:",
+    accuracyLimitationsText: "Mặc dù AI của chúng tôi phân tích tài liệu theo các yêu cầu đã biết, kết quả có thể không chính xác 100%. Yêu cầu của đại sứ quán thường xuyên thay đổi và khác nhau tùy theo hoàn cảnh cá nhân.",
+    notOfficialGuidanceTitle: "KHÔNG PHẢI HƯỚNG DẪN CHÍNH THỨC:",
+    notOfficialGuidanceText: "Dịch vụ này không thay thế các trang web chính thức của đại sứ quán, lời khuyên lãnh sự, hoặc tư vấn với luật sư di trú. Luôn xác minh các yêu cầu hiện tại với các nguồn chính thức.",
+    individualResponsibilityTitle: "TRÁCH NHIỆM CÁ NHÂN:",
+    individualResponsibilityText: "Mỗi du khách có trách nhiệm hoàn toàn đảm bảo đơn xin visa của họ đáp ứng tất cả các yêu cầu. Quyết định phê duyệt visa chỉ được đưa ra bởi các quan chức đại sứ quán và lãnh sự quán.",
+    readFullDisclaimer: "Đọc toàn bộ tuyên bố miễn trừ trách nhiệm và hạn chế dịch vụ →",
+    
+    // Features Section
+    whyChoose: "Tại sao chọn VisaValidator Pro",
+    securePrivate: "Bảo mật & Riêng tư",
+    securePrivateDesc: "Tất cả tài liệu được tự động xóa sau xác thực để bảo vệ quyền riêng tư và an ninh của bạn.",
+    fastProcessing: "Xử lý Nhanh chóng",
+    fastProcessingDesc: "Nhận kết quả xác thực trong vài phút, không phải vài ngày.",
+    comprehensiveAnalysis: "Phân tích Toàn diện",
+    comprehensiveAnalysisDesc: "Phân tích tài liệu được hỗ trợ bởi AI với khuyến nghị chi tiết và kiểm tra yêu cầu.",
+    
+    // How it Works
+    howItWorks: "Cách thức hoạt động",
+    step1: "Chọn Điểm đến",
+    step1Desc: "Chọn quốc gia đích và loại visa của bạn",
+    step2: "Tải lên Tài liệu",
+    step2Desc: "Tải lên các tài liệu đơn xin visa của bạn",
+    step3: "Nhập Chi tiết",
+    step3Desc: "Điền thông tin cá nhân của bạn",
+    step4: "Xem trước Kết quả",
+    step4Desc: "Xem bản xem trước xác thực trước khi thanh toán",
+    step5: "Thanh toán và Tải xuống",
+    step5Desc: "Hoàn tất thanh toán để có báo cáo chi tiết đầy đủ",
+    
     // Pricing Section
     simplePricing: "Giá cả Đơn giản, Minh bạch",
     perValidation: "Mỗi lần xác thực",
@@ -171,7 +205,7 @@ const languageTranslations: Record<string, Record<string, string>> = {
     secureHandling: "Xử lý tài liệu an toàn",
     startValidationButton: "Bắt đầu Xác thực",
     
-    // Footer
+    // Footer and Navigation
     professionalService: "Dịch vụ xác thực tài liệu chuyên nghiệp cho khách du lịch trên toàn thế giới.",
     service: "Dịch vụ",
     supportedCountries: "Các quốc gia được hỗ trợ",
@@ -179,7 +213,77 @@ const languageTranslations: Record<string, Record<string, string>> = {
     legal: "Pháp lý",
     disclaimer: "Tuyên bố miễn trừ trách nhiệm",
     dataProtection: "Bảo vệ dữ liệu",
-    copyright: "© 2024 VisaValidator Pro. Bảo lưu mọi quyền."
+    copyright: "© 2024 VisaValidator Pro. Bảo lưu mọi quyền.",
+    
+    // Country Selection
+    selectCountry: "Chọn quốc gia đích của bạn",
+    selectNationality: "Chọn quốc tịch của bạn",
+    selectYourDestination: "Chọn Điểm đến của Bạn",
+    chooseDestinationCountry: "Chọn quốc gia bạn dự định ghé thăm",
+    selectYourNationality: "Chọn Quốc tịch của Bạn",
+    yourNationalityDescription: "Chọn quốc tịch của bạn để nhận yêu cầu visa được cá nhân hóa",
+    popularChoices: "Lựa chọn Phổ biến",
+    searchCountries: "Tìm kiếm quốc gia...",
+    searchNationalities: "Tìm kiếm quốc tịch...",
+    proceedToValidation: "Tiến hành Xác thực",
+    
+    // Visa Types
+    tourist: "Du lịch",
+    business: "Kinh doanh",
+    student: "Sinh viên",
+    work: "Làm việc",
+    transit: "Quá cảnh",
+    family: "Thăm gia đình",
+    
+    // Document Upload
+    uploadFiles: "Tải lên Tài liệu",
+    selectFiles: "Chọn File",
+    uploadedFiles: "File đã tải lên",
+    noFilesUploaded: "Chưa có file nào được tải lên",
+    analyzing: "Đang phân tích...",
+    uploadSuccess: "Tải lên thành công",
+    
+    // Personal Information
+    personalInformation: "Thông tin Cá nhân",
+    fullName: "Họ và Tên",
+    firstName: "Tên",
+    lastName: "Họ",
+    middleName: "Tên đệm",
+    passportNumber: "Số Hộ chiếu",
+    dateOfBirth: "Ngày sinh",
+    nationality: "Quốc tịch",
+    plannedTravelDate: "Ngày Du lịch Dự kiến",
+    durationOfStay: "Thời gian Lưu trú (ngày)",
+    
+    // Validation Results
+    validationResults: "Kết quả Xác thực",
+    overallScore: "Điểm Tổng thể",
+    verifiedItems: "Mục đã Xác minh",
+    issuesFound: "Vấn đề Phát hiện",
+    recommendations: "Khuyến nghị",
+    downloadReport: "Tải xuống Báo cáo",
+    
+    // Payment
+    payment: "Thanh toán",
+    paymentDescription: "Hoàn tất thanh toán để nhận báo cáo xác thực đầy đủ của bạn",
+    price: "$9.99",
+    payNow: "Thanh toán Ngay",
+    
+    // Common
+    loading: "Đang tải...",
+    error: "Lỗi",
+    success: "Thành công",
+    close: "Đóng",
+    save: "Lưu",
+    cancel: "Hủy",
+    continue: "Tiếp tục",
+    required: "Bắt buộc",
+    optional: "Tùy chọn",
+    
+    // Additional
+    contact: "Liên hệ",
+    privacy: "Chính sách Bảo mật",
+    terms: "Điều khoản Dịch vụ"
   },
   
   zh: {
@@ -198,6 +302,40 @@ const languageTranslations: Record<string, Record<string, string>> = {
     pricing: "价格",
     support: "支持",
     
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "重要法律免责声明",
+    noGuaranteeTitle: "不保证签证批准：",
+    noGuaranteeText: "VisaValidator Pro仅为文档准备辅助工具。我们不保证签证批准，不代表任何政府机构，也不影响大使馆决定。",
+    accuracyLimitationsTitle: "准确性限制：",
+    accuracyLimitationsText: "虽然我们的AI根据已知要求分析文档，但结果可能不是100%准确。大使馆要求经常变化，并因个人情况而异。",
+    notOfficialGuidanceTitle: "非官方指导：",
+    notOfficialGuidanceText: "此服务不能替代官方大使馆网站、领事建议或移民律师咨询。请始终通过官方渠道验证当前要求。",
+    individualResponsibilityTitle: "个人责任：",
+    individualResponsibilityText: "每位旅行者都有完全责任确保其签证申请符合所有要求。签证批准决定仅由大使馆和领事馆官员做出。",
+    readFullDisclaimer: "阅读完整免责声明和服务限制 →",
+    
+    // Features Section
+    whyChoose: "为什么选择VisaValidator Pro",
+    securePrivate: "安全私密",
+    securePrivateDesc: "所有文档在验证后自动删除，保护您的隐私和安全。",
+    fastProcessing: "快速处理",
+    fastProcessingDesc: "在几分钟内获得验证结果，而非几天。",
+    comprehensiveAnalysis: "全面分析",
+    comprehensiveAnalysisDesc: "AI驱动的文档分析，提供详细建议和要求检查。",
+    
+    // How it Works
+    howItWorks: "工作原理",
+    step1: "选择目的地",
+    step1Desc: "选择您的目的地国家和签证类型",
+    step2: "上传文档",
+    step2Desc: "上传您的签证申请文档",
+    step3: "输入详情",
+    step3Desc: "填写您的个人信息",
+    step4: "预览结果",
+    step4Desc: "付款前查看验证预览",
+    step5: "付款和下载",
+    step5Desc: "完成付款以获得完整详细报告",
+    
     // Pricing Section
     simplePricing: "简单透明的定价",
     perValidation: "每次验证",
@@ -207,7 +345,7 @@ const languageTranslations: Record<string, Record<string, string>> = {
     secureHandling: "安全文档处理",
     startValidationButton: "开始验证",
     
-    // Footer
+    // Footer and Navigation
     professionalService: "为全球旅行者提供专业文档验证服务。",
     service: "服务",
     supportedCountries: "支持的国家",
@@ -215,7 +353,77 @@ const languageTranslations: Record<string, Record<string, string>> = {
     legal: "法律",
     disclaimer: "免责声明", 
     dataProtection: "数据保护",
-    copyright: "© 2024 VisaValidator Pro. 保留所有权利。"
+    copyright: "© 2024 VisaValidator Pro. 保留所有权利。",
+    
+    // Country Selection
+    selectCountry: "选择您的目的地国家",
+    selectNationality: "选择您的国籍",
+    selectYourDestination: "选择您的目的地",
+    chooseDestinationCountry: "选择您计划访问的国家",
+    selectYourNationality: "选择您的国籍",
+    yourNationalityDescription: "选择您的国籍以获得个性化签证要求",
+    popularChoices: "热门选择",
+    searchCountries: "搜索国家...",
+    searchNationalities: "搜索国籍...",
+    proceedToValidation: "进行验证",
+    
+    // Visa Types
+    tourist: "旅游",
+    business: "商务",
+    student: "学生",
+    work: "工作",
+    transit: "过境",
+    family: "探亲",
+    
+    // Document Upload
+    uploadFiles: "上传文档",
+    selectFiles: "选择文件",
+    uploadedFiles: "已上传文件",
+    noFilesUploaded: "尚未上传文件",
+    analyzing: "分析中...",
+    uploadSuccess: "上传成功",
+    
+    // Personal Information
+    personalInformation: "个人信息",
+    fullName: "全名",
+    firstName: "名",
+    lastName: "姓",
+    middleName: "中间名",
+    passportNumber: "护照号码",
+    dateOfBirth: "出生日期",
+    nationality: "国籍",
+    plannedTravelDate: "计划旅行日期",
+    durationOfStay: "停留时间（天）",
+    
+    // Validation Results
+    validationResults: "验证结果",
+    overallScore: "总分",
+    verifiedItems: "已验证项目",
+    issuesFound: "发现的问题",
+    recommendations: "建议",
+    downloadReport: "下载报告",
+    
+    // Payment
+    payment: "付款",
+    paymentDescription: "完成付款以获得您的完整验证报告",
+    price: "$9.99",
+    payNow: "立即付款",
+    
+    // Common
+    loading: "加载中...",
+    error: "错误",
+    success: "成功",
+    close: "关闭",
+    save: "保存",
+    cancel: "取消",
+    continue: "继续",
+    required: "必填",
+    optional: "可选",
+    
+    // Additional
+    contact: "联系",
+    privacy: "隐私政策",
+    terms: "服务条款"
   },
   
   es: {
@@ -234,6 +442,40 @@ const languageTranslations: Record<string, Record<string, string>> = {
     pricing: "Precios",
     support: "Soporte",
     
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "AVISO LEGAL CRÍTICO",
+    noGuaranteeTitle: "SIN GARANTÍA DE APROBACIÓN DE VISA:",
+    noGuaranteeText: "VisaValidator Pro es solo una herramienta de asistencia para la preparación de documentos. No garantizamos la aprobación de visa, no representamos ninguna agencia gubernamental, ni influenciamos las decisiones de la embajada.",
+    accuracyLimitationsTitle: "LIMITACIONES DE PRECISIÓN:",
+    accuracyLimitationsText: "Aunque nuestra IA analiza documentos según los requisitos conocidos, los resultados pueden no ser 100% precisos. Los requisitos de la embajada cambian frecuentemente y varían según las circunstancias individuales.",
+    notOfficialGuidanceTitle: "NO ES ORIENTACIÓN OFICIAL:",
+    notOfficialGuidanceText: "Este servicio no reemplaza los sitios web oficiales de embajadas, consejos consulares, o consulta con un abogado de inmigración. Siempre verifique los requisitos actuales con fuentes oficiales.",
+    individualResponsibilityTitle: "RESPONSABILIDAD INDIVIDUAL:",
+    individualResponsibilityText: "Cada viajero tiene la responsabilidad completa de asegurar que su solicitud de visa cumple con todos los requisitos. Las decisiones de aprobación de visa son tomadas únicamente por funcionarios de embajadas y consulados.",
+    readFullDisclaimer: "Leer descargo completo y limitaciones del servicio →",
+    
+    // Features Section
+    whyChoose: "Por qué elegir VisaValidator Pro",
+    securePrivate: "Seguro y Privado",
+    securePrivateDesc: "Todos los documentos se eliminan automáticamente después de la validación para su privacidad y seguridad.",
+    fastProcessing: "Procesamiento Rápido",
+    fastProcessingDesc: "Obtenga resultados de validación en minutos, no días.",
+    comprehensiveAnalysis: "Análisis Integral",
+    comprehensiveAnalysisDesc: "Análisis de documentos impulsado por IA con recomendaciones detalladas y verificación de requisitos.",
+    
+    // How it Works
+    howItWorks: "Cómo funciona",
+    step1: "Seleccionar Destino",
+    step1Desc: "Elija su país de destino y tipo de visa",
+    step2: "Subir Documentos",
+    step2Desc: "Suba sus documentos de solicitud de visa",
+    step3: "Introducir Detalles",
+    step3Desc: "Complete su información personal",
+    step4: "Vista Previa de Resultados",
+    step4Desc: "Vea la vista previa de validación antes del pago",
+    step5: "Pagar y Descargar",
+    step5Desc: "Complete el pago para el informe detallado completo",
+    
     // Pricing Section
     simplePricing: "Precios Simples y Transparentes",
     perValidation: "Por validación",
@@ -243,7 +485,7 @@ const languageTranslations: Record<string, Record<string, string>> = {
     secureHandling: "Manejo seguro de documentos",
     startValidationButton: "Comenzar Validación",
     
-    // Footer
+    // Footer and Navigation
     professionalService: "Servicio profesional de validación de documentos para viajeros de todo el mundo.",
     service: "Servicio",
     supportedCountries: "Países Compatibles",
@@ -251,7 +493,77 @@ const languageTranslations: Record<string, Record<string, string>> = {
     legal: "Legal",
     disclaimer: "Descargo de responsabilidad",
     dataProtection: "Protección de Datos",
-    copyright: "© 2024 VisaValidator Pro. Todos los derechos reservados."
+    copyright: "© 2024 VisaValidator Pro. Todos los derechos reservados.",
+    
+    // Country Selection
+    selectCountry: "Seleccione su país de destino",
+    selectNationality: "Seleccione su nacionalidad",
+    selectYourDestination: "Seleccione Su Destino",
+    chooseDestinationCountry: "Elija el país que planea visitar",
+    selectYourNationality: "Seleccione Su Nacionalidad",
+    yourNationalityDescription: "Elija su nacionalidad para obtener requisitos de visa personalizados",
+    popularChoices: "Opciones Populares",
+    searchCountries: "Buscar países...",
+    searchNationalities: "Buscar nacionalidades...",
+    proceedToValidation: "Proceder a la Validación",
+    
+    // Visa Types
+    tourist: "Turista",
+    business: "Negocios",
+    student: "Estudiante",
+    work: "Trabajo",
+    transit: "Tránsito",
+    family: "Visita Familiar",
+    
+    // Document Upload
+    uploadFiles: "Subir Documentos",
+    selectFiles: "Seleccionar Archivos",
+    uploadedFiles: "Archivos Subidos",
+    noFilesUploaded: "Aún no se han subido archivos",
+    analyzing: "Analizando...",
+    uploadSuccess: "Subida exitosa",
+    
+    // Personal Information
+    personalInformation: "Información Personal",
+    fullName: "Nombre Completo",
+    firstName: "Nombre",
+    lastName: "Apellido",
+    middleName: "Segundo Nombre",
+    passportNumber: "Número de Pasaporte",
+    dateOfBirth: "Fecha de Nacimiento",
+    nationality: "Nacionalidad",
+    plannedTravelDate: "Fecha de Viaje Planificada",
+    durationOfStay: "Duración de la Estancia (días)",
+    
+    // Validation Results
+    validationResults: "Resultados de Validación",
+    overallScore: "Puntuación General",
+    verifiedItems: "Elementos Verificados",
+    issuesFound: "Problemas Encontrados",
+    recommendations: "Recomendaciones",
+    downloadReport: "Descargar Informe",
+    
+    // Payment
+    payment: "Pago",
+    paymentDescription: "Complete el pago para recibir su informe de validación completo",
+    price: "$9.99",
+    payNow: "Pagar Ahora",
+    
+    // Common
+    loading: "Cargando...",
+    error: "Error",
+    success: "Éxito",
+    close: "Cerrar",
+    save: "Guardar",
+    cancel: "Cancelar",
+    continue: "Continuar",
+    required: "Obligatorio",
+    optional: "Opcional",
+    
+    // Additional
+    contact: "Contacto",
+    privacy: "Política de Privacidad",
+    terms: "Términos de Servicio"
   },
 
   fr: {
@@ -270,6 +582,40 @@ const languageTranslations: Record<string, Record<string, string>> = {
     pricing: "Tarifs",
     support: "Support",
     
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "AVIS LÉGAL CRITIQUE",
+    noGuaranteeTitle: "AUCUNE GARANTIE D'APPROBATION DE VISA :",
+    noGuaranteeText: "VisaValidator Pro n'est qu'un outil d'assistance à la préparation de documents. Nous ne garantissons pas l'approbation de visa, ne représentons aucune agence gouvernementale, et n'influençons pas les décisions d'ambassade.",
+    accuracyLimitationsTitle: "LIMITATIONS DE PRÉCISION :",
+    accuracyLimitationsText: "Bien que notre IA analyse les documents selon les exigences connues, les résultats peuvent ne pas être précis à 100%. Les exigences d'ambassade changent fréquemment et varient selon les circonstances individuelles.",
+    notOfficialGuidanceTitle: "PAS DE CONSEILS OFFICIELS :",
+    notOfficialGuidanceText: "Ce service ne remplace pas les sites web officiels d'ambassades, les conseils consulaires, ou la consultation avec un avocat en immigration. Vérifiez toujours les exigences actuelles avec les sources officielles.",
+    individualResponsibilityTitle: "RESPONSABILITÉ INDIVIDUELLE :",
+    individualResponsibilityText: "Chaque voyageur porte l'entière responsabilité de s'assurer que sa demande de visa répond à toutes les exigences. Les décisions d'approbation de visa sont prises uniquement par les fonctionnaires d'ambassades et de consulats.",
+    readFullDisclaimer: "Lire l'avis complet et les limitations du service →",
+    
+    // Features Section
+    whyChoose: "Pourquoi choisir VisaValidator Pro",
+    securePrivate: "Sécurisé et Privé",
+    securePrivateDesc: "Tous les documents sont automatiquement supprimés après validation pour votre confidentialité et sécurité.",
+    fastProcessing: "Traitement Rapide",
+    fastProcessingDesc: "Obtenez les résultats de validation en minutes, pas en jours.",
+    comprehensiveAnalysis: "Analyse Complète",
+    comprehensiveAnalysisDesc: "Analyse de documents alimentée par IA avec des recommandations détaillées et vérification des exigences.",
+    
+    // How it Works
+    howItWorks: "Comment ça marche",
+    step1: "Sélectionner la Destination",
+    step1Desc: "Choisissez votre pays de destination et type de visa",
+    step2: "Télécharger les Documents",
+    step2Desc: "Téléchargez vos documents de demande de visa",
+    step3: "Entrer les Détails",
+    step3Desc: "Remplissez vos informations personnelles",
+    step4: "Aperçu des Résultats",
+    step4Desc: "Voyez l'aperçu de validation avant le paiement",
+    step5: "Payer et Télécharger",
+    step5Desc: "Complétez le paiement pour le rapport détaillé complet",
+    
     // Pricing Section
     simplePricing: "Prix Simple et Transparent",
     perValidation: "Par validation",
@@ -279,7 +625,7 @@ const languageTranslations: Record<string, Record<string, string>> = {
     secureHandling: "Traitement sécurisé des documents",
     startValidationButton: "Commencer la Validation",
     
-    // Footer
+    // Footer and Navigation
     professionalService: "Service professionnel de validation de documents pour les voyageurs du monde entier.",
     service: "Service",
     supportedCountries: "Pays Pris en Charge",
@@ -287,7 +633,77 @@ const languageTranslations: Record<string, Record<string, string>> = {
     legal: "Légal",
     disclaimer: "Avis de non-responsabilité",
     dataProtection: "Protection des Données",
-    copyright: "© 2024 VisaValidator Pro. Tous droits réservés."
+    copyright: "© 2024 VisaValidator Pro. Tous droits réservés.",
+    
+    // Country Selection
+    selectCountry: "Sélectionnez votre pays de destination",
+    selectNationality: "Sélectionnez votre nationalité",
+    selectYourDestination: "Sélectionnez Votre Destination",
+    chooseDestinationCountry: "Choisissez le pays que vous prévoyez visiter",
+    selectYourNationality: "Sélectionnez Votre Nationalité",
+    yourNationalityDescription: "Choisissez votre nationalité pour obtenir des exigences de visa personnalisées",
+    popularChoices: "Choix Populaires",
+    searchCountries: "Rechercher des pays...",
+    searchNationalities: "Rechercher des nationalités...",
+    proceedToValidation: "Procéder à la Validation",
+    
+    // Visa Types
+    tourist: "Touriste",
+    business: "Affaires",
+    student: "Étudiant",
+    work: "Travail",
+    transit: "Transit",
+    family: "Visite Familiale",
+    
+    // Document Upload
+    uploadFiles: "Télécharger des Documents",
+    selectFiles: "Sélectionner des Fichiers",
+    uploadedFiles: "Fichiers Téléchargés",
+    noFilesUploaded: "Aucun fichier téléchargé encore",
+    analyzing: "Analyse en cours...",
+    uploadSuccess: "Téléchargement réussi",
+    
+    // Personal Information
+    personalInformation: "Informations Personnelles",
+    fullName: "Nom Complet",
+    firstName: "Prénom",
+    lastName: "Nom de Famille",
+    middleName: "Deuxième Prénom",
+    passportNumber: "Numéro de Passeport",
+    dateOfBirth: "Date de Naissance",
+    nationality: "Nationalité",
+    plannedTravelDate: "Date de Voyage Prévue",
+    durationOfStay: "Durée du Séjour (jours)",
+    
+    // Validation Results
+    validationResults: "Résultats de Validation",
+    overallScore: "Score Global",
+    verifiedItems: "Éléments Vérifiés",
+    issuesFound: "Problèmes Trouvés",
+    recommendations: "Recommandations",
+    downloadReport: "Télécharger le Rapport",
+    
+    // Payment
+    payment: "Paiement",
+    paymentDescription: "Complétez le paiement pour recevoir votre rapport de validation complet",
+    price: "9,99 $",
+    payNow: "Payer Maintenant",
+    
+    // Common
+    loading: "Chargement...",
+    error: "Erreur",
+    success: "Succès",
+    close: "Fermer",
+    save: "Enregistrer",
+    cancel: "Annuler",
+    continue: "Continuer",
+    required: "Obligatoire",
+    optional: "Optionnel",
+    
+    // Additional
+    contact: "Contact",
+    privacy: "Politique de Confidentialité",
+    terms: "Conditions de Service"
   },
 
   id: {
@@ -306,6 +722,40 @@ const languageTranslations: Record<string, Record<string, string>> = {
     pricing: "Harga",
     support: "Dukungan",
     
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "PENYANGKALAN HUKUM KRITIS",
+    noGuaranteeTitle: "TIDAK ADA JAMINAN PERSETUJUAN VISA:",
+    noGuaranteeText: "VisaValidator Pro hanya alat bantu persiapan dokumen. Kami tidak menjamin persetujuan visa, tidak mewakili lembaga pemerintah manapun, dan tidak mempengaruhi keputusan kedutaan.",
+    accuracyLimitationsTitle: "KETERBATASAN AKURASI:",
+    accuracyLimitationsText: "Meskipun AI kami menganalisis dokumen sesuai persyaratan yang diketahui, hasilnya mungkin tidak 100% akurat. Persyaratan kedutaan sering berubah dan bervariasi menurut keadaan individu.",
+    notOfficialGuidanceTitle: "BUKAN PANDUAN RESMI:",
+    notOfficialGuidanceText: "Layanan ini tidak menggantikan situs web kedutaan resmi, saran konsuler, atau konsultasi dengan pengacara imigrasi. Selalu verifikasi persyaratan terkini dengan sumber resmi.",
+    individualResponsibilityTitle: "TANGGUNG JAWAB INDIVIDU:",
+    individualResponsibilityText: "Setiap wisatawan bertanggung jawab penuh untuk memastikan aplikasi visa mereka memenuhi semua persyaratan. Keputusan persetujuan visa dibuat hanya oleh pejabat kedutaan dan konsulat.",
+    readFullDisclaimer: "Baca penyangkalan lengkap dan keterbatasan layanan →",
+    
+    // Features Section
+    whyChoose: "Mengapa Memilih VisaValidator Pro",
+    securePrivate: "Aman & Pribadi",
+    securePrivateDesc: "Semua dokumen otomatis dihapus setelah validasi untuk privasi dan keamanan Anda.",
+    fastProcessing: "Pemrosesan Cepat",
+    fastProcessingDesc: "Dapatkan hasil validasi dalam hitungan menit, bukan hari.",
+    comprehensiveAnalysis: "Analisis Komprehensif",
+    comprehensiveAnalysisDesc: "Analisis dokumen bertenaga AI dengan rekomendasi terperinci dan pemeriksaan persyaratan.",
+    
+    // How it Works
+    howItWorks: "Cara Kerja",
+    step1: "Pilih Tujuan",
+    step1Desc: "Pilih negara tujuan dan jenis visa Anda",
+    step2: "Unggah Dokumen",
+    step2Desc: "Unggah dokumen aplikasi visa Anda",
+    step3: "Masukkan Detail",
+    step3Desc: "Isi informasi pribadi Anda",
+    step4: "Pratinjau Hasil",
+    step4Desc: "Lihat pratinjau validasi sebelum pembayaran",
+    step5: "Bayar dan Unduh",
+    step5Desc: "Selesaikan pembayaran untuk laporan detail lengkap",
+    
     // Pricing Section
     simplePricing: "Harga yang Sederhana dan Transparan",
     perValidation: "Per validasi",
@@ -315,7 +765,7 @@ const languageTranslations: Record<string, Record<string, string>> = {
     secureHandling: "Penanganan dokumen yang aman",
     startValidationButton: "Mulai Validasi",
     
-    // Footer
+    // Footer and Navigation
     professionalService: "Layanan validasi dokumen profesional untuk pelancong di seluruh dunia.",
     service: "Layanan",
     supportedCountries: "Negara yang Didukung",
@@ -323,7 +773,77 @@ const languageTranslations: Record<string, Record<string, string>> = {
     legal: "Hukum",
     disclaimer: "Penafian",
     dataProtection: "Perlindungan Data",
-    copyright: "© 2024 VisaValidator Pro. Semua hak dilindungi."
+    copyright: "© 2024 VisaValidator Pro. Semua hak dilindungi.",
+    
+    // Country Selection
+    selectCountry: "Pilih negara tujuan Anda",
+    selectNationality: "Pilih kewarganegaraan Anda",
+    selectYourDestination: "Pilih Tujuan Anda",
+    chooseDestinationCountry: "Pilih negara yang akan Anda kunjungi",
+    selectYourNationality: "Pilih Kewarganegaraan Anda",
+    yourNationalityDescription: "Pilih kewarganegaraan Anda untuk mendapat persyaratan visa yang dipersonalisasi",
+    popularChoices: "Pilihan Populer",
+    searchCountries: "Cari negara...",
+    searchNationalities: "Cari kewarganegaraan...",
+    proceedToValidation: "Lanjut ke Validasi",
+    
+    // Visa Types
+    tourist: "Wisata",
+    business: "Bisnis",
+    student: "Pelajar",
+    work: "Kerja",
+    transit: "Transit",
+    family: "Kunjungan Keluarga",
+    
+    // Document Upload
+    uploadFiles: "Unggah Dokumen",
+    selectFiles: "Pilih File",
+    uploadedFiles: "File yang Diunggah",
+    noFilesUploaded: "Belum ada file yang diunggah",
+    analyzing: "Menganalisis...",
+    uploadSuccess: "Unggahan berhasil",
+    
+    // Personal Information
+    personalInformation: "Informasi Pribadi",
+    fullName: "Nama Lengkap",
+    firstName: "Nama Depan",
+    lastName: "Nama Belakang",
+    middleName: "Nama Tengah",
+    passportNumber: "Nomor Paspor",
+    dateOfBirth: "Tanggal Lahir",
+    nationality: "Kewarganegaraan",
+    plannedTravelDate: "Tanggal Perjalanan yang Direncanakan",
+    durationOfStay: "Durasi Tinggal (hari)",
+    
+    // Validation Results
+    validationResults: "Hasil Validasi",
+    overallScore: "Skor Keseluruhan",
+    verifiedItems: "Item yang Diverifikasi",
+    issuesFound: "Masalah Ditemukan",
+    recommendations: "Rekomendasi",
+    downloadReport: "Unduh Laporan",
+    
+    // Payment
+    payment: "Pembayaran",
+    paymentDescription: "Selesaikan pembayaran untuk menerima laporan validasi lengkap Anda",
+    price: "$9.99",
+    payNow: "Bayar Sekarang",
+    
+    // Common
+    loading: "Memuat...",
+    error: "Kesalahan",
+    success: "Berhasil",
+    close: "Tutup",
+    save: "Simpan",
+    cancel: "Batal",
+    continue: "Lanjutkan",
+    required: "Wajib",
+    optional: "Opsional",
+    
+    // Additional
+    contact: "Kontak",
+    privacy: "Kebijakan Privasi",
+    terms: "Syarat Layanan"
   }
 };
 
