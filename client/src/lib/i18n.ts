@@ -307,7 +307,32 @@ export const translations: Record<string, Record<string, string>> = {
     termsOfService: "Terms of Service",
     disclaimer: "Disclaimer",
     dataProtection: "Data Protection",
-    copyright: "© 2024 VisaValidator Pro. All rights reserved. This service is not affiliated with any government agency."
+    copyright: "© 2024 VisaValidator Pro. All rights reserved. This service is not affiliated with any government agency.",
+    
+    // Additional API Messages
+    failedToGenerateChecklist: "Failed to generate checklist",
+    errorFetchingRequirements: "Error fetching requirements",
+    retryFetch: "Retry",
+    lastUpdated: "Last updated",
+    officialSources: "Official sources",
+    generalInformation: "General Information",
+    applicationMethods: "Application methods",
+    importantNotes: "Important notes",
+    recentChanges: "Recent changes",
+    vfsOutsourcingNote: "Note: This country outsources visa processing to VFS Global. You may need to apply through their centers.",
+    
+    // Document Categories
+    documentCategory: "Document",
+    financialCategory: "Financial", 
+    personalCategory: "Personal",
+    travelCategory: "Travel",
+    healthCategory: "Health",
+    
+    // Status Labels
+    requiredLabel: "Required",
+    optionalLabel: "Optional",
+    formats: "Accepted formats",
+    additionalInfo: "Additional information"
   },
   
   vi: {
@@ -1050,15 +1075,6 @@ export const translations: Record<string, Record<string, string>> = {
     individualResponsibilityText: "Setiap wisatawan sepenuhnya bertanggung jawab memastikan aplikasi visa mereka memenuhi semua persyaratan. Keputusan persetujuan visa dibuat secara eksklusif oleh pejabat kedutaan dan konsuler.",
     readFullDisclaimer: "Baca Penafian Lengkap dan Keterbatasan Layanan →",
     
-    // Features Section
-    whyChoose: "Mengapa Memilih VisaValidator Pro",
-    securePrivate: "Aman dan Pribadi",
-    securePrivateDesc: "Semua dokumen dihapus otomatis setelah validasi untuk privasi dan keamanan Anda.",
-    fastProcessing: "Pemrosesan Cepat",
-    fastProcessingDesc: "Dapatkan hasil validasi dalam hitungan menit, bukan hari.",
-    comprehensiveAnalysis: "Analisis Komprehensif",
-    comprehensiveAnalysisDesc: "Analisis dokumen bertenaga AI dengan rekomendasi detail dan verifikasi persyaratan.",
-    
     // How it Works
     howItWorks: "Cara Kerjanya",
     step1: "Pilih Tujuan",
@@ -1070,7 +1086,154 @@ export const translations: Record<string, Record<string, string>> = {
     step4: "Pratinjau Hasil",
     step4Desc: "Lihat pratinjau validasi sebelum pembayaran",
     step5: "Bayar dan Unduh",
-    step5Desc: "Selesaikan pembayaran untuk laporan detail lengkap"
+    step5Desc: "Selesaikan pembayaran untuk laporan detail lengkap",
+    
+    // Features Section
+    whyChoose: "Mengapa Memilih VisaValidator Pro",
+    securePrivate: "Aman dan Pribadi",
+    securePrivateDesc: "Semua dokumen dihapus otomatis setelah validasi untuk privasi dan keamanan Anda.",
+    fastProcessing: "Pemrosesan Cepat",
+    fastProcessingDesc: "Dapatkan hasil validasi dalam hitungan menit, bukan hari.",
+    comprehensiveAnalysis: "Analisis Komprehensif",
+    comprehensiveAnalysisDesc: "Analisis dokumen bertenaga AI dengan rekomendasi detail dan verifikasi persyaratan.",
+    
+    // Navigation
+    howItWorksNav: "Cara Kerjanya",
+    pricing: "Harga",
+    support: "Dukungan",
+    
+    // Pricing Section
+    simplePricing: "Harga Sederhana dan Transparan",
+    perValidation: "Per validasi",
+    completeDocAnalysis: "Analisis dokumen lengkap",
+    detailedValidationReport: "Laporan validasi terperinci",
+    recommendationsChecklist: "Rekomendasi & daftar periksa",
+    secureHandling: "Penanganan dokumen aman",
+    startValidationButton: "Mulai Validasi",
+    
+    // Footer
+    professionalService: "Layanan validasi dokumen profesional untuk aplikasi visa di seluruh dunia.",
+    service: "Layanan",
+    supportedCountries: "Negara yang Didukung",
+    contactUs: "Hubungi Kami",
+    privacyPolicy: "Kebijakan Privasi",
+    legal: "Hukum",
+    termsOfService: "Syarat Layanan",
+    disclaimer: "Penafian",
+    dataProtection: "Perlindungan Data",
+    copyright: "© 2024 VisaValidator Pro. Semua hak dilindungi. Layanan ini tidak berafiliasi dengan agen pemerintah manapun.",
+    
+    // Step Indicators
+    stepDestination: "Tujuan",
+    stepNationality: "Kewarganegaraan",
+    stepRequirements: "Persyaratan",
+    stepUpload: "Unggah",
+    stepInformation: "Informasi",
+    stepReview: "Tinjau",
+    stepPayment: "Pembayaran",
+    
+    // Country Selection
+    selectDestinationVisaType: "Pilih Tujuan dan Jenis Visa",
+    destinationCountry: "Negara Tujuan",
+    selectCountryPlaceholder: "Pilih negara...",
+    visaType: "Jenis Visa",
+    selectVisaTypePlaceholder: "Pilih jenis visa...",
+    
+    // Nationality Selection  
+    selectNationality: "Pilih Kewarganegaraan",
+    yourNationality: "Kewarganegaraan Anda",
+    selectNationalityPlaceholder: "Pilih kewarganegaraan...",
+    
+    // File Upload
+    uploadDocuments: "Unggah Dokumen",
+    dragDropFiles: "Seret dan lepas file di sini, atau klik untuk memilih",
+    supportedFormats: "Format yang didukung: PDF, JPG, PNG, DOCX",
+    maxFileSize: "Ukuran file maksimum: 10MB",
+    analyzing: "Menganalisis...",
+    uploadSuccess: "Berhasil diunggah",
+    
+    // Personal Info
+    personalInformation: "Informasi Pribadi",
+    applicantName: "Nama Pemohon",
+    fullName: "Nama Lengkap",
+    passportNumber: "Nomor Paspor",
+    dateOfBirth: "Tanggal Lahir",
+    nationality: "Kewarganegaraan",
+    travelDate: "Tanggal Perjalanan",
+    stayDuration: "Durasi Tinggal",
+    
+    // Common UI
+    continue: "Lanjutkan",
+    required: "Wajib",
+    optional: "Opsional",
+    submit: "Kirim",
+    upload: "Unggah",
+    download: "Unduh",
+    loading: "Memuat...",
+    error: "Kesalahan",
+    success: "Berhasil",
+    close: "Tutup",
+    save: "Simpan",
+    cancel: "Batal",
+    about: "Tentang",
+    contact: "Kontak",
+    privacy: "Kebijakan Privasi",
+    terms: "Syarat Layanan",
+    
+    // Validation Process
+    validating: "Memvalidasi...",
+    validationComplete: "Validasi Selesai",
+    validationFailed: "Validasi Gagal",
+    processingFiles: "Memproses file...",
+    validationResults: "Hasil Validasi",
+    overallScore: "Skor Keseluruhan",
+    verifiedItems: "Item Terverifikasi",
+    issuesFound: "Masalah Ditemukan",
+    recommendations: "Rekomendasi",
+    downloadReport: "Unduh Laporan",
+    
+    // Payment
+    payment: "Pembayaran",
+    paymentDescription: "Selesaikan pembayaran untuk mendapatkan laporan validasi lengkap",
+    price: "$9.99",
+    payNow: "Bayar Sekarang",
+    
+    // Document Requirements
+    requiredDocuments: "Dokumen Wajib",
+    documentRequirements: "Persyaratan Dokumen",
+    reviewRequiredDocs: "Silakan tinjau dokumen yang diperlukan",
+    proceedToUpload: "Lanjutkan ke Unggah Dokumen",
+    
+    // Visa Types
+    tourist: "Wisata",
+    business: "Bisnis",
+    student: "Pelajar",
+    work: "Kerja",
+    
+    // Additional API Messages
+    failedToGenerateChecklist: "Gagal membuat daftar periksa",
+    errorFetchingRequirements: "Kesalahan mengambil persyaratan",
+    retryFetch: "Coba Lagi",
+    lastUpdated: "Terakhir diperbarui",
+    officialSources: "Sumber resmi",
+    generalInformation: "Informasi Umum",
+    applicationMethods: "Metode aplikasi",
+    importantNotes: "Catatan penting",
+    recentChanges: "Perubahan terbaru",
+    vfsOutsourcingNote: "Catatan: Negara ini menyerahkan pemrosesan visa kepada VFS Global. Anda mungkin perlu melamar melalui pusat mereka.",
+    
+    // Document Categories
+    documentCategory: "Dokumen",
+    financialCategory: "Keuangan", 
+    personalCategory: "Pribadi",
+    travelCategory: "Perjalanan",
+    healthCategory: "Kesehatan",
+    
+    // Status Labels
+    requiredLabel: "Wajib",
+    optionalLabel: "Opsional",
+    formats: "Format yang diterima",
+    additionalInfo: "Informasi tambahan"
   },
   
   ur: {
