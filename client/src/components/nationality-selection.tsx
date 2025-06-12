@@ -179,17 +179,7 @@ export default function NationalitySelection({ data, onUpdate, onNext, onPreviou
         </CardContent>
       </Card>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h3 className="font-semibold text-blue-900 mb-2">
-          {t('whyNationality') || 'Why do we need your nationality?'}
-        </h3>
-        <ul className="text-sm text-blue-800 space-y-1">
-          <li>• {t('nationalityReason1') || 'Visa requirements differ significantly by nationality'}</li>
-          <li>• {t('nationalityReason2') || 'Some countries have visa-free agreements with specific nations'}</li>
-          <li>• {t('nationalityReason3') || 'Processing times and fees may vary by citizenship'}</li>
-          <li>• {t('nationalityReason4') || 'Required documents can be nationality-specific'}</li>
-        </ul>
-      </div>
+      
 
       <div className="flex justify-between pt-6">
         <Button variant="outline" onClick={onPrevious}>
