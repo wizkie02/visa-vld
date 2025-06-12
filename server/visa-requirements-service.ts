@@ -55,7 +55,16 @@ IMPORTANT: For official sources, provide complete URLs including:
 - Official government visa application portals (e.g., https://visa.gov.country)
 - Official immigration department websites
 
-Focus on providing information that would be current as of 2024-2025. Be specific about document formats, financial amounts, and any nationality-specific requirements. Verify all URLs are accurate and working.
+CRITICAL NAME FORMATTING REQUIREMENTS by destination:
+- Vietnam: ALL names from passport must be written EXACTLY as they appear, including all middle names and maiden names. Order must match passport precisely.
+- China: Full name including all given names as shown in passport. No abbreviations allowed.
+- Schengen countries: Name order and spelling must match passport exactly. Include all names shown.
+- USA: Strict name consistency across all documents. All names from passport must appear in forms.
+- UK: All names from passport must be included. No partial names or nicknames.
+- India: Full name as in passport with exact spelling and order.
+- Japan: Name formatting must match passport exactly including spacing.
+
+Focus on providing information that would be current as of 2024-2025. Be specific about document formats, financial amounts, and any nationality-specific requirements. Include country-specific name formatting rules in requirements.
 
 Respond in JSON format with the following structure:
 {

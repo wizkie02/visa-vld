@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { getNameFormattingRules, validateNameFormatting } from "./country-specific-rules";
 
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -108,6 +109,9 @@ export async function validateDocumentsAgainstRequirements(
     const visaRequirements = await getVisaRequirementsOnline(country, visaType);
     const requiredDocs = requiredDocuments || visaRequirements?.requirements || [];
     
+    // Get country-specific name formatting rules
+    const nameFormattingRules = getNameFormattingRules(country);
+    
     // Extract document types from uploaded documents
     const uploadedDocTypes = documents.map(doc => doc.documentType.toLowerCase());
     
@@ -129,9 +133,22 @@ export async function validateDocumentsAgainstRequirements(
       return !isPresent;
     });
 
+    // Validate name formatting for destination country
+    const passportDoc = documents.find(doc => doc.documentType.toLowerCase().includes('passport'));
+    let nameValidationIssues: string[] = [];
+    
+    if (passportDoc && passportDoc.fullName && personalInfo?.firstName && personalInfo?.lastName) {
+      const passportName = passportDoc.fullName;
+      const applicationName = `${personalInfo.firstName} ${personalInfo.lastName}`.trim();
+      
+      const nameValidation = validateNameFormatting(passportName, applicationName, country);
+      nameValidationIssues = nameValidation.issues;
+    }
+
     // If missing required documents, set score to 0%
     const hasAllRequiredDocs = missingRequiredDocs.length === 0;
-    const baseScore = hasAllRequiredDocs ? 75 : 0;
+    const hasNameIssues = nameValidationIssues.length > 0;
+    const baseScore = hasAllRequiredDocs && !hasNameIssues ? 75 : 0;
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -142,10 +159,18 @@ export async function validateDocumentsAgainstRequirements(
 
 CRITICAL RULE: If any REQUIRED documents are missing, the visa likelihood score MUST be 0%.
 
+COUNTRY-SPECIFIC NAME VALIDATION RULES:
+- Vietnam: ALL names from passport must be written EXACTLY as they appear in visa applications
+- China: Full name as in passport, including all given names
+- Schengen countries: Name order and spelling must match passport exactly
+- USA: Name consistency across all documents is strictly enforced
+- UK: All names from passport must be included in application forms
+
 Check for:
 - Required document types (passport, photos, financial statements, etc.)
 - Document validity periods
 - Information consistency across documents
+- Name formatting compliance for destination country
 - Missing requirements
 - Quality and completeness
 
