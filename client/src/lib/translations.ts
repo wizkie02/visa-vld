@@ -259,6 +259,146 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     transit: "पारगमन",
     family: "पारिवारिक यात्रा",
     
+    // Features Section
+    whyChoose: "VisaValidator Pro क्यों चुनें",
+    securePrivate: "सुरक्षित और निजी",
+    securePrivateDesc: "आपकी गोपनीयता और सुरक्षा के लिए सत्यापन के बाद सभी दस्तावेज़ अपने आप हटा दिए जाते हैं।",
+    fastProcessing: "तेज़ प्रसंस्करण",
+    fastProcessingDesc: "दिनों नहीं, मिनटों में सत्यापन परिणाम प्राप्त करें।",
+    comprehensiveAnalysis: "व्यापक विश्लेषण",
+    comprehensiveAnalysisDesc: "विस्तृत सिफारिशों और आवश्यकता जांच के साथ AI-संचालित दस्तावेज़ विश्लेषण।",
+    
+    // How it Works
+    howItWorks: "यह कैसे काम करता है",
+    step1: "गंतव्य चुनें",
+    step1Desc: "अपना गंतव्य देश और वीज़ा प्रकार चुनें",
+    step2: "दस्तावेज़ अपलोड करें",
+    step2Desc: "अपने वीज़ा आवेदन दस्तावेज़ अपलोड करें",
+    step3: "विवरण दर्ज करें",
+    step3Desc: "अपनी व्यक्तिगत जानकारी भरें",
+    step4: "परिणाम पूर्वावलोकन",
+    step4Desc: "भुगतान से पहले सत्यापन पूर्वावलोकन देखें",
+    step5: "भुगतान करें और डाउनलोड करें",
+    step5Desc: "पूर्ण विस्तृत रिपोर्ट के लिए भुगतान पूरा करें",
+    
+    // Pricing Section
+    simplePricing: "सरल, पारदर्शी मूल्य निर्धारण",
+    perValidation: "प्रति सत्यापन",
+    completeDocAnalysis: "पूर्ण दस्तावेज़ विश्लेषण",
+    detailedValidationReport: "विस्तृत सत्यापन रिपोर्ट",
+    recommendationsChecklist: "सिफारिशें और चेकलिस्ट",
+    secureHandling: "सुरक्षित दस्तावेज़ प्रबंधन",
+    startValidationButton: "सत्यापन शुरू करें",
+    
+    // Footer and Navigation
+    professionalService: "दुनिया भर के यात्रियों के लिए पेशेवर दस्तावेज़ सत्यापन सेवा।",
+    service: "सेवा",
+    supportedCountries: "समर्थित देश",
+    contactUs: "हमसे संपर्क करें",
+    legal: "कानूनी",
+    disclaimer: "अस्वीकरण",
+    dataProtection: "डेटा सुरक्षा",
+    copyright: "© 2024 VisaValidator Pro। सभी अधिकार सुरक्षित।",
+    
+    // Country Selection
+    selectCountry: "अपना गंतव्य देश चुनें",
+    selectNationality: "अपनी राष्ट्रीयता चुनें",
+    selectYourDestination: "अपना गंतव्य चुनें",
+    chooseDestinationCountry: "वह देश चुनें जहाँ आप जाने की योजना बना रहे हैं",
+    selectYourNationality: "अपनी राष्ट्रीयता चुनें",
+    yourNationalityDescription: "व्यक्तिगत वीज़ा आवश्यकताएं प्राप्त करने के लिए अपनी राष्ट्रीयता चुनें",
+    popularChoices: "लोकप्रिय विकल्प",
+    searchCountries: "देश खोजें...",
+    searchNationalities: "राष्ट्रीयताएं खोजें...",
+    proceedToValidation: "सत्यापन के लिए आगे बढ़ें",
+    
+    // Document Upload
+    uploadFiles: "दस्तावेज़ अपलोड करें",
+    selectFiles: "फ़ाइलें चुनें",
+    uploadedFiles: "अपलोड की गई फ़ाइलें",
+    noFilesUploaded: "अभी तक कोई फ़ाइल अपलोड नहीं की गई",
+    analyzing: "विश्लेषण कर रहे हैं...",
+    uploadSuccess: "अपलोड सफल",
+    
+    // Personal Information
+    personalInformation: "व्यक्तिगत जानकारी",
+    fullName: "पूरा नाम",
+    firstName: "पहला नाम",
+    lastName: "अंतिम नाम",
+    middleName: "मध्य नाम",
+    passportNumber: "पासपोर्ट नंबर",
+    dateOfBirth: "जन्म की तारीख",
+    nationality: "राष्ट्रीयता",
+    plannedTravelDate: "नियोजित यात्रा तिथि",
+    durationOfStay: "ठहरने की अवधि (दिन)",
+    
+    // Validation Results
+    validationResults: "सत्यापन परिणाम",
+    overallScore: "समग्र स्कोर",
+    verifiedItems: "सत्यापित आइटम",
+    issuesFound: "मुद्दे मिले",
+    recommendations: "सिफारिशें",
+    downloadReport: "रिपोर्ट डाउनलोड करें",
+    
+    // Payment
+    payment: "भुगतान",
+    paymentDescription: "अपनी पूर्ण सत्यापन रिपोर्ट प्राप्त करने के लिए भुगतान पूरा करें",
+    price: "$9.99",
+    payNow: "अभी भुगतान करें",
+    
+    // Additional
+    contact: "संपर्क",
+    privacy: "गोपनीयता नीति",
+    terms: "सेवा की शर्तें",
+    
+    // Country Selection
+    commonRequirementsFor: "के लिए सामान्य आवश्यकताएं",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "अपनी राष्ट्रीयता चुनें",
+    daysPlaceholder: "दिनों की संख्या दर्ज करें",
+    
+    // File Upload
+    uploadAnalysisComplete: "अपलोड और विश्लेषण पूर्ण",
+    documentsAnalyzedSuccessfully: "दस्तावेज़(ों) का सफलतापूर्वक विश्लेषण किया गया",
+    documentsFailed: "असफल",
+    uploadFailed: "अपलोड असफल",
+    
+    // Validation Results
+    validationScore: "सत्यापन स्कोर",
+    completedOn: "पूर्ण हुआ",
+    documentsVerified: "दस्तावेज़ सत्यापित",
+    
+    // Language Modal
+    chooseYourLanguage: "अपनी भाषा चुनें",
+    selectPreferredLanguage: "वीज़ा सत्यापन एप्लिकेशन के लिए अपनी पसंदीदा भाषा चुनें",
+    continueButton: "जारी रखें",
+    
+    // Extended Visa Types
+    medical: "चिकित्सा",
+    conference: "सम्मेलन",
+    journalist: "पत्रकार",
+    religious: "धार्मिक",
+    cultural: "सांस्कृतिक",
+    research: "अनुसंधान",
+    training: "प्रशिक्षण",
+    diplomatic: "राजनयिक",
+    crew: "चालक दल",
+    investment: "निवेश",
+    retirement: "सेवानिवृत्ति",
+    volunteer: "स्वयंसेवक",
+    sports: "खेल",
+    other: "अन्य",
+    
+    // Document Requirements
+    validPassportMinimum: "वैध पासपोर्ट (न्यूनतम 6 महीने की वैधता)",
+    ds160ConfirmationPage: "DS-160 पुष्टिकरण पृष्ठ",
+    passportStylePhotograph: "पासपोर्ट-शैली फोटोग्राफ",
+    financialDocuments: "वित्तीय दस्तावेज़ (बैंक स्टेटमेंट, आय प्रमाण)",
+    travelItineraryAccommodation: "यात्रा कार्यक्रम और आवास प्रमाण",
+    completedVisaApplication: "पूर्ण वीज़ा आवेदन फॉर्म",
+    supportingDocuments: "सहायक दस्तावेज़ (वीज़ा प्रकार के अनुसार भिन्न)",
+    
     // Common
     loading: "लोड हो रहा है...",
     error: "त्रुटि",
@@ -319,6 +459,146 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     work: "عمل",
     transit: "عبور",
     family: "زيارة عائلية",
+    
+    // Features Section
+    whyChoose: "لماذا تختار VisaValidator Pro",
+    securePrivate: "آمن وخاص",
+    securePrivateDesc: "يتم حذف جميع المستندات تلقائياً بعد التحقق لضمان خصوصيتك وأمانك.",
+    fastProcessing: "معالجة سريعة",
+    fastProcessingDesc: "احصل على نتائج التحقق في دقائق، وليس أيام.",
+    comprehensiveAnalysis: "تحليل شامل",
+    comprehensiveAnalysisDesc: "تحليل مستندات مدعوم بالذكاء الاصطناعي مع توصيات مفصلة وفحص المتطلبات.",
+    
+    // How it Works
+    howItWorks: "كيف يعمل",
+    step1: "اختر الوجهة",
+    step1Desc: "اختر بلد الوجهة ونوع التأشيرة",
+    step2: "ارفع المستندات",
+    step2Desc: "ارفع مستندات طلب التأشيرة الخاصة بك",
+    step3: "أدخل التفاصيل",
+    step3Desc: "املأ معلوماتك الشخصية",
+    step4: "معاينة النتائج",
+    step4Desc: "اطلع على معاينة التحقق قبل الدفع",
+    step5: "ادفع وحمّل",
+    step5Desc: "أكمل الدفع للحصول على التقرير المفصل الكامل",
+    
+    // Pricing Section
+    simplePricing: "تسعير بسيط وشفاف",
+    perValidation: "لكل تحقق",
+    completeDocAnalysis: "تحليل كامل للمستندات",
+    detailedValidationReport: "تقرير تحقق مفصل",
+    recommendationsChecklist: "توصيات وقائمة مراجعة",
+    secureHandling: "معالجة آمنة للمستندات",
+    startValidationButton: "بدء التحقق",
+    
+    // Footer and Navigation
+    professionalService: "خدمة تحقق مستندات احترافية للمسافرين حول العالم.",
+    service: "الخدمة",
+    supportedCountries: "البلدان المدعومة",
+    contactUs: "اتصل بنا",
+    legal: "قانوني",
+    disclaimer: "إخلاء المسؤولية",
+    dataProtection: "حماية البيانات",
+    copyright: "© 2024 VisaValidator Pro. جميع الحقوق محفوظة.",
+    
+    // Country Selection
+    selectCountry: "اختر بلد الوجهة",
+    selectNationality: "اختر جنسيتك",
+    selectYourDestination: "اختر وجهتك",
+    chooseDestinationCountry: "اختر البلد الذي تخطط لزيارته",
+    selectYourNationality: "اختر جنسيتك",
+    yourNationalityDescription: "اختر جنسيتك للحصول على متطلبات التأشيرة الشخصية",
+    popularChoices: "الخيارات الشائعة",
+    searchCountries: "البحث في البلدان...",
+    searchNationalities: "البحث في الجنسيات...",
+    proceedToValidation: "المتابعة إلى التحقق",
+    
+    // Document Upload
+    uploadFiles: "رفع المستندات",
+    selectFiles: "اختر الملفات",
+    uploadedFiles: "الملفات المرفوعة",
+    noFilesUploaded: "لم يتم رفع أي ملفات بعد",
+    analyzing: "جاري التحليل...",
+    uploadSuccess: "تم الرفع بنجاح",
+    
+    // Personal Information
+    personalInformation: "المعلومات الشخصية",
+    fullName: "الاسم الكامل",
+    firstName: "الاسم الأول",
+    lastName: "الاسم الأخير",
+    middleName: "الاسم الأوسط",
+    passportNumber: "رقم جواز السفر",
+    dateOfBirth: "تاريخ الميلاد",
+    nationality: "الجنسية",
+    plannedTravelDate: "تاريخ السفر المخطط",
+    durationOfStay: "مدة الإقامة (أيام)",
+    
+    // Validation Results
+    validationResults: "نتائج التحقق",
+    overallScore: "النتيجة الإجمالية",
+    verifiedItems: "العناصر المتحققة",
+    issuesFound: "المشاكل الموجودة",
+    recommendations: "التوصيات",
+    downloadReport: "تحميل التقرير",
+    
+    // Payment
+    payment: "الدفع",
+    paymentDescription: "أكمل الدفع لتلقي تقرير التحقق الكامل",
+    price: "$9.99",
+    payNow: "ادفع الآن",
+    
+    // Additional
+    contact: "اتصال",
+    privacy: "سياسة الخصوصية",
+    terms: "شروط الخدمة",
+    
+    // Country Selection
+    commonRequirementsFor: "المتطلبات الشائعة لـ",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "اختر جنسيتك",
+    daysPlaceholder: "أدخل عدد الأيام",
+    
+    // File Upload
+    uploadAnalysisComplete: "اكتمل الرفع والتحليل",
+    documentsAnalyzedSuccessfully: "تم تحليل المستند(ات) بنجاح",
+    documentsFailed: "فشل",
+    uploadFailed: "فشل الرفع",
+    
+    // Validation Results
+    validationScore: "نتيجة التحقق",
+    completedOn: "اكتمل في",
+    documentsVerified: "المستندات المتحققة",
+    
+    // Language Modal
+    chooseYourLanguage: "اختر لغتك",
+    selectPreferredLanguage: "اختر لغتك المفضلة لتطبيق تحقق التأشيرة",
+    continueButton: "متابعة",
+    
+    // Extended Visa Types
+    medical: "طبي",
+    conference: "مؤتمر",
+    journalist: "صحفي",
+    religious: "ديني",
+    cultural: "ثقافي",
+    research: "بحث",
+    training: "تدريب",
+    diplomatic: "دبلوماسي",
+    crew: "طاقم",
+    investment: "استثمار",
+    retirement: "تقاعد",
+    volunteer: "تطوع",
+    sports: "رياضة",
+    other: "أخرى",
+    
+    // Document Requirements
+    validPassportMinimum: "جواز سفر صالح (صالح لمدة 6 أشهر على الأقل)",
+    ds160ConfirmationPage: "صفحة تأكيد DS-160",
+    passportStylePhotograph: "صورة بطراز جواز السفر",
+    financialDocuments: "المستندات المالية (كشوف بنكية، إثبات دخل)",
+    travelItineraryAccommodation: "خط سير السفر وإثبات الإقامة",
+    completedVisaApplication: "نموذج طلب التأشيرة المكتمل",
+    supportingDocuments: "المستندات الداعمة (تختلف حسب نوع التأشيرة)",
     
     // Common
     loading: "جارٍ التحميل...",
@@ -381,6 +661,146 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     transit: "Транзитная",
     family: "Семейная поездка",
     
+    // Features Section
+    whyChoose: "Почему выбирают VisaValidator Pro",
+    securePrivate: "Безопасно и конфиденциально",
+    securePrivateDesc: "Все документы автоматически удаляются после проверки для вашей конфиденциальности и безопасности.",
+    fastProcessing: "Быстрая обработка",
+    fastProcessingDesc: "Получите результаты проверки за минуты, а не дни.",
+    comprehensiveAnalysis: "Комплексный анализ",
+    comprehensiveAnalysisDesc: "Анализ документов с помощью ИИ с подробными рекомендациями и проверкой требований.",
+    
+    // How it Works
+    howItWorks: "Как это работает",
+    step1: "Выберите пункт назначения",
+    step1Desc: "Выберите страну назначения и тип визы",
+    step2: "Загрузите документы",
+    step2Desc: "Загрузите документы для визового заявления",
+    step3: "Введите данные",
+    step3Desc: "Заполните вашу личную информацию",
+    step4: "Предварительный просмотр результатов",
+    step4Desc: "Посмотрите предварительные результаты проверки перед оплатой",
+    step5: "Оплатите и скачайте",
+    step5Desc: "Завершите оплату для получения полного подробного отчета",
+    
+    // Pricing Section
+    simplePricing: "Простое, прозрачное ценообразование",
+    perValidation: "За проверку",
+    completeDocAnalysis: "Полный анализ документов",
+    detailedValidationReport: "Подробный отчет о проверке",
+    recommendationsChecklist: "Рекомендации и контрольный список",
+    secureHandling: "Безопасная обработка документов",
+    startValidationButton: "Начать проверку",
+    
+    // Footer and Navigation
+    professionalService: "Профессиональная служба проверки документов для путешественников по всему миру.",
+    service: "Служба",
+    supportedCountries: "Поддерживаемые страны",
+    contactUs: "Свяжитесь с нами",
+    legal: "Правовая информация",
+    disclaimer: "Отказ от ответственности",
+    dataProtection: "Защита данных",
+    copyright: "© 2024 VisaValidator Pro. Все права защищены.",
+    
+    // Country Selection
+    selectCountry: "Выберите страну назначения",
+    selectNationality: "Выберите ваше гражданство",
+    selectYourDestination: "Выберите вашу цель",
+    chooseDestinationCountry: "Выберите страну, которую планируете посетить",
+    selectYourNationality: "Выберите ваше гражданство",
+    yourNationalityDescription: "Выберите ваше гражданство для получения персональных визовых требований",
+    popularChoices: "Популярные варианты",
+    searchCountries: "Поиск стран...",
+    searchNationalities: "Поиск гражданств...",
+    proceedToValidation: "Перейти к проверке",
+    
+    // Document Upload
+    uploadFiles: "Загрузить документы",
+    selectFiles: "Выбрать файлы",
+    uploadedFiles: "Загруженные файлы",
+    noFilesUploaded: "Файлы еще не загружены",
+    analyzing: "Анализирую...",
+    uploadSuccess: "Загрузка успешна",
+    
+    // Personal Information
+    personalInformation: "Личная информация",
+    fullName: "Полное имя",
+    firstName: "Имя",
+    lastName: "Фамилия",
+    middleName: "Отчество",
+    passportNumber: "Номер паспорта",
+    dateOfBirth: "Дата рождения",
+    nationality: "Гражданство",
+    plannedTravelDate: "Планируемая дата поездки",
+    durationOfStay: "Продолжительность пребывания (дни)",
+    
+    // Validation Results
+    validationResults: "Результаты проверки",
+    overallScore: "Общий балл",
+    verifiedItems: "Проверенные элементы",
+    issuesFound: "Найденные проблемы",
+    recommendations: "Рекомендации",
+    downloadReport: "Скачать отчет",
+    
+    // Payment
+    payment: "Оплата",
+    paymentDescription: "Завершите оплату для получения полного отчета о проверке",
+    price: "$9.99",
+    payNow: "Оплатить сейчас",
+    
+    // Additional
+    contact: "Контакт",
+    privacy: "Политика конфиденциальности",
+    terms: "Условия обслуживания",
+    
+    // Country Selection
+    commonRequirementsFor: "Общие требования для",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "Выберите ваше гражданство",
+    daysPlaceholder: "Введите количество дней",
+    
+    // File Upload
+    uploadAnalysisComplete: "Загрузка и анализ завершены",
+    documentsAnalyzedSuccessfully: "документ(ы) успешно проанализированы",
+    documentsFailed: "не удалось",
+    uploadFailed: "Загрузка не удалась",
+    
+    // Validation Results
+    validationScore: "Балл проверки",
+    completedOn: "Завершено",
+    documentsVerified: "Документы проверены",
+    
+    // Language Modal
+    chooseYourLanguage: "Выберите ваш язык",
+    selectPreferredLanguage: "Выберите предпочитаемый язык для приложения проверки визы",
+    continueButton: "Продолжить",
+    
+    // Extended Visa Types
+    medical: "Медицинская",
+    conference: "Конференция",
+    journalist: "Журналистская",
+    religious: "Религиозная",
+    cultural: "Культурная",
+    research: "Исследовательская",
+    training: "Обучение",
+    diplomatic: "Дипломатическая",
+    crew: "Экипаж",
+    investment: "Инвестиционная",
+    retirement: "Пенсионная",
+    volunteer: "Волонтерская",
+    sports: "Спортивная",
+    other: "Другая",
+    
+    // Document Requirements
+    validPassportMinimum: "Действительный паспорт (минимум 6 месяцев действия)",
+    ds160ConfirmationPage: "Страница подтверждения DS-160",
+    passportStylePhotograph: "Фотография в стиле паспорта",
+    financialDocuments: "Финансовые документы (банковские выписки, справка о доходах)",
+    travelItineraryAccommodation: "Маршрут поездки и подтверждение размещения",
+    completedVisaApplication: "Заполненная анкета на визу",
+    supportingDocuments: "Сопроводительные документы (варьируются в зависимости от типа визы)",
+    
     // Common
     loading: "Загрузка...",
     error: "Ошибка",
@@ -441,6 +861,146 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     work: "Trabalho",
     transit: "Trânsito",
     family: "Visita Familiar",
+    
+    // Features Section
+    whyChoose: "Por que escolher VisaValidator Pro",
+    securePrivate: "Seguro e Privado",
+    securePrivateDesc: "Todos os documentos são automaticamente excluídos após a validação para sua privacidade e segurança.",
+    fastProcessing: "Processamento Rápido",
+    fastProcessingDesc: "Obtenha resultados de validação em minutos, não dias.",
+    comprehensiveAnalysis: "Análise Abrangente",
+    comprehensiveAnalysisDesc: "Análise de documentos com IA com recomendações detalhadas e verificação de requisitos.",
+    
+    // How it Works
+    howItWorks: "Como Funciona",
+    step1: "Selecionar Destino",
+    step1Desc: "Escolha seu país de destino e tipo de visto",
+    step2: "Carregar Documentos",
+    step2Desc: "Faça upload dos documentos de aplicação de visto",
+    step3: "Inserir Detalhes",
+    step3Desc: "Preencha suas informações pessoais",
+    step4: "Visualizar Resultados",
+    step4Desc: "Veja a prévia da validação antes do pagamento",
+    step5: "Pagar e Baixar",
+    step5Desc: "Complete o pagamento para relatório detalhado completo",
+    
+    // Pricing Section
+    simplePricing: "Preços Simples e Transparentes",
+    perValidation: "Por validação",
+    completeDocAnalysis: "Análise completa de documentos",
+    detailedValidationReport: "Relatório detalhado de validação",
+    recommendationsChecklist: "Recomendações e checklist",
+    secureHandling: "Manuseio seguro de documentos",
+    startValidationButton: "Iniciar Validação",
+    
+    // Footer and Navigation
+    professionalService: "Serviço profissional de validação de documentos para viajantes em todo o mundo.",
+    service: "Serviço",
+    supportedCountries: "Países Suportados",
+    contactUs: "Entre em Contato",
+    legal: "Legal",
+    disclaimer: "Isenção de Responsabilidade",
+    dataProtection: "Proteção de Dados",
+    copyright: "© 2024 VisaValidator Pro. Todos os direitos reservados.",
+    
+    // Country Selection
+    selectCountry: "Selecione seu país de destino",
+    selectNationality: "Selecione sua nacionalidade",
+    selectYourDestination: "Selecione Seu Destino",
+    chooseDestinationCountry: "Escolha o país que planeja visitar",
+    selectYourNationality: "Selecione Sua Nacionalidade",
+    yourNationalityDescription: "Escolha sua nacionalidade para obter requisitos de visto personalizados",
+    popularChoices: "Escolhas Populares",
+    searchCountries: "Buscar países...",
+    searchNationalities: "Buscar nacionalidades...",
+    proceedToValidation: "Prosseguir para Validação",
+    
+    // Document Upload
+    uploadFiles: "Carregar Documentos",
+    selectFiles: "Selecionar Arquivos",
+    uploadedFiles: "Arquivos Carregados",
+    noFilesUploaded: "Nenhum arquivo carregado ainda",
+    analyzing: "Analisando...",
+    uploadSuccess: "Upload bem-sucedido",
+    
+    // Personal Information
+    personalInformation: "Informações Pessoais",
+    fullName: "Nome Completo",
+    firstName: "Primeiro Nome",
+    lastName: "Sobrenome",
+    middleName: "Nome do Meio",
+    passportNumber: "Número do Passaporte",
+    dateOfBirth: "Data de Nascimento",
+    nationality: "Nacionalidade",
+    plannedTravelDate: "Data de Viagem Planejada",
+    durationOfStay: "Duração da Estadia (dias)",
+    
+    // Validation Results
+    validationResults: "Resultados da Validação",
+    overallScore: "Pontuação Geral",
+    verifiedItems: "Itens Verificados",
+    issuesFound: "Problemas Encontrados",
+    recommendations: "Recomendações",
+    downloadReport: "Baixar Relatório",
+    
+    // Payment
+    payment: "Pagamento",
+    paymentDescription: "Complete o pagamento para receber seu relatório de validação completo",
+    price: "$9.99",
+    payNow: "Pagar Agora",
+    
+    // Additional
+    contact: "Contato",
+    privacy: "Política de Privacidade",
+    terms: "Termos de Serviço",
+    
+    // Country Selection
+    commonRequirementsFor: "Requisitos comuns para",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "Selecione sua nacionalidade",
+    daysPlaceholder: "Digite o número de dias",
+    
+    // File Upload
+    uploadAnalysisComplete: "Upload e Análise Completos",
+    documentsAnalyzedSuccessfully: "documento(s) analisados com sucesso",
+    documentsFailed: "falharam",
+    uploadFailed: "Upload falhou",
+    
+    // Validation Results
+    validationScore: "Pontuação de Validação",
+    completedOn: "Concluído em",
+    documentsVerified: "Documentos Verificados",
+    
+    // Language Modal
+    chooseYourLanguage: "Escolha Seu Idioma",
+    selectPreferredLanguage: "Selecione seu idioma preferido para a aplicação de validação de visto",
+    continueButton: "Continuar",
+    
+    // Extended Visa Types
+    medical: "Médico",
+    conference: "Conferência",
+    journalist: "Jornalista",
+    religious: "Religioso",
+    cultural: "Cultural",
+    research: "Pesquisa",
+    training: "Treinamento",
+    diplomatic: "Diplomático",
+    crew: "Tripulação",
+    investment: "Investimento",
+    retirement: "Aposentadoria",
+    volunteer: "Voluntário",
+    sports: "Esportes",
+    other: "Outro",
+    
+    // Document Requirements
+    validPassportMinimum: "Passaporte válido (validade mínima de 6 meses)",
+    ds160ConfirmationPage: "Página de confirmação DS-160",
+    passportStylePhotograph: "Fotografia estilo passaporte",
+    financialDocuments: "Documentos financeiros (extratos bancários, comprovante de renda)",
+    travelItineraryAccommodation: "Itinerário de viagem e comprovante de acomodação",
+    completedVisaApplication: "Formulário de aplicação de visto preenchido",
+    supportingDocuments: "Documentos de apoio (varia por tipo de visto)",
     
     // Common
     loading: "Carregando...",
@@ -503,6 +1063,146 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     transit: "Transit",
     family: "Familienbesuch",
     
+    // Features Section
+    whyChoose: "Warum VisaValidator Pro wählen",
+    securePrivate: "Sicher und Privat",
+    securePrivateDesc: "Alle Dokumente werden nach der Validierung automatisch gelöscht für Ihre Privatsphäre und Sicherheit.",
+    fastProcessing: "Schnelle Verarbeitung",
+    fastProcessingDesc: "Erhalten Sie Validierungsergebnisse in Minuten, nicht Tagen.",
+    comprehensiveAnalysis: "Umfassende Analyse",
+    comprehensiveAnalysisDesc: "KI-gestützte Dokumentenanalyse mit detaillierten Empfehlungen und Anforderungsprüfung.",
+    
+    // How it Works
+    howItWorks: "Wie es funktioniert",
+    step1: "Ziel auswählen",
+    step1Desc: "Wählen Sie Ihr Zielland und Ihren Visa-Typ",
+    step2: "Dokumente hochladen",
+    step2Desc: "Laden Sie Ihre Visa-Antragsdokumente hoch",
+    step3: "Details eingeben",
+    step3Desc: "Füllen Sie Ihre persönlichen Informationen aus",
+    step4: "Ergebnisse vorschau",
+    step4Desc: "Sehen Sie die Validierungsvorschau vor der Zahlung",
+    step5: "Bezahlen und Herunterladen",
+    step5Desc: "Schließen Sie die Zahlung für den vollständigen detaillierten Bericht ab",
+    
+    // Pricing Section
+    simplePricing: "Einfache, transparente Preisgestaltung",
+    perValidation: "Pro Validierung",
+    completeDocAnalysis: "Vollständige Dokumentenanalyse",
+    detailedValidationReport: "Detaillierter Validierungsbericht",
+    recommendationsChecklist: "Empfehlungen und Checkliste",
+    secureHandling: "Sichere Dokumentenbehandlung",
+    startValidationButton: "Validierung starten",
+    
+    // Footer and Navigation
+    professionalService: "Professioneller Dokumentenvalidierungsservice für Reisende weltweit.",
+    service: "Service",
+    supportedCountries: "Unterstützte Länder",
+    contactUs: "Kontaktieren Sie uns",
+    legal: "Rechtliches",
+    disclaimer: "Haftungsausschluss",
+    dataProtection: "Datenschutz",
+    copyright: "© 2024 VisaValidator Pro. Alle Rechte vorbehalten.",
+    
+    // Country Selection
+    selectCountry: "Wählen Sie Ihr Zielland",
+    selectNationality: "Wählen Sie Ihre Nationalität",
+    selectYourDestination: "Wählen Sie Ihr Ziel",
+    chooseDestinationCountry: "Wählen Sie das Land, das Sie besuchen möchten",
+    selectYourNationality: "Wählen Sie Ihre Nationalität",
+    yourNationalityDescription: "Wählen Sie Ihre Nationalität für personalisierte Visa-Anforderungen",
+    popularChoices: "Beliebte Optionen",
+    searchCountries: "Länder suchen...",
+    searchNationalities: "Nationalitäten suchen...",
+    proceedToValidation: "Zur Validierung fortfahren",
+    
+    // Document Upload
+    uploadFiles: "Dokumente hochladen",
+    selectFiles: "Dateien auswählen",
+    uploadedFiles: "Hochgeladene Dateien",
+    noFilesUploaded: "Noch keine Dateien hochgeladen",
+    analyzing: "Analysiere...",
+    uploadSuccess: "Upload erfolgreich",
+    
+    // Personal Information
+    personalInformation: "Persönliche Informationen",
+    fullName: "Vollständiger Name",
+    firstName: "Vorname",
+    lastName: "Nachname",
+    middleName: "Zweiter Vorname",
+    passportNumber: "Passnummer",
+    dateOfBirth: "Geburtsdatum",
+    nationality: "Nationalität",
+    plannedTravelDate: "Geplantes Reisedatum",
+    durationOfStay: "Aufenthaltsdauer (Tage)",
+    
+    // Validation Results
+    validationResults: "Validierungsergebnisse",
+    overallScore: "Gesamtpunktzahl",
+    verifiedItems: "Verifizierte Elemente",
+    issuesFound: "Gefundene Probleme",
+    recommendations: "Empfehlungen",
+    downloadReport: "Bericht herunterladen",
+    
+    // Payment
+    payment: "Zahlung",
+    paymentDescription: "Schließen Sie die Zahlung ab, um Ihren vollständigen Validierungsbericht zu erhalten",
+    price: "$9.99",
+    payNow: "Jetzt bezahlen",
+    
+    // Additional
+    contact: "Kontakt",
+    privacy: "Datenschutzrichtlinie",
+    terms: "Nutzungsbedingungen",
+    
+    // Country Selection
+    commonRequirementsFor: "Allgemeine Anforderungen für",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "Wählen Sie Ihre Nationalität",
+    daysPlaceholder: "Anzahl der Tage eingeben",
+    
+    // File Upload
+    uploadAnalysisComplete: "Upload und Analyse abgeschlossen",
+    documentsAnalyzedSuccessfully: "Dokument(e) erfolgreich analysiert",
+    documentsFailed: "fehlgeschlagen",
+    uploadFailed: "Upload fehlgeschlagen",
+    
+    // Validation Results
+    validationScore: "Validierungspunktzahl",
+    completedOn: "Abgeschlossen am",
+    documentsVerified: "Dokumente verifiziert",
+    
+    // Language Modal
+    chooseYourLanguage: "Wählen Sie Ihre Sprache",
+    selectPreferredLanguage: "Wählen Sie Ihre bevorzugte Sprache für die Visa-Validierungsanwendung",
+    continueButton: "Weiter",
+    
+    // Extended Visa Types
+    medical: "Medizinisch",
+    conference: "Konferenz",
+    journalist: "Journalist",
+    religious: "Religiös",
+    cultural: "Kulturell",
+    research: "Forschung",
+    training: "Ausbildung",
+    diplomatic: "Diplomatisch",
+    crew: "Besatzung",
+    investment: "Investition",
+    retirement: "Ruhestand",
+    volunteer: "Freiwillig",
+    sports: "Sport",
+    other: "Andere",
+    
+    // Document Requirements
+    validPassportMinimum: "Gültiger Reisepass (mindestens 6 Monate gültig)",
+    ds160ConfirmationPage: "DS-160 Bestätigungsseite",
+    passportStylePhotograph: "Passfoto",
+    financialDocuments: "Finanzdokumente (Kontoauszüge, Einkommensnachweis)",
+    travelItineraryAccommodation: "Reiseverlauf und Unterkunftsnachweis",
+    completedVisaApplication: "Ausgefülltes Visa-Antragsformular",
+    supportingDocuments: "Unterstützende Dokumente (variiert je nach Visa-Typ)",
+    
     // Common
     loading: "Laden...",
     error: "Fehler",
@@ -563,6 +1263,146 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     work: "就労",
     transit: "通過",
     family: "家族訪問",
+    
+    // Features Section
+    whyChoose: "VisaValidator Proを選ぶ理由",
+    securePrivate: "安全でプライベート",
+    securePrivateDesc: "プライバシーとセキュリティのため、検証後すべての文書が自動的に削除されます。",
+    fastProcessing: "高速処理",
+    fastProcessingDesc: "日数ではなく、分で検証結果を取得。",
+    comprehensiveAnalysis: "包括的分析",
+    comprehensiveAnalysisDesc: "詳細な推奨事項と要件チェックを含むAI搭載文書分析。",
+    
+    // How it Works
+    howItWorks: "仕組み",
+    step1: "目的地を選択",
+    step1Desc: "目的地の国とビザの種類を選択",
+    step2: "書類をアップロード",
+    step2Desc: "ビザ申請書類をアップロード",
+    step3: "詳細を入力",
+    step3Desc: "個人情報を入力",
+    step4: "結果をプレビュー",
+    step4Desc: "支払い前に検証プレビューを確認",
+    step5: "支払いとダウンロード",
+    step5Desc: "完全な詳細レポートのために支払いを完了",
+    
+    // Pricing Section
+    simplePricing: "シンプルで透明な価格設定",
+    perValidation: "検証あたり",
+    completeDocAnalysis: "完全な文書分析",
+    detailedValidationReport: "詳細な検証レポート",
+    recommendationsChecklist: "推奨事項とチェックリスト",
+    secureHandling: "安全な文書処理",
+    startValidationButton: "検証を開始",
+    
+    // Footer and Navigation
+    professionalService: "世界中の旅行者のための専門文書検証サービス。",
+    service: "サービス",
+    supportedCountries: "対応国",
+    contactUs: "お問い合わせ",
+    legal: "法的情報",
+    disclaimer: "免責事項",
+    dataProtection: "データ保護",
+    copyright: "© 2024 VisaValidator Pro。全著作権所有。",
+    
+    // Country Selection
+    selectCountry: "目的地の国を選択",
+    selectNationality: "国籍を選択",
+    selectYourDestination: "目的地を選択",
+    chooseDestinationCountry: "訪問予定の国を選択",
+    selectYourNationality: "国籍を選択",
+    yourNationalityDescription: "個人向けビザ要件を取得するために国籍を選択",
+    popularChoices: "人気の選択肢",
+    searchCountries: "国を検索...",
+    searchNationalities: "国籍を検索...",
+    proceedToValidation: "検証に進む",
+    
+    // Document Upload
+    uploadFiles: "書類をアップロード",
+    selectFiles: "ファイルを選択",
+    uploadedFiles: "アップロード済みファイル",
+    noFilesUploaded: "まだファイルがアップロードされていません",
+    analyzing: "分析中...",
+    uploadSuccess: "アップロード成功",
+    
+    // Personal Information
+    personalInformation: "個人情報",
+    fullName: "氏名",
+    firstName: "名",
+    lastName: "姓",
+    middleName: "ミドルネーム",
+    passportNumber: "パスポート番号",
+    dateOfBirth: "生年月日",
+    nationality: "国籍",
+    plannedTravelDate: "予定旅行日",
+    durationOfStay: "滞在期間（日数）",
+    
+    // Validation Results
+    validationResults: "検証結果",
+    overallScore: "総合スコア",
+    verifiedItems: "検証済み項目",
+    issuesFound: "発見された問題",
+    recommendations: "推奨事項",
+    downloadReport: "レポートダウンロード",
+    
+    // Payment
+    payment: "支払い",
+    paymentDescription: "完全な検証レポートを受け取るために支払いを完了",
+    price: "$9.99",
+    payNow: "今すぐ支払い",
+    
+    // Additional
+    contact: "連絡先",
+    privacy: "プライバシーポリシー",
+    terms: "利用規約",
+    
+    // Country Selection
+    commonRequirementsFor: "の一般的な要件",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "国籍を選択",
+    daysPlaceholder: "日数を入力",
+    
+    // File Upload
+    uploadAnalysisComplete: "アップロードと分析完了",
+    documentsAnalyzedSuccessfully: "書類の分析が正常に完了",
+    documentsFailed: "失敗",
+    uploadFailed: "アップロード失敗",
+    
+    // Validation Results
+    validationScore: "検証スコア",
+    completedOn: "完了日",
+    documentsVerified: "書類検証済み",
+    
+    // Language Modal
+    chooseYourLanguage: "言語を選択",
+    selectPreferredLanguage: "ビザ検証アプリケーションの希望言語を選択",
+    continueButton: "続行",
+    
+    // Extended Visa Types
+    medical: "医療",
+    conference: "会議",
+    journalist: "ジャーナリスト",
+    religious: "宗教",
+    cultural: "文化",
+    research: "研究",
+    training: "研修",
+    diplomatic: "外交",
+    crew: "乗務員",
+    investment: "投資",
+    retirement: "退職",
+    volunteer: "ボランティア",
+    sports: "スポーツ",
+    other: "その他",
+    
+    // Document Requirements
+    validPassportMinimum: "有効なパスポート（最低6ヶ月有効）",
+    ds160ConfirmationPage: "DS-160確認ページ",
+    passportStylePhotograph: "パスポート用写真",
+    financialDocuments: "財務書類（銀行明細書、収入証明）",
+    travelItineraryAccommodation: "旅行日程と宿泊証明",
+    completedVisaApplication: "記入済みビザ申請書",
+    supportingDocuments: "補助書類（ビザタイプにより異なる）",
     
     // Common
     loading: "読み込み中...",
@@ -625,6 +1465,146 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     transit: "Transit",
     family: "Aile Ziyareti",
     
+    // Features Section
+    whyChoose: "Neden VisaValidator Pro'yu Seçin",
+    securePrivate: "Güvenli ve Özel",
+    securePrivateDesc: "Tüm belgeler gizliliğiniz ve güvenliğiniz için doğrulama sonrası otomatik olarak silinir.",
+    fastProcessing: "Hızlı İşlem",
+    fastProcessingDesc: "Günler değil, dakikalar içinde doğrulama sonuçları alın.",
+    comprehensiveAnalysis: "Kapsamlı Analiz",
+    comprehensiveAnalysisDesc: "Detaylı öneriler ve gereksinim kontrolü ile AI destekli belge analizi.",
+    
+    // How it Works
+    howItWorks: "Nasıl Çalışır",
+    step1: "Hedef Seçin",
+    step1Desc: "Hedef ülkenizi ve vize türünüzü seçin",
+    step2: "Belgeleri Yükleyin",
+    step2Desc: "Vize başvuru belgelerinizi yükleyin",
+    step3: "Detayları Girin",
+    step3Desc: "Kişisel bilgilerinizi doldurun",
+    step4: "Sonuçları Önizleyin",
+    step4Desc: "Ödeme öncesi doğrulama önizlemesini görün",
+    step5: "Ödeyin ve İndirin",
+    step5Desc: "Tam detaylı rapor için ödemeyi tamamlayın",
+    
+    // Pricing Section
+    simplePricing: "Basit, Şeffaf Fiyatlandırma",
+    perValidation: "Doğrulama başına",
+    completeDocAnalysis: "Tam belge analizi",
+    detailedValidationReport: "Detaylı doğrulama raporu",
+    recommendationsChecklist: "Öneriler ve kontrol listesi",
+    secureHandling: "Güvenli belge işleme",
+    startValidationButton: "Doğrulamayı Başlat",
+    
+    // Footer and Navigation
+    professionalService: "Dünya çapında yolcular için profesyonel belge doğrulama hizmeti.",
+    service: "Hizmet",
+    supportedCountries: "Desteklenen Ülkeler",
+    contactUs: "Bizimle İletişime Geçin",
+    legal: "Yasal",
+    disclaimer: "Sorumluluk Reddi",
+    dataProtection: "Veri Koruma",
+    copyright: "© 2024 VisaValidator Pro. Tüm hakları saklıdır.",
+    
+    // Country Selection
+    selectCountry: "Hedef ülkenizi seçin",
+    selectNationality: "Uyruğunuzu seçin",
+    selectYourDestination: "Hedefinizi Seçin",
+    chooseDestinationCountry: "Ziyaret etmeyi planladığınız ülkeyi seçin",
+    selectYourNationality: "Uyruğunuzu Seçin",
+    yourNationalityDescription: "Kişiselleştirilmiş vize gereksinimleri almak için uyruğunuzu seçin",
+    popularChoices: "Popüler Seçenekler",
+    searchCountries: "Ülke ara...",
+    searchNationalities: "Uyruk ara...",
+    proceedToValidation: "Doğrulamaya Geç",
+    
+    // Document Upload
+    uploadFiles: "Belgeleri Yükle",
+    selectFiles: "Dosya Seç",
+    uploadedFiles: "Yüklenen Dosyalar",
+    noFilesUploaded: "Henüz dosya yüklenmedi",
+    analyzing: "Analiz ediliyor...",
+    uploadSuccess: "Yükleme başarılı",
+    
+    // Personal Information
+    personalInformation: "Kişisel Bilgiler",
+    fullName: "Tam Adı",
+    firstName: "Ad",
+    lastName: "Soyad",
+    middleName: "İkinci Ad",
+    passportNumber: "Pasaport Numarası",
+    dateOfBirth: "Doğum Tarihi",
+    nationality: "Uyruk",
+    plannedTravelDate: "Planlanan Seyahat Tarihi",
+    durationOfStay: "Kalış Süresi (gün)",
+    
+    // Validation Results
+    validationResults: "Doğrulama Sonuçları",
+    overallScore: "Genel Puan",
+    verifiedItems: "Doğrulanmış Öğeler",
+    issuesFound: "Bulunan Sorunlar",
+    recommendations: "Öneriler",
+    downloadReport: "Raporu İndir",
+    
+    // Payment
+    payment: "Ödeme",
+    paymentDescription: "Tam doğrulama raporunuzu almak için ödemeyi tamamlayın",
+    price: "$9.99",
+    payNow: "Şimdi Öde",
+    
+    // Additional
+    contact: "İletişim",
+    privacy: "Gizlilik Politikası",
+    terms: "Hizmet Şartları",
+    
+    // Country Selection
+    commonRequirementsFor: "için ortak gereksinimler",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "Uyruğunuzu seçin",
+    daysPlaceholder: "Gün sayısını girin",
+    
+    // File Upload
+    uploadAnalysisComplete: "Yükleme ve Analiz Tamamlandı",
+    documentsAnalyzedSuccessfully: "belge(ler) başarıyla analiz edildi",
+    documentsFailed: "başarısız",
+    uploadFailed: "Yükleme başarısız",
+    
+    // Validation Results
+    validationScore: "Doğrulama Puanı",
+    completedOn: "Tamamlandı",
+    documentsVerified: "Belgeler Doğrulandı",
+    
+    // Language Modal
+    chooseYourLanguage: "Dilinizi Seçin",
+    selectPreferredLanguage: "Vize doğrulama uygulaması için tercih ettiğiniz dili seçin",
+    continueButton: "Devam Et",
+    
+    // Extended Visa Types
+    medical: "Tıbbi",
+    conference: "Konferans",
+    journalist: "Gazeteci",
+    religious: "Dini",
+    cultural: "Kültürel",
+    research: "Araştırma",
+    training: "Eğitim",
+    diplomatic: "Diplomatik",
+    crew: "Mürettebat",
+    investment: "Yatırım",
+    retirement: "Emeklilik",
+    volunteer: "Gönüllü",
+    sports: "Spor",
+    other: "Diğer",
+    
+    // Document Requirements
+    validPassportMinimum: "Geçerli pasaport (minimum 6 ay geçerlilik)",
+    ds160ConfirmationPage: "DS-160 onay sayfası",
+    passportStylePhotograph: "Pasaport tarzı fotoğraf",
+    financialDocuments: "Mali belgeler (banka ekstreleri, gelir kanıtı)",
+    travelItineraryAccommodation: "Seyahat programı ve konaklama kanıtı",
+    completedVisaApplication: "Tamamlanmış vize başvuru formu",
+    supportingDocuments: "Destekleyici belgeler (vize türüne göre değişir)",
+    
     // Common
     loading: "Yükleniyor...",
     error: "Hata",
@@ -685,6 +1665,146 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     work: "취업",
     transit: "경유",
     family: "가족 방문",
+    
+    // Features Section
+    whyChoose: "VisaValidator Pro를 선택하는 이유",
+    securePrivate: "안전하고 비공개",
+    securePrivateDesc: "개인 정보 보호와 보안을 위해 검증 후 모든 문서가 자동으로 삭제됩니다.",
+    fastProcessing: "빠른 처리",
+    fastProcessingDesc: "며칠이 아닌 몇 분 만에 검증 결과를 받아보세요.",
+    comprehensiveAnalysis: "포괄적 분석",
+    comprehensiveAnalysisDesc: "상세한 권장사항과 요구사항 확인이 포함된 AI 기반 문서 분석.",
+    
+    // How it Works
+    howItWorks: "작동 방식",
+    step1: "목적지 선택",
+    step1Desc: "목적지 국가와 비자 유형을 선택하세요",
+    step2: "문서 업로드",
+    step2Desc: "비자 신청 문서를 업로드하세요",
+    step3: "세부정보 입력",
+    step3Desc: "개인 정보를 입력하세요",
+    step4: "결과 미리보기",
+    step4Desc: "결제 전 검증 미리보기를 확인하세요",
+    step5: "결제 및 다운로드",
+    step5Desc: "전체 상세 보고서를 위해 결제를 완료하세요",
+    
+    // Pricing Section
+    simplePricing: "간단하고 투명한 가격",
+    perValidation: "검증당",
+    completeDocAnalysis: "완전한 문서 분석",
+    detailedValidationReport: "상세한 검증 보고서",
+    recommendationsChecklist: "권장사항 및 체크리스트",
+    secureHandling: "안전한 문서 처리",
+    startValidationButton: "검증 시작",
+    
+    // Footer and Navigation
+    professionalService: "전 세계 여행자를 위한 전문 문서 검증 서비스.",
+    service: "서비스",
+    supportedCountries: "지원 국가",
+    contactUs: "문의하기",
+    legal: "법적 정보",
+    disclaimer: "면책조항",
+    dataProtection: "데이터 보호",
+    copyright: "© 2024 VisaValidator Pro. 모든 권리 보유.",
+    
+    // Country Selection
+    selectCountry: "목적지 국가를 선택하세요",
+    selectNationality: "국적을 선택하세요",
+    selectYourDestination: "목적지 선택",
+    chooseDestinationCountry: "방문할 국가를 선택하세요",
+    selectYourNationality: "국적 선택",
+    yourNationalityDescription: "개인 맞춤 비자 요구사항을 받으려면 국적을 선택하세요",
+    popularChoices: "인기 선택",
+    searchCountries: "국가 검색...",
+    searchNationalities: "국적 검색...",
+    proceedToValidation: "검증 진행",
+    
+    // Document Upload
+    uploadFiles: "문서 업로드",
+    selectFiles: "파일 선택",
+    uploadedFiles: "업로드된 파일",
+    noFilesUploaded: "아직 파일이 업로드되지 않음",
+    analyzing: "분석 중...",
+    uploadSuccess: "업로드 성공",
+    
+    // Personal Information
+    personalInformation: "개인 정보",
+    fullName: "전체 이름",
+    firstName: "이름",
+    lastName: "성",
+    middleName: "중간 이름",
+    passportNumber: "여권 번호",
+    dateOfBirth: "생년월일",
+    nationality: "국적",
+    plannedTravelDate: "계획된 여행 날짜",
+    durationOfStay: "체류 기간(일)",
+    
+    // Validation Results
+    validationResults: "검증 결과",
+    overallScore: "전체 점수",
+    verifiedItems: "검증된 항목",
+    issuesFound: "발견된 문제",
+    recommendations: "권장사항",
+    downloadReport: "보고서 다운로드",
+    
+    // Payment
+    payment: "결제",
+    paymentDescription: "전체 검증 보고서를 받으려면 결제를 완료하세요",
+    price: "$9.99",
+    payNow: "지금 결제",
+    
+    // Additional
+    contact: "연락처",
+    privacy: "개인정보처리방침",
+    terms: "이용약관",
+    
+    // Country Selection
+    commonRequirementsFor: "에 대한 일반적인 요구사항",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "국적을 선택하세요",
+    daysPlaceholder: "일수를 입력하세요",
+    
+    // File Upload
+    uploadAnalysisComplete: "업로드 및 분석 완료",
+    documentsAnalyzedSuccessfully: "문서가 성공적으로 분석됨",
+    documentsFailed: "실패",
+    uploadFailed: "업로드 실패",
+    
+    // Validation Results
+    validationScore: "검증 점수",
+    completedOn: "완료일",
+    documentsVerified: "문서 검증됨",
+    
+    // Language Modal
+    chooseYourLanguage: "언어 선택",
+    selectPreferredLanguage: "비자 검증 애플리케이션의 선호 언어를 선택하세요",
+    continueButton: "계속",
+    
+    // Extended Visa Types
+    medical: "의료",
+    conference: "회의",
+    journalist: "기자",
+    religious: "종교",
+    cultural: "문화",
+    research: "연구",
+    training: "연수",
+    diplomatic: "외교",
+    crew: "승무원",
+    investment: "투자",
+    retirement: "은퇴",
+    volunteer: "자원봉사",
+    sports: "스포츠",
+    other: "기타",
+    
+    // Document Requirements
+    validPassportMinimum: "유효한 여권 (최소 6개월 유효)",
+    ds160ConfirmationPage: "DS-160 확인 페이지",
+    passportStylePhotograph: "여권용 사진",
+    financialDocuments: "재정 서류 (은행 명세서, 소득 증명)",
+    travelItineraryAccommodation: "여행 일정 및 숙박 증명",
+    completedVisaApplication: "작성된 비자 신청서",
+    supportingDocuments: "지원 서류 (비자 유형에 따라 다름)",
     
     // Common
     loading: "로딩 중...",
