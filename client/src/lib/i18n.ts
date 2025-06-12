@@ -399,6 +399,25 @@ export const translations: Record<string, Record<string, string>> = {
     zambia: "Zambia",
     zimbabwe: "Zimbabwe",
     
+    // Pricing Section
+    simplePricing: "Simple, Transparent Pricing",
+    perValidation: "Per validation",
+    completeDocAnalysis: "Complete document analysis",
+    detailedValidationReport: "Detailed validation report",
+    recommendationsChecklist: "Recommendations & checklist",
+    secureHandling: "Secure document handling",
+    startValidationButton: "Start Validation",
+    
+    // Footer and Navigation
+    professionalService: "Professional document validation service for travelers worldwide.",
+    service: "Service",
+    supportedCountries: "Supported Countries",
+    contactUs: "Contact Us",
+    legal: "Legal",
+    disclaimer: "Disclaimer",
+    dataProtection: "Data Protection",
+    copyright: "© 2024 VisaValidator Pro. All rights reserved.",
+    
     // Additional Translation Keys
     selectYourNationality: "Select Your Nationality",
     yourNationalityDescription: "Choose your nationality to get personalized visa requirements",
@@ -680,6 +699,25 @@ export const translations: Record<string, Record<string, string>> = {
     tip3: "Giữ tài liệu gốc cho cuộc hẹn",
     tip4: "Xác minh tất cả thông tin khớp giữa các tài liệu",
     proceedToUpload: "Tiến hành Tải lên Tài liệu",
+    
+    // Pricing Section
+    simplePricing: "Giá Cả Đơn Giản, Minh Bạch",
+    perValidation: "Mỗi lần xác thực",
+    completeDocAnalysis: "Phân tích tài liệu hoàn chỉnh",
+    detailedValidationReport: "Báo cáo xác thực chi tiết",
+    recommendationsChecklist: "Khuyến nghị và danh sách kiểm tra",
+    secureHandling: "Xử lý tài liệu an toàn",
+    startValidationButton: "Bắt Đầu Xác Thực",
+    
+    // Footer and Navigation
+    professionalService: "Dịch vụ xác thực tài liệu chuyên nghiệp cho khách du lịch trên toàn thế giới.",
+    service: "Dịch vụ",
+    supportedCountries: "Các Quốc Gia Được Hỗ Trợ",
+    contactUs: "Liên Hệ Chúng Tôi",
+    legal: "Pháp lý",
+    disclaimer: "Tuyên bố miễn trừ trách nhiệm",
+    dataProtection: "Bảo vệ Dữ liệu",
+    copyright: "© 2024 VisaValidator Pro. Bảo lưu mọi quyền.",
     
     // Common
     loading: "Đang tải...",
@@ -1239,7 +1277,26 @@ export const translations: Record<string, Record<string, string>> = {
     step4: "Предварительный просмотр результатов",
     step4Desc: "Посмотрите предварительный просмотр проверки перед оплатой",
     step5: "Оплатить и скачать",
-    step5Desc: "Завершите оплату для получения полного подробного отчета"
+    step5Desc: "Завершите оплату для получения полного подробного отчета",
+    
+    // Pricing Section
+    simplePricing: "Простое, Прозрачное Ценообразование",
+    perValidation: "За проверку",
+    completeDocAnalysis: "Полный анализ документов",
+    detailedValidationReport: "Подробный отчет о проверке",
+    recommendationsChecklist: "Рекомендации и чек-лист",
+    secureHandling: "Безопасная обработка документов",
+    startValidationButton: "Начать Проверку",
+    
+    // Footer and Navigation
+    professionalService: "Профессиональный сервис проверки документов для путешественников по всему миру.",
+    service: "Сервис",
+    supportedCountries: "Поддерживаемые Страны",
+    contactUs: "Связаться с нами",
+    legal: "Правовая информация",
+    disclaimer: "Отказ от ответственности",
+    dataProtection: "Защита данных",
+    copyright: "© 2024 VisaValidator Pro. Все права защищены."
   },
   
   pt: {
