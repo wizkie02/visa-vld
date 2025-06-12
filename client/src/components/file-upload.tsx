@@ -43,6 +43,7 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
   const [files, setFiles] = useState<UploadFile[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const uploadMutation = useMutation({
     mutationFn: async (formData: FormData) => {
@@ -229,9 +230,42 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
           onChange={(e) => e.target.files && handleFileSelect(e.target.files)}
         />
         
-        {/* Uploaded Files List */}
+        {/* All Uploaded Documents - Real-time List */}
+        {(data.uploadedFiles && data.uploadedFiles.length > 0) && (
+          <div className="mt-6">
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">{t('uploadedDocuments')} ({data.uploadedFiles.length})</h4>
+            <div className="space-y-3">
+              {data.uploadedFiles.map((file: any, index: number) => (
+                <div key={index} className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      {getFileIcon(file.mimetype)}
+                      <div>
+                        <span className="font-medium text-blue-900">{file.originalName}</span>
+                        <span className="text-sm text-blue-700 ml-2">({formatFileSize(file.size)})</span>
+                        {file.analysis && (
+                          <div className="text-xs text-blue-600 mt-1">
+                            {t('documentType')}: {file.analysis.documentType}
+                            {file.analysis.confidence && ` (${Math.round(file.analysis.confidence * 100)}% ${t('confidence')})`}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center text-emerald-600">
+                      <CheckCircle className="w-4 h-4 mr-1" />
+                      <span className="text-sm">{t('uploaded')}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* Currently Uploading Files */}
         {files.length > 0 && (
           <div className="mt-6 space-y-3">
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">{t('currentUploads')}</h4>
             {files.map((file, index) => (
               <div key={index} className="bg-gray-50 rounded-lg p-4">
                 <div className="flex items-center justify-between">

@@ -181,7 +181,7 @@ export function generateRequirementsChecklistPDF(requirements: ComprehensiveVisa
       const categoryReqs = requirements.requirements.filter(req => req.category === category);
       if (categoryReqs.length === 0) return '';
       
-      const categoryNames = {
+      const categoryNames: Record<string, string> = {
         'document': 'Document Requirements',
         'financial': 'Financial Requirements',
         'personal': 'Personal Requirements',

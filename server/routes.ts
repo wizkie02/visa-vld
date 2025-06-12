@@ -333,7 +333,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const vfsInfo = checkVFSOutsourcing(country, visaType);
       if (vfsInfo.isOutsourced) {
         requirements.importantNotes.unshift(
-          `⚠️ IMPORTANT: ${country} ${visaType} visa applications are outsourced to ${vfsInfo.provider}. You must submit your application through ${vfsInfo.applicationCenter}. Visit: ${vfsInfo.website}`
+          `⚠️ IMPORTANT: ${country} ${visaType} visa applications are processed through ${vfsInfo.provider} instead of the embassy. You must submit your application at ${vfsInfo.applicationCenter}. Visit: ${vfsInfo.website} to book an appointment and find your nearest location.`
         );
       }
       
