@@ -1605,7 +1605,26 @@ export const translations: Record<string, Record<string, string>> = {
     step4: "Ergebnisse vorschau",
     step4Desc: "Sehen Sie die Validierungsvorschau vor der Zahlung",
     step5: "Zahlen und herunterladen",
-    step5Desc: "Zahlung abschließen für vollständigen detaillierten Bericht"
+    step5Desc: "Zahlung abschließen für vollständigen detaillierten Bericht",
+    
+    // Pricing Section
+    simplePricing: "Einfache, Transparente Preise",
+    perValidation: "Pro Validierung",
+    completeDocAnalysis: "Vollständige Dokumentenanalyse",
+    detailedValidationReport: "Detaillierter Validierungsbericht",
+    recommendationsChecklist: "Empfehlungen und Checkliste",
+    secureHandling: "Sichere Dokumentenverarbeitung",
+    startValidationButton: "Validierung Starten",
+    
+    // Footer and Navigation
+    professionalService: "Professioneller Dokumentenvalidierungsservice für Reisende weltweit.",
+    service: "Service",
+    supportedCountries: "Unterstützte Länder",
+    contactUs: "Kontaktieren Sie uns",
+    legal: "Rechtliches",
+    disclaimer: "Haftungsausschluss",
+    dataProtection: "Datenschutz",
+    copyright: "© 2024 VisaValidator Pro. Alle Rechte vorbehalten."
   },
   
   ja: {
@@ -1649,7 +1668,26 @@ export const translations: Record<string, Record<string, string>> = {
     step4: "結果をプレビュー",
     step4Desc: "支払い前に検証プレビューを確認",
     step5: "支払いとダウンロード",
-    step5Desc: "完全な詳細レポートのために支払いを完了"
+    step5Desc: "完全な詳細レポートのために支払いを完了",
+    
+    // Pricing Section
+    simplePricing: "シンプルで透明な料金体系",
+    perValidation: "1回の検証あたり",
+    completeDocAnalysis: "完全な書類分析",
+    detailedValidationReport: "詳細な検証レポート",
+    recommendationsChecklist: "推奨事項とチェックリスト",
+    secureHandling: "安全な書類処理",
+    startValidationButton: "検証を開始",
+    
+    // Footer and Navigation
+    professionalService: "世界中の旅行者のためのプロフェッショナル書類検証サービス。",
+    service: "サービス",
+    supportedCountries: "対応国",
+    contactUs: "お問い合わせ",
+    legal: "法的情報",
+    disclaimer: "免責事項",
+    dataProtection: "データ保護",
+    copyright: "© 2024 VisaValidator Pro. 全著作権所有。"
   },
   
   sw: {
