@@ -107,12 +107,16 @@ export const translations: Record<string, Record<string, string>> = {
     removeFile: "Remove file",
     
     // Personal Information
-    personalInfo: "Personal Information",
+    personalInformation: "Personal Information",
     fullName: "Full Name",
     passportNumber: "Passport Number", 
     dateOfBirth: "Date of Birth",
     nationality: "Nationality",
+    selectNationalityPlaceholder: "Select nationality...",
+    plannedTravelDate: "Planned Travel Date",
     travelDate: "Travel Date",
+    durationOfStay: "Duration of Stay (days)",
+    daysPlaceholder: "e.g., 14",
     stayDuration: "Stay Duration (days)",
     
     // Validation
@@ -202,7 +206,6 @@ export const translations: Record<string, Record<string, string>> = {
     issuingCountry: "Issuing Country",
     expirationDate: "Expiration Date",
     documentNumber: "Document Number",
-    personalInformation: "Personal Information",
     firstName: "First Name",
     lastName: "Last Name",
     email: "Email",

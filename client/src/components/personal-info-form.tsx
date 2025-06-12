@@ -286,7 +286,7 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
                 name="travelDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Planned Travel Date</FormLabel>
+                    <FormLabel>{t('plannedTravelDate')}</FormLabel>
                     <FormControl>
                       <Input type="date" {...field} />
                     </FormControl>
@@ -300,11 +300,11 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
                 name="stayDuration"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Duration of Stay (days)</FormLabel>
+                    <FormLabel>{t('durationOfStay')}</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
-                        placeholder="e.g., 14" 
+                        placeholder={t('daysPlaceholder')} 
                         {...field}
                         onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
                       />
@@ -317,10 +317,10 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
 
             <div className="flex space-x-4">
               <Button type="button" variant="outline" onClick={onPrevious} className="flex-1">
-                Previous
+                {t('previous')}
               </Button>
               <Button type="submit" className="flex-1 bg-blue-700 hover:bg-blue-800">
-                Next
+                {t('next')}
               </Button>
             </div>
           </form>
