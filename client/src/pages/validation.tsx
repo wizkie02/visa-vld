@@ -418,19 +418,7 @@ export default function Validation() {
                   </Button>
                 </div>
                 
-                {/* Download button (shown after payment) */}
-                <div className="mt-4 pt-4 border-t border-gray-200">
-                  <Button 
-                    onClick={downloadValidationReport} 
-                    variant="outline" 
-                    className="w-full"
-                  >
-                    Download Validation Report
-                  </Button>
-                  <p className="text-xs text-gray-500 text-center mt-2">
-                    Download a comprehensive report of your document validation results
-                  </p>
-                </div>
+                
                 
                 <p className="text-xs text-gray-500 text-center mt-3">
                   Secure payment powered by Stripe. Full report available immediately after payment.
