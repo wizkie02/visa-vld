@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { personalInfoSchema, type PersonalInfo } from "@shared/schema";
 import type { ValidationData } from "@/pages/validation";
+import { useLanguage } from "@/lib/i18n";
 
 interface PersonalInfoFormProps {
   data: ValidationData;
@@ -194,6 +195,7 @@ const nationalities = [
 ];
 
 export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }: PersonalInfoFormProps) {
+  const { t } = useLanguage();
   const form = useForm<PersonalInfo>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: data.personalInfo,
@@ -207,7 +209,7 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
   return (
     <Card className="bg-white rounded-xl shadow-lg">
       <CardContent className="p-8">
-        <h3 className="text-2xl font-semibold text-gray-900 mb-6">Personal Information</h3>
+        <h3 className="text-2xl font-semibold text-gray-900 mb-6">{t('personalInformation')}</h3>
         
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -217,9 +219,9 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
                 name="applicantName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Full Name</FormLabel>
+                    <FormLabel>{t('fullName')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="As shown on passport" {...field} />
+                      <Input placeholder={t('fullName')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -231,9 +233,9 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
                 name="passportNumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Passport Number</FormLabel>
+                    <FormLabel>{t('passportNumber')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter passport number" {...field} />
+                      <Input placeholder={t('passportNumber')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -245,7 +247,7 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
                 name="dateOfBirth"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Date of Birth</FormLabel>
+                    <FormLabel>{t('dateOfBirth')}</FormLabel>
                     <FormControl>
                       <Input type="date" {...field} />
                     </FormControl>
@@ -259,11 +261,11 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
                 name="nationality"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nationality</FormLabel>
+                    <FormLabel>{t('nationality')}</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select nationality..." />
+                          <SelectValue placeholder={t('selectNationalityPlaceholder')} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
