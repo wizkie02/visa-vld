@@ -1867,6 +1867,146 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     transit: "Mpito",
     family: "Ziara ya Familia",
     
+    // Features Section
+    whyChoose: "Kwa nini Chagua VisaValidator Pro",
+    securePrivate: "Salama na ya Binafsi",
+    securePrivateDesc: "Hati zote zinafutwa kiotomatiki baada ya uthibitisho kwa faragha na usalama wako.",
+    fastProcessing: "Uchakataji wa Haraka",
+    fastProcessingDesc: "Pata matokeo ya uthibitisho katika dakika, si siku.",
+    comprehensiveAnalysis: "Uchambuzi wa Kina",
+    comprehensiveAnalysisDesc: "Uchambuzi wa hati unaotumia AI pamoja na mapendekezo ya kina na ukaguzi wa mahitaji.",
+    
+    // How it Works
+    howItWorks: "Jinsi Inavyofanya Kazi",
+    step1: "Chagua Marudio",
+    step1Desc: "Chagua nchi yako ya marudio na aina ya visa",
+    step2: "Pakia Hati",
+    step2Desc: "Pakia hati zako za maombi ya visa",
+    step3: "Ingiza Maelezo",
+    step3Desc: "Jaza maelezo yako ya kibinafsi",
+    step4: "Chunguza Matokeo",
+    step4Desc: "Ona hakiki ya uthibitisho kabla ya malipo",
+    step5: "Lipa na Pakua",
+    step5Desc: "Maliza malipo kwa ripoti kamili ya kina",
+    
+    // Pricing Section
+    simplePricing: "Bei Rahisi na Wazi",
+    perValidation: "Kwa uthibitisho",
+    completeDocAnalysis: "Uchambuzi kamili wa hati",
+    detailedValidationReport: "Ripoti ya kina ya uthibitisho",
+    recommendationsChecklist: "Mapendekezo na orodha ya ukaguzi",
+    secureHandling: "Utunzaji salama wa hati",
+    startValidationButton: "Anza Uthibitisho",
+    
+    // Footer and Navigation
+    professionalService: "Huduma ya kitaaluma ya uthibitisho wa hati kwa wasafiri ulimwenguni.",
+    service: "Huduma",
+    supportedCountries: "Nchi Zinazotumika",
+    contactUs: "Wasiliana Nasi",
+    legal: "Kisheria",
+    disclaimer: "Kanusho",
+    dataProtection: "Ulinzi wa Data",
+    copyright: "© 2024 VisaValidator Pro. Haki zote zimehifadhiwa.",
+    
+    // Country Selection
+    selectCountry: "Chagua nchi yako ya marudio",
+    selectNationality: "Chagua utaifa wako",
+    selectYourDestination: "Chagua Marudio Lako",
+    chooseDestinationCountry: "Chagua nchi unayopanga kutembelea",
+    selectYourNationality: "Chagua Utaifa Wako",
+    yourNationalityDescription: "Chagua utaifa wako kupata mahitaji ya visa ya kibinafsi",
+    popularChoices: "Uchaguzi Maarufu",
+    searchCountries: "Tafuta nchi...",
+    searchNationalities: "Tafuta utaifa...",
+    proceedToValidation: "Endelea kwa Uthibitisho",
+    
+    // Document Upload
+    uploadFiles: "Pakia Hati",
+    selectFiles: "Chagua Faili",
+    uploadedFiles: "Faili Zilizopakiwa",
+    noFilesUploaded: "Hakuna faili zilizopakiwa bado",
+    analyzing: "Inachambuliwa...",
+    uploadSuccess: "Upakiaji umefanikiwa",
+    
+    // Personal Information
+    personalInformation: "Maelezo ya Kibinafsi",
+    fullName: "Jina Kamili",
+    firstName: "Jina la Kwanza",
+    lastName: "Jina la Mwisho",
+    middleName: "Jina la Kati",
+    passportNumber: "Nambari ya Pasipoti",
+    dateOfBirth: "Tarehe ya Kuzaliwa",
+    nationality: "Utaifa",
+    plannedTravelDate: "Tarehe ya Safari Iliyopangwa",
+    durationOfStay: "Muda wa Kukaa (siku)",
+    
+    // Validation Results
+    validationResults: "Matokeo ya Uthibitisho",
+    overallScore: "Alama ya Jumla",
+    verifiedItems: "Vitu Vilivyothibitishwa",
+    issuesFound: "Matatizo Yaliyopatikana",
+    recommendations: "Mapendekezo",
+    downloadReport: "Pakua Ripoti",
+    
+    // Payment
+    payment: "Malipo",
+    paymentDescription: "Maliza malipo kupokea ripoti yako kamili ya uthibitisho",
+    price: "$9.99",
+    payNow: "Lipa Sasa",
+    
+    // Additional
+    contact: "Mawasiliano",
+    privacy: "Sera ya Faragha",
+    terms: "Masharti ya Huduma",
+    
+    // Country Selection
+    commonRequirementsFor: "Mahitaji ya kawaida kwa",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "Chagua utaifa wako",
+    daysPlaceholder: "Ingiza idadi ya siku",
+    
+    // File Upload
+    uploadAnalysisComplete: "Upakiaji na Uchambuzi Umekamilika",
+    documentsAnalyzedSuccessfully: "hati imechambuliwa kwa mafanikio",
+    documentsFailed: "imeshindwa",
+    uploadFailed: "Upakiaji umeshindwa",
+    
+    // Validation Results
+    validationScore: "Alama ya Uthibitisho",
+    completedOn: "Imekamilika",
+    documentsVerified: "Hati Zimethibitishwa",
+    
+    // Language Modal
+    chooseYourLanguage: "Chagua Lugha Yako",
+    selectPreferredLanguage: "Chagua lugha yako unayopendelea kwa programu ya uthibitisho wa visa",
+    continueButton: "Endelea",
+    
+    // Extended Visa Types
+    medical: "Kwa Matibabu",
+    conference: "Mkutano",
+    journalist: "Mwanahabari",
+    religious: "Kidini",
+    cultural: "Kitamaduni",
+    research: "Utafiti",
+    training: "Mafunzo",
+    diplomatic: "Kidiplomasia",
+    crew: "Wafanyakazi",
+    investment: "Uwekezaji",
+    retirement: "Ustaafu",
+    volunteer: "Kujitolea",
+    sports: "Michezo",
+    other: "Nyingine",
+    
+    // Document Requirements
+    validPassportMinimum: "Pasipoti halali (angalau miezi 6 halali)",
+    ds160ConfirmationPage: "Ukurasa wa uthibitisho wa DS-160",
+    passportStylePhotograph: "Picha ya mtindo wa pasipoti",
+    financialDocuments: "Hati za kifedha (taarifa za benki, uthibitisho wa mapato)",
+    travelItineraryAccommodation: "Ratiba ya safari na uthibitisho wa malazi",
+    completedVisaApplication: "Fomu ya maombi ya visa iliyokamilika",
+    supportingDocuments: "Hati za msaada (hutofautiana kulingana na aina ya visa)",
+    
     // Common
     loading: "Inapakia...",
     error: "Hitilafu",
@@ -1927,6 +2067,146 @@ const additionalLanguageTranslations: Record<string, Record<string, string>> = {
     work: "పని",
     transit: "రవాణా",
     family: "కుటుంబ సందర్శన",
+    
+    // Features Section
+    whyChoose: "VisaValidator Pro ఎందుకు ఎంచుకోవాలి",
+    securePrivate: "సురక్షిత మరియు వ్యక్తిగత",
+    securePrivateDesc: "మీ గోప్యత మరియు భద్రత కోసం ధృవీకరణ తర్వాత అన్ని పత్రాలు స్వయంచాలకంగా తొలగించబడతాయి.",
+    fastProcessing: "వేగవంతమైన ప్రాసెసింగ్",
+    fastProcessingDesc: "రోజులు కాకుండా నిమిషాల్లో ధృవీకరణ ఫలితాలను పొందండి.",
+    comprehensiveAnalysis: "సమగ్ర విశ్లేషణ",
+    comprehensiveAnalysisDesc: "వివరణాత్మక సిఫార్సులు మరియు అవసరాల తనిఖీతో AI-ఆధారిత పత్రాల విశ్లేషణ.",
+    
+    // How it Works
+    howItWorks: "ఎలా పని చేస్తుంది",
+    step1: "గమ్యస్థానం ఎంచుకోండి",
+    step1Desc: "మీ గమ్యస్థాన దేశం మరియు వీసా రకాన్ని ఎంచుకోండి",
+    step2: "పత్రాలను అప్‌లోడ్ చేయండి",
+    step2Desc: "మీ వీసా దరఖాస్తు పత్రాలను అప్‌లోడ్ చేయండి",
+    step3: "వివరాలను నమోదు చేయండి",
+    step3Desc: "మీ వ్యక్తిగత సమాచారాన్ని పూరించండి",
+    step4: "ఫలితాలను ప్రివ్యూ చేయండి",
+    step4Desc: "చెల్లింపుకు ముందు ధృవీకరణ ప్రివ్యూని చూడండి",
+    step5: "చెల్లించండి మరియు డౌన్‌లోడ్ చేయండి",
+    step5Desc: "పూర్తి వివరణాత్మక నివేదిక కోసం చెల్లింపును పూర్తి చేయండి",
+    
+    // Pricing Section
+    simplePricing: "సాధారణ, పారదర్శక ధర",
+    perValidation: "ధృవీకరణకు",
+    completeDocAnalysis: "పూర్తి పత్రాల విశ్లేషణ",
+    detailedValidationReport: "వివరణాత్మక ధృవీకరణ నివేదిక",
+    recommendationsChecklist: "సిఫార్సులు మరియు చెక్‌లిస్ట్",
+    secureHandling: "సురక్షిత పత్రాల నిర్వహణ",
+    startValidationButton: "ధృవీకరణ ప్రారంభించండి",
+    
+    // Footer and Navigation
+    professionalService: "ప్రపంచవ్యాప్తంగా ప్రయాణికుల కోసం వృత్తిపరమైన పత్రాల ధృవీకరణ సేవ.",
+    service: "సేవ",
+    supportedCountries: "మద్దతు ఇవ్వబడిన దేశాలు",
+    contactUs: "మమ్మల్ని సంప్రదించండి",
+    legal: "చట్టపరమైన",
+    disclaimer: "నిరాకరణ",
+    dataProtection: "డేటా రక్షణ",
+    copyright: "© 2024 VisaValidator Pro. అన్ని హక్కులు రక్షించబడ్డాయి.",
+    
+    // Country Selection
+    selectCountry: "మీ గమ్యస్థాన దేశాన్ని ఎంచుకోండి",
+    selectNationality: "మీ జాతీయతను ఎంచుకోండి",
+    selectYourDestination: "మీ గమ్యస్థానాన్ని ఎంచుకోండి",
+    chooseDestinationCountry: "మీరు సందర్శించాలని అనుకుంటున్న దేశాన్ని ఎంచుకోండి",
+    selectYourNationality: "మీ జాతీయతను ఎంచుకోండి",
+    yourNationalityDescription: "వ్యక్తిగతీకరించిన వీసా అవసరాలను పొందడానికి మీ జాతీయతను ఎంచుకోండి",
+    popularChoices: "ప్రాచుర్యమైన ఎంపికలు",
+    searchCountries: "దేశాలను వెతకండి...",
+    searchNationalities: "జాతీయతలను వెతకండి...",
+    proceedToValidation: "ధృవీకరణకు కొనసాగండి",
+    
+    // Document Upload
+    uploadFiles: "పత్రాలను అప్‌లోడ్ చేయండి",
+    selectFiles: "ఫైల్‌లను ఎంచుకోండి",
+    uploadedFiles: "అప్‌లోడ్ చేయబడిన ఫైల్‌లు",
+    noFilesUploaded: "ఇంకా ఫైల్‌లు అప్‌లోడ్ చేయబడలేదు",
+    analyzing: "విశ్లేషిస్తోంది...",
+    uploadSuccess: "అప్‌లోడ్ విజయవంతమైంది",
+    
+    // Personal Information
+    personalInformation: "వ్యక్తిగత సమాచారం",
+    fullName: "పూర్తి పేరు",
+    firstName: "మొదటి పేరు",
+    lastName: "చివరి పేరు",
+    middleName: "మధ్య పేరు",
+    passportNumber: "పాస్‌పోర్ట్ నంబర్",
+    dateOfBirth: "పుట్టిన తేదీ",
+    nationality: "జాతీయత",
+    plannedTravelDate: "ప్రణాళికాబద్ధమైన ప్రయాణ తేదీ",
+    durationOfStay: "ఉండే వ్యవధి (రోజులు)",
+    
+    // Validation Results
+    validationResults: "ధృవీకరణ ఫలితాలు",
+    overallScore: "మొత్తం స్కోర్",
+    verifiedItems: "ధృవీకరించబడిన అంశాలు",
+    issuesFound: "కనుగొనబడిన సమస్యలు",
+    recommendations: "సిఫార్సులు",
+    downloadReport: "నివేదికను డౌన్‌లోడ్ చేయండి",
+    
+    // Payment
+    payment: "చెల్లింపు",
+    paymentDescription: "మీ పూర్తి ధృవీకరణ నివేదికను పొందడానికి చెల్లింపును పూర్తి చేయండి",
+    price: "$9.99",
+    payNow: "ఇప్పుడు చెల్లించండి",
+    
+    // Additional
+    contact: "సంప్రదించండి",
+    privacy: "గోప్యతా విధానం",
+    terms: "సేవా నిబంధనలు",
+    
+    // Country Selection
+    commonRequirementsFor: "కోసం సాధారణ అవసరాలు",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "మీ జాతీయతను ఎంచుకోండి",
+    daysPlaceholder: "రోజుల సంఖ్యను నమోదు చేయండి",
+    
+    // File Upload
+    uploadAnalysisComplete: "అప్‌లోడ్ మరియు విశ్లేషణ పూర్తయింది",
+    documentsAnalyzedSuccessfully: "పత్రం(లు) విజయవంతంగా విశ్లేషించబడింది",
+    documentsFailed: "విఫలమైంది",
+    uploadFailed: "అప్‌లోడ్ విఫలమైంది",
+    
+    // Validation Results
+    validationScore: "ధృవీకరణ స్కోర్",
+    completedOn: "పూర్తయిన తేదీ",
+    documentsVerified: "పత్రాలు ధృవీకరించబడ్డాయి",
+    
+    // Language Modal
+    chooseYourLanguage: "మీ భాషను ఎంచుకోండి",
+    selectPreferredLanguage: "వీసా ధృవీకరణ అప్లికేషన్ కోసం మీ ఇష్టమైన భాషను ఎంచుకోండి",
+    continueButton: "కొనసాగించు",
+    
+    // Extended Visa Types
+    medical: "వైద్య",
+    conference: "సమావేశం",
+    journalist: "పాత్రికేయుడు",
+    religious: "మతపరమైన",
+    cultural: "సాంస్కృతిక",
+    research: "పరిశోధన",
+    training: "శిక్షణ",
+    diplomatic: "దౌత్య",
+    crew: "సిబ్బంది",
+    investment: "పెట్టుబడి",
+    retirement: "పదవీ విరమణ",
+    volunteer: "స్వచ్ఛంద",
+    sports: "క్రీడలు",
+    other: "ఇతర",
+    
+    // Document Requirements
+    validPassportMinimum: "చెల్లుబాటు అయ్యే పాస్‌పోర్ట్ (కనీసం 6 నెలల చెల్లుబాటు)",
+    ds160ConfirmationPage: "DS-160 నిర్ధారణ పేజీ",
+    passportStylePhotograph: "పాస్‌పోర్ట్ శైలి ఫోటోగ్రాఫ్",
+    financialDocuments: "ఆర్థిక పత్రాలు (బ్యాంక్ స్టేట్‌మెంట్‌లు, ఆదాయ రుజువు)",
+    travelItineraryAccommodation: "ప్రయాణ కార్యక్రమం మరియు వసతి రుజువు",
+    completedVisaApplication: "పూర్తి చేయబడిన వీసా దరఖాస్తు ఫారం",
+    supportingDocuments: "సహాయక పత్రాలు (వీసా రకాన్ని బట్టి మారుతుంది)",
     
     // Common
     loading: "లోడ్ అవుతోంది...",
