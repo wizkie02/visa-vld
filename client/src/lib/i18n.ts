@@ -689,12 +689,17 @@ export const translations: Record<string, Record<string, string>> = {
     supportedFormats: "समर्थित प्रारूप: PDF, JPG, PNG, DOCX",
     analyzing: "विश्लेषण कर रहे हैं...",
     uploadSuccess: "अपलोड सफल",
+    personalInformation: "व्यक्तिगत जानकारी",
     personalInfo: "व्यक्तिगत जानकारी",
     fullName: "पूरा नाम",
     passportNumber: "पासपोर्ट नंबर",
     dateOfBirth: "जन्म तिथि",
     nationality: "राष्ट्रीयता",
+    selectNationalityPlaceholder: "राष्ट्रीयता चुनें...",
+    plannedTravelDate: "नियोजित यात्रा तिथि",
     travelDate: "यात्रा तिथि",
+    durationOfStay: "ठहरने की अवधि (दिन)",
+    daysPlaceholder: "उदा: 14",
     stayDuration: "ठहरने की अवधि (दिन)",
     validationResults: "सत्यापन परिणाम",
     overallScore: "कुल स्कोर",
@@ -868,12 +873,17 @@ export const translations: Record<string, Record<string, string>> = {
     supportedFormats: "Formats supportés: PDF, JPG, PNG, DOCX",
     analyzing: "Analyse en cours...",
     uploadSuccess: "Téléchargement réussi",
+    personalInformation: "Informations Personnelles",
     personalInfo: "Informations Personnelles",
     fullName: "Nom Complet",
     passportNumber: "Numéro de Passeport",
     dateOfBirth: "Date de Naissance",
     nationality: "Nationalité",
+    selectNationalityPlaceholder: "Sélectionner nationalité...",
+    plannedTravelDate: "Date de Voyage Prévue",
     travelDate: "Date de Voyage",
+    durationOfStay: "Durée de Séjour (jours)",
+    daysPlaceholder: "ex: 14",
     stayDuration: "Durée de Séjour (jours)",
     validationResults: "Résultats de Validation",
     overallScore: "Score Global",
@@ -1158,7 +1168,6 @@ export const translations: Record<string, Record<string, string>> = {
     // Nationality Selection  
     selectNationality: "Pilih Kewarganegaraan",
     yourNationality: "Kewarganegaraan Anda",
-    selectNationalityPlaceholder: "Pilih kewarganegaraan...",
     
     // File Upload
     uploadDocuments: "Unggah Dokumen",
@@ -1261,7 +1270,21 @@ export const translations: Record<string, Record<string, string>> = {
     appName: "ویزا ویلیڈیٹر پرو",
     back: "واپس",
     next: "اگلا",
-    previous: "پچھلا"
+    previous: "پچھلا",
+    
+    // Personal Information
+    personalInformation: "ذاتی معلومات",
+    personalInfo: "ذاتی معلومات",
+    fullName: "مکمل نام",
+    passportNumber: "پاسپورٹ نمبر",
+    dateOfBirth: "تاریخ پیدائش",
+    nationality: "قومیت",
+    selectNationalityPlaceholder: "قومیت منتخب کریں...",
+    plannedTravelDate: "منصوبہ بند سفر کی تاریخ",
+    travelDate: "سفر کی تاریخ",
+    durationOfStay: "قیام کی مدت (دن)",
+    daysPlaceholder: "مثال: 14",
+    stayDuration: "قیام کی مدت (دن)"
   },
   
   de: {
@@ -1272,6 +1295,20 @@ export const translations: Record<string, Record<string, string>> = {
     homeTitle: "Professionelle Visa-Dokument-Validierung",
     homeSubtitle: "Validieren Sie Ihre Reisedokumente mit KI-Technologie vor der Antragstellung",
     startValidation: "Dokument-Validierung starten",
+    
+    // Personal Information
+    personalInformation: "Persönliche Informationen",
+    personalInfo: "Persönliche Informationen",
+    fullName: "Vollständiger Name",
+    passportNumber: "Reisepassnummer",
+    dateOfBirth: "Geburtsdatum",
+    nationality: "Staatsangehörigkeit",
+    selectNationalityPlaceholder: "Staatsangehörigkeit auswählen...",
+    plannedTravelDate: "Geplantes Reisedatum",
+    travelDate: "Reisedatum",
+    durationOfStay: "Aufenthaltsdauer (Tage)",
+    daysPlaceholder: "z.B.: 14",
+    stayDuration: "Aufenthaltsdauer (Tage)",
     
     // Legal Disclaimer
     criticalLegalDisclaimer: "KRITISCHER RECHTLICHER HAFTUNGSAUSSCHLUSS",
