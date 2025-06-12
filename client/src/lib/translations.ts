@@ -137,7 +137,69 @@ const baseKeys = {
   // Additional
   contact: "Contact",
   privacy: "Privacy Policy",
-  terms: "Terms of Service"
+  terms: "Terms of Service",
+  
+  // Step Indicator
+  stepDestination: "Destination",
+  stepNationality: "Nationality", 
+  stepRequirements: "Requirements",
+  stepUpload: "Upload",
+  stepInformation: "Information",
+  stepReview: "Review",
+  stepPayment: "Payment",
+  
+  // Country Selection
+  selectDestinationVisa: "Select Destination & Visa Type",
+  destinationCountry: "Destination Country",
+  selectCountryPlaceholder: "Choose your destination country",
+  visaType: "Visa Type",
+  selectVisaTypePlaceholder: "Select visa type",
+  commonRequirementsFor: "Common requirements for",
+  
+  // Personal Info Form
+  selectNationalityPlaceholder: "Select your nationality",
+  daysPlaceholder: "Enter number of days",
+  
+  // File Upload
+  uploadAnalysisComplete: "Upload and Analysis Complete",
+  documentsAnalyzedSuccessfully: "document(s) analyzed successfully",
+  documentsFailed: "failed",
+  uploadFailed: "Upload failed",
+  
+  // Validation Results
+  validationScore: "Validation Score",
+  completedOn: "Completed on",
+  documentsVerified: "Documents Verified",
+  
+  // Language Modal
+  chooseYourLanguage: "Choose Your Language",
+  selectPreferredLanguage: "Select your preferred language for the visa validation application",
+  continueButton: "Continue",
+  
+  // Extended Visa Types
+  medical: "Medical",
+  conference: "Conference",
+  journalist: "Journalist", 
+  religious: "Religious",
+  cultural: "Cultural",
+  research: "Research",
+  training: "Training",
+  diplomatic: "Diplomatic",
+  crew: "Crew",
+  investment: "Investment",
+  retirement: "Retirement",
+  volunteer: "Volunteer",
+  sports: "Sports",
+  other: "Other",
+  
+  // Document Requirements
+  validPassportMinimum: "Valid passport (minimum 6 months validity)",
+  ds160ConfirmationPage: "DS-160 confirmation page",
+  passportStylePhotograph: "Passport-style photograph", 
+  financialDocuments: "Financial documents (bank statements, income proof)",
+  travelItineraryAccommodation: "Travel itinerary and accommodation proof",
+  completedVisaApplication: "Completed visa application form",
+  supportingDocuments: "Supporting documents (varies by visa type)"
 };
 
 const languages = [
@@ -563,7 +625,69 @@ const languageTranslations: Record<string, Record<string, string>> = {
     // Additional
     contact: "Contacto",
     privacy: "Política de Privacidad",
-    terms: "Términos de Servicio"
+    terms: "Términos de Servicio",
+    
+    // Step Indicator
+    stepDestination: "Destino",
+    stepNationality: "Nacionalidad", 
+    stepRequirements: "Requisitos",
+    stepUpload: "Subir",
+    stepInformation: "Información",
+    stepReview: "Revisión",
+    stepPayment: "Pago",
+    
+    // Country Selection
+    selectDestinationVisa: "Seleccionar Destino y Tipo de Visa",
+    destinationCountry: "País de Destino",
+    selectCountryPlaceholder: "Elija su país de destino",
+    visaType: "Tipo de Visa",
+    selectVisaTypePlaceholder: "Seleccionar tipo de visa",
+    commonRequirementsFor: "Requisitos comunes para",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "Seleccione su nacionalidad",
+    daysPlaceholder: "Ingrese número de días",
+    
+    // File Upload
+    uploadAnalysisComplete: "Carga y Análisis Completo",
+    documentsAnalyzedSuccessfully: "documento(s) analizados con éxito",
+    documentsFailed: "fallaron",
+    uploadFailed: "Carga fallida",
+    
+    // Validation Results
+    validationScore: "Puntuación de Validación",
+    completedOn: "Completado el",
+    documentsVerified: "Documentos Verificados",
+    
+    // Language Modal
+    chooseYourLanguage: "Elija Su Idioma",
+    selectPreferredLanguage: "Seleccione su idioma preferido para la aplicación de validación de visa",
+    continueButton: "Continuar",
+    
+    // Extended Visa Types
+    medical: "Médico",
+    conference: "Conferencia",
+    journalist: "Periodista", 
+    religious: "Religioso",
+    cultural: "Cultural",
+    research: "Investigación",
+    training: "Entrenamiento",
+    diplomatic: "Diplomático",
+    crew: "Tripulación",
+    investment: "Inversión",
+    retirement: "Jubilación",
+    volunteer: "Voluntario",
+    sports: "Deportes",
+    other: "Otro",
+    
+    // Document Requirements
+    validPassportMinimum: "Pasaporte válido (mínimo 6 meses de validez)",
+    ds160ConfirmationPage: "Página de confirmación DS-160",
+    passportStylePhotograph: "Fotografía estilo pasaporte", 
+    financialDocuments: "Documentos financieros (estados de cuenta bancarios, comprobante de ingresos)",
+    travelItineraryAccommodation: "Itinerario de viaje y comprobante de alojamiento",
+    completedVisaApplication: "Formulario de solicitud de visa completado",
+    supportingDocuments: "Documentos de apoyo (varía según el tipo de visa)"
   },
 
   fr: {
@@ -703,7 +827,69 @@ const languageTranslations: Record<string, Record<string, string>> = {
     // Additional
     contact: "Contact",
     privacy: "Politique de Confidentialité",
-    terms: "Conditions de Service"
+    terms: "Conditions de Service",
+    
+    // Step Indicator
+    stepDestination: "Destination",
+    stepNationality: "Nationalité", 
+    stepRequirements: "Exigences",
+    stepUpload: "Télécharger",
+    stepInformation: "Informations",
+    stepReview: "Révision",
+    stepPayment: "Paiement",
+    
+    // Country Selection
+    selectDestinationVisa: "Sélectionner Destination et Type de Visa",
+    destinationCountry: "Pays de Destination",
+    selectCountryPlaceholder: "Choisissez votre pays de destination",
+    visaType: "Type de Visa",
+    selectVisaTypePlaceholder: "Sélectionner le type de visa",
+    commonRequirementsFor: "Exigences communes pour",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "Sélectionnez votre nationalité",
+    daysPlaceholder: "Entrez le nombre de jours",
+    
+    // File Upload
+    uploadAnalysisComplete: "Téléchargement et Analyse Terminés",
+    documentsAnalyzedSuccessfully: "document(s) analysé(s) avec succès",
+    documentsFailed: "échoué",
+    uploadFailed: "Téléchargement échoué",
+    
+    // Validation Results
+    validationScore: "Score de Validation",
+    completedOn: "Terminé le",
+    documentsVerified: "Documents Vérifiés",
+    
+    // Language Modal
+    chooseYourLanguage: "Choisissez Votre Langue",
+    selectPreferredLanguage: "Sélectionnez votre langue préférée pour l'application de validation de visa",
+    continueButton: "Continuer",
+    
+    // Extended Visa Types
+    medical: "Médical",
+    conference: "Conférence",
+    journalist: "Journaliste", 
+    religious: "Religieux",
+    cultural: "Culturel",
+    research: "Recherche",
+    training: "Formation",
+    diplomatic: "Diplomatique",
+    crew: "Équipage",
+    investment: "Investissement",
+    retirement: "Retraite",
+    volunteer: "Bénévole",
+    sports: "Sports",
+    other: "Autre",
+    
+    // Document Requirements
+    validPassportMinimum: "Passeport valide (validité minimale de 6 mois)",
+    ds160ConfirmationPage: "Page de confirmation DS-160",
+    passportStylePhotograph: "Photographie de style passeport", 
+    financialDocuments: "Documents financiers (relevés bancaires, preuve de revenus)",
+    travelItineraryAccommodation: "Itinéraire de voyage et preuve d'hébergement",
+    completedVisaApplication: "Formulaire de demande de visa complété",
+    supportingDocuments: "Documents justificatifs (varie selon le type de visa)"
   },
 
   id: {
@@ -843,7 +1029,69 @@ const languageTranslations: Record<string, Record<string, string>> = {
     // Additional
     contact: "Kontak",
     privacy: "Kebijakan Privasi",
-    terms: "Syarat Layanan"
+    terms: "Syarat Layanan",
+    
+    // Step Indicator
+    stepDestination: "Tujuan",
+    stepNationality: "Kewarganegaraan", 
+    stepRequirements: "Persyaratan",
+    stepUpload: "Unggah",
+    stepInformation: "Informasi",
+    stepReview: "Tinjau",
+    stepPayment: "Pembayaran",
+    
+    // Country Selection
+    selectDestinationVisa: "Pilih Tujuan & Jenis Visa",
+    destinationCountry: "Negara Tujuan",
+    selectCountryPlaceholder: "Pilih negara tujuan Anda",
+    visaType: "Jenis Visa",
+    selectVisaTypePlaceholder: "Pilih jenis visa",
+    commonRequirementsFor: "Persyaratan umum untuk",
+    
+    // Personal Info Form
+    selectNationalityPlaceholder: "Pilih kewarganegaraan Anda",
+    daysPlaceholder: "Masukkan jumlah hari",
+    
+    // File Upload
+    uploadAnalysisComplete: "Unggah dan Analisis Selesai",
+    documentsAnalyzedSuccessfully: "dokumen berhasil dianalisis",
+    documentsFailed: "gagal",
+    uploadFailed: "Unggahan gagal",
+    
+    // Validation Results
+    validationScore: "Skor Validasi",
+    completedOn: "Selesai pada",
+    documentsVerified: "Dokumen Terverifikasi",
+    
+    // Language Modal
+    chooseYourLanguage: "Pilih Bahasa Anda",
+    selectPreferredLanguage: "Pilih bahasa pilihan Anda untuk aplikasi validasi visa",
+    continueButton: "Lanjutkan",
+    
+    // Extended Visa Types
+    medical: "Medis",
+    conference: "Konferensi",
+    journalist: "Jurnalis", 
+    religious: "Agama",
+    cultural: "Budaya",
+    research: "Penelitian",
+    training: "Pelatihan",
+    diplomatic: "Diplomatik",
+    crew: "Kru",
+    investment: "Investasi",
+    retirement: "Pensiun",
+    volunteer: "Sukarelawan",
+    sports: "Olahraga",
+    other: "Lainnya",
+    
+    // Document Requirements
+    validPassportMinimum: "Paspor yang valid (minimal 6 bulan berlaku)",
+    ds160ConfirmationPage: "Halaman konfirmasi DS-160",
+    passportStylePhotograph: "Foto gaya paspor", 
+    financialDocuments: "Dokumen keuangan (rekening koran, bukti penghasilan)",
+    travelItineraryAccommodation: "Itinerary perjalanan dan bukti akomodasi",
+    completedVisaApplication: "Formulir aplikasi visa yang telah diisi",
+    supportingDocuments: "Dokumen pendukung (bervariasi menurut jenis visa)"
   }
 };
 
