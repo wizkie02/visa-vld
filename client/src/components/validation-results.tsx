@@ -45,9 +45,9 @@ export default function ValidationResults({ results }: ValidationResultsProps) {
             <div className={`text-4xl font-bold ${getScoreColor(results.score)} mb-2`}>
               {results.score}%
             </div>
-            <p className="text-gray-600">Validation Score</p>
+            <p className="text-gray-600">{t('validationScore')}</p>
             <p className="text-sm text-gray-500 mt-2">
-              Completed on {new Date(results.completedAt).toLocaleDateString()}
+              {t('completedOn')} {new Date(results.completedAt).toLocaleDateString()}
             </p>
           </div>
         </CardContent>

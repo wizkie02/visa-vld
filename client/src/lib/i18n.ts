@@ -113,6 +113,8 @@ export const translations: Record<string, Record<string, string>> = {
     validationPreview: "Validation Results Preview",
     overallScore: "Overall Score",
     preliminaryScore: "Preliminary Validation Score",
+    validationScore: "Validation Score",
+    completedOn: "Completed on",
     verifiedItems: "Verified Items",
     issuesFound: "Issues Found",
     documentsFound: "Documents Found",

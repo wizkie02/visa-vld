@@ -10,7 +10,8 @@ import { fetchCurrentVisaRequirements, generateRequirementsChecklist } from "./v
 import { generateValidationReport, generateRequirementsChecklist as generateChecklistHtml } from "./document-generator";
 import { generateValidationReportMarkdown, generateRequirementsChecklistMarkdown } from "./markdown-generator-fixed";
 import { generateRequirementsChecklistBuffer } from "./simple-pdf-generator";
-import { generateValidationReportPDF, generateRequirementsChecklistPDF } from "./fixed-pdf-generator";
+import { generateValidationReportHTML, generateRequirementsChecklistHTML } from "./working-pdf-generator";
+import puppeteer from "puppeteer";
 import { checkVFSOutsourcing } from "./vfs-outsourcing-service";
 
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -337,11 +338,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
         );
       }
       
-      const checklistBuffer = generateRequirementsChecklistBuffer(requirements);
+      const checklistHTML = generateRequirementsChecklistHTML(requirements);
       
-      res.setHeader('Content-Type', 'text/plain');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.txt"`);
-      res.send(checklistBuffer);
+      // Generate PDF using Puppeteer
+      const browser = await puppeteer.launch({ 
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+      });
+      const page = await browser.newPage();
+      await page.setContent(checklistHTML);
+      const pdfBuffer = await page.pdf({ 
+        format: 'A4',
+        printBackground: true,
+        margin: { top: '20mm', bottom: '20mm', left: '15mm', right: '15mm' }
+      });
+      await browser.close();
+      
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.pdf"`);
+      res.send(pdfBuffer);
     } catch (error: any) {
       console.error("Error generating requirements checklist:", error);
       res.status(500).json({ message: "Error generating checklist: " + error.message });
@@ -412,11 +427,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
         uploadedDocuments: Array.isArray(session.uploadedFiles) ? session.uploadedFiles : []
       };
 
-      const reportMarkdown = generateValidationReportMarkdown(reportData);
+      const reportHTML = generateValidationReportHTML(reportData);
       
-      res.setHeader('Content-Type', 'text/plain');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.txt"`);
-      res.send(Buffer.from(reportMarkdown, 'utf-8'));
+      // Generate PDF using Puppeteer
+      const browser = await puppeteer.launch({ 
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+      });
+      const page = await browser.newPage();
+      await page.setContent(reportHTML);
+      const pdfBuffer = await page.pdf({ 
+        format: 'A4',
+        printBackground: true,
+        margin: { top: '20mm', bottom: '20mm', left: '15mm', right: '15mm' }
+      });
+      await browser.close();
+      
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.pdf"`);
+      res.send(pdfBuffer);
     } catch (error: any) {
       console.error("Error generating validation report:", error);
       res.status(500).json({ message: "Error generating report: " + error.message });
