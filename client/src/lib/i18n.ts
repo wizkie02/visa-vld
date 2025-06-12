@@ -581,7 +581,41 @@ export const translations: Record<string, Record<string, string>> = {
     about: "के बारे में",
     contact: "संपर्क",
     privacy: "गोपनीयता नीति",
-    terms: "सेवा की शर्तें"
+    terms: "सेवा की शर्तें",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "महत्वपूर्ण कानूनी अस्वीकरण",
+    noGuaranteeTitle: "वीज़ा अनुमोदन की कोई गारंटी नहीं:",
+    noGuaranteeText: "वीज़ा वैलिडेटर प्रो केवल एक दस्तावेज़ तैयारी सहायता उपकरण है। हम वीज़ा अनुमोदन की गारंटी नहीं देते, किसी सरकारी एजेंसी का प्रतिनिधित्व नहीं करते, या दूतावास के निर्णयों को प्रभावित नहीं करते।",
+    accuracyLimitationsTitle: "सटीकता की सीमाएं:",
+    accuracyLimitationsText: "जबकि हमारा AI ज्ञात आवश्यकताओं के अनुसार दस्तावेज़ों का विश्लेषण करता है, परिणाम 100% सटीक नहीं हो सकते। दूतावास की आवश्यकताएं अक्सर बदलती रहती हैं और व्यक्तिगत परिस्थितियों के अनुसार भिन्न होती हैं।",
+    notOfficialGuidanceTitle: "आधिकारिक मार्गदर्शन नहीं:",
+    notOfficialGuidanceText: "यह सेवा आधिकारिक दूतावास वेबसाइटों, वाणिज्य दूतावास सलाह, या आप्रवासन वकील परामर्श की जगह नहीं लेती। हमेशा आधिकारिक स्रोतों से वर्तमान आवश्यकताओं की पुष्टि करें।",
+    individualResponsibilityTitle: "व्यक्तिगत जिम्मेदारी:",
+    individualResponsibilityText: "प्रत्येक यात्री यह सुनिश्चित करने के लिए पूर्णतः जिम्मेदार है कि उनका वीज़ा आवेदन सभी आवश्यकताओं को पूरा करता है। वीज़ा अनुमोदन निर्णय विशेष रूप से दूतावास और वाणिज्य दूतावास अधिकारियों द्वारा लिए जाते हैं।",
+    readFullDisclaimer: "पूर्ण अस्वीकरण और सेवा सीमाएं पढ़ें →",
+    
+    // Features Section
+    whyChoose: "वीज़ा वैलिडेटर प्रो क्यों चुनें",
+    securePrivate: "सुरक्षित और निजी",
+    securePrivateDesc: "आपकी गोपनीयता और सुरक्षा के लिए सभी दस्तावेज़ सत्यापन के बाद स्वचालित रूप से हटा दिए जाते हैं।",
+    fastProcessing: "तेज़ प्रसंस्करण",
+    fastProcessingDesc: "दिनों नहीं, मिनटों में अपने सत्यापन परिणाम प्राप्त करें।",
+    comprehensiveAnalysis: "व्यापक विश्लेषण",
+    comprehensiveAnalysisDesc: "विस्तृत सिफारिशों और आवश्यकता जांच के साथ AI-संचालित दस्तावेज़ विश्लेषण।",
+    
+    // How it Works
+    howItWorks: "यह कैसे काम करता है",
+    step1: "गंतव्य चुनें",
+    step1Desc: "अपना गंतव्य देश और वीज़ा प्रकार चुनें",
+    step2: "दस्तावेज़ अपलोड करें", 
+    step2Desc: "अपने वीज़ा आवेदन दस्तावेज़ अपलोड करें",
+    step3: "विवरण दर्ज करें",
+    step3Desc: "अपनी व्यक्तिगत जानकारी भरें",
+    step4: "परिणाम पूर्वावलोकन",
+    step4Desc: "भुगतान से पहले सत्यापन पूर्वावलोकन देखें",
+    step5: "भुगतान करें और डाउनलोड करें",
+    step5Desc: "पूर्ण विस्तृत रिपोर्ट के लिए भुगतान पूरा करें"
   },
   
   es: {
@@ -634,7 +668,41 @@ export const translations: Record<string, Record<string, string>> = {
     about: "Acerca de",
     contact: "Contacto",
     privacy: "Política de Privacidad",
-    terms: "Términos de Servicio"
+    terms: "Términos de Servicio",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "DESCARGO DE RESPONSABILIDAD LEGAL CRÍTICO",
+    noGuaranteeTitle: "SIN GARANTÍA DE APROBACIÓN DE VISA:",
+    noGuaranteeText: "VisaValidator Pro es solo una herramienta de asistencia para preparación de documentos. No garantizamos la aprobación de visa, no representamos ninguna agencia gubernamental, ni influimos en las decisiones de la embajada.",
+    accuracyLimitationsTitle: "LIMITACIONES DE PRECISIÓN:",
+    accuracyLimitationsText: "Aunque nuestra IA analiza documentos según requisitos conocidos, los resultados pueden no ser 100% precisos. Los requisitos de embajada cambian frecuentemente y varían según circunstancias individuales.",
+    notOfficialGuidanceTitle: "NO ES ORIENTACIÓN OFICIAL:",
+    notOfficialGuidanceText: "Este servicio no reemplaza sitios web oficiales de embajadas, asesoría consular, o consulta con abogado de inmigración. Siempre verifique los requisitos actuales con fuentes oficiales.",
+    individualResponsibilityTitle: "RESPONSABILIDAD INDIVIDUAL:",
+    individualResponsibilityText: "Cada viajero es únicamente responsable de asegurar que su solicitud de visa cumpla todos los requisitos. Las decisiones de aprobación de visa son tomadas exclusivamente por funcionarios de embajada y consulares.",
+    readFullDisclaimer: "Leer Descargo Completo y Limitaciones del Servicio →",
+    
+    // Features Section
+    whyChoose: "Por qué Elegir VisaValidator Pro",
+    securePrivate: "Seguro y Privado",
+    securePrivateDesc: "Todos los documentos se eliminan automáticamente después de la validación para su privacidad y seguridad.",
+    fastProcessing: "Procesamiento Rápido",
+    fastProcessingDesc: "Obtenga sus resultados de validación en minutos, no días.",
+    comprehensiveAnalysis: "Análisis Integral",
+    comprehensiveAnalysisDesc: "Análisis de documentos impulsado por IA con recomendaciones detalladas y verificación de requisitos.",
+    
+    // How it Works
+    howItWorks: "Cómo Funciona",
+    step1: "Elegir Destino",
+    step1Desc: "Seleccione su país de destino y tipo de visa",
+    step2: "Subir Documentos", 
+    step2Desc: "Suba sus documentos de solicitud de visa",
+    step3: "Ingresar Detalles",
+    step3Desc: "Complete su información personal",
+    step4: "Vista Previa de Resultados",
+    step4Desc: "Vea la vista previa de validación antes del pago",
+    step5: "Pagar y Descargar",
+    step5Desc: "Complete el pago para obtener el reporte detallado completo"
   },
   
   fr: {
@@ -687,7 +755,41 @@ export const translations: Record<string, Record<string, string>> = {
     about: "À Propos",
     contact: "Contact",
     privacy: "Politique de Confidentialité",
-    terms: "Conditions de Service"
+    terms: "Conditions de Service",
+    
+    // Legal Disclaimer
+    criticalLegalDisclaimer: "AVERTISSEMENT LÉGAL CRITIQUE",
+    noGuaranteeTitle: "AUCUNE GARANTIE D'APPROBATION DE VISA :",
+    noGuaranteeText: "VisaValidator Pro est uniquement un outil d'assistance à la préparation de documents. Nous ne garantissons pas l'approbation du visa, ne représentons aucune agence gouvernementale, ni n'influençons les décisions d'ambassade.",
+    accuracyLimitationsTitle: "LIMITATIONS DE PRÉCISION :",
+    accuracyLimitationsText: "Bien que notre IA analyse les documents selon les exigences connues, les résultats peuvent ne pas être précis à 100%. Les exigences d'ambassade changent fréquemment et varient selon les circonstances individuelles.",
+    notOfficialGuidanceTitle: "PAS DE GUIDANCE OFFICIELLE :",
+    notOfficialGuidanceText: "Ce service ne remplace pas les sites web officiels d'ambassade, les conseils consulaires, ou la consultation d'avocat en immigration. Vérifiez toujours les exigences actuelles avec les sources officielles.",
+    individualResponsibilityTitle: "RESPONSABILITÉ INDIVIDUELLE :",
+    individualResponsibilityText: "Chaque voyageur est seul responsable de s'assurer que sa demande de visa répond à toutes les exigences. Les décisions d'approbation de visa sont prises exclusivement par les fonctionnaires d'ambassade et consulaires.",
+    readFullDisclaimer: "Lire l'Avertissement Complet et les Limitations du Service →",
+    
+    // Features Section
+    whyChoose: "Pourquoi Choisir VisaValidator Pro",
+    securePrivate: "Sécurisé et Privé",
+    securePrivateDesc: "Tous les documents sont automatiquement supprimés après validation pour votre confidentialité et sécurité.",
+    fastProcessing: "Traitement Rapide",
+    fastProcessingDesc: "Obtenez vos résultats de validation en minutes, pas en jours.",
+    comprehensiveAnalysis: "Analyse Complète",
+    comprehensiveAnalysisDesc: "Analyse de documents alimentée par IA avec recommandations détaillées et vérification des exigences.",
+    
+    // How it Works
+    howItWorks: "Comment Ça Marche",
+    step1: "Choisir la Destination",
+    step1Desc: "Sélectionnez votre pays de destination et type de visa",
+    step2: "Télécharger Documents", 
+    step2Desc: "Téléchargez vos documents de demande de visa",
+    step3: "Entrer les Détails",
+    step3Desc: "Remplissez vos informations personnelles",
+    step4: "Aperçu des Résultats",
+    step4Desc: "Voir l'aperçu de validation avant paiement",
+    step5: "Payer et Télécharger",
+    step5Desc: "Complétez le paiement pour obtenir le rapport détaillé complet"
   },
   
   ar: {
