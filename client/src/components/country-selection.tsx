@@ -218,6 +218,14 @@ export default function CountrySelection({ data, onUpdate, onNext, canProceed }:
   // Fetch ALL visa types immediately when country is selected
   const { data: visaTypesData, isLoading: isLoadingVisaTypes, error: visaTypesError } = useQuery({
     queryKey: ['/api/visa-types', selectedCountry],
+    queryFn: async () => {
+      if (!selectedCountry) return null;
+      const response = await fetch(`/api/visa-types?country=${encodeURIComponent(selectedCountry)}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch visa types: ${response.statusText}`);
+      }
+      return response.json();
+    },
     enabled: !!selectedCountry,
     retry: 2,
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes

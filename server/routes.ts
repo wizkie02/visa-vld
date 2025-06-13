@@ -148,25 +148,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Visa types API endpoint
-  app.get("/api/visa-types/:country", async (req, res) => {
+  // Visa types API endpoint - supports both query and path parameters
+  app.get("/api/visa-types/:country?", async (req, res) => {
     try {
-      const { country } = req.params;
+      const country = req.params.country || req.query.country;
       
-      if (!country) {
+      console.log(`Visa types API called with country: ${country}`);
+      
+      if (!country || typeof country !== 'string') {
+        console.log("Missing country parameter, returning error");
         return res.status(400).json({ message: "Country parameter is required" });
       }
       
       console.log(`Fetching visa types for: ${country}`);
+      
+      // Test OpenAI integration directly first
+      if (!process.env.OPENAI_API_KEY) {
+        console.error("OpenAI API key not found");
+        return res.status(500).json({ 
+          error: "OpenAI API key not configured",
+          country: country,
+          visaTypes: [],
+          categories: { tourist: [], business: [], transit: [], student: [], work: [], family: [], other: [] }
+        });
+      }
+      
       const visaTypes = await fetchAvailableVisaTypes(country);
+      console.log(`Successfully fetched ${visaTypes.visaTypes.length} visa types for ${country}`);
       
       res.json(visaTypes);
     } catch (error) {
       console.error("Error fetching visa types:", error);
       
-      // Return empty structure for frontend fallback to static visa types
-      res.json({
-        country: req.params.country,
+      // Return error with fallback structure
+      res.status(500).json({
+        country: req.params.country || req.query.country,
         lastUpdated: new Date().toISOString(),
         visaTypes: [],
         categories: {
@@ -178,7 +194,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           family: [],
           other: []
         },
-        error: "OpenAI service temporarily unavailable"
+        error: `Failed to fetch visa types: ${(error as Error).message}`
       });
     }
   });
