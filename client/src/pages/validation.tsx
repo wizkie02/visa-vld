@@ -42,6 +42,16 @@ export default function Validation() {
     return saved ? parseInt(saved, 10) : 1;
   });
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  
+  // Debug payment modal state
+  useEffect(() => {
+    console.log("Payment modal state changed:", {
+      showPaymentModal,
+      sessionId,
+      currentStep,
+      hasValidationResults: !!validationResults
+    });
+  }, [showPaymentModal, sessionId, currentStep, validationResults]);
   const [validationResults, setValidationResults] = useState<any>(() => {
     const saved = localStorage.getItem('validation_results');
     if (saved) {
@@ -204,6 +214,16 @@ export default function Validation() {
   };
 
   const handlePayment = () => {
+    console.log("Payment button clicked, sessionId:", sessionId);
+    console.log("Validation data:", validationData);
+    if (!sessionId) {
+      toast({
+        title: "Error",
+        description: "No validation session found. Please try validating again.",
+        variant: "destructive",
+      });
+      return;
+    }
     setShowPaymentModal(true);
   };
 
@@ -542,8 +562,27 @@ export default function Validation() {
         <PaymentModal
           data={validationData}
           sessionId={sessionId}
-          onClose={() => setShowPaymentModal(false)}
+          onClose={() => {
+            console.log("Closing payment modal");
+            setShowPaymentModal(false);
+          }}
         />
+      )}
+      
+      {/* Debug info for payment modal */}
+      {showPaymentModal && !sessionId && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg max-w-md">
+            <h3 className="text-lg font-semibold text-red-600 mb-2">Payment Error</h3>
+            <p className="text-gray-700 mb-4">No validation session found. Please validate your documents first.</p>
+            <button 
+              onClick={() => setShowPaymentModal(false)}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Close
+            </button>
+          </div>
+        </div>
       )}
 
       {/* Language Selection Modal */}
