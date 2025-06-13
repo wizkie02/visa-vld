@@ -279,7 +279,9 @@ export default function Validation() {
     if (!sessionId) return;
     
     try {
-      const response = await fetch(`/api/validation-report/${sessionId}/download`);
+      // Use apiRequest to ensure proper authentication headers
+      const response = await apiRequest("GET", `/api/validation-report/${sessionId}/download`);
+      
       if (!response.ok) {
         throw new Error('Failed to download professional report');
       }
