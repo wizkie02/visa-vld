@@ -167,12 +167,18 @@ export function setupNewAuth(app: Express) {
 export function requireNewAuth(req: Request, res: Response, next: NextFunction) {
   try {
     const authHeader = req.headers.authorization;
+    console.log('Auth middleware - header:', authHeader ? 'present' : 'missing');
+    
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.log('Auth middleware - no valid Bearer token');
       return res.status(401).json({ message: "Unauthorized" });
     }
 
     const token = authHeader.substring(7);
+    console.log('Auth middleware - token length:', token.length);
+    
     const decoded = jwt.verify(token, JWT_SECRET) as any;
+    console.log('Auth middleware - token decoded for user:', decoded.username);
     
     // Attach user info to request
     req.user = {
@@ -183,6 +189,7 @@ export function requireNewAuth(req: Request, res: Response, next: NextFunction) 
     
     next();
   } catch (error) {
+    console.log('Auth middleware - JWT verification failed:', error.message);
     return res.status(401).json({ message: "Unauthorized" });
   }
 }
