@@ -120,7 +120,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const sessionId = nanoid();
       
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       
       const session = await storage.createValidationSession({
         sessionId,
@@ -147,7 +147,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // File upload endpoint with OpenAI analysis
-  app.post("/api/upload", isAuthenticated, upload.array("files", 10), async (req, res) => {
+  app.post("/api/upload", requireAuth, upload.array("files", 10), async (req, res) => {
     try {
       console.log("Upload request received");
       
@@ -193,7 +193,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Validate documents using OpenAI
-  app.post("/api/validate", isAuthenticated, async (req, res) => {
+  app.post("/api/validate", requireAuth, async (req, res) => {
     try {
       const { sessionId } = req.body;
       
@@ -282,7 +282,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Create payment intent
-  app.post("/api/create-payment-intent", isAuthenticated, async (req, res) => {
+  app.post("/api/create-payment-intent", requireAuth, async (req, res) => {
     try {
       const { sessionId } = req.body;
       
@@ -308,7 +308,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Validate documents after payment
-  app.post("/api/validate-documents", isAuthenticated, async (req, res) => {
+  app.post("/api/validate-documents", requireAuth, async (req, res) => {
     try {
       const { sessionId } = req.body;
       
@@ -364,7 +364,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get real-time visa requirements
-  app.get("/api/visa-requirements/:country/:visaType", isAuthenticated, async (req, res) => {
+  app.get("/api/visa-requirements/:country/:visaType", requireAuth, async (req, res) => {
     try {
       const { country, visaType } = req.params;
       const { nationality } = req.query;
@@ -385,7 +385,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Download comprehensive requirements checklist
-  app.get("/api/visa-requirements/:country/:visaType/download", isAuthenticated, async (req, res) => {
+  app.get("/api/visa-requirements/:country/:visaType/download", requireAuth, async (req, res) => {
     try {
       const { country, visaType } = req.params;
       const { nationality } = req.query;
@@ -418,7 +418,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get validation results
-  app.get("/api/validation-results/:sessionId", isAuthenticated, async (req, res) => {
+  app.get("/api/validation-results/:sessionId", requireAuth, async (req, res) => {
     try {
       const { sessionId } = req.params;
       
@@ -438,7 +438,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Download validation report with professional formatting
-  app.get("/api/validation-report/:sessionId/download", isAuthenticated, async (req, res) => {
+  app.get("/api/validation-report/:sessionId/download", requireAuth, async (req, res) => {
     try {
       const { sessionId } = req.params;
       
