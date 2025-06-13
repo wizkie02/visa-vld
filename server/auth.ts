@@ -32,13 +32,14 @@ async function comparePasswords(supplied: string, stored: string) {
 export function setupAuth(app: Express) {
   const sessionSettings: session.SessionOptions = {
     secret: process.env.SESSION_SECRET || "your-secret-key-here",
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     cookie: {
       secure: false,
-      httpOnly: true,
+      httpOnly: false, // Allow JavaScript access for debugging
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
       sameSite: 'lax',
+      path: '/',
     },
   };
 
@@ -67,12 +68,19 @@ export function setupAuth(app: Express) {
     }),
   );
 
-  passport.serializeUser((user, done) => done(null, user.id));
+  passport.serializeUser((user: UserType, done) => {
+    console.log('Serializing user:', user.id);
+    done(null, user.id);
+  });
+  
   passport.deserializeUser(async (id: number, done) => {
     try {
+      console.log('Deserializing user ID:', id);
       const user = await storage.getUser(id);
+      console.log('Found user:', user ? user.username : 'not found');
       done(null, user || null);
     } catch (error) {
+      console.error('Deserialize error:', error);
       done(error);
     }
   });
@@ -125,7 +133,15 @@ export function setupAuth(app: Express) {
         }
 
         req.login(user, (err) => {
-          if (err) return next(err);
+          if (err) {
+            console.error('Login error:', err);
+            return next(err);
+          }
+          
+          console.log('User logged in successfully:', user.username);
+          console.log('Session after login:', req.session);
+          console.log('Is authenticated:', req.isAuthenticated());
+          
           res.json({
             id: user.id,
             username: user.username,
@@ -153,7 +169,13 @@ export function setupAuth(app: Express) {
   // Get current user endpoint
   app.get("/api/user", async (req, res) => {
     try {
+      console.log('GET /api/user - Session ID:', req.sessionID);
+      console.log('GET /api/user - Session:', req.session);
+      console.log('GET /api/user - Is authenticated:', req.isAuthenticated());
+      console.log('GET /api/user - User:', req.user);
+      
       if (!req.isAuthenticated() || !req.user) {
+        console.log('User not authenticated');
         return res.status(401).json({ message: "Unauthorized" });
       }
       
@@ -162,10 +184,12 @@ export function setupAuth(app: Express) {
       // Verify user still exists in database
       const dbUser = await storage.getUser(user.id);
       if (!dbUser) {
+        console.log('User not found in database');
         req.logout(() => {});
         return res.status(401).json({ message: "Unauthorized" });
       }
       
+      console.log('Returning user data:', dbUser.username);
       res.json({
         id: dbUser.id,
         username: dbUser.username,
