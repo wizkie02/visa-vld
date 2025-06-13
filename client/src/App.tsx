@@ -14,6 +14,8 @@ import PrivacyPolicy from "@/pages/privacy-policy";
 import TermsOfService from "@/pages/terms-of-service";
 import Contact from "@/pages/contact";
 import Landing from "@/pages/landing";
+import AuthPage from "@/pages/auth";
+import AdminPanel from "@/pages/admin";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -31,15 +33,17 @@ function Router() {
       {!isAuthenticated ? (
         <>
           <Route path="/" component={Landing} />
+          <Route path="/auth" component={AuthPage} />
           <Route path="/about" component={About} />
           <Route path="/privacy-policy" component={PrivacyPolicy} />
           <Route path="/terms-of-service" component={TermsOfService} />
           <Route path="/contact" component={Contact} />
-          <Route component={Landing} />
+          <Route component={AuthPage} />
         </>
       ) : (
         <>
           <Route path="/" component={Home} />
+          <Route path="/admin" component={AdminPanel} />
           <Route path="/validate" component={Validation} />
           <Route path="/results/:sessionId" component={Results} />
           <Route path="/about" component={About} />
