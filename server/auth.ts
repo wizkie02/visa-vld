@@ -35,18 +35,23 @@ export function setupAuth(app: Express) {
     conString: process.env.DATABASE_URL,
     createTableIfMissing: true,
     tableName: 'sessions',
+    schemaName: 'public',
+    ttl: 24 * 60 * 60, // 24 hours in seconds
   });
 
+  const isProduction = process.env.NODE_ENV === 'production';
   const sessionSettings: session.SessionOptions = {
     secret: process.env.SESSION_SECRET || "your-secret-key-here",
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
     cookie: {
-      secure: false, // Set to true in production with HTTPS
+      secure: isProduction, // Use secure cookies in production
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      sameSite: isProduction ? 'strict' : 'lax',
     },
+    name: 'sessionId',
   };
 
   app.set("trust proxy", 1);
@@ -158,18 +163,31 @@ export function setupAuth(app: Express) {
   });
 
   // Get current user endpoint
-  app.get("/api/user", (req, res) => {
-    if (!req.isAuthenticated() || !req.user) {
-      return res.status(401).json({ message: "Unauthorized" });
+  app.get("/api/user", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
+      const user = req.user as UserType;
+      
+      // Verify user still exists in database
+      const dbUser = await storage.getUser(user.id);
+      if (!dbUser) {
+        req.logout(() => {});
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
+      res.json({
+        id: dbUser.id,
+        username: dbUser.username,
+        nationality: dbUser.nationality,
+        isAdmin: dbUser.isAdmin,
+      });
+    } catch (error) {
+      console.error('Error in /api/user:', error);
+      res.status(500).json({ message: "Internal server error" });
     }
-    
-    const user = req.user as UserType;
-    res.json({
-      id: user.id,
-      username: user.username,
-      nationality: user.nationality,
-      isAdmin: user.isAdmin,
-    });
   });
 }
 

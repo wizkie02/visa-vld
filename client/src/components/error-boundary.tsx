@@ -1,4 +1,5 @@
 import React from 'react';
+import AppFallback from './app-fallback';
 
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -30,7 +31,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 
   render() {
     if (this.state.hasError) {
-      const FallbackComponent = this.props.fallback || DefaultErrorFallback;
+      const FallbackComponent = this.props.fallback || AppFallback;
       return <FallbackComponent error={this.state.error} resetError={this.resetError} />;
     }
 
