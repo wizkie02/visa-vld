@@ -80,6 +80,14 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleRefreshRequirements = () => {
+    if (!data.country || !data.visaType) {
+      toast({
+        title: t('error'),
+        description: "Please select a country and visa type first",
+        variant: "destructive",
+      });
+      return;
+    }
     // Clear the specific query cache and refetch
     queryClient.removeQueries({
       queryKey: ['/api/visa-requirements', data.country, data.visaType]
@@ -91,9 +99,13 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
   const { data: liveRequirements, isLoading, error, refetch } = useQuery<ComprehensiveVisaRequirements>({
     queryKey: ['/api/visa-requirements', data.country, data.visaType],
     queryFn: async () => {
+      if (!data.country || !data.visaType) {
+        throw new Error('Country and visa type are required');
+      }
       const response = await apiRequest('GET', `/api/visa-requirements/${encodeURIComponent(data.country)}/${encodeURIComponent(data.visaType)}?nationality=${encodeURIComponent(data.personalInfo?.nationality || '')}`);
       return await response.json();
     },
+    enabled: !!(data.country && data.visaType), // Only run query when we have valid data
     staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
     refetchOnWindowFocus: false,
   });
@@ -101,6 +113,15 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
   const downloadComprehensiveChecklist = async (e?: React.MouseEvent) => {
     e?.preventDefault();
     e?.stopPropagation();
+    
+    if (!data.country || !data.visaType) {
+      toast({
+        title: t('requirementsDownloadFailed'),
+        description: "Please select a country and visa type first",
+        variant: "destructive",
+      });
+      return;
+    }
     
     setIsDownloading(true);
     try {
@@ -270,7 +291,7 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            refetch();
+            handleRefreshRequirements();
           }}
           variant="outline"
           className="px-6 py-3"
