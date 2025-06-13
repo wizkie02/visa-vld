@@ -3,12 +3,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tickets, Shield, Clock, CheckCircle, AlertTriangle, LogOut, User } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
-import { useAuth } from "@/hooks/useAuth";
+import { useNewAuth } from "@/hooks/use-new-auth";
 
 
 export default function Home() {
   const { t } = useLanguage();
-  const { user, logout } = useAuth();
+  const { user, logoutMutation } = useNewAuth();
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -45,7 +45,7 @@ export default function Home() {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  onClick={() => logout()}
+                  onClick={() => logoutMutation.mutate()}
                   className="flex items-center space-x-1"
                 >
                   <LogOut className="h-4 w-4" />

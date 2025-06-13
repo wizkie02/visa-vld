@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAuth } from "@/hooks/useAuth";
+import { useNewAuth } from "@/hooks/use-new-auth";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Users, DollarSign, TrendingUp, Calendar } from "lucide-react";
@@ -34,7 +34,7 @@ interface MonthlyRevenue {
 }
 
 export default function AdminPanel() {
-  const { user, logout } = useAuth();
+  const { user, logoutMutation } = useNewAuth();
   const { t } = useLanguage();
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -103,7 +103,7 @@ export default function AdminPanel() {
               Manage users and monitor platform performance
             </p>
           </div>
-          <Button onClick={() => logout()} variant="outline">
+          <Button onClick={() => logoutMutation.mutate()} variant="outline">
             Logout
           </Button>
         </div>
