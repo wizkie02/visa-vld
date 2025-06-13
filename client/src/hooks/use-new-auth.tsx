@@ -72,6 +72,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   } = useQuery<SelectUser | null, Error>({
     queryKey: ["/api/user"],
     queryFn: async () => {
+      const token = getToken();
+      if (!token) {
+        setCurrentUser(null);
+        return null;
+      }
+      
       try {
         const res = await apiRequestWithAuth("GET", "/api/user");
         const userData = await res.json();
@@ -88,12 +94,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     enabled: isInitialized,
     retry: false,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchOnWindowFocus: false,
   });
 
-  // Initialize auth state
+  // Initialize auth state and check for existing token
   useEffect(() => {
-    setIsInitialized(true);
-  }, []);
+    const existingToken = getToken();
+    if (existingToken && !currentUser) {
+      // If we have a token but no user, trigger a fetch
+      setIsInitialized(true);
+    } else {
+      setIsInitialized(true);
+    }
+  }, [currentUser]);
 
   const loginMutation = useMutation({
     mutationFn: async (credentials: LoginData) => {
@@ -101,10 +115,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return await res.json();
     },
     onSuccess: (data: { user: SelectUser; token: string }) => {
+      console.log("Login success - storing token and setting user:", data.user.username);
       setToken(data.token);
       setCurrentUser(data.user);
       queryClient.setQueryData(["/api/user"], data.user);
-      refetch(); // Force a refetch to ensure state consistency
       toast({
         title: "Login successful",
         description: `Welcome back, ${data.user.username}!`,
@@ -125,10 +139,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return await res.json();
     },
     onSuccess: (data: { user: SelectUser; token: string }) => {
+      console.log("Registration success - storing token and setting user:", data.user.username);
       setToken(data.token);
       setCurrentUser(data.user);
       queryClient.setQueryData(["/api/user"], data.user);
-      refetch(); // Force a refetch to ensure state consistency
       toast({
         title: "Registration successful",
         description: `Welcome, ${data.user.username}!`,
