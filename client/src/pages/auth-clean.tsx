@@ -55,6 +55,8 @@ export default function AuthPage() {
     defaultValues: {
       username: "",
       password: "",
+      firstName: "",
+      lastName: "",
       nationality: "",
       dataProcessingConsent: false,
     },
@@ -69,14 +71,15 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="container mx-auto px-4 py-8">
         <div className="max-w-md mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Login or Signup
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              {t('heroTitle')}
             </h1>
-            <p className="text-gray-600">
-              To use the tool you have to be logged in.
+            <p className="text-gray-600 dark:text-gray-300">
+              {t('heroSubtitle')}
             </p>
           </div>
 
@@ -201,7 +204,7 @@ export default function AuthPage() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>{t('nationality')}</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
                                 <SelectTrigger>
                                   <SelectValue placeholder={t('selectNationality')} />
@@ -224,7 +227,7 @@ export default function AuthPage() {
                         control={registerForm.control}
                         name="dataProcessingConsent"
                         render={({ field }) => (
-                          <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                             <FormControl>
                               <Checkbox
                                 checked={field.value}
@@ -232,11 +235,11 @@ export default function AuthPage() {
                               />
                             </FormControl>
                             <div className="space-y-1 leading-none">
-                              <FormLabel className="text-sm">
-                                {t('dataProcessingConsent')}
+                              <FormLabel className="text-sm font-normal">
+                                {t('agreeToDataProcessing')}
                               </FormLabel>
                               <p className="text-xs text-muted-foreground">
-                                {t('dataProcessingConsentText')}
+                                {t('dataProcessingConsent')}
                               </p>
                               <Link href="/privacy-policy">
                                 <span className="text-xs text-blue-600 hover:text-blue-800 underline">
@@ -264,5 +267,6 @@ export default function AuthPage() {
           </Card>
         </div>
       </div>
+    </div>
   );
 }
