@@ -113,37 +113,87 @@ export default function AdminPanel() {
     updateUserMutation.mutate({ userId, updates: { isActive } });
   };
 
+  const { data: documents = [], isLoading: documentsLoading } = useQuery<UserDocument[]>({
+    queryKey: ["/api/admin/documents"],
+  });
+
+  const handleEditUser = (user: AdminUser) => {
+    setSelectedUser(user);
+    setEditForm({
+      username: user.username,
+      nationality: user.nationality,
+      isActive: user.isActive,
+      isAdmin: user.isAdmin,
+      totalPaid: user.totalPaid,
+    });
+    setEditDialogOpen(true);
+  };
+
+  const handleSaveUser = () => {
+    if (selectedUser) {
+      updateUserMutation.mutate({
+        userId: selectedUser.id,
+        updates: editForm,
+      });
+    }
+  };
+
+  const formatCurrency = (amount: string) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(parseFloat(amount));
+  };
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  if (usersLoading || documentsLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" />
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <PersistentLanguageSelector />
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Admin Dashboard
+              {t("adminDashboard")}
             </h1>
             <p className="text-gray-600 dark:text-gray-400">
-              Manage users and monitor platform performance
+              {t("manageUsersAndMonitor")}
             </p>
           </div>
           <Button onClick={() => logoutMutation.mutate()} variant="outline">
-            Logout
+            {t("logout")}
           </Button>
         </div>
 
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="users">Users</TabsTrigger>
-            <TabsTrigger value="revenue">Revenue</TabsTrigger>
+            <TabsTrigger value="overview">{t("overview")}</TabsTrigger>
+            <TabsTrigger value="users">{t("users")}</TabsTrigger>
+            <TabsTrigger value="documents">{t("documents")}</TabsTrigger>
+            <TabsTrigger value="revenue">{t("revenue")}</TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Users</CardTitle>
+                  <CardTitle className="text-sm font-medium">{t("totalUsers")}</CardTitle>
                   <Users className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>

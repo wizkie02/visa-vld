@@ -56,7 +56,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   setupNewAuth(app);
 
   // Admin panel routes
-  app.get('/api/admin/users', requireNewAuth, requireNewAdmin, async (req, res) => {
+  app.get('/api/admin/users', requireNewAdmin, async (req, res) => {
     try {
       const users = await storage.getAllUsers();
       res.json(users);
@@ -66,7 +66,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/admin/stats', requireNewAuth, requireNewAdmin, async (req, res) => {
+  app.get('/api/admin/stats', requireNewAdmin, async (req, res) => {
     try {
       const stats = await storage.getUserStats();
       res.json(stats);
@@ -76,7 +76,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/admin/revenue', requireNewAuth, requireNewAdmin, async (req, res) => {
+  app.get('/api/admin/revenue', requireNewAdmin, async (req, res) => {
     try {
       const revenue = await storage.getMonthlyRevenue();
       res.json(revenue);
@@ -86,7 +86,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put('/api/admin/users/:id', requireNewAuth, requireNewAdmin, async (req, res) => {
+  app.put('/api/admin/users/:id', requireNewAdmin, async (req, res) => {
     try {
       const userId = parseInt(req.params.id);
       const updates = req.body;
@@ -124,7 +124,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/documents", requireNewAuth, requireNewAdmin, async (req, res) => {
+  app.get("/api/admin/documents", requireNewAdmin, async (req, res) => {
     try {
       const documents = await storage.getAllDocuments();
       res.json(documents);
