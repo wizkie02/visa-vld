@@ -410,6 +410,61 @@ export default function AdminPanel() {
             </Card>
           </TabsContent>
 
+          {/* Documents Tab */}
+          <TabsContent value="documents">
+            <Card>
+              <CardHeader>
+                <CardTitle>Document Analysis Logs</CardTitle>
+                <CardDescription>
+                  AI-detected document types from user uploads (files are not stored)
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {documentsLoading ? (
+                  <div className="text-center py-8">Loading document analysis logs...</div>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>User ID</TableHead>
+                        <TableHead>Original Filename</TableHead>
+                        <TableHead>AI Detected Type</TableHead>
+                        <TableHead>Confidence</TableHead>
+                        <TableHead>File Size</TableHead>
+                        <TableHead>Upload Date</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {documents.map((doc) => (
+                        <TableRow key={doc.id}>
+                          <TableCell>{doc.userId}</TableCell>
+                          <TableCell className="font-medium">{doc.originalFileName}</TableCell>
+                          <TableCell>
+                            <Badge variant={doc.detectedDocumentType === 'analysis_failed' ? "destructive" : "default"}>
+                              {doc.detectedDocumentType === 'analysis_failed' ? 'Failed' : doc.detectedDocumentType}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{doc.confidenceScore}%</TableCell>
+                          <TableCell>{formatFileSize(doc.fileSize)}</TableCell>
+                          <TableCell>
+                            {new Date(doc.uploadedAt).toLocaleDateString()}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                      {documents.length === 0 && (
+                        <TableRow>
+                          <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                            No document analysis logs found
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           {/* Revenue Tab */}
           <TabsContent value="revenue">
             <Card>

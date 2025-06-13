@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Separator } from "@/components/ui/separator";
 import { FileText, Trash2, Upload, Download, Eye, Calendar, HardDrive, CheckCircle, XCircle, Clock } from "lucide-react";
-import type { UserDocument } from "@shared/schema";
+import type { DocumentAnalysisLog } from "@shared/schema";
 import PersistentLanguageSelector from "@/components/persistent-language-selector";
 
 export default function Documents() {
