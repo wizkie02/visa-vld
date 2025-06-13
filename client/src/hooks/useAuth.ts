@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+import { apiRequest, getQueryFn } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { RegisterData, LoginData } from "@shared/schema";
 
@@ -16,7 +16,12 @@ export function useAuth() {
 
   const { data: user, isLoading, error } = useQuery<User>({
     queryKey: ["/api/user"],
+    queryFn: getQueryFn({ on401: "returnNull" }),
     retry: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    refetchInterval: false,
+    staleTime: 5 * 60 * 1000, // 5 minutes
   });
 
   const registerMutation = useMutation({
