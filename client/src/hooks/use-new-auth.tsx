@@ -162,10 +162,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await apiRequestWithAuth("POST", "/api/logout");
     },
     onSuccess: () => {
+      console.log("Logout success - clearing all auth data");
       removeToken();
       setCurrentUser(null);
       queryClient.setQueryData(["/api/user"], null);
       queryClient.clear(); // Clear all cached data
+      // Force redirect to auth page after logout
+      setTimeout(() => {
+        window.location.href = "/auth";
+      }, 100);
       toast({
         title: "Logged out",
         description: "You have been successfully logged out.",
@@ -173,10 +178,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     onError: (error: Error) => {
       // Even if logout fails on server, clear local token
+      console.log("Logout error - clearing auth data anyway");
       removeToken();
       setCurrentUser(null);
       queryClient.setQueryData(["/api/user"], null);
       queryClient.clear();
+      // Force redirect to auth page even on error
+      setTimeout(() => {
+        window.location.href = "/auth";
+      }, 100);
       toast({
         title: "Logged out",
         description: "You have been logged out.",
