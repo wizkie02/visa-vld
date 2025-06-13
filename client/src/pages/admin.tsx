@@ -6,19 +6,27 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useNewAuth } from "@/hooks/use-new-auth";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { Users, DollarSign, TrendingUp, Calendar } from "lucide-react";
+import { Users, DollarSign, TrendingUp, Calendar, Edit, Trash2, Pause, Play, FileText, Activity, UserCheck, UserX } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import PersistentLanguageSelector from "@/components/persistent-language-selector";
 
 interface AdminUser {
   id: number;
   username: string;
   nationality: string;
   isActive: boolean;
+  isAdmin: boolean;
   totalPaid: string;
   createdAt: string;
+  updatedAt: string;
+  dataProcessingConsent: boolean;
 }
 
 interface UserStats {
@@ -33,16 +41,31 @@ interface MonthlyRevenue {
   userCount: number;
 }
 
+interface UserDocument {
+  id: number;
+  userId: number;
+  fileName: string;
+  originalName: string;
+  fileType: string;
+  fileSize: number;
+  documentType: string;
+  uploadedAt: string;
+  validationStatus: string;
+}
+
 export default function AdminPanel() {
   const { user, logoutMutation } = useNewAuth();
   const { t } = useLanguage();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editForm, setEditForm] = useState<Partial<AdminUser>>({});
 
   // Redirect non-admin users
   if (!user?.isAdmin) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Card>
           <CardContent className="p-6">
             <p className="text-center text-red-600">Access denied. Admin privileges required.</p>
