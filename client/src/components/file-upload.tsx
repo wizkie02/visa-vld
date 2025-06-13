@@ -48,16 +48,7 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
   const uploadMutation = useMutation({
     mutationFn: async (formData: FormData) => {
       console.log("Uploading files:", Array.from(formData.entries()));
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || `Upload failed with status ${response.status}`);
-      }
-      
+      const response = await apiRequest("POST", "/api/upload", formData);
       return response.json();
     },
     onSuccess: (result) => {
