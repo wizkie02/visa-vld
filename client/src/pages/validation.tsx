@@ -59,7 +59,7 @@ export default function Validation() {
   });
   const [isValidating, setIsValidating] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState(() => {
-    const saved = localStorage.getItem('validation_payment_status');
+    const saved = localStorage.getItem(`validation_payment_status_${sessionId}`);
     return saved || "pending";
   });
   
@@ -67,15 +67,24 @@ export default function Validation() {
   const { toast } = useToast();
   const { t } = useLanguage();
   
+  // Update payment status when session changes
+  useEffect(() => {
+    if (sessionId) {
+      const saved = localStorage.getItem(`validation_payment_status_${sessionId}`);
+      setPaymentStatus(saved || "pending");
+    }
+  }, [sessionId]);
+
   // Debug payment modal state
   useEffect(() => {
     console.log("Payment modal state changed:", {
       showPaymentModal,
       sessionId,
       currentStep,
-      hasValidationResults: !!validationResults
+      hasValidationResults: !!validationResults,
+      paymentStatus
     });
-  }, [showPaymentModal, sessionId, currentStep, validationResults]);
+  }, [showPaymentModal, sessionId, currentStep, validationResults, paymentStatus]);
   const [validationData, setValidationData] = useState<ValidationData>(() => {
     const saved = localStorage.getItem('validation_data');
     if (saved) {
@@ -144,6 +153,11 @@ export default function Validation() {
   };
 
   const resetToStep1 = () => {
+    // Clear payment status for current session
+    if (sessionId) {
+      localStorage.removeItem(`validation_payment_status_${sessionId}`);
+    }
+    
     setValidationData({
       country: "",
       visaType: "",
@@ -160,6 +174,7 @@ export default function Validation() {
     });
     setValidationResults(null);
     setSessionId("");
+    setPaymentStatus("pending");
     localStorage.removeItem('validation_data');
     localStorage.removeItem('validation_results');
     localStorage.removeItem('validation_session_id');
@@ -655,7 +670,7 @@ export default function Validation() {
           onPaymentSuccess={() => {
             console.log("Payment successful, updating status");
             setPaymentStatus("completed");
-            localStorage.setItem('validation_payment_status', 'completed');
+            localStorage.setItem(`validation_payment_status_${sessionId}`, 'completed');
             setShowPaymentModal(false);
           }}
         />

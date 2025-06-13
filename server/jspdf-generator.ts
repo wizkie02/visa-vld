@@ -123,11 +123,11 @@ export function generateValidationReportPDF(data: ReportData): Buffer {
   if (data.requirements) {
     yPosition += 10;
     addText('VISA REQUIREMENTS', 14, true);
-    addText(`Country: ${data.requirements.country}`);
-    addText(`Visa Type: ${data.requirements.visaType}`);
-    addText(`Processing Time: ${data.requirements.generalInfo.processingTime}`);
-    addText(`Validity: ${data.requirements.generalInfo.validity}`);
-    addText(`Fees: ${data.requirements.generalInfo.fees}`);
+    addText(`Country: ${data.requirements.country || data.country}`);
+    addText(`Visa Type: ${data.requirements.visaType || data.visaType}`);
+    addText(`Processing Time: ${data.requirements.generalInfo?.processingTime || 'Contact embassy for details'}`);
+    addText(`Validity: ${data.requirements.generalInfo?.validity || 'Varies by case'}`);
+    addText(`Fees: ${data.requirements.generalInfo?.fees || 'Contact embassy for current fees'}`);
   }
 
   // Footer
