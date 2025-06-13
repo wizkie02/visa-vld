@@ -426,10 +426,26 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
       </div>
 
       <div className="flex justify-between pt-6">
-        <Button variant="outline" onClick={onPrevious}>
+        <Button 
+          variant="outline" 
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onPrevious();
+          }}
+          type="button"
+        >
           {t('previous')}
         </Button>
-        <Button onClick={onNext} className="bg-blue-600 hover:bg-blue-700 text-white">
+        <Button 
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onNext();
+          }}
+          type="button" 
+          className="bg-blue-600 hover:bg-blue-700 text-white"
+        >
           {t('proceedToUpload') || 'Proceed to Upload Documents'}
         </Button>
       </div>

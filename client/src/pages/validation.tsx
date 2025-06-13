@@ -71,8 +71,18 @@ export default function Validation() {
   };
 
   const handleNext = () => {
-    if (currentStep < 7) {
-      setCurrentStep(currentStep + 1);
+    try {
+      console.log(`Navigating from step ${currentStep} to step ${currentStep + 1}`);
+      if (currentStep < 7) {
+        setCurrentStep(currentStep + 1);
+      }
+    } catch (error) {
+      console.error('Navigation error:', error);
+      toast({
+        title: "Navigation Error",
+        description: "Unable to proceed to next step. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
