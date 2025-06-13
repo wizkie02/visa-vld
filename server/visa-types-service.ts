@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { getComprehensiveVisaData } from "./comprehensive-visa-data";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -112,6 +113,13 @@ Include accurate subclass numbers, current processing times, and fees. This must
     return categorizedVisas;
   } catch (error) {
     console.error('Error fetching visa types for', country, ':', error);
+    
+    // Check for comprehensive visa data fallback
+    const comprehensiveData = getComprehensiveVisaData(country);
+    if (comprehensiveData) {
+      console.log(`Using comprehensive visa data for ${country}: ${comprehensiveData.visaTypes.length} visa types`);
+      return comprehensiveData;
+    }
     
     // Return error indication to frontend for fallback handling
     throw new Error(`Failed to fetch visa types for ${country}: ${error.message}`);
