@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { Ticket, ArrowLeft } from "lucide-react";
+import { Ticket, ArrowLeft, Download } from "lucide-react";
 import StepIndicator from "@/components/step-indicator";
 import CountrySelection from "@/components/country-selection";
 import NationalitySelection from "@/components/nationality-selection";
@@ -545,20 +545,56 @@ export default function Validation() {
                   </div>
                 </div>
                 
-                <div className="flex space-x-4">
-                  <Button type="button" variant="outline" onClick={handlePrevious} className="flex-1">
-                    Back to Review
-                  </Button>
-                  <Button type="button" onClick={handlePayment} className="flex-1 bg-blue-700 hover:bg-blue-800">
-                    Pay & Get Full Report
-                  </Button>
-                </div>
-                
-                
-                
-                <p className="text-xs text-gray-500 text-center mt-3">
-                  Secure payment powered by Stripe. Full report available immediately after payment.
-                </p>
+                {paymentStatus === "completed" ? (
+                  <div className="space-y-4">
+                    <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
+                      <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <h4 className="text-lg font-semibold text-green-800 mb-2">Payment Successful!</h4>
+                      <p className="text-green-700 text-sm">Your professional validation report is now ready for download.</p>
+                    </div>
+                    
+                    <Button 
+                      type="button"
+                      onClick={downloadValidationReport} 
+                      className="w-full bg-green-600 hover:bg-green-700"
+                      size="lg"
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      Download Complete Report
+                    </Button>
+                    
+                    <div className="flex space-x-4">
+                      <Button type="button" variant="outline" onClick={handlePrevious} className="flex-1">
+                        Back to Review
+                      </Button>
+                      <Button type="button" onClick={() => {
+                        setCurrentStep(7);
+                        localStorage.setItem('validation_current_step', '7');
+                      }} className="flex-1 bg-blue-700 hover:bg-blue-800">
+                        View Summary
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="flex space-x-4">
+                      <Button type="button" variant="outline" onClick={handlePrevious} className="flex-1">
+                        Back to Review
+                      </Button>
+                      <Button type="button" onClick={handlePayment} className="flex-1 bg-blue-700 hover:bg-blue-800">
+                        Pay & Get Full Report
+                      </Button>
+                    </div>
+                    
+                    <p className="text-xs text-gray-500 text-center">
+                      Secure payment powered by Stripe. Full report available immediately after payment.
+                    </p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
