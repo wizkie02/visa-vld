@@ -98,6 +98,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post('/api/admin/reset-password', requireNewAdmin, async (req, res) => {
+    try {
+      const { userId, newPassword, sendEmail } = req.body;
+      
+      // Hash the new password
+      const salt = crypto.randomBytes(16).toString('hex');
+      const buf = await scryptAsync(newPassword, salt, 64);
+      const hashedPassword = `${buf.toString('hex')}.${salt}`;
+      
+      // Update password in database
+      const user = await storage.resetUserPassword(userId, hashedPassword);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Send email notification if requested
+      if (sendEmail && user.username) {
+        try {
+          // Simple email notification (would need SendGrid setup for production)
+          console.log(`Password reset for user ${user.username}: ${newPassword}`);
+          console.log(`Email would be sent to: info@dldv.nl`);
+          // TODO: Implement actual email sending with SendGrid
+        } catch (emailError) {
+          console.error("Email sending failed:", emailError);
+        }
+      }
+
+      res.json({ 
+        message: "Password reset successfully",
+        user: {
+          id: user.id,
+          username: user.username,
+          nationality: user.nationality,
+          isActive: user.isActive,
+          isAdmin: user.isAdmin
+        }
+      });
+    } catch (error) {
+      console.error("Error resetting password:", error);
+      res.status(500).json({ message: "Failed to reset password" });
+    }
+  });
+
   // Document routes
   app.get("/api/documents", requireNewAuth, async (req: any, res) => {
     try {

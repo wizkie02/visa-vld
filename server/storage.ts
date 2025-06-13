@@ -24,6 +24,9 @@ export interface IStorage {
   getUserDocuments(userId: number): Promise<UserDocument[]>;
   deleteUserDocument(documentId: number, userId: number): Promise<boolean>;
   getAllDocuments(): Promise<UserDocument[]>;
+  
+  // Password operations
+  resetUserPassword(userId: number, newPassword: string): Promise<User | undefined>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -56,7 +59,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getAllUsers(): Promise<User[]> {
-    return await db.select().from(users).where(eq(users.isAdmin, false));
+    return await db.select().from(users);
   }
 
   async getUserStats(): Promise<{ totalUsers: number; activeUsers: number; totalRevenue: string }> {
@@ -166,6 +169,16 @@ export class DatabaseStorage implements IStorage {
 
   async getAllDocuments(): Promise<UserDocument[]> {
     return await db.select().from(userDocuments);
+  }
+
+  // Password operations
+  async resetUserPassword(userId: number, newPassword: string): Promise<User | undefined> {
+    const [user] = await db
+      .update(users)
+      .set({ password: newPassword })
+      .where(eq(users.id, userId))
+      .returning();
+    return user || undefined;
   }
 }
 
