@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { personalInfoSchema, type PersonalInfo } from "@shared/schema";
 import type { ValidationData } from "@/pages/validation";
 import { useLanguage } from "@/lib/i18n";
+import { Link } from "wouter";
 
 interface PersonalInfoFormProps {
   data: ValidationData;
@@ -315,11 +317,47 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
               />
             </div>
 
+            {/* Data Processing Consent */}
+            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
+              <FormField
+                control={form.control}
+                name="dataProcessingConsent"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                        {t('dataProcessingConsent')}
+                      </FormLabel>
+                      <p className="text-xs text-blue-800 dark:text-blue-200 leading-relaxed">
+                        {t('dataProcessingConsentText')}
+                      </p>
+                      <Link href="/privacy-policy">
+                        <span className="text-xs text-blue-700 dark:text-blue-300 underline hover:text-blue-900 dark:hover:text-blue-100 cursor-pointer">
+                          {t('learnMorePrivacy')}
+                        </span>
+                      </Link>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <div className="flex space-x-4">
               <Button type="button" variant="outline" onClick={onPrevious} className="flex-1">
                 {t('previous')}
               </Button>
-              <Button type="submit" className="flex-1 bg-blue-700 hover:bg-blue-800">
+              <Button 
+                type="submit" 
+                className="flex-1 bg-blue-700 hover:bg-blue-800"
+                disabled={!form.watch('dataProcessingConsent')}
+              >
                 {t('next')}
               </Button>
             </div>
