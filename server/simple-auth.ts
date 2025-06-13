@@ -106,14 +106,17 @@ export function setupSimpleAuth(app: Express) {
       // Generate token
       const token = generateToken(user);
 
-      // Set token as HTTP-only cookie
+      // Set token as accessible cookie for debugging
       res.cookie('auth-token', token, {
-        httpOnly: true,
+        httpOnly: false, // Allow JS access for debugging
         secure: false,
         sameSite: 'lax',
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
         path: '/'
       });
+
+      console.log('Login successful for:', user.username);
+      console.log('Token set in cookie:', token.substring(0, 20) + '...');
 
       res.json({
         id: user.id,
@@ -135,21 +138,38 @@ export function setupSimpleAuth(app: Express) {
     res.json({ message: "Logged out successfully" });
   });
 
+  // Debug endpoint to check cookies
+  app.get("/api/debug/cookies", (req, res) => {
+    console.log('Debug cookies:', req.cookies);
+    res.json({ 
+      cookies: req.cookies,
+      hasAuthToken: !!req.cookies['auth-token']
+    });
+  });
+
   // Get current user endpoint
   app.get("/api/user", async (req, res) => {
     try {
+      console.log('GET /api/user - Cookies:', req.cookies);
       const token = req.cookies['auth-token'];
+      console.log('Token found:', !!token);
+      
       if (!token) {
+        console.log('No token found in cookies');
         return res.status(401).json({ message: "Unauthorized" });
       }
 
       const decoded = jwt.verify(token, JWT_SECRET) as any;
+      console.log('Token decoded for user ID:', decoded.id);
+      
       const user = await storage.getUser(decoded.id);
       
       if (!user) {
+        console.log('User not found in database');
         return res.status(401).json({ message: "Unauthorized" });
       }
 
+      console.log('Returning user:', user.username);
       res.json({
         id: user.id,
         username: user.username,
@@ -157,6 +177,7 @@ export function setupSimpleAuth(app: Express) {
         isAdmin: user.isAdmin,
       });
     } catch (error) {
+      console.log('JWT verification error:', error);
       return res.status(401).json({ message: "Unauthorized" });
     }
   });
