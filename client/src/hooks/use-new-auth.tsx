@@ -149,6 +149,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     onSuccess: () => {
       removeToken();
+      setCurrentUser(null);
       queryClient.setQueryData(["/api/user"], null);
       queryClient.clear(); // Clear all cached data
       toast({
@@ -159,6 +160,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onError: (error: Error) => {
       // Even if logout fails on server, clear local token
       removeToken();
+      setCurrentUser(null);
       queryClient.setQueryData(["/api/user"], null);
       queryClient.clear();
       toast({
@@ -171,7 +173,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider
       value={{
-        user: user ?? null,
+        user: currentUser ?? user ?? null,
         isLoading: !isInitialized || isLoading,
         error,
         loginMutation,
