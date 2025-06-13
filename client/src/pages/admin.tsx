@@ -60,7 +60,7 @@ export default function AdminPanel() {
   const queryClient = useQueryClient();
   const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [editForm, setEditForm] = useState<Partial<AdminUser>>({});
+  const [editForm, setEditForm] = useState<Partial<AdminUser> & { password?: string; sendEmail?: boolean }>({});
 
   // Redirect non-admin users
   if (!user?.isAdmin) {
