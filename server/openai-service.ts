@@ -178,7 +178,15 @@ export async function validateDocumentsAgainstRequirements(
           role: "system",
           content: `You are a visa requirements expert. Validate documents against official visa requirements for ${country} ${visaType} visa. 
 
-CRITICAL RULE: If any REQUIRED documents are missing, the visa likelihood score MUST be 0%.
+CRITICAL ENFORCEMENT RULES:
+1. If ANY required documents are missing: score = 0%
+2. Missing required documents count: ${missingRequiredDocs.length}
+3. If missing count > 0: AUTOMATIC score = 0%
+
+DOCUMENT STATUS:
+- Required documents missing: ${missingRequiredDocs.map((doc: any) => typeof doc === 'string' ? doc : doc.title).join(', ') || 'None'}
+- Documents uploaded: ${documents.map(d => d.documentType).join(', ')}
+- Documents checked (user has but didn't upload): ${checkedDocuments ? Object.entries(checkedDocuments).filter(([_, checked]) => checked).map(([name, _]) => name).join(', ') : 'None'}
 
 COUNTRY-SPECIFIC NAME VALIDATION RULES:
 - Vietnam: ALL names from passport must be written EXACTLY as they appear in visa applications
@@ -229,6 +237,23 @@ Provide detailed validation results including any issues found and recommendatio
     });
 
     const result = JSON.parse(response.choices[0].message.content || '{}');
+    
+    // CRITICAL: Force 0% score if required documents are missing
+    if (missingRequiredDocs.length > 0) {
+      console.log(`Forcing 0% score due to ${missingRequiredDocs.length} missing required documents`);
+      result.score = 0;
+      
+      // Add issues for each missing document
+      const missingDocIssues = missingRequiredDocs.map((doc: any) => ({
+        type: 'missing_document',
+        title: `Missing Required Document: ${typeof doc === 'string' ? doc : doc.title}`,
+        description: `This document is required for ${country} ${visaType} visa applications and must be provided.`,
+        recommendation: `Obtain and upload the required ${typeof doc === 'string' ? doc : doc.title} document before proceeding with your application.`
+      }));
+      
+      result.issues = [...(result.issues || []), ...missingDocIssues];
+    }
+    
     return {
       ...result,
       completedAt: new Date().toISOString()

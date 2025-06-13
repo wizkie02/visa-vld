@@ -333,7 +333,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       try {
         // Extract checked documents from session data
-        const checkedDocuments = session.checkedDocuments || {};
+        const checkedDocuments = (session.checkedDocuments as Record<string, boolean>) || {};
         
         validationResults = await validateDocumentsAgainstRequirements(
           documentAnalyses,
