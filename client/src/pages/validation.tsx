@@ -42,16 +42,6 @@ export default function Validation() {
     return saved ? parseInt(saved, 10) : 1;
   });
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  
-  // Debug payment modal state
-  useEffect(() => {
-    console.log("Payment modal state changed:", {
-      showPaymentModal,
-      sessionId,
-      currentStep,
-      hasValidationResults: !!validationResults
-    });
-  }, [showPaymentModal, sessionId, currentStep, validationResults]);
   const [validationResults, setValidationResults] = useState<any>(() => {
     const saved = localStorage.getItem('validation_results');
     if (saved) {
@@ -63,11 +53,25 @@ export default function Validation() {
     }
     return null;
   });
-  const [sessionId, setSessionId] = useState("");
+  const [sessionId, setSessionId] = useState(() => {
+    const saved = localStorage.getItem('validation_session_id');
+    return saved || "";
+  });
   const [isValidating, setIsValidating] = useState(false);
+  
   const [showLanguageModal, setShowLanguageModal] = useState(false);
   const { toast } = useToast();
   const { t } = useLanguage();
+  
+  // Debug payment modal state
+  useEffect(() => {
+    console.log("Payment modal state changed:", {
+      showPaymentModal,
+      sessionId,
+      currentStep,
+      hasValidationResults: !!validationResults
+    });
+  }, [showPaymentModal, sessionId, currentStep, validationResults]);
   const [validationData, setValidationData] = useState<ValidationData>(() => {
     const saved = localStorage.getItem('validation_data');
     if (saved) {
@@ -136,6 +140,25 @@ export default function Validation() {
   };
 
   const resetToStep1 = () => {
+    setValidationData({
+      country: "",
+      visaType: "",
+      personalInfo: {
+        applicantName: "",
+        passportNumber: "",
+        dateOfBirth: "",
+        nationality: "",
+        travelDate: "",
+        stayDuration: 0,
+      },
+      uploadedFiles: [],
+      checkedDocuments: {},
+    });
+    setValidationResults(null);
+    setSessionId("");
+    localStorage.removeItem('validation_data');
+    localStorage.removeItem('validation_results');
+    localStorage.removeItem('validation_session_id');
     setCurrentStep(1);
     localStorage.setItem('validation_current_step', '1');
   };
@@ -156,6 +179,7 @@ export default function Validation() {
       const sessionResponse = await apiRequest("POST", "/api/create-validation-session", validationData);
       const sessionResult = await sessionResponse.json();
       setSessionId(sessionResult.sessionId);
+      localStorage.setItem('validation_session_id', sessionResult.sessionId);
       
       console.log("Session created successfully:", sessionResult);
       
@@ -213,17 +237,37 @@ export default function Validation() {
     }
   };
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
     console.log("Payment button clicked, sessionId:", sessionId);
     console.log("Validation data:", validationData);
-    if (!sessionId) {
+    
+    // If no session ID exists, create one for existing validation results
+    if (!sessionId && validationResults) {
+      try {
+        console.log("Creating new session for existing validation results");
+        const sessionResponse = await apiRequest("POST", "/api/create-validation-session", validationData);
+        const sessionResult = await sessionResponse.json();
+        setSessionId(sessionResult.sessionId);
+        localStorage.setItem('validation_session_id', sessionResult.sessionId);
+        console.log("New session created for payment:", sessionResult.sessionId);
+      } catch (error) {
+        console.error("Failed to create session for payment:", error);
+        toast({
+          title: "Error",
+          description: "Unable to prepare payment. Please try validating again.",
+          variant: "destructive",
+        });
+        return;
+      }
+    } else if (!sessionId) {
       toast({
         title: "Error",
-        description: "No validation session found. Please try validating again.",
+        description: "No validation session found. Please complete validation first.",
         variant: "destructive",
       });
       return;
     }
+    
     setShowPaymentModal(true);
   };
 
