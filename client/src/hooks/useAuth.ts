@@ -14,14 +14,21 @@ export function useAuth() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
-  const { data: user, isLoading, error } = useQuery<User>({
+  const { data: user, isLoading, error } = useQuery<User | null>({
     queryKey: ["/api/user"],
     queryFn: getQueryFn({ on401: "returnNull" }),
-    retry: false,
+    retry: (failureCount, error) => {
+      // Don't retry on 401 errors or after 2 attempts
+      if (error?.message?.includes('401') || failureCount >= 2) {
+        return false;
+      }
+      return true;
+    },
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchInterval: false,
     staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
   });
 
   const registerMutation = useMutation({
