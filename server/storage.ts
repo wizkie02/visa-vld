@@ -1,4 +1,4 @@
-import { validationSessions, users, type ValidationSession, type InsertValidationSession, type User, type InsertUser, type RegisterData } from "@shared/schema";
+import { validationSessions, users, userDocuments, type ValidationSession, type InsertValidationSession, type User, type InsertUser, type RegisterData, type UserDocument, type InsertUserDocument } from "@shared/schema";
 import { db } from "./db";
 import { eq, sql } from "drizzle-orm";
 
@@ -18,6 +18,12 @@ export interface IStorage {
   updateValidationResults(sessionId: string, results: any): Promise<ValidationSession | undefined>;
   updatePaymentStatus(sessionId: string, status: string, paymentIntentId?: string): Promise<ValidationSession | undefined>;
   getUserValidationSessions(userId: number): Promise<ValidationSession[]>;
+  
+  // Document operations
+  createUserDocument(document: InsertUserDocument): Promise<UserDocument>;
+  getUserDocuments(userId: number): Promise<UserDocument[]>;
+  deleteUserDocument(documentId: number, userId: number): Promise<boolean>;
+  getAllDocuments(): Promise<UserDocument[]>;
 }
 
 export class DatabaseStorage implements IStorage {

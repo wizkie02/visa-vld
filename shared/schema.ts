@@ -47,7 +47,22 @@ export const validationSessions = pgTable("validation_sessions", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const userDocuments = pgTable("user_documents", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  fileName: varchar("file_name", { length: 255 }).notNull(),
+  originalName: varchar("original_name", { length: 255 }).notNull(),
+  fileType: varchar("file_type", { length: 50 }).notNull(),
+  fileSize: integer("file_size").notNull(),
+  filePath: varchar("file_path", { length: 500 }).notNull(),
+  documentType: varchar("document_type", { length: 100 }), // passport, id, bank_statement, etc.
+  uploadedAt: timestamp("uploaded_at").defaultNow().notNull(),
+  validationStatus: varchar("validation_status", { length: 50 }).default("pending"),
+  validationResults: jsonb("validation_results"),
+});
+
 export const insertUserSchema = createInsertSchema(users);
+export const insertUserDocumentSchema = createInsertSchema(userDocuments);
 
 export const insertValidationSessionSchema = createInsertSchema(validationSessions).omit({
   id: true,
@@ -84,6 +99,8 @@ export type InsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
 export type ValidationSession = typeof validationSessions.$inferSelect;
 export type InsertValidationSession = z.infer<typeof insertValidationSessionSchema>;
+export type UserDocument = typeof userDocuments.$inferSelect;
+export type InsertUserDocument = z.infer<typeof insertUserDocumentSchema>;
 export type PersonalInfo = z.infer<typeof personalInfoSchema>;
 export type RegisterData = z.infer<typeof registerSchema>;
 export type LoginData = z.infer<typeof loginSchema>;
