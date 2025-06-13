@@ -36,7 +36,10 @@ export interface ValidationData {
 }
 
 export default function Validation() {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(() => {
+    const saved = localStorage.getItem('validation_current_step');
+    return saved ? parseInt(saved, 10) : 1;
+  });
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [validationResults, setValidationResults] = useState<any>(null);
   const [sessionId, setSessionId] = useState("");
@@ -74,7 +77,9 @@ export default function Validation() {
     try {
       console.log(`Navigating from step ${currentStep} to step ${currentStep + 1}`);
       if (currentStep < 7) {
-        setCurrentStep(currentStep + 1);
+        const newStep = currentStep + 1;
+        setCurrentStep(newStep);
+        localStorage.setItem('validation_current_step', newStep.toString());
       }
     } catch (error) {
       console.error('Navigation error:', error);
@@ -88,8 +93,15 @@ export default function Validation() {
 
   const handlePrevious = () => {
     if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
+      const newStep = currentStep - 1;
+      setCurrentStep(newStep);
+      localStorage.setItem('validation_current_step', newStep.toString());
     }
+  };
+
+  const resetToStep1 = () => {
+    setCurrentStep(1);
+    localStorage.setItem('validation_current_step', '1');
   };
 
   const handleValidate = async () => {
