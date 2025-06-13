@@ -475,7 +475,7 @@ export default function Validation() {
                 </Button>
                 
                 <div className="flex space-x-4">
-                  <Button type="button" variant="outline" onClick={() => setCurrentStep(1)} className="flex-1">
+                  <Button type="button" variant="outline" onClick={resetToStep1} className="flex-1">
                     Validate Another Destination
                   </Button>
                   <Button type="button" variant="outline" onClick={() => window.location.href = "/"} className="flex-1">
