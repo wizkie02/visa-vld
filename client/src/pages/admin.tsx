@@ -95,6 +95,7 @@ export default function AdminPanel() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/users"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
+      setEditDialogOpen(false);
       toast({
         title: "User updated",
         description: "User status has been updated successfully.",
@@ -103,6 +104,27 @@ export default function AdminPanel() {
     onError: (error: Error) => {
       toast({
         title: "Update failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  const resetPasswordMutation = useMutation({
+    mutationFn: async ({ userId, newPassword, sendEmail }: { userId: number; newPassword: string; sendEmail: boolean }) => {
+      const res = await apiRequest("POST", "/api/admin/reset-password", { userId, newPassword, sendEmail });
+      return await res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/users"] });
+      toast({
+        title: "Password Reset",
+        description: "Password has been reset successfully.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Reset failed",
         description: error.message,
         variant: "destructive",
       });
@@ -312,14 +334,71 @@ export default function AdminPanel() {
                           </TableCell>
                           <TableCell>
                             <div className="flex items-center space-x-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleEditUser(user)}
+                              >
+                                <Edit className="h-3 w-3 mr-1" />
+                                Edit
+                              </Button>
+                              
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Button variant="outline" size="sm">
+                                    🔑 Reset
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent>
+                                  <DialogHeader>
+                                    <DialogTitle>Reset Password for {user.username}</DialogTitle>
+                                    <DialogDescription>
+                                      Enter a new password for this user. You can also send it to info@dldv.nl
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                  <div className="space-y-4">
+                                    <div>
+                                      <Label htmlFor="newPassword">New Password</Label>
+                                      <Input
+                                        id="newPassword"
+                                        type="password"
+                                        placeholder="Enter new password"
+                                        onChange={(e) => setEditForm({...editForm, password: e.target.value})}
+                                      />
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                      <input
+                                        type="checkbox"
+                                        id="sendEmail"
+                                        onChange={(e) => setEditForm({...editForm, sendEmail: e.target.checked})}
+                                      />
+                                      <Label htmlFor="sendEmail">Send password to info@dldv.nl</Label>
+                                    </div>
+                                  </div>
+                                  <DialogFooter>
+                                    <Button
+                                      onClick={() => {
+                                        if (editForm.password) {
+                                          resetPasswordMutation.mutate({
+                                            userId: user.id,
+                                            newPassword: editForm.password,
+                                            sendEmail: editForm.sendEmail || false
+                                          });
+                                        }
+                                      }}
+                                      disabled={resetPasswordMutation.isPending || !editForm.password}
+                                    >
+                                      {resetPasswordMutation.isPending ? "Resetting..." : "Reset Password"}
+                                    </Button>
+                                  </DialogFooter>
+                                </DialogContent>
+                              </Dialog>
+
                               <Switch
                                 checked={user.isActive}
                                 onCheckedChange={(checked) => toggleUserStatus(user.id, checked)}
                                 disabled={updateUserMutation.isPending}
                               />
-                              <span className="text-sm text-muted-foreground">
-                                {user.isActive ? "Active" : "Paused"}
-                              </span>
                             </div>
                           </TableCell>
                         </TableRow>
@@ -375,6 +454,75 @@ export default function AdminPanel() {
             </Card>
           </TabsContent>
         </Tabs>
+
+        {/* User Edit Dialog */}
+        <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Edit User: {selectedUser?.username}</DialogTitle>
+              <DialogDescription>
+                Update user information and permissions
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="editUsername">Username</Label>
+                <Input
+                  id="editUsername"
+                  value={editForm.username || ""}
+                  onChange={(e) => setEditForm({...editForm, username: e.target.value})}
+                />
+              </div>
+              <div>
+                <Label htmlFor="editNationality">Nationality</Label>
+                <Input
+                  id="editNationality"
+                  value={editForm.nationality || ""}
+                  onChange={(e) => setEditForm({...editForm, nationality: e.target.value})}
+                />
+              </div>
+              <div>
+                <Label htmlFor="editTotalPaid">Total Paid ($)</Label>
+                <Input
+                  id="editTotalPaid"
+                  type="number"
+                  step="0.01"
+                  value={editForm.totalPaid || ""}
+                  onChange={(e) => setEditForm({...editForm, totalPaid: e.target.value})}
+                />
+              </div>
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="editIsActive"
+                  checked={editForm.isActive || false}
+                  onChange={(e) => setEditForm({...editForm, isActive: e.target.checked})}
+                />
+                <Label htmlFor="editIsActive">Account Active</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="editIsAdmin"
+                  checked={editForm.isAdmin || false}
+                  onChange={(e) => setEditForm({...editForm, isAdmin: e.target.checked})}
+                />
+                <Label htmlFor="editIsAdmin">Admin Privileges</Label>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setEditDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSaveUser}
+                disabled={updateUserMutation.isPending}
+              >
+                {updateUserMutation.isPending ? "Saving..." : "Save Changes"}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

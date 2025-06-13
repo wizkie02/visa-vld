@@ -1,10 +1,14 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import { scrypt, randomBytes } from "crypto";
+import { promisify } from "util";
 import Stripe from "stripe";
 import multer from "multer";
 import { storage } from "./storage";
 import { setupNewAuth, requireNewAuth, requireNewAdmin } from "./new-auth";
 import { personalInfoSchema } from "@shared/schema";
+
+const scryptAsync = promisify(scrypt);
 import { nanoid } from "nanoid";
 import { analyzeDocument, validateDocumentsAgainstRequirements, getVisaRequirementsOnline } from "./openai-service";
 import { fetchCurrentVisaRequirements, generateRequirementsChecklist } from "./visa-requirements-service";
@@ -103,8 +107,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { userId, newPassword, sendEmail } = req.body;
       
       // Hash the new password
-      const salt = crypto.randomBytes(16).toString('hex');
-      const buf = await scryptAsync(newPassword, salt, 64);
+      const salt = randomBytes(16).toString('hex');
+      const buf = (await scryptAsync(newPassword, salt, 64)) as Buffer;
       const hashedPassword = `${buf.toString('hex')}.${salt}`;
       
       // Update password in database
