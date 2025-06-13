@@ -37,6 +37,34 @@ const baseKeys = {
   comprehensiveAnalysis: "Comprehensive Analysis", 
   comprehensiveAnalysisDesc: "AI-powered document analysis with detailed recommendations and requirement checking.",
   
+  // Authentication
+  welcomeBack: "Welcome Back",
+  accessYourAccount: "Access your account to continue",
+  signIn: "Sign In",
+  signUp: "Sign Up",
+  username: "Username",
+  password: "Password",
+  enterUsername: "Enter your username",
+  enterPassword: "Enter your password",
+  chooseUsername: "Choose a username",
+  createPassword: "Create a password",
+  nationality: "Nationality",
+  selectNationality: "Select your nationality",
+  signingIn: "Signing in...",
+  creatingAccount: "Creating account...",
+  createAccount: "Create Account",
+  getStarted: "Get Started",
+  
+  // Hero Features
+  secureValidation: "Secure Validation",
+  secureValidationDesc: "Bank-level security for your documents",
+  quickProcessing: "Quick Processing",
+  quickProcessingDesc: "Results in minutes",
+  globalSupport: "Global Support",
+  globalSupportDesc: "Support for 190+ countries",
+  comprehensiveReports: "Comprehensive Reports",
+  comprehensiveReportsDesc: "Detailed analysis and recommendations",
+  
   // How it Works
   howItWorks: "How it Works",
   step1: "Select Destination",
