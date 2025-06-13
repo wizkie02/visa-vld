@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, timestamp, jsonb, varchar, index } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, jsonb, varchar, index, decimal } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -13,13 +13,16 @@ export const sessions = pgTable(
   (table) => [index("IDX_session_expire").on(table.expire)],
 );
 
-// User storage table for Replit Auth
+// User storage table for custom authentication
 export const users = pgTable("users", {
-  id: varchar("id").primaryKey().notNull(),
-  email: varchar("email").unique(),
-  firstName: varchar("first_name"),
-  lastName: varchar("last_name"),
-  profileImageUrl: varchar("profile_image_url"),
+  id: serial("id").primaryKey(),
+  username: varchar("username", { length: 50 }).unique().notNull(),
+  password: varchar("password", { length: 255 }).notNull(),
+  nationality: varchar("nationality", { length: 50 }).notNull(),
+  dataProcessingConsent: boolean("data_processing_consent").notNull().default(false),
+  isActive: boolean("is_active").notNull().default(true),
+  isAdmin: boolean("is_admin").notNull().default(false),
+  totalPaid: decimal("total_paid", { precision: 10, scale: 2 }).default("0.00"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -27,7 +30,7 @@ export const users = pgTable("users", {
 export const validationSessions = pgTable("validation_sessions", {
   id: serial("id").primaryKey(),
   sessionId: text("session_id").notNull().unique(),
-  userId: varchar("user_id").references(() => users.id),
+  userId: integer("user_id").references(() => users.id),
   country: text("country").notNull(),
   visaType: text("visa_type").notNull(),
   applicantName: text("applicant_name").notNull(),
@@ -63,8 +66,24 @@ export const personalInfoSchema = z.object({
   }),
 });
 
-export type UpsertUser = typeof users.$inferInsert;
+export const registerSchema = z.object({
+  username: z.string().min(3, "Username must be at least 3 characters"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  nationality: z.string().min(1, "Nationality is required"),
+  dataProcessingConsent: z.boolean().refine(val => val === true, {
+    message: "You must agree to data processing to continue"
+  }),
+});
+
+export const loginSchema = z.object({
+  username: z.string().min(1, "Username is required"),
+  password: z.string().min(1, "Password is required"),
+});
+
+export type InsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
 export type ValidationSession = typeof validationSessions.$inferSelect;
 export type InsertValidationSession = z.infer<typeof insertValidationSessionSchema>;
 export type PersonalInfo = z.infer<typeof personalInfoSchema>;
+export type RegisterData = z.infer<typeof registerSchema>;
+export type LoginData = z.infer<typeof loginSchema>;
