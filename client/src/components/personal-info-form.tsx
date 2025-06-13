@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -198,10 +200,33 @@ const nationalities = [
 
 export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }: PersonalInfoFormProps) {
   const { t } = useLanguage();
+  
+  // Fetch user data for auto-population
+  const { data: userData } = useQuery({
+    queryKey: ['/api/user'],
+    retry: false,
+  });
+
   const form = useForm<PersonalInfo>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: data.personalInfo,
   });
+
+  // Auto-populate form with user data when available
+  useEffect(() => {
+    if (userData && userData.firstName && userData.lastName && userData.nationality) {
+      const currentValues = form.getValues();
+      
+      // Only auto-populate if fields are empty
+      if (!currentValues.applicantName && userData.firstName && userData.lastName) {
+        form.setValue('applicantName', `${userData.firstName} ${userData.lastName}`);
+      }
+      
+      if (!currentValues.nationality && userData.nationality) {
+        form.setValue('nationality', userData.nationality);
+      }
+    }
+  }, [userData, form]);
 
   const onSubmit = (values: PersonalInfo) => {
     onUpdate({ personalInfo: values });

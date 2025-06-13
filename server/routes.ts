@@ -147,6 +147,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Visa types API endpoint
+  app.get("/api/visa-types/:country", async (req, res) => {
+    try {
+      const { country } = req.params;
+      
+      if (!country) {
+        return res.status(400).json({ message: "Country parameter is required" });
+      }
+      
+      console.log(`Fetching visa types for: ${country}`);
+      const visaTypes = await fetchAvailableVisaTypes(country);
+      
+      res.json(visaTypes);
+    } catch (error) {
+      console.error("Error fetching visa types:", error);
+      res.status(500).json({ 
+        message: "Failed to fetch visa types",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
   // Document analysis routes (no storage)
   app.get("/api/documents", requireNewAuth, async (req: any, res) => {
     try {
