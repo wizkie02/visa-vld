@@ -146,39 +146,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Document routes
+  // Document analysis routes (no storage)
   app.get("/api/documents", requireNewAuth, async (req: any, res) => {
     try {
-      const documents = await storage.getUserDocuments(req.user.id);
-      res.json(documents);
+      const analysisLogs = await storage.getUserDocumentAnalysisLogs(req.user.id);
+      res.json(analysisLogs);
     } catch (error) {
-      console.error("Error fetching user documents:", error);
-      res.status(500).json({ message: "Failed to fetch documents" });
-    }
-  });
-
-  app.delete("/api/documents/:id", requireNewAuth, async (req: any, res) => {
-    try {
-      const documentId = parseInt(req.params.id);
-      const success = await storage.deleteUserDocument(documentId, req.user.id);
-      if (success) {
-        res.json({ message: "Document deleted successfully" });
-      } else {
-        res.status(404).json({ message: "Document not found" });
-      }
-    } catch (error) {
-      console.error("Error deleting document:", error);
-      res.status(500).json({ message: "Failed to delete document" });
+      console.error("Error fetching user document analysis logs:", error);
+      res.status(500).json({ message: "Failed to fetch document analysis logs" });
     }
   });
 
   app.get("/api/admin/documents", requireNewAdmin, async (req, res) => {
     try {
-      const documents = await storage.getAllDocuments();
-      res.json(documents);
+      const analysisLogs = await storage.getAllDocumentAnalysisLogs();
+      res.json(analysisLogs);
     } catch (error) {
-      console.error("Error fetching all documents:", error);
-      res.status(500).json({ message: "Failed to fetch documents" });
+      console.error("Error fetching document analysis logs:", error);
+      res.status(500).json({ message: "Failed to fetch document analysis logs" });
     }
   });
 
@@ -242,11 +227,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       console.log(`Analyzing ${req.files.length} documents with OpenAI...`);
       
-      // Analyze each document with OpenAI
+      // Analyze each document with OpenAI and log metadata (no file storage)
       const analyzedFiles = await Promise.all(
         req.files.map(async (file: any) => {
           try {
             const analysis = await analyzeDocument(file.buffer, file.originalname, file.mimetype);
+            
+            // Create analysis log without storing the file
+            await storage.createDocumentAnalysisLog({
+              userId: req.user.id,
+              sessionId: sessionId,
+              originalFileName: file.originalname,
+              fileType: file.mimetype,
+              fileSize: file.size,
+              detectedDocumentType: analysis.documentType || 'unknown',
+              extractedText: analysis.extractedText,
+              confidenceScore: Math.round(analysis.confidence * 100),
+              analysisResults: analysis
+            });
+            
             return {
               originalName: file.originalname,
               mimetype: file.mimetype,
@@ -256,6 +255,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
             };
           } catch (error) {
             console.error(`Error analyzing file ${file.originalname}:`, error);
+            
+            // Still log failed analysis attempts
+            await storage.createDocumentAnalysisLog({
+              userId: req.user.id,
+              sessionId: sessionId,
+              originalFileName: file.originalname,
+              fileType: file.mimetype,
+              fileSize: file.size,
+              detectedDocumentType: 'analysis_failed',
+              extractedText: '',
+              confidenceScore: 0,
+              analysisResults: { error: 'Failed to analyze document' }
+            });
+            
             return {
               originalName: file.originalname,
               mimetype: file.mimetype,

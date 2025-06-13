@@ -41,16 +41,16 @@ interface MonthlyRevenue {
   userCount: number;
 }
 
-interface UserDocument {
+interface DocumentAnalysisLog {
   id: number;
   userId: number;
-  fileName: string;
-  originalName: string;
+  sessionId: string;
+  originalFileName: string;
   fileType: string;
   fileSize: number;
-  documentType: string;
+  detectedDocumentType: string;
+  confidenceScore: number;
   uploadedAt: string;
-  validationStatus: string;
 }
 
 export default function AdminPanel() {
@@ -135,7 +135,7 @@ export default function AdminPanel() {
     updateUserMutation.mutate({ userId, updates: { isActive } });
   };
 
-  const { data: documents = [], isLoading: documentsLoading } = useQuery<UserDocument[]>({
+  const { data: documents = [], isLoading: documentsLoading } = useQuery<DocumentAnalysisLog[]>({
     queryKey: ["/api/admin/documents"],
   });
 
