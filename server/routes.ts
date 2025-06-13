@@ -98,6 +98,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Document routes
+  app.get("/api/documents", requireNewAuth, async (req: any, res) => {
+    try {
+      const documents = await storage.getUserDocuments(req.user.id);
+      res.json(documents);
+    } catch (error) {
+      console.error("Error fetching user documents:", error);
+      res.status(500).json({ message: "Failed to fetch documents" });
+    }
+  });
+
+  app.delete("/api/documents/:id", requireNewAuth, async (req: any, res) => {
+    try {
+      const documentId = parseInt(req.params.id);
+      const success = await storage.deleteUserDocument(documentId, req.user.id);
+      if (success) {
+        res.json({ message: "Document deleted successfully" });
+      } else {
+        res.status(404).json({ message: "Document not found" });
+      }
+    } catch (error) {
+      console.error("Error deleting document:", error);
+      res.status(500).json({ message: "Failed to delete document" });
+    }
+  });
+
+  app.get("/api/admin/documents", requireNewAuth, requireNewAdmin, async (req, res) => {
+    try {
+      const documents = await storage.getAllDocuments();
+      res.json(documents);
+    } catch (error) {
+      console.error("Error fetching all documents:", error);
+      res.status(500).json({ message: "Failed to fetch documents" });
+    }
+  });
+
   // User validation sessions
   app.get('/api/user/validation-sessions', requireNewAuth, async (req: any, res) => {
     try {

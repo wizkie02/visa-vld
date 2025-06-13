@@ -143,6 +143,30 @@ export class DatabaseStorage implements IStorage {
       .from(validationSessions)
       .where(eq(validationSessions.userId, userId));
   }
+
+  // Document operations
+  async createUserDocument(insertDocument: InsertUserDocument): Promise<UserDocument> {
+    const [document] = await db
+      .insert(userDocuments)
+      .values(insertDocument)
+      .returning();
+    return document;
+  }
+
+  async getUserDocuments(userId: number): Promise<UserDocument[]> {
+    return await db.select().from(userDocuments).where(eq(userDocuments.userId, userId));
+  }
+
+  async deleteUserDocument(documentId: number, userId: number): Promise<boolean> {
+    const result = await db
+      .delete(userDocuments)
+      .where(eq(userDocuments.id, documentId));
+    return result.rowCount > 0;
+  }
+
+  async getAllDocuments(): Promise<UserDocument[]> {
+    return await db.select().from(userDocuments);
+  }
 }
 
 export const storage = new DatabaseStorage();

@@ -10,6 +10,7 @@ import Home from "@/pages/home";
 import About from "@/pages/about";
 import Validation from "@/pages/validation";
 import Results from "@/pages/results";
+import Documents from "@/pages/documents";
 import NotFound from "@/pages/not-found";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import TermsOfService from "@/pages/terms-of-service";
@@ -72,6 +73,7 @@ function Router() {
         <>
           <Route path="/" component={() => <SafeComponent Component={Home} />} />
           <Route path="/admin" component={() => <SafeComponent Component={AdminPanel} />} />
+          <Route path="/documents" component={() => <SafeComponent Component={Documents} />} />
           <Route path="/validate" component={() => <SafeComponent Component={Validation} />} />
           <Route path="/results/:sessionId" component={() => <SafeComponent Component={Results} />} />
           <Route path="/about" component={() => <SafeComponent Component={About} />} />

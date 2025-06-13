@@ -92,11 +92,18 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Link href="/validate">
-            <Button size="lg" className="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-4 px-8 text-lg transform hover:scale-105 transition-all duration-200 shadow-lg">
-              {t("startValidation")}
-            </Button>
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/validate">
+              <Button size="lg" className="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-4 px-8 text-lg transform hover:scale-105 transition-all duration-200 shadow-lg">
+                {t("startValidation")}
+              </Button>
+            </Link>
+            <Link href="/documents">
+              <Button size="lg" variant="outline" className="border-blue-700 text-blue-700 hover:bg-blue-50 font-semibold py-4 px-8 text-lg transform hover:scale-105 transition-all duration-200 shadow-lg">
+                {t("myDocuments")}
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
