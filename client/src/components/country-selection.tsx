@@ -300,7 +300,16 @@ export default function CountrySelection({ data, onUpdate, onNext, canProceed }:
         )}
 
         <div className="flex justify-end mt-6">
-          <Button onClick={onNext} disabled={!canProceed} className="bg-blue-700 hover:bg-blue-800">
+          <Button 
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onNext();
+            }}
+            disabled={!canProceed} 
+            className="bg-blue-700 hover:bg-blue-800"
+          >
             {t('next')}
           </Button>
         </div>

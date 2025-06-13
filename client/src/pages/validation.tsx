@@ -421,10 +421,10 @@ export default function Validation() {
                 </div>
                 
                 <div className="flex space-x-4">
-                  <Button variant="outline" onClick={handlePrevious} className="flex-1">
+                  <Button type="button" variant="outline" onClick={handlePrevious} className="flex-1">
                     Back to Review
                   </Button>
-                  <Button onClick={handlePayment} className="flex-1 bg-blue-700 hover:bg-blue-800">
+                  <Button type="button" onClick={handlePayment} className="flex-1 bg-blue-700 hover:bg-blue-800">
                     Pay & Get Full Report
                   </Button>
                 </div>
@@ -454,6 +454,7 @@ export default function Validation() {
               
               <div className="space-y-4">
                 <Button 
+                  type="button"
                   onClick={downloadValidationReport} 
                   className="w-full bg-green-600 hover:bg-green-700"
                   size="lg"
@@ -462,10 +463,10 @@ export default function Validation() {
                 </Button>
                 
                 <div className="flex space-x-4">
-                  <Button variant="outline" onClick={() => setCurrentStep(1)} className="flex-1">
+                  <Button type="button" variant="outline" onClick={() => setCurrentStep(1)} className="flex-1">
                     Validate Another Destination
                   </Button>
-                  <Button variant="outline" onClick={() => window.location.href = "/"} className="flex-1">
+                  <Button type="button" variant="outline" onClick={() => window.location.href = "/"} className="flex-1">
                     Return to Home
                   </Button>
                 </div>
