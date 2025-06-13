@@ -98,7 +98,10 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
     refetchOnWindowFocus: false,
   });
 
-  const downloadComprehensiveChecklist = async () => {
+  const downloadComprehensiveChecklist = async (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    
     setIsDownloading(true);
     try {
       const response = await apiRequest('GET', `/api/visa-requirements/${encodeURIComponent(data.country)}/${encodeURIComponent(data.visaType)}/download?nationality=${encodeURIComponent(data.personalInfo?.nationality || '')}`);
@@ -249,6 +252,7 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <Button 
+          type="button"
           onClick={downloadComprehensiveChecklist}
           disabled={isDownloading}
           className="bg-green-600 hover:bg-green-700 text-white px-6 py-3"
@@ -262,7 +266,12 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
         </Button>
         
         <Button 
-          onClick={() => refetch()}
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            refetch();
+          }}
           variant="outline"
           className="px-6 py-3"
         >

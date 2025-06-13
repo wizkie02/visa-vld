@@ -351,10 +351,11 @@ export default function Validation() {
               </div>
               
               <div className="flex space-x-4 mt-6">
-                <Button variant="outline" onClick={handlePrevious} className="flex-1">
+                <Button type="button" variant="outline" onClick={handlePrevious} className="flex-1">
                   Previous
                 </Button>
                 <Button 
+                  type="button"
                   onClick={handleValidate} 
                   disabled={isValidating}
                   className="flex-1 bg-blue-700 hover:bg-blue-800"
