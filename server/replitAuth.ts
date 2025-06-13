@@ -5,7 +5,7 @@ import passport from "passport";
 // import session from "express-session"; // Disabled for JWT auth
 import type { Express, RequestHandler } from "express";
 import memoize from "memoizee";
-import connectPg from "connect-pg-simple";
+// import connectPg from "connect-pg-simple"; // Disabled for JWT auth
 import { storage } from "./storage";
 
 if (!process.env.REPLIT_DOMAINS) {
