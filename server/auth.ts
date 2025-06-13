@@ -46,12 +46,12 @@ export function setupAuth(app: Express) {
     saveUninitialized: false,
     store: sessionStore,
     cookie: {
-      secure: isProduction, // Use secure cookies in production
+      secure: false, // Always false for development and Replit
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
-      sameSite: isProduction ? 'strict' : 'lax',
+      sameSite: 'lax',
     },
-    name: 'sessionId',
+    name: 'connect.sid',
   };
 
   app.set("trust proxy", 1);
