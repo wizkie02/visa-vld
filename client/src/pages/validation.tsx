@@ -18,6 +18,7 @@ import { apiRequest } from "@/lib/queryClient";
 
 export interface ValidationData {
   country: string;
+  visaCategory: string;
   visaType: string;
   personalInfo: {
     applicantName: string;
@@ -96,6 +97,7 @@ export default function Validation() {
     }
     return {
       country: "",
+      visaCategory: "",
       visaType: "",
       personalInfo: {
         applicantName: "",
@@ -160,6 +162,7 @@ export default function Validation() {
     
     setValidationData({
       country: "",
+      visaCategory: "",
       visaType: "",
       personalInfo: {
         applicantName: "",

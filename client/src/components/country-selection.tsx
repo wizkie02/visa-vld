@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -236,31 +236,66 @@ const getRequirements = (country: string, visaType: string) => {
 export default function CountrySelection({ data, onUpdate, onNext, canProceed }: CountrySelectionProps) {
   const { t } = useLanguage();
   const [selectedCountry, setSelectedCountry] = useState(data.country);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const countries = getCountries(t);
   
-  // Fetch dynamic visa types based on selected country
+  // Basic visa categories for initial selection
+  const visaCategories = [
+    { value: "tourist", label: t('tourist') },
+    { value: "business", label: t('business') },
+    { value: "student", label: t('student') },
+    { value: "work", label: t('work') },
+    { value: "family", label: t('family') },
+    { value: "transit", label: t('transit') },
+    { value: "other", label: t('other') }
+  ];
+  
+  // Fetch dynamic visa types based on selected country and category
   const { data: visaTypesData, isLoading: isLoadingVisaTypes } = useQuery({
     queryKey: ['/api/visa-types', selectedCountry],
     enabled: !!selectedCountry,
     retry: false,
   });
 
-  // Use dynamic visa types if available, fallback to static list
-  const availableVisaTypes = (visaTypesData as any)?.visaTypes?.length > 0 
-    ? (visaTypesData as any).visaTypes.map((visa: any) => ({
+  // Filter visa types by selected category
+  const availableVisaTypes = React.useMemo(() => {
+    if (!selectedCategory) return [];
+    
+    if ((visaTypesData as any)?.visaTypes?.length > 0) {
+      // Use dynamic visa types filtered by category
+      const categoryVisas = (visaTypesData as any).visaTypes.filter((visa: any) => 
+        visa.category === selectedCategory
+      );
+      return categoryVisas.map((visa: any) => ({
         value: visa.id,
-        label: visa.name
-      }))
-    : getVisaTypes(t);
+        label: visa.name,
+        details: visa
+      }));
+    } else {
+      // Fallback to static visa types
+      return getVisaTypes(t).filter(type => type.value === selectedCategory);
+    }
+  }, [selectedCategory, visaTypesData, t]);
 
   const requirements = data.country && data.visaType ? getRequirements(data.country, data.visaType) : [];
 
   // Update selected country when country changes
   const handleCountryChange = (country: string) => {
     setSelectedCountry(country);
+    setSelectedCategory("");
     onUpdate({ 
       country, 
-      visaType: "" // Reset visa type when country changes
+      visaType: "", // Reset visa type when country changes
+      visaCategory: ""
+    });
+  };
+
+  // Update selected category
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    onUpdate({ 
+      visaCategory: category,
+      visaType: "" // Reset specific visa type when category changes
     });
   };
 
@@ -269,7 +304,8 @@ export default function CountrySelection({ data, onUpdate, onNext, canProceed }:
       <CardContent className="p-8">
         <h3 className="text-2xl font-semibold text-gray-900 mb-6">{t('selectDestinationVisa')}</h3>
         
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="space-y-6">
+          {/* Step 1: Destination Country */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">{t('destinationCountry')}</label>
             <Select
@@ -289,32 +325,69 @@ export default function CountrySelection({ data, onUpdate, onNext, canProceed }:
             </Select>
           </div>
           
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">{t('visaType')}</label>
-            <Select
-              value={data.visaType}
-              onValueChange={(value) => onUpdate({ visaType: value })}
-              disabled={!data.country}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder={t('selectVisaTypePlaceholder')} />
-              </SelectTrigger>
-              <SelectContent>
-                {isLoadingVisaTypes ? (
-                  <div className="flex items-center justify-center p-4">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    <span className="ml-2 text-sm">{t('loadingVisaTypes')}</span>
-                  </div>
-                ) : (
-                  availableVisaTypes.map((type: any) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
+          {/* Step 2: Visa Category */}
+          {data.country && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('visaCategory')}</label>
+              <Select
+                value={selectedCategory}
+                onValueChange={handleCategoryChange}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder={t('selectVisaCategoryPlaceholder')} />
+                </SelectTrigger>
+                <SelectContent>
+                  {visaCategories.map((category) => (
+                    <SelectItem key={category.value} value={category.value}>
+                      {category.label}
                     </SelectItem>
-                  ))
-                )}
-              </SelectContent>
-            </Select>
-          </div>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+          
+          {/* Step 3: Specific Visa Type */}
+          {selectedCategory && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('specificVisaType')}</label>
+              <Select
+                value={data.visaType}
+                onValueChange={(value) => onUpdate({ visaType: value })}
+                disabled={availableVisaTypes.length === 0}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder={
+                    isLoadingVisaTypes 
+                      ? t('loadingVisaTypes')
+                      : availableVisaTypes.length === 0 
+                        ? t('noVisaTypesAvailable')
+                        : t('selectSpecificVisaType')
+                  } />
+                </SelectTrigger>
+                <SelectContent>
+                  {isLoadingVisaTypes ? (
+                    <div className="flex items-center justify-center p-4">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <span className="ml-2 text-sm">{t('fetchingOnlineVisaData')}</span>
+                    </div>
+                  ) : (
+                    availableVisaTypes.map((type: any) => (
+                      <SelectItem key={type.value} value={type.value}>
+                        {type.label}
+                      </SelectItem>
+                    ))
+                  )}
+                </SelectContent>
+              </Select>
+              
+              {availableVisaTypes.length === 0 && !isLoadingVisaTypes && selectedCategory && (
+                <p className="text-sm text-gray-500 mt-2">
+                  {t('noSpecificVisaTypesFound')}
+                </p>
+              )}
+            </div>
+          )}
         </div>
         
         {/* Show dynamic visa type information */}
