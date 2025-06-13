@@ -16,7 +16,7 @@ import PrivacyPolicy from "@/pages/privacy-policy";
 import TermsOfService from "@/pages/terms-of-service";
 import Contact from "@/pages/contact";
 import Landing from "@/pages/landing";
-import AuthPage from "@/pages/auth";
+import AuthPage from "@/pages/auth-clean";
 import AdminPanel from "@/pages/admin";
 
 function Router() {
