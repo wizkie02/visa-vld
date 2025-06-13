@@ -2,9 +2,10 @@ import { useLanguage } from "@/lib/i18n";
 
 interface StepIndicatorProps {
   currentStep: number;
+  onStepClick: (step: number) => void;
 }
 
-export default function StepIndicator({ currentStep }: StepIndicatorProps) {
+export default function StepIndicator({ currentStep, onStepClick }: StepIndicatorProps) {
   const { t } = useLanguage();
   
   const steps = [
@@ -24,15 +25,17 @@ export default function StepIndicator({ currentStep }: StepIndicatorProps) {
           {steps.map((step, index) => (
             <div key={step.number} className="flex items-center">
               <div className="flex items-center space-x-2">
-                <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                <button
+                  onClick={() => onStepClick(step.number)}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                     step.number <= currentStep
-                      ? "bg-blue-700 text-white"
-                      : "bg-gray-200 text-gray-600"
+                      ? "bg-blue-700 text-white hover:bg-blue-800 cursor-pointer"
+                      : "bg-gray-200 text-gray-600 hover:bg-gray-300 cursor-pointer"
                   }`}
+                  title={`Go to ${step.label}`}
                 >
                   {step.number}
-                </div>
+                </button>
                 <span
                   className={`font-medium ${
                     step.number <= currentStep ? "text-blue-700" : "text-gray-400"

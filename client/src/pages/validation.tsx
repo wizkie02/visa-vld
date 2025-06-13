@@ -130,6 +130,15 @@ export default function Validation() {
     localStorage.setItem('validation_current_step', '1');
   };
 
+  const handleStepClick = (targetStep: number) => {
+    // Allow navigation to any step from 1 to 7
+    if (targetStep >= 1 && targetStep <= 7) {
+      setCurrentStep(targetStep);
+      localStorage.setItem('validation_current_step', targetStep.toString());
+      console.log(`Direct navigation to step ${targetStep}`);
+    }
+  };
+
   const handleValidate = async () => {
     setIsValidating(true);
     try {
@@ -288,7 +297,7 @@ export default function Validation() {
       </header>
 
       {/* Step Indicator */}
-      <StepIndicator currentStep={currentStep} />
+      <StepIndicator currentStep={currentStep} onStepClick={handleStepClick} />
 
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
