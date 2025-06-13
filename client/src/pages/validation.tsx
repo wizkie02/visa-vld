@@ -153,11 +153,16 @@ export default function Validation() {
       
       setValidationResults(validationResult.validationResults);
       
+      // Update step and persist to localStorage
+      setCurrentStep(6);
+      localStorage.setItem('validation_current_step', '6');
+      console.log("Navigating to step 6 - Results display");
+      console.log("Validation results set:", validationResult.validationResults);
+      
       toast({
         title: "Validation Complete",
         description: "Document analysis completed using AI technology",
       });
-      setCurrentStep(6); // Show results preview (step 6 in 7-step workflow)
     } catch (error: any) {
       console.error("Validation error:", error);
       console.error("Error details:", {
@@ -395,6 +400,7 @@ export default function Validation() {
 
         {currentStep === 6 && validationResults && (
           <div className="space-y-6">
+            {console.log("Rendering step 6 - currentStep:", currentStep, "validationResults:", validationResults)}
             {/* Visa Requirements Display */}
             <VisaRequirementsDisplay data={validationData} />
             
