@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAuth } from "@/hooks/useAuth";
+import { useNewAuth } from "@/hooks/use-new-auth";
 import { useLanguage } from "@/lib/i18n";
 import { registerSchema, loginSchema, type RegisterData, type LoginData } from "@shared/schema";
 import { Link } from "wouter";
@@ -39,7 +39,7 @@ const nationalities = [
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState("login");
   const { t } = useLanguage();
-  const { register, login, isRegistering, isLoggingIn } = useAuth();
+  const { registerMutation, loginMutation } = useNewAuth();
 
   const loginForm = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
@@ -60,11 +60,11 @@ export default function AuthPage() {
   });
 
   const onLogin = (data: LoginData) => {
-    login(data);
+    loginMutation.mutate(data);
   };
 
   const onRegister = (data: RegisterData) => {
-    register(data);
+    registerMutation.mutate(data);
   };
 
   return (
@@ -166,9 +166,9 @@ export default function AuthPage() {
                         <Button
                           type="submit"
                           className="w-full"
-                          disabled={isLoggingIn}
+                          disabled={loginMutation.isPending}
                         >
-                          {isLoggingIn ? t('signingIn') : t('signIn')}
+                          {loginMutation.isPending ? t('signingIn') : t('signIn')}
                         </Button>
                       </form>
                     </Form>
@@ -263,9 +263,9 @@ export default function AuthPage() {
                         <Button
                           type="submit"
                           className="w-full"
-                          disabled={isRegistering || !registerForm.watch('dataProcessingConsent')}
+                          disabled={registerMutation.isPending || !registerForm.watch('dataProcessingConsent')}
                         >
-                          {isRegistering ? t('creatingAccount') : t('createAccount')}
+                          {registerMutation.isPending ? t('creatingAccount') : t('createAccount')}
                         </Button>
                       </form>
                     </Form>
