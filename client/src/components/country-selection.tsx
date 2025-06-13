@@ -192,29 +192,6 @@ const getCountries = (t: any) => [
   { value: "zimbabwe", label: t('zimbabwe') }
 ];
 
-const getVisaTypes = (t: any) => [
-  { value: "tourist", label: t('tourist') },
-  { value: "business", label: t('business') },
-  { value: "student", label: t('student') },
-  { value: "work", label: t('work') },
-  { value: "family", label: t('family') },
-  { value: "medical", label: t('medical') },
-  { value: "conference", label: t('conference') },
-  { value: "journalist", label: t('journalist') },
-  { value: "religious", label: t('religious') },
-  { value: "cultural", label: t('cultural') },
-  { value: "research", label: t('research') },
-  { value: "training", label: t('training') },
-  { value: "diplomatic", label: t('diplomatic') },
-  { value: "transit", label: t('transit') },
-  { value: "crew", label: t('crew') },
-  { value: "investment", label: t('investment') },
-  { value: "retirement", label: t('retirement') },
-  { value: "volunteer", label: t('volunteer') },
-  { value: "sports", label: t('sports') },
-  { value: "other", label: t('other') },
-];
-
 const getRequirements = (country: string, visaType: string) => {
   if (country === "usa" && visaType === "tourist") {
     return [
@@ -236,66 +213,51 @@ const getRequirements = (country: string, visaType: string) => {
 export default function CountrySelection({ data, onUpdate, onNext, canProceed }: CountrySelectionProps) {
   const { t } = useLanguage();
   const [selectedCountry, setSelectedCountry] = useState(data.country);
-  const [selectedCategory, setSelectedCategory] = useState("");
   const countries = getCountries(t);
   
-  // Basic visa categories for initial selection
-  const visaCategories = [
-    { value: "tourist", label: t('tourist') },
-    { value: "business", label: t('business') },
-    { value: "student", label: t('student') },
-    { value: "work", label: t('work') },
-    { value: "family", label: t('family') },
-    { value: "transit", label: t('transit') },
-    { value: "other", label: t('other') }
-  ];
-  
-  // Fetch dynamic visa types based on selected country and category
-  const { data: visaTypesData, isLoading: isLoadingVisaTypes } = useQuery({
+  // Fetch ALL visa types immediately when country is selected
+  const { data: visaTypesData, isLoading: isLoadingVisaTypes, error: visaTypesError } = useQuery({
     queryKey: ['/api/visa-types', selectedCountry],
     enabled: !!selectedCountry,
-    retry: false,
+    retry: 2,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
 
-  // Filter visa types by selected category
+  // Prepare all available visa types for display
   const availableVisaTypes = React.useMemo(() => {
-    if (!selectedCategory) return [];
-    
     if ((visaTypesData as any)?.visaTypes?.length > 0) {
-      // Use dynamic visa types filtered by category
-      const categoryVisas = (visaTypesData as any).visaTypes.filter((visa: any) => 
-        visa.category === selectedCategory
-      );
-      return categoryVisas.map((visa: any) => ({
+      // Use all fetched visa types from official government sources
+      return (visaTypesData as any).visaTypes.map((visa: any) => ({
         value: visa.id,
         label: visa.name,
+        category: visa.category,
         details: visa
       }));
-    } else {
-      // Fallback to static visa types
-      return getVisaTypes(t).filter(type => type.value === selectedCategory);
     }
-  }, [selectedCategory, visaTypesData, t]);
+    return [];
+  }, [visaTypesData]);
+
+  // Group visa types by category for better organization
+  const visaTypesByCategory = React.useMemo(() => {
+    const grouped: Record<string, any[]> = {};
+    availableVisaTypes.forEach((visa: any) => {
+      const category = visa.category || 'other';
+      if (!grouped[category]) {
+        grouped[category] = [];
+      }
+      grouped[category].push(visa);
+    });
+    return grouped;
+  }, [availableVisaTypes]);
 
   const requirements = data.country && data.visaType ? getRequirements(data.country, data.visaType) : [];
 
-  // Update selected country when country changes
+  // Update selected country and immediately fetch visa types
   const handleCountryChange = (country: string) => {
     setSelectedCountry(country);
-    setSelectedCategory("");
     onUpdate({ 
       country, 
       visaType: "", // Reset visa type when country changes
-      visaCategory: ""
-    });
-  };
-
-  // Update selected category
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
-    onUpdate({ 
-      visaCategory: category,
-      visaType: "" // Reset specific visa type when category changes
     });
   };
 
@@ -325,67 +287,115 @@ export default function CountrySelection({ data, onUpdate, onNext, canProceed }:
             </Select>
           </div>
           
-          {/* Step 2: Visa Category */}
+          {/* Step 2: All Available Visa Types */}
           {data.country && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t('visaCategory')}</label>
-              <Select
-                value={selectedCategory}
-                onValueChange={handleCategoryChange}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder={t('selectVisaCategoryPlaceholder')} />
-                </SelectTrigger>
-                <SelectContent>
-                  {visaCategories.map((category) => (
-                    <SelectItem key={category.value} value={category.value}>
-                      {category.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
-          
-          {/* Step 3: Specific Visa Type */}
-          {selectedCategory && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t('specificVisaType')}</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {t('selectVisaType')} 
+                {isLoadingVisaTypes && (
+                  <span className="text-blue-600 text-sm ml-2">
+                    ({t('fetchingFromOfficialSources')})
+                  </span>
+                )}
+              </label>
               <Select
                 value={data.visaType}
                 onValueChange={(value) => onUpdate({ visaType: value })}
-                disabled={availableVisaTypes.length === 0}
+                disabled={isLoadingVisaTypes}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder={
                     isLoadingVisaTypes 
-                      ? t('loadingVisaTypes')
+                      ? t('loadingOfficialVisaTypes')
                       : availableVisaTypes.length === 0 
-                        ? t('noVisaTypesAvailable')
-                        : t('selectSpecificVisaType')
+                        ? t('noVisaTypesFound')
+                        : t('selectFromAllVisaTypes')
                   } />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="max-h-80">
                   {isLoadingVisaTypes ? (
                     <div className="flex items-center justify-center p-4">
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      <span className="ml-2 text-sm">{t('fetchingOnlineVisaData')}</span>
+                      <span className="ml-2 text-sm">{t('fetchingOfficialVisaData')}</span>
+                    </div>
+                  ) : visaTypesError ? (
+                    <div className="p-4 text-center text-red-600 text-sm">
+                      <p>{t('errorFetchingVisaTypes')}</p>
+                      <p className="text-xs mt-1">{t('usingFallbackData')}</p>
                     </div>
                   ) : (
-                    availableVisaTypes.map((type: any) => (
-                      <SelectItem key={type.value} value={type.value}>
-                        {type.label}
-                      </SelectItem>
+                    Object.keys(visaTypesByCategory).map((category) => (
+                      <div key={category}>
+                        {/* Category Header */}
+                        <div className="px-2 py-2 text-xs font-medium text-gray-500 uppercase bg-gray-50 border-b">
+                          {t(category)} ({visaTypesByCategory[category].length})
+                        </div>
+                        {/* Visa Types in Category */}
+                        {visaTypesByCategory[category].map((visa: any) => (
+                          <SelectItem key={visa.value} value={visa.value} className="pl-4">
+                            <div className="flex flex-col">
+                              <span className="font-medium">{visa.label}</span>
+                              {visa.details?.fees && (
+                                <span className="text-xs text-gray-500">{visa.details.fees}</span>
+                              )}
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </div>
                     ))
                   )}
                 </SelectContent>
               </Select>
               
-              {availableVisaTypes.length === 0 && !isLoadingVisaTypes && selectedCategory && (
-                <p className="text-sm text-gray-500 mt-2">
-                  {t('noSpecificVisaTypesFound')}
-                </p>
+              {/* Display visa count and source info */}
+              {availableVisaTypes.length > 0 && !isLoadingVisaTypes && (
+                <div className="mt-2 text-sm text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <Info className="h-4 w-4" />
+                    <span>
+                      {availableVisaTypes.length} {t('officialVisaTypesFound')} • {t('fromGovernmentSources')}
+                    </span>
+                  </div>
+                </div>
               )}
+              
+              {availableVisaTypes.length === 0 && !isLoadingVisaTypes && visaTypesError && (
+                <Alert className="mt-3">
+                  <Info className="h-4 w-4" />
+                  <AlertDescription>
+                    {t('errorFetchingVisaTypes')} {t('pleaseContactSupport')}
+                  </AlertDescription>
+                </Alert>
+              )}
+            </div>
+          )}
+
+          {/* Display selected visa type details */}
+          {data.visaType && availableVisaTypes.length > 0 && (
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <h4 className="font-medium text-blue-900 mb-2">{t('selectedVisaDetails')}</h4>
+              {(() => {
+                const selectedVisa = availableVisaTypes.find((v: any) => v.value === data.visaType);
+                if (selectedVisa?.details) {
+                  return (
+                    <div className="space-y-2 text-sm text-blue-800">
+                      {selectedVisa.details.description && (
+                        <p><strong>{t('description')}:</strong> {selectedVisa.details.description}</p>
+                      )}
+                      {selectedVisa.details.duration && (
+                        <p><strong>{t('duration')}:</strong> {selectedVisa.details.duration}</p>
+                      )}
+                      {selectedVisa.details.processingTime && (
+                        <p><strong>{t('processingTime')}:</strong> {selectedVisa.details.processingTime}</p>
+                      )}
+                      {selectedVisa.details.fees && (
+                        <p><strong>{t('fees')}:</strong> {selectedVisa.details.fees}</p>
+                      )}
+                    </div>
+                  );
+                }
+                return null;
+              })()}
             </div>
           )}
         </div>
