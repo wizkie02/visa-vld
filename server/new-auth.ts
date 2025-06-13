@@ -189,10 +189,28 @@ export function requireNewAuth(req: Request, res: Response, next: NextFunction) 
 
 // Middleware to check if user is admin
 export function requireNewAdmin(req: Request, res: Response, next: NextFunction) {
-  requireNewAuth(req, res, () => {
-    if (!req.user?.isAdmin) {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const token = authHeader.substring(7);
+    const decoded = jwt.verify(token, JWT_SECRET) as any;
+    
+    if (!decoded.isAdmin) {
       return res.status(403).json({ message: "Admin access required" });
     }
+    
+    // Attach user info to request
+    req.user = {
+      id: decoded.id,
+      username: decoded.username,
+      isAdmin: decoded.isAdmin
+    } as any;
+    
     next();
-  });
+  } catch (error) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
 }
