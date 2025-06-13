@@ -216,7 +216,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // File upload endpoint with OpenAI analysis
-  app.post("/api/upload", requireNewAuth, upload.array("files", 10), async (req, res) => {
+  app.post("/api/upload", requireNewAuth, upload.array("files", 10), async (req: any, res) => {
     try {
       console.log("Upload request received");
       
@@ -225,6 +225,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "No files uploaded" });
       }
 
+      const sessionId = req.body.sessionId || `temp-${Date.now()}`;
       console.log(`Analyzing ${req.files.length} documents with OpenAI...`);
       
       // Analyze each document with OpenAI and log metadata (no file storage)
@@ -235,7 +236,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             
             // Create analysis log without storing the file
             await storage.createDocumentAnalysisLog({
-              userId: req.user.id,
+              userId: req.user!.id,
               sessionId: sessionId,
               originalFileName: file.originalname,
               fileType: file.mimetype,
@@ -258,7 +259,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             
             // Still log failed analysis attempts
             await storage.createDocumentAnalysisLog({
-              userId: req.user.id,
+              userId: req.user!.id,
               sessionId: sessionId,
               originalFileName: file.originalname,
               fileType: file.mimetype,
