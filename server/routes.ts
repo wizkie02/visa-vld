@@ -183,6 +183,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get dynamic document requirements for specific visa type
+  app.get("/api/dynamic-requirements", async (req, res) => {
+    try {
+      const { country, visaType, subclass } = req.query;
+      
+      if (!country || typeof country !== 'string' || !visaType || typeof visaType !== 'string') {
+        return res.status(400).json({ error: "Country and visaType parameters are required" });
+      }
+
+      console.log(`Fetching dynamic document requirements for ${visaType} to ${country}`);
+      const requirements = await getVisaSpecificDocuments(
+        country, 
+        visaType, 
+        subclass as string
+      );
+      
+      res.json(requirements);
+    } catch (error: any) {
+      console.error("Error fetching dynamic visa requirements:", error);
+      res.status(500).json({ error: "Failed to fetch visa requirements" });
+    }
+  });
+
   // Document analysis routes (no storage)
   app.get("/api/documents", requireNewAuth, async (req: any, res) => {
     try {
