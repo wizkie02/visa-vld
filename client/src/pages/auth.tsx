@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNewAuth } from "@/hooks/use-new-auth";
 import { useLanguage } from "@/lib/i18n";
 import { registerSchema, loginSchema, type RegisterData, type LoginData } from "@shared/schema";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Shield, Globe, Clock, FileCheck } from "lucide-react";
 
 const nationalities = [
@@ -39,7 +39,15 @@ const nationalities = [
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState("login");
   const { t } = useLanguage();
-  const { registerMutation, loginMutation } = useNewAuth();
+  const { registerMutation, loginMutation, user } = useNewAuth();
+  const [, setLocation] = useLocation();
+
+  // Redirect if user is already authenticated
+  useEffect(() => {
+    if (user) {
+      setLocation("/");
+    }
+  }, [user, setLocation]);
 
   const loginForm = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
