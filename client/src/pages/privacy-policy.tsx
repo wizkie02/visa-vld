@@ -1,8 +1,7 @@
 import { useLanguage } from "@/lib/i18n";
-import { translations } from "@/lib/translations";
 
 export default function PrivacyPolicy() {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
