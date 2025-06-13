@@ -47,18 +47,28 @@ export default function Validation() {
   const [showLanguageModal, setShowLanguageModal] = useState(false);
   const { toast } = useToast();
   const { t } = useLanguage();
-  const [validationData, setValidationData] = useState<ValidationData>({
-    country: "",
-    visaType: "",
-    personalInfo: {
-      applicantName: "",
-      passportNumber: "",
-      dateOfBirth: "",
-      nationality: "",
-      travelDate: "",
-      stayDuration: 0,
-    },
-    uploadedFiles: [],
+  const [validationData, setValidationData] = useState<ValidationData>(() => {
+    const saved = localStorage.getItem('validation_data');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Failed to parse saved validation data:', e);
+      }
+    }
+    return {
+      country: "",
+      visaType: "",
+      personalInfo: {
+        applicantName: "",
+        passportNumber: "",
+        dateOfBirth: "",
+        nationality: "",
+        travelDate: "",
+        stayDuration: 0,
+      },
+      uploadedFiles: [],
+    };
   });
 
   // Check if language has been selected before
@@ -70,7 +80,11 @@ export default function Validation() {
   }, []);
 
   const updateValidationData = (updates: Partial<ValidationData>) => {
-    setValidationData(prev => ({ ...prev, ...updates }));
+    setValidationData(prev => {
+      const newData = { ...prev, ...updates };
+      localStorage.setItem('validation_data', JSON.stringify(newData));
+      return newData;
+    });
   };
 
   const handleNext = () => {
