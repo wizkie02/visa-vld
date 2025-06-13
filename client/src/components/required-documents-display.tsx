@@ -8,6 +8,7 @@ import { ValidationData } from '@/pages/validation';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { apiRequest } from '@/lib/queryClient';
 
 interface VisaRequirement {
   id: string;
@@ -82,11 +83,8 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
   const { data: liveRequirements, isLoading, error, refetch } = useQuery<ComprehensiveVisaRequirements>({
     queryKey: ['/api/visa-requirements', data.country, data.visaType],
     queryFn: async () => {
-      const response = await fetch(`/api/visa-requirements/${encodeURIComponent(data.country)}/${encodeURIComponent(data.visaType)}?nationality=${encodeURIComponent(data.personalInfo?.nationality || '')}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch visa requirements');
-      }
-      return response.json();
+      const response = await apiRequest('GET', `/api/visa-requirements/${encodeURIComponent(data.country)}/${encodeURIComponent(data.visaType)}?nationality=${encodeURIComponent(data.personalInfo?.nationality || '')}`);
+      return await response.json();
     },
     staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
     refetchOnWindowFocus: false,
@@ -95,7 +93,7 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
   const downloadComprehensiveChecklist = async () => {
     setIsDownloading(true);
     try {
-      const response = await fetch(`/api/visa-requirements/${encodeURIComponent(data.country)}/${encodeURIComponent(data.visaType)}/download?nationality=${encodeURIComponent(data.personalInfo?.nationality || '')}`);
+      const response = await apiRequest('GET', `/api/visa-requirements/${encodeURIComponent(data.country)}/${encodeURIComponent(data.visaType)}/download?nationality=${encodeURIComponent(data.personalInfo?.nationality || '')}`);
       
       if (!response.ok) {
         throw new Error('Failed to generate checklist');

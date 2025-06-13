@@ -98,11 +98,6 @@ export default function Home() {
                 {t("startValidation")}
               </Button>
             </Link>
-            <Link href="/documents">
-              <Button size="lg" variant="outline" className="border-blue-700 text-blue-700 hover:bg-blue-50 font-semibold py-4 px-8 text-lg transform hover:scale-105 transition-all duration-200 shadow-lg">
-                {t("myDocuments")}
-              </Button>
-            </Link>
           </div>
         </div>
       </section>
