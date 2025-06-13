@@ -48,24 +48,34 @@ export async function fetchAvailableVisaTypes(country: string): Promise<CountryV
         },
         {
           role: "user",
-          content: `List all available visa types for ${country}. Return a JSON object with the following structure:
+          content: `List ALL available visa types for ${country}. For Australia, include the complete list of 134+ visa types with subclass numbers. Return a JSON object with the following structure:
 
 {
   "visaTypes": [
     {
-      "id": "tourist-90",
-      "name": "Tourist Visa (90 days)",
+      "id": "subclass-601",
+      "name": "Electronic Travel Authority (subclass 601)",
       "category": "tourist",
-      "duration": "90 days",
-      "purpose": "Tourism and leisure travel",
-      "description": "Standard tourist visa for short-term visits",
-      "processingTime": "3-5 business days",
-      "fees": "$160"
+      "duration": "12 months multiple entry",
+      "purpose": "Tourism and short business visits",
+      "description": "Electronic travel authority for tourism and business",
+      "processingTime": "Within minutes to 72 hours",
+      "fees": "AUD $20",
+      "subclass": "601"
     }
   ]
 }
 
-Include all major visa categories: tourist, business, transit, student, work, family, and other specific types available for ${country}.`
+For ${country}, research and provide the COMPLETE official list including:
+- ALL visitor visas (Electronic Travel Authority, eVisitor, Transit, Visitor, Work and Holiday, Working Holiday)
+- ALL studying and training visas (Student, Student Guardian, Training)
+- ALL family and partner visas (Adoption, Aged Parent, Carer, Child, Partner, etc.)
+- ALL working and skilled visas (Business Innovation, Employer Nomination, Skilled Independent, etc.)
+- ALL refugee and humanitarian visas
+- ALL other visas (Bridging, Medical Treatment, Crew, etc.)
+- ALL repealed visas that are no longer available
+
+Include accurate subclass numbers, current processing times, and fees. This must be comprehensive - include every single visa type available.`
         }
       ],
       response_format: { type: "json_object" },
