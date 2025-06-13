@@ -60,8 +60,12 @@ export default function Validation() {
   });
   const [isValidating, setIsValidating] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState(() => {
-    const saved = localStorage.getItem(`validation_payment_status_${sessionId}`);
-    return saved || "pending";
+    const savedSessionId = localStorage.getItem('validation_session_id');
+    if (savedSessionId) {
+      const saved = localStorage.getItem(`validation_payment_status_${savedSessionId}`);
+      return saved || "pending";
+    }
+    return "pending";
   });
   
   const [showLanguageModal, setShowLanguageModal] = useState(false);

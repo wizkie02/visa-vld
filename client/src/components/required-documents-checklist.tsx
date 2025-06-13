@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, FileText, AlertCircle, CheckCircle2 } from "lucide-react";
-import { useI18n } from "@/lib/i18n";
+import { useLanguage } from "@/lib/i18n";
 
 interface DocumentRequirement {
   id: string;
@@ -38,7 +38,7 @@ export default function RequiredDocumentsChecklist({
   subclass,
   onDocumentsChanged
 }: RequiredDocumentsChecklistProps) {
-  const { t } = useI18n();
+  const { t } = useLanguage();
   const [checkedDocuments, setCheckedDocuments] = useState<string[]>([]);
 
   const { data: requirements, isLoading, error } = useQuery<VisaSpecificRequirements>({

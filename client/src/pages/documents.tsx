@@ -18,9 +18,9 @@ export default function Documents() {
   const { t } = useLanguage();
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const [selectedDocument, setSelectedDocument] = useState<UserDocument | null>(null);
+  const [selectedDocument, setSelectedDocument] = useState<DocumentAnalysisLog | null>(null);
 
-  const { data: documents = [], isLoading, error } = useQuery<UserDocument[]>({
+  const { data: documents = [], isLoading, error } = useQuery<DocumentAnalysisLog[]>({
     queryKey: ["/api/documents"],
     enabled: !!user,
   });
@@ -68,15 +68,13 @@ export default function Documents() {
     }
   };
 
-  const getValidationStatusBadge = (status: string | null) => {
-    switch (status) {
-      case 'validated':
-        return <Badge variant="default" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"><CheckCircle className="w-3 h-3 mr-1" />Validated</Badge>;
-      case 'failed':
-        return <Badge variant="destructive"><XCircle className="w-3 h-3 mr-1" />Failed</Badge>;
-      case 'pending':
-      default:
-        return <Badge variant="secondary"><Clock className="w-3 h-3 mr-1" />Pending</Badge>;
+  const getValidationStatusBadge = (docType: string | null) => {
+    if (docType && docType !== 'analysis_failed') {
+      return <Badge variant="default" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"><CheckCircle className="w-3 h-3 mr-1" />Analyzed</Badge>;
+    } else if (docType === 'analysis_failed') {
+      return <Badge variant="destructive"><XCircle className="w-3 h-3 mr-1" />Failed</Badge>;
+    } else {
+      return <Badge variant="secondary"><Clock className="w-3 h-3 mr-1" />Pending</Badge>;
     }
   };
 
@@ -147,7 +145,7 @@ export default function Documents() {
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">{t("validated")}</p>
                     <p className="text-2xl font-bold">
-                      {documents.filter(doc => doc.validationStatus === 'validated').length}
+                      {documents.filter(doc => doc.detectedDocumentType && doc.detectedDocumentType !== 'analysis_failed').length}
                     </p>
                   </div>
                 </div>
@@ -161,7 +159,7 @@ export default function Documents() {
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">{t("pending")}</p>
                     <p className="text-2xl font-bold">
-                      {documents.filter(doc => doc.validationStatus === 'pending' || !doc.validationStatus).length}
+                      {documents.filter(doc => !doc.detectedDocumentType || doc.detectedDocumentType === 'analysis_failed').length}
                     </p>
                   </div>
                 </div>
@@ -219,17 +217,17 @@ export default function Documents() {
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-2">
-                        <span className="text-2xl">{getDocumentTypeIcon(document.documentType)}</span>
+                        <span className="text-2xl">{getDocumentTypeIcon(document.detectedDocumentType)}</span>
                         <div>
-                          <CardTitle className="text-base truncate max-w-[180px]" title={document.originalName}>
-                            {document.originalName}
+                          <CardTitle className="text-base truncate max-w-[180px]" title={document.originalFileName}>
+                            {document.originalFileName}
                           </CardTitle>
                           <CardDescription className="text-sm">
-                            {document.documentType || 'Unknown Type'}
+                            {document.detectedDocumentType || 'Unknown Type'}
                           </CardDescription>
                         </div>
                       </div>
-                      {getValidationStatusBadge(document.validationStatus)}
+                      {getValidationStatusBadge(document.detectedDocumentType)}
                     </div>
                   </CardHeader>
 
@@ -278,7 +276,7 @@ export default function Documents() {
                           <AlertDialogHeader>
                             <AlertDialogTitle>{t("deleteDocument")}</AlertDialogTitle>
                             <AlertDialogDescription>
-                              {t("deleteDocumentConfirmation")} "{document.originalName}"?
+                              {t("deleteDocumentConfirmation")} "{document.originalFileName}"?
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
@@ -308,7 +306,7 @@ export default function Documents() {
           <Card className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle>{selectedDocument.originalName}</CardTitle>
+                <CardTitle>{selectedDocument.originalFileName}</CardTitle>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -322,7 +320,7 @@ export default function Documents() {
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <span className="font-semibold">{t("documentType")}:</span>
-                  <p>{selectedDocument.documentType || 'Unknown'}</p>
+                  <p>{selectedDocument.detectedDocumentType || 'Unknown'}</p>
                 </div>
                 <div>
                   <span className="font-semibold">{t("fileType")}:</span>
@@ -337,16 +335,16 @@ export default function Documents() {
                   <p>{new Date(selectedDocument.uploadedAt).toLocaleString()}</p>
                 </div>
                 <div>
-                  <span className="font-semibold">{t("validationStatus")}:</span>
-                  <p>{getValidationStatusBadge(selectedDocument.validationStatus)}</p>
+                  <span className="font-semibold">{t("analysisStatus")}:</span>
+                  <p>{getValidationStatusBadge(selectedDocument.detectedDocumentType)}</p>
                 </div>
               </div>
 
-              {selectedDocument.validationResults && (
+              {selectedDocument.analysisResults && (
                 <div>
-                  <h4 className="font-semibold mb-2">{t("validationResults")}:</h4>
+                  <h4 className="font-semibold mb-2">{t("analysisResults")}:</h4>
                   <pre className="bg-gray-100 dark:bg-gray-800 p-3 rounded text-xs overflow-x-auto">
-                    {JSON.stringify(selectedDocument.validationResults, null, 2)}
+                    {JSON.stringify(selectedDocument.analysisResults, null, 2)}
                   </pre>
                 </div>
               )}
