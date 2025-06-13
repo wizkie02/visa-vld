@@ -200,6 +200,36 @@ export default function AuthPage() {
                           )}
                         />
 
+                        <div className="grid grid-cols-2 gap-4">
+                          <FormField
+                            control={registerForm.control}
+                            name="firstName"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>{t('firstName')}</FormLabel>
+                                <FormControl>
+                                  <Input placeholder={t('enterFirstName')} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+
+                          <FormField
+                            control={registerForm.control}
+                            name="lastName"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>{t('lastName')}</FormLabel>
+                                <FormControl>
+                                  <Input placeholder={t('enterLastName')} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+
                         <FormField
                           control={registerForm.control}
                           name="password"

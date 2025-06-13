@@ -317,6 +317,32 @@ export default function CountrySelection({ data, onUpdate, onNext, canProceed }:
           </div>
         </div>
         
+        {/* Show dynamic visa type information */}
+        {data.visaType && (visaTypesData as any)?.visaTypes?.length > 0 && (
+          <div className="mt-6">
+            {(() => {
+              const selectedVisa = (visaTypesData as any).visaTypes.find((v: any) => v.id === data.visaType);
+              return selectedVisa ? (
+                <Alert className="bg-green-50 border-green-200">
+                  <Info className="h-4 w-4 text-green-600" />
+                  <AlertDescription>
+                    <div className="space-y-2">
+                      <div className="font-semibold text-green-900">{selectedVisa.name}</div>
+                      <div className="text-sm text-gray-700 grid grid-cols-2 gap-2">
+                        <div><strong>Duration:</strong> {selectedVisa.duration}</div>
+                        <div><strong>Processing Time:</strong> {selectedVisa.processingTime}</div>
+                        <div><strong>Purpose:</strong> {selectedVisa.purpose}</div>
+                        <div><strong>Fees:</strong> {selectedVisa.fees}</div>
+                      </div>
+                      <div className="text-sm text-gray-600">{selectedVisa.description}</div>
+                    </div>
+                  </AlertDescription>
+                </Alert>
+              ) : null;
+            })()}
+          </div>
+        )}
+        
         {requirements.length > 0 && (
           <Alert className="mt-6 bg-blue-50 border-blue-200">
             <Info className="h-4 w-4 text-blue-600" />
