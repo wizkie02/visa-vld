@@ -11,6 +11,7 @@ export interface IStorage {
   getAllUsers(): Promise<User[]>;
   getUserStats(): Promise<{ totalUsers: number; activeUsers: number; totalRevenue: string }>;
   getMonthlyRevenue(): Promise<Array<{ month: string; revenue: string; userCount: number }>>;
+  upsertUser(userData: any): Promise<User>;
   
   // Validation session operations
   createValidationSession(session: InsertValidationSession): Promise<ValidationSession>;
@@ -161,6 +162,30 @@ export class DatabaseStorage implements IStorage {
 
   async getAllDocumentAnalysisLogs(): Promise<DocumentAnalysisLog[]> {
     return await db.select().from(documentAnalysisLogs);
+  }
+
+  async upsertUser(userData: any): Promise<User> {
+    // For Replit auth integration - create a simple user record
+    const [user] = await db
+      .insert(users)
+      .values({
+        username: userData.email || userData.id,
+        password: 'replit_auth', // Placeholder for Replit auth users
+        firstName: userData.firstName || '',
+        lastName: userData.lastName || '',
+        nationality: 'Unknown',
+        dataProcessingConsent: true,
+      })
+      .onConflictDoUpdate({
+        target: users.username,
+        set: {
+          firstName: userData.firstName || '',
+          lastName: userData.lastName || '',
+          updatedAt: new Date(),
+        }
+      })
+      .returning();
+    return user;
   }
 
   // Password operations

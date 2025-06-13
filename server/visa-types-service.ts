@@ -122,7 +122,7 @@ Include accurate subclass numbers, current processing times, and fees. This must
     }
     
     // Return error indication to frontend for fallback handling
-    throw new Error(`Failed to fetch visa types for ${country}: ${error.message}`);
+    throw new Error(`Failed to fetch visa types for ${country}: ${(error as Error).message}`);
   }
 }
 

@@ -189,7 +189,7 @@ export function requireNewAuth(req: Request, res: Response, next: NextFunction) 
     
     next();
   } catch (error) {
-    console.log('Auth middleware - JWT verification failed:', error.message);
+    console.log('Auth middleware - JWT verification failed:', (error as Error).message);
     return res.status(401).json({ message: "Unauthorized" });
   }
 }
