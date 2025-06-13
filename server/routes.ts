@@ -329,6 +329,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Validate documents against requirements with cross-referencing
       let validationResults;
       try {
+        // Extract the required documents array from the requirements structure
+        const requiredDocuments = currentRequirements?.requirements?.requiredDocuments || [];
+        
         validationResults = await validateDocumentsAgainstRequirements(
           documentAnalyses,
           {
@@ -341,10 +344,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
           },
           session.country,
           session.visaType,
-          currentRequirements?.requirements
+          requiredDocuments
         );
       } catch (error: any) {
-        console.error("OpenAI validation error:", error);
+        console.error("Error validating documents:", error);
+        console.error("Error stack:", error.stack);
+        console.error("Required documents passed:", requiredDocuments);
         // Provide fallback validation results
         validationResults = {
           verified: [],

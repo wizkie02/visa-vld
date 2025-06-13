@@ -117,9 +117,12 @@ export async function validateDocumentsAgainstRequirements(
     
     // Check for missing required documents
     const missingRequiredDocs = requiredDocs.filter((req: any) => {
-      if (!req.required) return false;
+      // Handle both string arrays and object arrays
+      const reqType = typeof req === 'string' ? req.toLowerCase() : (req.title || '').toLowerCase();
+      const isRequired = typeof req === 'string' ? true : req.required !== false;
       
-      const reqType = req.title.toLowerCase();
+      if (!isRequired) return false;
+      
       const isPresent = uploadedDocTypes.some(uploaded => {
         return (
           reqType.includes(uploaded) ||
@@ -174,7 +177,7 @@ Check for:
 - Missing requirements
 - Quality and completeness
 
-Missing Required Documents: ${missingRequiredDocs.map((doc: any) => doc.title).join(', ') || 'None'}
+Missing Required Documents: ${missingRequiredDocs.map((doc: any) => typeof doc === 'string' ? doc : doc.title).join(', ') || 'None'}
 
 Respond with JSON in this format:
 {
