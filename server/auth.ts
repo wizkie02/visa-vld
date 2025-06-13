@@ -30,28 +30,16 @@ async function comparePasswords(supplied: string, stored: string) {
 }
 
 export function setupAuth(app: Express) {
-  const pgStore = connectPg(session);
-  const sessionStore = new pgStore({
-    conString: process.env.DATABASE_URL,
-    createTableIfMissing: true,
-    tableName: 'sessions',
-    schemaName: 'public',
-    ttl: 24 * 60 * 60, // 24 hours in seconds
-  });
-
-  const isProduction = process.env.NODE_ENV === 'production';
   const sessionSettings: session.SessionOptions = {
     secret: process.env.SESSION_SECRET || "your-secret-key-here",
     resave: false,
     saveUninitialized: false,
-    store: sessionStore,
     cookie: {
-      secure: false, // Always false for development and Replit
+      secure: false,
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
       sameSite: 'lax',
     },
-    name: 'connect.sid',
   };
 
   app.set("trust proxy", 1);

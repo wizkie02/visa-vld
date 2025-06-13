@@ -17,18 +17,12 @@ export function useAuth() {
   const { data: user, isLoading, error } = useQuery<User | null>({
     queryKey: ["/api/user"],
     queryFn: getQueryFn({ on401: "returnNull" }),
-    retry: (failureCount, error) => {
-      // Don't retry on 401 errors or after 2 attempts
-      if (error?.message?.includes('401') || failureCount >= 2) {
-        return false;
-      }
-      return true;
-    },
+    retry: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchInterval: false,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 0, // Always fresh
+    gcTime: 0, // Don't cache
   });
 
   const registerMutation = useMutation({
