@@ -41,26 +41,39 @@ export async function fetchAvailableVisaTypes(country: string): Promise<CountryV
         },
         {
           role: "user",
-          content: `List all available visa types for ${country}. Include tourist, business, transit, student, work, family, and other visa categories. For each visa type, provide:
-          - Unique ID
-          - Full name
-          - Category (tourist, business, transit, student, work, family, other)
-          - Duration/validity period
-          - Purpose/description
-          - Typical processing time
-          - Approximate fees (if known)
-          
-          Organize visas by category and provide current, accurate information.`
+          content: `List all available visa types for ${country}. Return a JSON object with the following structure:
+
+{
+  "visaTypes": [
+    {
+      "id": "tourist-90",
+      "name": "Tourist Visa (90 days)",
+      "category": "tourist",
+      "duration": "90 days",
+      "purpose": "Tourism and leisure travel",
+      "description": "Standard tourist visa for short-term visits",
+      "processingTime": "3-5 business days",
+      "fees": "$160"
+    }
+  ]
+}
+
+Include all major visa categories: tourist, business, transit, student, work, family, and other specific types available for ${country}.`
         }
       ],
       response_format: { type: "json_object" },
       temperature: 0.3,
     });
 
-    const result = JSON.parse(response.choices[0].message.content || '{}');
+    const rawContent = response.choices[0].message.content || '{}';
+    console.log(`OpenAI raw response for ${country}:`, rawContent);
+    
+    const result = JSON.parse(rawContent);
+    console.log(`Parsed result for ${country}:`, result);
 
     // Validate and structure the response
     const visaTypes: VisaType[] = result.visaTypes || [];
+    console.log(`Extracted visa types for ${country}:`, visaTypes);
     
     const categorizedVisas: CountryVisaTypes = {
       country: country,
