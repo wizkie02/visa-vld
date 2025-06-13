@@ -115,6 +115,7 @@ const baseKeys = {
   work: "Work",
   transit: "Transit",
   family: "Family Visit",
+  loadingVisaTypes: "Loading visa types...",
   
   // Document Upload
   uploadFiles: "Upload Documents",
