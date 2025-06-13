@@ -214,16 +214,16 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
 
   // Auto-populate form with user data when available
   useEffect(() => {
-    if (userData && userData.firstName && userData.lastName && userData.nationality) {
+    if (userData && (userData as any).firstName && (userData as any).lastName && (userData as any).nationality) {
       const currentValues = form.getValues();
       
       // Only auto-populate if fields are empty
-      if (!currentValues.applicantName && userData.firstName && userData.lastName) {
-        form.setValue('applicantName', `${userData.firstName} ${userData.lastName}`);
+      if (!currentValues.applicantName && (userData as any).firstName && (userData as any).lastName) {
+        form.setValue('applicantName', `${(userData as any).firstName} ${(userData as any).lastName}`);
       }
       
-      if (!currentValues.nationality && userData.nationality) {
-        form.setValue('nationality', userData.nationality);
+      if (!currentValues.nationality && (userData as any).nationality) {
+        form.setValue('nationality', (userData as any).nationality);
       }
     }
   }, [userData, form]);

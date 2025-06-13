@@ -31,8 +31,15 @@ export interface CountryVisaTypes {
 
 export async function fetchAvailableVisaTypes(country: string): Promise<CountryVisaTypes> {
   try {
+    console.log(`Starting visa type fetch for ${country}`);
+    
+    // Add timeout to OpenAI request
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('OpenAI request timeout')), 10000)
+    );
+
     // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-    const response = await openai.chat.completions.create({
+    const openaiPromise = openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
         {
@@ -65,7 +72,9 @@ Include all major visa categories: tourist, business, transit, student, work, fa
       temperature: 0.3,
     });
 
-    const rawContent = response.choices[0].message.content || '{}';
+    const openaiResponse = await Promise.race([openaiPromise, timeoutPromise]) as any;
+
+    const rawContent = openaiResponse.choices[0].message.content || '{}';
     console.log(`OpenAI raw response for ${country}:`, rawContent);
     
     const result = JSON.parse(rawContent);
