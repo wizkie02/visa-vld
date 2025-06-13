@@ -102,7 +102,8 @@ export async function validateDocumentsAgainstRequirements(
   personalInfo: any,
   country: string,
   visaType: string,
-  requiredDocuments?: any[]
+  requiredDocuments?: any[],
+  checkedDocuments?: Record<string, boolean>
 ): Promise<ValidationResult> {
   try {
     // Get required documents for cross-referencing
@@ -123,7 +124,8 @@ export async function validateDocumentsAgainstRequirements(
       
       if (!isRequired) return false;
       
-      const isPresent = uploadedDocTypes.some(uploaded => {
+      // Check if document is uploaded
+      const isUploaded = uploadedDocTypes.some(uploaded => {
         return (
           reqType.includes(uploaded) ||
           uploaded.includes('passport') && reqType.includes('passport') ||
@@ -133,7 +135,23 @@ export async function validateDocumentsAgainstRequirements(
           uploaded.includes('hotel') && reqType.includes('accommodation')
         );
       });
-      return !isPresent;
+      
+      // Check if document is marked as checked (user has it but didn't upload)
+      const isChecked = checkedDocuments && Object.entries(checkedDocuments).some(([docName, isChecked]) => {
+        if (!isChecked) return false;
+        const checkedType = docName.toLowerCase();
+        return (
+          reqType.includes(checkedType) ||
+          checkedType.includes('travel insurance') && reqType.includes('insurance') ||
+          checkedType.includes('bank') && reqType.includes('financial') ||
+          checkedType.includes('hotel') && reqType.includes('accommodation') ||
+          checkedType.includes('flight') && reqType.includes('itinerary') ||
+          checkedType.includes('employment') && reqType.includes('employment') ||
+          checkedType.includes('invitation') && reqType.includes('invitation')
+        );
+      });
+      
+      return !isUploaded && !isChecked;
     });
 
     // Validate name formatting for destination country

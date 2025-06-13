@@ -332,6 +332,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const requiredDocuments = currentRequirements?.requirements?.requiredDocuments || [];
       
       try {
+        // Extract checked documents from session data
+        const checkedDocuments = session.checkedDocuments || {};
+        
         validationResults = await validateDocumentsAgainstRequirements(
           documentAnalyses,
           {
@@ -344,7 +347,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           },
           session.country,
           session.visaType,
-          requiredDocuments
+          requiredDocuments,
+          checkedDocuments
         );
       } catch (error: any) {
         console.error("Error validating documents:", error);

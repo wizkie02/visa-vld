@@ -40,6 +40,7 @@ export const validationSessions = pgTable("validation_sessions", {
   travelDate: text("travel_date").notNull(),
   stayDuration: integer("stay_duration").notNull(),
   uploadedFiles: jsonb("uploaded_files").notNull(),
+  checkedDocuments: jsonb("checked_documents").notNull().default('{}'),
   validationResults: jsonb("validation_results"),
   paymentStatus: text("payment_status").notNull().default("pending"),
   stripePaymentIntentId: text("stripe_payment_intent_id"),
