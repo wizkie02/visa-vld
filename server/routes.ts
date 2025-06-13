@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import Stripe from "stripe";
 import multer from "multer";
 import { storage } from "./storage";
-import { setupAuth, requireAuth, requireAdmin } from "./auth";
+import { setupSimpleAuth, requireAuth, requireAdmin } from "./simple-auth";
 import { personalInfoSchema } from "@shared/schema";
 import { nanoid } from "nanoid";
 import { analyzeDocument, validateDocumentsAgainstRequirements, getVisaRequirementsOnline } from "./openai-service";
@@ -52,8 +52,8 @@ const upload = multer({
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Auth middleware - setupAuth is synchronous for custom auth
-  setupAuth(app);
+  // Auth middleware - setupSimpleAuth is synchronous for token-based auth
+  setupSimpleAuth(app);
 
   // Admin panel routes
   app.get('/api/admin/users', requireAdmin, async (req, res) => {
