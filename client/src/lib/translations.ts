@@ -99,7 +99,6 @@ const baseKeys = {
   
   // Country Selection
   selectCountry: "Select your destination country",
-  selectNationality: "Select your nationality",
   selectYourDestination: "Select Your Destination",
   chooseDestinationCountry: "Choose the country you plan to visit",
   selectYourNationality: "Select Your Nationality",
@@ -133,7 +132,6 @@ const baseKeys = {
   middleName: "Middle Name",
   passportNumber: "Passport Number",
   dateOfBirth: "Date of Birth",
-  nationality: "Nationality",
   plannedTravelDate: "Planned Travel Date",
   durationOfStay: "Duration of Stay (days)",
   
