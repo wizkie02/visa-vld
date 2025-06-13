@@ -162,7 +162,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Validate documents using OpenAI
-  app.post("/api/validate", async (req, res) => {
+  app.post("/api/validate", isAuthenticated, async (req, res) => {
     try {
       const { sessionId } = req.body;
       
@@ -251,7 +251,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Create payment intent
-  app.post("/api/create-payment-intent", async (req, res) => {
+  app.post("/api/create-payment-intent", isAuthenticated, async (req, res) => {
     try {
       const { sessionId } = req.body;
       
@@ -277,7 +277,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Validate documents after payment
-  app.post("/api/validate-documents", async (req, res) => {
+  app.post("/api/validate-documents", isAuthenticated, async (req, res) => {
     try {
       const { sessionId } = req.body;
       
@@ -333,7 +333,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get real-time visa requirements
-  app.get("/api/visa-requirements/:country/:visaType", async (req, res) => {
+  app.get("/api/visa-requirements/:country/:visaType", isAuthenticated, async (req, res) => {
     try {
       const { country, visaType } = req.params;
       const { nationality } = req.query;
@@ -354,7 +354,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Download comprehensive requirements checklist
-  app.get("/api/visa-requirements/:country/:visaType/download", async (req, res) => {
+  app.get("/api/visa-requirements/:country/:visaType/download", isAuthenticated, async (req, res) => {
     try {
       const { country, visaType } = req.params;
       const { nationality } = req.query;
@@ -387,7 +387,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get validation results
-  app.get("/api/validation-results/:sessionId", async (req, res) => {
+  app.get("/api/validation-results/:sessionId", isAuthenticated, async (req, res) => {
     try {
       const { sessionId } = req.params;
       
@@ -407,7 +407,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Download validation report with professional formatting
-  app.get("/api/validation-report/:sessionId/download", async (req, res) => {
+  app.get("/api/validation-report/:sessionId/download", isAuthenticated, async (req, res) => {
     try {
       const { sessionId } = req.params;
       

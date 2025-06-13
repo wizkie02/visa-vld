@@ -1,114 +1,135 @@
-import { Link } from "wouter";
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useLanguage } from "@/lib/i18n";
+import { translations } from "@/lib/translations";
 
 export default function PrivacyPolicy() {
+  const { t } = useTranslation();
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-6">
-          <Link href="/">
-            <Button variant="ghost" className="gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Home
-            </Button>
-          </Link>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+            {t('privacyPolicy')}
+          </h1>
+          
+          <div className="prose prose-lg dark:prose-invert max-w-none space-y-6">
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                {t('dataCollection')}
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                {t('dataCollectionDesc')}
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-300">
+                <li>{t('personalInformation')}: {t('personalInfoDesc')}</li>
+                <li>{t('uploadedDocuments')}: {t('documentsDesc')}</li>
+                <li>{t('paymentInformation')}: {t('paymentDesc')}</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                {t('aiProcessing')}
+              </h2>
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mb-4">
+                <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-3">
+                  {t('openaiProcessing')}
+                </h3>
+                <p className="text-blue-800 dark:text-blue-200 leading-relaxed mb-4">
+                  {t('openaiProcessingDesc')}
+                </p>
+                <div className="space-y-3">
+                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                    <strong>{t('dataRetention')}:</strong> {t('dataRetentionDesc')}
+                  </p>
+                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                    <strong>{t('dataLocation')}:</strong> {t('dataLocationDesc')}
+                  </p>
+                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                    <strong>{t('complianceStandards')}:</strong> {t('complianceDesc')}
+                  </p>
+                </div>
+              </div>
+              
+              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+                <p className="text-amber-800 dark:text-amber-200 text-sm">
+                  <strong>{t('openaiTerms')}:</strong> {t('openaiTermsDesc')} 
+                  <a 
+                    href="https://openai.com/enterprise-privacy" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-amber-700 dark:text-amber-300 underline hover:text-amber-900 dark:hover:text-amber-100"
+                  >
+                    {t('openaiDpaLink')}
+                  </a> {t('and')} 
+                  <a 
+                    href="https://openai.com/policies/api-data-usage-policies" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-amber-700 dark:text-amber-300 underline hover:text-amber-900 dark:hover:text-amber-100"
+                  >
+                    {t('openaiDataPolicy')}
+                  </a>.
+                </p>
+              </div>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                {t('dataProtectionRights')}
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                {t('dataRightsDesc')}
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-300">
+                <li><strong>{t('accessRight')}:</strong> {t('accessRightDesc')}</li>
+                <li><strong>{t('correctionRight')}:</strong> {t('correctionRightDesc')}</li>
+                <li><strong>{t('deletionRight')}:</strong> {t('deletionRightDesc')}</li>
+                <li><strong>{t('portabilityRight')}:</strong> {t('portabilityRightDesc')}</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                {t('dataSecurityMeasures')}
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                {t('securityDesc')}
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-300">
+                <li>{t('encryptionInTransit')}</li>
+                <li>{t('encryptionAtRest')}</li>
+                <li>{t('accessControls')}</li>
+                <li>{t('automaticDeletion')}</li>
+                <li>{t('securePaymentProcessing')}</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                {t('cookiesTracking')}
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                {t('cookiesDesc')}
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                {t('contactPrivacy')}
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                {t('contactPrivacyDesc')}
+              </p>
+            </section>
+
+            <section className="border-t pt-6 mt-8">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                <strong>{t('lastUpdated')}:</strong> {t('lastUpdatedDate')}
+              </p>
+            </section>
+          </div>
         </div>
-
-        <Card className="max-w-4xl mx-auto">
-          <CardHeader>
-            <CardTitle className="text-3xl text-center">Privacy Policy</CardTitle>
-            <p className="text-center text-slate-600">Last updated: January 2025</p>
-          </CardHeader>
-          <CardContent className="prose max-w-none">
-            <section className="mb-8">
-              <h2 className="text-xl font-semibold mb-4">Information We Collect</h2>
-              <p className="mb-4">
-                VisaValidator Pro collects the following types of information to provide our document validation services:
-              </p>
-              <ul className="list-disc pl-6 mb-4">
-                <li>Personal information you provide (name, passport number, nationality, travel dates)</li>
-                <li>Uploaded documents and their contents</li>
-                <li>Payment information processed through Stripe</li>
-                <li>Usage analytics and technical information</li>
-              </ul>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-xl font-semibold mb-4">How We Use Your Information</h2>
-              <p className="mb-4">We use collected information to:</p>
-              <ul className="list-disc pl-6 mb-4">
-                <li>Analyze your documents using AI technology</li>
-                <li>Provide validation reports and recommendations</li>
-                <li>Process payments and maintain account records</li>
-                <li>Improve our services and user experience</li>
-                <li>Communicate with you about your validation requests</li>
-              </ul>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-xl font-semibold mb-4">Data Security</h2>
-              <p className="mb-4">
-                We implement industry-standard security measures to protect your data:
-              </p>
-              <ul className="list-disc pl-6 mb-4">
-                <li>All data transmission is encrypted using SSL/TLS</li>
-                <li>Documents are processed securely and deleted after analysis</li>
-                <li>Payment information is handled by Stripe with PCI compliance</li>
-                <li>Access to personal data is restricted to authorized personnel only</li>
-              </ul>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-xl font-semibold mb-4">Data Retention</h2>
-              <p className="mb-4">
-                We retain your data for the following periods:
-              </p>
-              <ul className="list-disc pl-6 mb-4">
-                <li>Uploaded documents: Deleted within 24 hours after processing</li>
-                <li>Validation results: Stored for 1 year for customer support</li>
-                <li>Payment records: Retained as required by law (typically 7 years)</li>
-                <li>Account information: Until account deletion is requested</li>
-              </ul>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-xl font-semibold mb-4">Your Rights</h2>
-              <p className="mb-4">You have the right to:</p>
-              <ul className="list-disc pl-6 mb-4">
-                <li>Access your personal data</li>
-                <li>Correct inaccurate information</li>
-                <li>Delete your account and data</li>
-                <li>Export your data</li>
-                <li>Withdraw consent for data processing</li>
-              </ul>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-xl font-semibold mb-4">Third-Party Services</h2>
-              <p className="mb-4">
-                We use the following third-party services that may collect data:
-              </p>
-              <ul className="list-disc pl-6 mb-4">
-                <li>OpenAI for document analysis</li>
-                <li>Stripe for payment processing</li>
-                <li>Analytics services for usage statistics</li>
-              </ul>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-xl font-semibold mb-4">Contact Us</h2>
-              <p className="mb-4">
-                For privacy-related questions or requests, contact us at:
-                <br />
-                Email: privacy@visavalidator.pro
-                <br />
-                Address: [Company Address]
-              </p>
-            </section>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );
