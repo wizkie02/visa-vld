@@ -22,9 +22,10 @@ interface PaymentModalProps {
   data: ValidationData;
   sessionId: string;
   onClose: () => void;
+  onPaymentSuccess?: () => void;
 }
 
-function CheckoutForm({ data, sessionId, onClose }: PaymentModalProps) {
+function CheckoutForm({ data, sessionId, onClose, onPaymentSuccess }: PaymentModalProps) {
   const stripe = useStripe();
   const elements = useElements();
   const { toast } = useToast();
@@ -79,6 +80,10 @@ function CheckoutForm({ data, sessionId, onClose }: PaymentModalProps) {
           title: t("paymentSuccess"),
           description: t("validationComplete"),
         });
+        // Notify parent component of successful payment
+        if (onPaymentSuccess) {
+          onPaymentSuccess();
+        }
       }
     } catch (error: any) {
       toast({
@@ -174,7 +179,7 @@ function CheckoutForm({ data, sessionId, onClose }: PaymentModalProps) {
   );
 }
 
-export default function PaymentModal({ data, sessionId, onClose }: PaymentModalProps) {
+export default function PaymentModal({ data, sessionId, onClose, onPaymentSuccess }: PaymentModalProps) {
   const [clientSecret, setClientSecret] = useState("");
   const { toast } = useToast();
 
@@ -233,7 +238,7 @@ export default function PaymentModal({ data, sessionId, onClose }: PaymentModalP
         </Card>
         
         <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <CheckoutForm data={data} sessionId={sessionId} onClose={onClose} />
+          <CheckoutForm data={data} sessionId={sessionId} onClose={onClose} onPaymentSuccess={onPaymentSuccess} />
         </Elements>
       </DialogContent>
     </Dialog>

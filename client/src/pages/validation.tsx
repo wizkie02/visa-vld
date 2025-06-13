@@ -58,6 +58,10 @@ export default function Validation() {
     return saved || "";
   });
   const [isValidating, setIsValidating] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState(() => {
+    const saved = localStorage.getItem('validation_payment_status');
+    return saved || "pending";
+  });
   
   const [showLanguageModal, setShowLanguageModal] = useState(false);
   const { toast } = useToast();
@@ -608,6 +612,12 @@ export default function Validation() {
           sessionId={sessionId}
           onClose={() => {
             console.log("Closing payment modal");
+            setShowPaymentModal(false);
+          }}
+          onPaymentSuccess={() => {
+            console.log("Payment successful, updating status");
+            setPaymentStatus("completed");
+            localStorage.setItem('validation_payment_status', 'completed');
             setShowPaymentModal(false);
           }}
         />
