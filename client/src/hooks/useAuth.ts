@@ -51,14 +51,17 @@ export function useAuth() {
       const res = await apiRequest("POST", "/api/login", data);
       return await res.json();
     },
-    onSuccess: (user: User) => {
+    onSuccess: async (user: User) => {
       queryClient.setQueryData(["/api/user"], user);
-      // Force refetch to ensure session is properly established
-      queryClient.invalidateQueries({ queryKey: ["/api/user"] });
       toast({
         title: "Login successful",
         description: `Welcome back, ${user.username}!`,
       });
+      
+      // Small delay to ensure session is established, then refetch
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ["/api/user"] });
+      }, 100);
     },
     onError: (error: Error) => {
       toast({
