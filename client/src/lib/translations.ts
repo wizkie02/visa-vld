@@ -38,6 +38,8 @@ const baseKeys = {
   comprehensiveAnalysisDesc: "AI-powered document analysis with detailed recommendations and requirement checking.",
   
   // Authentication
+  heroTitle: "Login or Signup",
+  heroSubtitle: "to use the tool you have to be logged in.",
   welcomeBack: "Welcome Back",
   accessYourAccount: "Access your account to continue",
   signIn: "Sign In",
