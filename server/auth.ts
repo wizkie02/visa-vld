@@ -30,23 +30,9 @@ async function comparePasswords(supplied: string, stored: string) {
 }
 
 export function setupAuth(app: Express) {
-  const sessionSettings: session.SessionOptions = {
-    secret: process.env.SESSION_SECRET || "your-secret-key-here",
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-      secure: false,
-      httpOnly: false, // Allow JavaScript access for debugging
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
-      sameSite: 'lax',
-      path: '/',
-    },
-  };
-
-  app.set("trust proxy", 1);
-  app.use(session(sessionSettings));
-  app.use(passport.initialize());
-  app.use(passport.session());
+  // Note: This function is deprecated and should not be used
+  // JWT authentication is handled in simple-auth.ts instead
+  console.log('Warning: setupAuth from auth.ts should not be called - using JWT auth instead');
 
   passport.use(
     new LocalStrategy(async (username, password, done) => {
