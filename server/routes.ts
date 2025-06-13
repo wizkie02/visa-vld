@@ -13,6 +13,7 @@ import { nanoid } from "nanoid";
 import { analyzeDocument, validateDocumentsAgainstRequirements, getVisaRequirementsOnline } from "./openai-service";
 import { fetchCurrentVisaRequirements, generateRequirementsChecklist } from "./visa-requirements-service";
 import { generateValidationReport, generateRequirementsChecklist as generateChecklistHtml } from "./document-generator";
+import { fetchAvailableVisaTypes } from "./visa-types-service";
 import { generateValidationReportMarkdown, generateRequirementsChecklistMarkdown } from "./markdown-generator-fixed";
 import { generateValidationReportPDF } from "./jspdf-generator";
 import { generateRequirementsChecklistBuffer } from "./simple-pdf-generator";
