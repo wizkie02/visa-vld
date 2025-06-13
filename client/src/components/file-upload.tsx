@@ -361,6 +361,46 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
           </div>
         )}
 
+        {/* Document Checklist for non-uploaded documents */}
+        <div className="mt-8 bg-amber-50 border border-amber-200 rounded-lg p-6">
+          <h4 className="text-lg font-semibold text-amber-900 mb-3">
+            Documents You Have But Don't Want to Upload
+          </h4>
+          <p className="text-sm text-amber-800 mb-4">
+            ⚠️ Warning: By checking these boxes, you confirm you have these documents but understand the system cannot validate their correctness without uploading them.
+          </p>
+          
+          <div className="space-y-3">
+            {[
+              'Travel insurance certificate',
+              'Bank statements (financial proof)',
+              'Hotel booking confirmation', 
+              'Flight itinerary',
+              'Employment certificate',
+              'Invitation letter',
+              'Passport-sized photos',
+              'Cover letter'
+            ].map((doc) => (
+              <label key={doc} className="flex items-center space-x-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={data.checkedDocuments?.[doc] || false}
+                  onChange={(e) => {
+                    onUpdate({
+                      checkedDocuments: {
+                        ...data.checkedDocuments,
+                        [doc]: e.target.checked
+                      }
+                    });
+                  }}
+                  className="rounded border-amber-300 text-amber-600 focus:ring-amber-500"
+                />
+                <span className="text-sm text-amber-900">{doc}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
         <div className="flex space-x-4 mt-6">
           <Button variant="outline" onClick={onPrevious} className="flex-1">
             Previous

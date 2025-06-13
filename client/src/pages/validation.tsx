@@ -33,6 +33,7 @@ export interface ValidationData {
     size: number;
     uploadedAt: string;
   }>;
+  checkedDocuments: Record<string, boolean>;
 }
 
 export default function Validation() {
@@ -78,6 +79,7 @@ export default function Validation() {
         stayDuration: 0,
       },
       uploadedFiles: [],
+      checkedDocuments: {},
     };
   });
 
@@ -411,10 +413,7 @@ export default function Validation() {
           </Card>
         )}
 
-        {/* Temporary debug display */}
-        <div className="bg-yellow-100 p-4 mb-4 text-sm">
-          Debug: Step={currentStep}, HasResults={validationResults ? 'Yes' : 'No'}, Type={typeof validationResults}
-        </div>
+
 
         {currentStep === 6 && validationResults && (
           <div className="space-y-6">
