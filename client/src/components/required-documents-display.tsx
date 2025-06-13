@@ -8,7 +8,7 @@ import { ValidationData } from '@/pages/validation';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { apiRequest } from '@/lib/queryClient';
+import { apiRequest, queryClient } from '@/lib/queryClient';
 
 interface VisaRequirement {
   id: string;
@@ -78,6 +78,14 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
   const { t } = useLanguage();
   const { toast } = useToast();
   const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleRefreshRequirements = () => {
+    // Clear the specific query cache and refetch
+    queryClient.removeQueries({
+      queryKey: ['/api/visa-requirements', data.country, data.visaType]
+    });
+    refetch();
+  };
 
   // Fetch real-time visa requirements from API
   const { data: liveRequirements, isLoading, error, refetch } = useQuery<ComprehensiveVisaRequirements>({

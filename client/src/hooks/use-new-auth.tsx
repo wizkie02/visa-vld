@@ -20,7 +20,7 @@ type AuthContextType = {
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 // Token management functions
-const TOKEN_KEY = 'auth-token';
+const TOKEN_KEY = 'auth_token';
 
 function getToken(): string | null {
   return localStorage.getItem(TOKEN_KEY);
@@ -119,6 +119,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setToken(data.token);
       setCurrentUser(data.user);
       queryClient.setQueryData(["/api/user"], data.user);
+      // Clear all cached queries to force fresh requests with new token
+      queryClient.invalidateQueries();
       toast({
         title: "Login successful",
         description: `Welcome back, ${data.user.username}!`,
@@ -143,6 +145,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setToken(data.token);
       setCurrentUser(data.user);
       queryClient.setQueryData(["/api/user"], data.user);
+      // Clear all cached queries to force fresh requests with new token
+      queryClient.invalidateQueries();
       toast({
         title: "Registration successful",
         description: `Welcome, ${data.user.username}!`,
