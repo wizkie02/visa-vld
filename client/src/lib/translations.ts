@@ -115,7 +115,15 @@ const baseKeys = {
   work: "Work",
   transit: "Transit",
   family: "Family Visit",
+  other: "Other",
   loadingVisaTypes: "Loading visa types...",
+  visaCategory: "Visa Category",
+  selectVisaCategoryPlaceholder: "Select visa category",
+  specificVisaType: "Specific Visa Type",
+  selectSpecificVisaType: "Select specific visa type",
+  noVisaTypesAvailable: "No visa types available",
+  noSpecificVisaTypesFound: "No specific visa types found for this category",
+  fetchingOnlineVisaData: "Fetching latest visa information online...",
   
   // Document Upload
   uploadFiles: "Upload Documents",
@@ -217,7 +225,7 @@ const baseKeys = {
   retirement: "Retirement",
   volunteer: "Volunteer",
   sports: "Sports",
-  other: "Other",
+  otherCategory: "Other",
   
   // Document Requirements
   validPassportMinimum: "Valid passport (minimum 6 months validity)",

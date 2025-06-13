@@ -372,6 +372,7 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
           
           <div className="space-y-3">
             {[
+              'Passport',
               'Travel insurance certificate',
               'Bank statements (financial proof)',
               'Hotel booking confirmation', 
