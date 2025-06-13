@@ -41,7 +41,17 @@ export default function Validation() {
     return saved ? parseInt(saved, 10) : 1;
   });
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [validationResults, setValidationResults] = useState<any>(null);
+  const [validationResults, setValidationResults] = useState<any>(() => {
+    const saved = localStorage.getItem('validation_results');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Failed to parse saved validation results:', e);
+      }
+    }
+    return null;
+  });
   const [sessionId, setSessionId] = useState("");
   const [isValidating, setIsValidating] = useState(false);
   const [showLanguageModal, setShowLanguageModal] = useState(false);
@@ -151,13 +161,16 @@ export default function Validation() {
       
       console.log("OpenAI validation completed:", validationResult);
       
-      setValidationResults(validationResult.validationResults);
+      // Store validation results with persistence
+      const results = validationResult.validationResults;
+      setValidationResults(results);
+      localStorage.setItem('validation_results', JSON.stringify(results));
       
       // Update step and persist to localStorage
       setCurrentStep(6);
       localStorage.setItem('validation_current_step', '6');
       console.log("Navigating to step 6 - Results display");
-      console.log("Validation results set:", validationResult.validationResults);
+      console.log("Validation results set and persisted:", results);
       
       toast({
         title: "Validation Complete",
@@ -398,9 +411,13 @@ export default function Validation() {
           </Card>
         )}
 
+        {/* Temporary debug display */}
+        <div className="bg-yellow-100 p-4 mb-4 text-sm">
+          Debug: Step={currentStep}, HasResults={validationResults ? 'Yes' : 'No'}, Type={typeof validationResults}
+        </div>
+
         {currentStep === 6 && validationResults && (
           <div className="space-y-6">
-            {console.log("Rendering step 6 - currentStep:", currentStep, "validationResults:", validationResults)}
             {/* Visa Requirements Display */}
             <VisaRequirementsDisplay data={validationData} />
             
