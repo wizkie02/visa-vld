@@ -263,39 +263,7 @@ export default function AuthPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
-              <div className="text-center">
-                <div className="bg-blue-100 dark:bg-blue-900 rounded-lg p-4 mb-3 inline-block">
-                  <Shield className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{t('secureValidation')}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t('secureValidationDesc')}</p>
-              </div>
 
-              <div className="text-center">
-                <div className="bg-green-100 dark:bg-green-900 rounded-lg p-4 mb-3 inline-block">
-                  <Clock className="h-8 w-8 text-green-600 dark:text-green-400" />
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{t('quickProcessing')}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t('quickProcessingDesc')}</p>
-              </div>
-
-              <div className="text-center">
-                <div className="bg-purple-100 dark:bg-purple-900 rounded-lg p-4 mb-3 inline-block">
-                  <Globe className="h-8 w-8 text-purple-600 dark:text-purple-400" />
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{t('globalSupport')}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t('globalSupportDesc')}</p>
-              </div>
-
-              <div className="text-center">
-                <div className="bg-orange-100 dark:bg-orange-900 rounded-lg p-4 mb-3 inline-block">
-                  <FileCheck className="h-8 w-8 text-orange-600 dark:text-orange-400" />
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{t('comprehensiveReports')}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t('comprehensiveReportsDesc')}</p>
-              </div>
-            </div>
           </div>
 
           {/* Authentication Forms */}
