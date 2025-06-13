@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import Stripe from "stripe";
 import multer from "multer";
 import { storage } from "./storage";
-import { setupSimpleAuth, requireAuth, requireAdmin } from "./simple-auth";
+import { setupNewAuth, requireNewAuth, requireNewAdmin } from "./new-auth";
 import { personalInfoSchema } from "@shared/schema";
 import { nanoid } from "nanoid";
 import { analyzeDocument, validateDocumentsAgainstRequirements, getVisaRequirementsOnline } from "./openai-service";
@@ -52,11 +52,11 @@ const upload = multer({
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Auth middleware - setupSimpleAuth is synchronous for token-based auth
-  setupSimpleAuth(app);
+  // Auth middleware - setupNewAuth with Authorization headers
+  setupNewAuth(app);
 
   // Admin panel routes
-  app.get('/api/admin/users', requireAdmin, async (req, res) => {
+  app.get('/api/admin/users', requireNewAdmin, async (req, res) => {
     try {
       const users = await storage.getAllUsers();
       res.json(users);
@@ -66,7 +66,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/admin/stats', requireAdmin, async (req, res) => {
+  app.get('/api/admin/stats', requireNewAdmin, async (req, res) => {
     try {
       const stats = await storage.getUserStats();
       res.json(stats);
@@ -76,7 +76,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/admin/revenue', requireAdmin, async (req, res) => {
+  app.get('/api/admin/revenue', requireNewAdmin, async (req, res) => {
     try {
       const revenue = await storage.getMonthlyRevenue();
       res.json(revenue);
@@ -86,7 +86,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put('/api/admin/users/:id', requireAdmin, async (req, res) => {
+  app.put('/api/admin/users/:id', requireNewAdmin, async (req, res) => {
     try {
       const userId = parseInt(req.params.id);
       const updates = req.body;
@@ -99,7 +99,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // User validation sessions
-  app.get('/api/user/validation-sessions', requireAuth, async (req: any, res) => {
+  app.get('/api/user/validation-sessions', requireNewAuth, async (req: any, res) => {
     try {
       const userId = req.user.id;
       const sessions = await storage.getUserValidationSessions(userId);
@@ -111,7 +111,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Create validation session
-  app.post("/api/create-validation-session", requireAuth, async (req: any, res) => {
+  app.post("/api/create-validation-session", requireNewAuth, async (req: any, res) => {
     try {
       const { country, visaType, personalInfo, uploadedFiles } = req.body;
       
@@ -147,7 +147,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // File upload endpoint with OpenAI analysis
-  app.post("/api/upload", requireAuth, upload.array("files", 10), async (req, res) => {
+  app.post("/api/upload", requireNewAuth, upload.array("files", 10), async (req, res) => {
     try {
       console.log("Upload request received");
       
@@ -193,7 +193,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Validate documents using OpenAI
-  app.post("/api/validate", requireAuth, async (req, res) => {
+  app.post("/api/validate", requireNewAuth, async (req, res) => {
     try {
       const { sessionId } = req.body;
       
@@ -282,7 +282,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Create payment intent
-  app.post("/api/create-payment-intent", requireAuth, async (req, res) => {
+  app.post("/api/create-payment-intent", requireNewAuth, async (req, res) => {
     try {
       const { sessionId } = req.body;
       
@@ -308,7 +308,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Validate documents after payment
-  app.post("/api/validate-documents", requireAuth, async (req, res) => {
+  app.post("/api/validate-documents", requireNewAuth, async (req, res) => {
     try {
       const { sessionId } = req.body;
       
@@ -364,7 +364,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get real-time visa requirements
-  app.get("/api/visa-requirements/:country/:visaType", requireAuth, async (req, res) => {
+  app.get("/api/visa-requirements/:country/:visaType", requireNewAuth, async (req, res) => {
     try {
       const { country, visaType } = req.params;
       const { nationality } = req.query;
@@ -385,7 +385,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Download comprehensive requirements checklist
-  app.get("/api/visa-requirements/:country/:visaType/download", requireAuth, async (req, res) => {
+  app.get("/api/visa-requirements/:country/:visaType/download", requireNewAuth, async (req, res) => {
     try {
       const { country, visaType } = req.params;
       const { nationality } = req.query;
@@ -418,7 +418,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get validation results
-  app.get("/api/validation-results/:sessionId", requireAuth, async (req, res) => {
+  app.get("/api/validation-results/:sessionId", requireNewAuth, async (req, res) => {
     try {
       const { sessionId } = req.params;
       
@@ -438,7 +438,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Download validation report with professional formatting
-  app.get("/api/validation-report/:sessionId/download", requireAuth, async (req, res) => {
+  app.get("/api/validation-report/:sessionId/download", requireNewAuth, async (req, res) => {
     try {
       const { sessionId } = req.params;
       
