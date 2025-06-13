@@ -38,7 +38,7 @@ function Router() {
           <Route path="/privacy-policy" component={PrivacyPolicy} />
           <Route path="/terms-of-service" component={TermsOfService} />
           <Route path="/contact" component={Contact} />
-          <Route component={AuthPage} />
+          <Route path="/:rest*" component={AuthPage} />
         </>
       ) : (
         <>
@@ -50,7 +50,8 @@ function Router() {
           <Route path="/privacy-policy" component={PrivacyPolicy} />
           <Route path="/terms-of-service" component={TermsOfService} />
           <Route path="/contact" component={Contact} />
-          <Route component={NotFound} />
+          <Route path="/auth" component={Home} />
+          <Route path="/:rest*" component={NotFound} />
         </>
       )}
     </Switch>

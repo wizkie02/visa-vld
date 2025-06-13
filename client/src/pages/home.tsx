@@ -1,12 +1,14 @@
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Tickets, Shield, Clock, CheckCircle, AlertTriangle } from "lucide-react";
+import { Tickets, Shield, Clock, CheckCircle, AlertTriangle, LogOut, User } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import { useAuth } from "@/hooks/useAuth";
 
 
 export default function Home() {
   const { t } = useLanguage();
+  const { user, logout } = useAuth();
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -28,11 +30,28 @@ export default function Home() {
                 <Link href="/about">
                   <span className="text-slate-600 hover:text-blue-700 transition-colors cursor-pointer">{t("about")}</span>
                 </Link>
-                <a href="#how-it-works" className="text-slate-600 hover:text-blue-700 transition-colors">{t("howItWorksNav")}</a>
-                <a href="#pricing" className="text-slate-600 hover:text-blue-700 transition-colors">{t("pricing")}</a>
-                <a href="#support" className="text-slate-600 hover:text-blue-700 transition-colors">{t("support")}</a>
+                {user?.isAdmin && (
+                  <Link href="/admin">
+                    <span className="text-slate-600 hover:text-blue-700 transition-colors cursor-pointer">Admin</span>
+                  </Link>
+                )}
               </nav>
-
+              
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2 text-sm text-slate-600">
+                  <User className="h-4 w-4" />
+                  <span>{user?.username}</span>
+                </div>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => logout()}
+                  className="flex items-center space-x-1"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span>Logout</span>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
