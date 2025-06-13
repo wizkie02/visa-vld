@@ -149,7 +149,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Visa types API endpoint - supports both query and path parameters
-  app.get("/api/visa-types/:country?", async (req, res) => {
+  app.get("/api/visa-types", async (req, res) => {
+    console.log("Visa types API endpoint hit - GET /api/visa-types");
+    try {
+      const country = req.query.country;
+      
+      console.log(`Visa types API called with country: ${country}`);
+      
+      if (!country || typeof country !== 'string') {
+        console.log("Missing country parameter, returning error");
+        return res.status(400).json({ message: "Country parameter is required" });
+      }
+      
+      console.log(`Fetching visa types for: ${country}`);
+      
+      // Test OpenAI integration directly first
+      if (!process.env.OPENAI_API_KEY) {
+        console.error("OpenAI API key not found");
+        return res.status(500).json({ 
+          error: "OpenAI API key not configured",
+          country: country,
+          visaTypes: [],
+          categories: { tourist: [], business: [], transit: [], student: [], work: [], family: [], other: [] }
+        });
+      }
+      
+      const visaTypes = await fetchAvailableVisaTypes(country);
+      console.log(`Successfully fetched ${visaTypes.visaTypes.length} visa types for ${country}`);
+      
+      res.json(visaTypes);
+    } catch (error) {
+      console.error("Error fetching visa types:", error);
+      
+      // Return error with fallback structure
+      res.status(500).json({
+        country: req.query.country,
+        lastUpdated: new Date().toISOString(),
+        visaTypes: [],
+        categories: {
+          tourist: [],
+          business: [],
+          transit: [],
+          student: [],
+          work: [],
+          family: [],
+          other: []
+        },
+        error: `Failed to fetch visa types: ${(error as Error).message}`
+      });
+    }
+  });
+
+  app.get("/api/visa-types/:country", async (req, res) => {
     try {
       const country = req.params.country || req.query.country;
       
