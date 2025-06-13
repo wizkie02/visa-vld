@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import Stripe from "stripe";
 import multer from "multer";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupAuth, requireAuth, requireAdmin } from "./auth";
 import { personalInfoSchema } from "@shared/schema";
 import { nanoid } from "nanoid";
 import { analyzeDocument, validateDocumentsAgainstRequirements, getVisaRequirementsOnline } from "./openai-service";
@@ -52,25 +52,56 @@ const upload = multer({
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Auth middleware
-  await setupAuth(app);
+  // Auth middleware - setupAuth is synchronous for custom auth
+  setupAuth(app);
 
-  // Auth routes
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
+  // Admin panel routes
+  app.get('/api/admin/users', requireAdmin, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
+      const users = await storage.getAllUsers();
+      res.json(users);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      res.status(500).json({ message: "Failed to fetch users" });
+    }
+  });
+
+  app.get('/api/admin/stats', requireAdmin, async (req, res) => {
+    try {
+      const stats = await storage.getUserStats();
+      res.json(stats);
+    } catch (error) {
+      console.error("Error fetching stats:", error);
+      res.status(500).json({ message: "Failed to fetch stats" });
+    }
+  });
+
+  app.get('/api/admin/revenue', requireAdmin, async (req, res) => {
+    try {
+      const revenue = await storage.getMonthlyRevenue();
+      res.json(revenue);
+    } catch (error) {
+      console.error("Error fetching revenue:", error);
+      res.status(500).json({ message: "Failed to fetch revenue" });
+    }
+  });
+
+  app.put('/api/admin/users/:id', requireAdmin, async (req, res) => {
+    try {
+      const userId = parseInt(req.params.id);
+      const updates = req.body;
+      const user = await storage.updateUser(userId, updates);
       res.json(user);
     } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
+      console.error("Error updating user:", error);
+      res.status(500).json({ message: "Failed to update user" });
     }
   });
 
   // User validation sessions
-  app.get('/api/user/validation-sessions', isAuthenticated, async (req: any, res) => {
+  app.get('/api/user/validation-sessions', requireAuth, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const sessions = await storage.getUserValidationSessions(userId);
       res.json(sessions);
     } catch (error) {
@@ -80,7 +111,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Create validation session
-  app.post("/api/create-validation-session", isAuthenticated, async (req: any, res) => {
+  app.post("/api/create-validation-session", requireAuth, async (req: any, res) => {
     try {
       const { country, visaType, personalInfo, uploadedFiles } = req.body;
       

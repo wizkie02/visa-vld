@@ -131,7 +131,7 @@ export class DatabaseStorage implements IStorage {
     return session || undefined;
   }
 
-  async getUserValidationSessions(userId: string): Promise<ValidationSession[]> {
+  async getUserValidationSessions(userId: number): Promise<ValidationSession[]> {
     return await db
       .select()
       .from(validationSessions)
