@@ -62,20 +62,25 @@ async function apiRequestWithAuth(method: string, url: string, data?: any) {
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { toast } = useToast();
   const [isInitialized, setIsInitialized] = useState(false);
+  const [currentUser, setCurrentUser] = useState<SelectUser | null>(null);
   
   const {
     data: user,
     error,
     isLoading,
+    refetch,
   } = useQuery<SelectUser | null, Error>({
     queryKey: ["/api/user"],
     queryFn: async () => {
       try {
         const res = await apiRequestWithAuth("GET", "/api/user");
-        return await res.json();
+        const userData = await res.json();
+        setCurrentUser(userData);
+        return userData;
       } catch (error: any) {
         if (error.message.includes('401') || error.message.includes('Unauthorized')) {
           removeToken(); // Clear invalid token
+          setCurrentUser(null);
           return null;
         }
         throw error;
@@ -97,7 +102,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     onSuccess: (data: { user: SelectUser; token: string }) => {
       setToken(data.token);
+      setCurrentUser(data.user);
       queryClient.setQueryData(["/api/user"], data.user);
+      refetch(); // Force a refetch to ensure state consistency
       toast({
         title: "Login successful",
         description: `Welcome back, ${data.user.username}!`,
@@ -119,7 +126,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     onSuccess: (data: { user: SelectUser; token: string }) => {
       setToken(data.token);
+      setCurrentUser(data.user);
       queryClient.setQueryData(["/api/user"], data.user);
+      refetch(); // Force a refetch to ensure state consistency
       toast({
         title: "Registration successful",
         description: `Welcome, ${data.user.username}!`,
