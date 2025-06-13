@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import Stripe from "stripe";
 import multer from "multer";
 import { storage } from "./storage";
+import { setupAuth, isAuthenticated } from "./replitAuth";
 import { personalInfoSchema } from "@shared/schema";
 import { nanoid } from "nanoid";
 import { analyzeDocument, validateDocumentsAgainstRequirements, getVisaRequirementsOnline } from "./openai-service";
@@ -51,9 +52,35 @@ const upload = multer({
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Auth middleware
+  await setupAuth(app);
+
+  // Auth routes
+  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      res.json(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
+
+  // User validation sessions
+  app.get('/api/user/validation-sessions', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const sessions = await storage.getUserValidationSessions(userId);
+      res.json(sessions);
+    } catch (error) {
+      console.error("Error fetching user sessions:", error);
+      res.status(500).json({ message: "Failed to fetch sessions" });
+    }
+  });
   
   // Create validation session
-  app.post("/api/create-validation-session", async (req, res) => {
+  app.post("/api/create-validation-session", isAuthenticated, async (req: any, res) => {
     try {
       const { country, visaType, personalInfo, uploadedFiles } = req.body;
       
@@ -62,11 +89,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const sessionId = nanoid();
       
+      const userId = req.user.claims.sub;
+      
       const session = await storage.createValidationSession({
         sessionId,
+        userId,
         country,
         visaType,
-        ...validatedPersonalInfo,
+        applicantName: validatedPersonalInfo.applicantName,
+        passportNumber: validatedPersonalInfo.passportNumber,
+        dateOfBirth: validatedPersonalInfo.dateOfBirth,
+        nationality: validatedPersonalInfo.nationality,
+        travelDate: validatedPersonalInfo.travelDate,
+        stayDuration: validatedPersonalInfo.stayDuration,
+        dataProcessingConsent: validatedPersonalInfo.dataProcessingConsent,
         uploadedFiles: uploadedFiles || [],
         paymentStatus: "pending",
         validationResults: null,
@@ -80,7 +116,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // File upload endpoint with OpenAI analysis
-  app.post("/api/upload", upload.array("files", 10), async (req, res) => {
+  app.post("/api/upload", isAuthenticated, upload.array("files", 10), async (req, res) => {
     try {
       console.log("Upload request received");
       
