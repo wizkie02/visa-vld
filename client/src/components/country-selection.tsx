@@ -1,8 +1,10 @@
+import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Info } from "lucide-react";
+import { Info, Loader2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import type { ValidationData } from "@/pages/validation";
 
@@ -233,9 +235,34 @@ const getRequirements = (country: string, visaType: string) => {
 
 export default function CountrySelection({ data, onUpdate, onNext, canProceed }: CountrySelectionProps) {
   const { t } = useLanguage();
+  const [selectedCountry, setSelectedCountry] = useState(data.country);
   const countries = getCountries(t);
-  const visaTypes = getVisaTypes(t);
+  
+  // Fetch dynamic visa types based on selected country
+  const { data: visaTypesData, isLoading: isLoadingVisaTypes } = useQuery({
+    queryKey: ['/api/visa-types', selectedCountry],
+    enabled: !!selectedCountry,
+    retry: false,
+  });
+
+  // Use dynamic visa types if available, fallback to static list
+  const availableVisaTypes = (visaTypesData as any)?.visaTypes?.length > 0 
+    ? (visaTypesData as any).visaTypes.map((visa: any) => ({
+        value: visa.id,
+        label: visa.name
+      }))
+    : getVisaTypes(t);
+
   const requirements = data.country && data.visaType ? getRequirements(data.country, data.visaType) : [];
+
+  // Update selected country when country changes
+  const handleCountryChange = (country: string) => {
+    setSelectedCountry(country);
+    onUpdate({ 
+      country, 
+      visaType: "" // Reset visa type when country changes
+    });
+  };
 
   return (
     <Card className="bg-white rounded-xl shadow-lg">
@@ -247,7 +274,7 @@ export default function CountrySelection({ data, onUpdate, onNext, canProceed }:
             <label className="block text-sm font-medium text-gray-700 mb-2">{t('destinationCountry')}</label>
             <Select
               value={data.country}
-              onValueChange={(value) => onUpdate({ country: value, visaType: "" })}
+              onValueChange={handleCountryChange}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={t('selectCountryPlaceholder')} />
@@ -273,11 +300,18 @@ export default function CountrySelection({ data, onUpdate, onNext, canProceed }:
                 <SelectValue placeholder={t('selectVisaTypePlaceholder')} />
               </SelectTrigger>
               <SelectContent>
-                {visaTypes.map((type) => (
-                  <SelectItem key={type.value} value={type.value}>
-                    {type.label}
-                  </SelectItem>
-                ))}
+                {isLoadingVisaTypes ? (
+                  <div className="flex items-center justify-center p-4">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span className="ml-2 text-sm">{t('loadingVisaTypes')}</span>
+                  </div>
+                ) : (
+                  availableVisaTypes.map((type: any) => (
+                    <SelectItem key={type.value} value={type.value}>
+                      {type.label}
+                    </SelectItem>
+                  ))
+                )}
               </SelectContent>
             </Select>
           </div>
@@ -288,7 +322,7 @@ export default function CountrySelection({ data, onUpdate, onNext, canProceed }:
             <Info className="h-4 w-4 text-blue-600" />
             <AlertDescription>
               <h4 className="font-semibold text-blue-900 mb-2">
-                {t('commonRequirementsFor')} {countries.find(c => c.value === data.country)?.label} {visaTypes.find(v => v.value === data.visaType)?.label}
+                {t('commonRequirementsFor')} {countries.find(c => c.value === data.country)?.label} {availableVisaTypes.find((v: any) => v.value === data.visaType)?.label}
               </h4>
               <ul className="text-sm text-blue-800 space-y-1">
                 {requirements.map((req, index) => (
