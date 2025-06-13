@@ -1,4 +1,4 @@
-import { validationSessions, users, userDocuments, type ValidationSession, type InsertValidationSession, type User, type InsertUser, type RegisterData, type UserDocument, type InsertUserDocument } from "@shared/schema";
+import { validationSessions, users, documentAnalysisLogs, type ValidationSession, type InsertValidationSession, type User, type InsertUser, type RegisterData, type DocumentAnalysisLog, type InsertDocumentAnalysisLog } from "@shared/schema";
 import { db } from "./db";
 import { eq, sql } from "drizzle-orm";
 
@@ -19,11 +19,10 @@ export interface IStorage {
   updatePaymentStatus(sessionId: string, status: string, paymentIntentId?: string): Promise<ValidationSession | undefined>;
   getUserValidationSessions(userId: number): Promise<ValidationSession[]>;
   
-  // Document operations
-  createUserDocument(document: InsertUserDocument): Promise<UserDocument>;
-  getUserDocuments(userId: number): Promise<UserDocument[]>;
-  deleteUserDocument(documentId: number, userId: number): Promise<boolean>;
-  getAllDocuments(): Promise<UserDocument[]>;
+  // Document analysis operations
+  createDocumentAnalysisLog(log: InsertDocumentAnalysisLog): Promise<DocumentAnalysisLog>;
+  getUserDocumentAnalysisLogs(userId: number): Promise<DocumentAnalysisLog[]>;
+  getAllDocumentAnalysisLogs(): Promise<DocumentAnalysisLog[]>;
   
   // Password operations
   resetUserPassword(userId: number, newPassword: string): Promise<User | undefined>;
@@ -148,27 +147,20 @@ export class DatabaseStorage implements IStorage {
   }
 
   // Document operations
-  async createUserDocument(insertDocument: InsertUserDocument): Promise<UserDocument> {
-    const [document] = await db
-      .insert(userDocuments)
-      .values(insertDocument)
+  async createDocumentAnalysisLog(insertLog: InsertDocumentAnalysisLog): Promise<DocumentAnalysisLog> {
+    const [log] = await db
+      .insert(documentAnalysisLogs)
+      .values(insertLog)
       .returning();
-    return document;
+    return log;
   }
 
-  async getUserDocuments(userId: number): Promise<UserDocument[]> {
-    return await db.select().from(userDocuments).where(eq(userDocuments.userId, userId));
+  async getUserDocumentAnalysisLogs(userId: number): Promise<DocumentAnalysisLog[]> {
+    return await db.select().from(documentAnalysisLogs).where(eq(documentAnalysisLogs.userId, userId));
   }
 
-  async deleteUserDocument(documentId: number, userId: number): Promise<boolean> {
-    const result = await db
-      .delete(userDocuments)
-      .where(eq(userDocuments.id, documentId));
-    return result.rowCount > 0;
-  }
-
-  async getAllDocuments(): Promise<UserDocument[]> {
-    return await db.select().from(userDocuments);
+  async getAllDocumentAnalysisLogs(): Promise<DocumentAnalysisLog[]> {
+    return await db.select().from(documentAnalysisLogs);
   }
 
   // Password operations

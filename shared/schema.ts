@@ -47,22 +47,22 @@ export const validationSessions = pgTable("validation_sessions", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const userDocuments = pgTable("user_documents", {
+export const documentAnalysisLogs = pgTable("document_analysis_logs", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id).notNull(),
-  fileName: varchar("file_name", { length: 255 }).notNull(),
-  originalName: varchar("original_name", { length: 255 }).notNull(),
+  sessionId: varchar("session_id", { length: 100 }),
+  originalFileName: varchar("original_file_name", { length: 255 }).notNull(),
   fileType: varchar("file_type", { length: 50 }).notNull(),
   fileSize: integer("file_size").notNull(),
-  filePath: varchar("file_path", { length: 500 }).notNull(),
-  documentType: varchar("document_type", { length: 100 }), // passport, id, bank_statement, etc.
+  detectedDocumentType: varchar("detected_document_type", { length: 100 }), // AI detected type: passport, payslip, bank_statement, etc.
+  extractedText: text("extracted_text"),
+  confidenceScore: integer("confidence_score"), // 0-100
+  analysisResults: jsonb("analysis_results"),
   uploadedAt: timestamp("uploaded_at").defaultNow().notNull(),
-  validationStatus: varchar("validation_status", { length: 50 }).default("pending"),
-  validationResults: jsonb("validation_results"),
 });
 
 export const insertUserSchema = createInsertSchema(users);
-export const insertUserDocumentSchema = createInsertSchema(userDocuments);
+export const insertDocumentAnalysisLogSchema = createInsertSchema(documentAnalysisLogs);
 
 export const insertValidationSessionSchema = createInsertSchema(validationSessions).omit({
   id: true,
@@ -99,8 +99,8 @@ export type InsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
 export type ValidationSession = typeof validationSessions.$inferSelect;
 export type InsertValidationSession = z.infer<typeof insertValidationSessionSchema>;
-export type UserDocument = typeof userDocuments.$inferSelect;
-export type InsertUserDocument = z.infer<typeof insertUserDocumentSchema>;
+export type DocumentAnalysisLog = typeof documentAnalysisLogs.$inferSelect;
+export type InsertDocumentAnalysisLog = z.infer<typeof insertDocumentAnalysisLogSchema>;
 export type PersonalInfo = z.infer<typeof personalInfoSchema>;
 export type RegisterData = z.infer<typeof registerSchema>;
 export type LoginData = z.infer<typeof loginSchema>;
