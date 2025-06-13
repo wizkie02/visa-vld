@@ -35,7 +35,7 @@ export async function fetchAvailableVisaTypes(country: string): Promise<CountryV
     
     // Add timeout to OpenAI request
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('OpenAI request timeout')), 10000)
+      setTimeout(() => reject(new Error('OpenAI request timeout')), 8000)
     );
 
     // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
@@ -101,23 +101,10 @@ Include all major visa categories: tourist, business, transit, student, work, fa
 
     return categorizedVisas;
   } catch (error) {
-    console.error('Error fetching visa types:', error);
+    console.error('Error fetching visa types for', country, ':', error);
     
-    // Return minimal fallback structure without synthetic data
-    return {
-      country: country,
-      lastUpdated: new Date().toISOString(),
-      visaTypes: [],
-      categories: {
-        tourist: [],
-        business: [],
-        transit: [],
-        student: [],
-        work: [],
-        family: [],
-        other: []
-      }
-    };
+    // Return error indication to frontend for fallback handling
+    throw new Error(`Failed to fetch visa types for ${country}: ${error.message}`);
   }
 }
 

@@ -162,9 +162,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(visaTypes);
     } catch (error) {
       console.error("Error fetching visa types:", error);
-      res.status(500).json({ 
-        message: "Failed to fetch visa types",
-        error: error instanceof Error ? error.message : "Unknown error"
+      
+      // Return empty structure for frontend fallback to static visa types
+      res.json({
+        country: req.params.country,
+        lastUpdated: new Date().toISOString(),
+        visaTypes: [],
+        categories: {
+          tourist: [],
+          business: [],
+          transit: [],
+          student: [],
+          work: [],
+          family: [],
+          other: []
+        },
+        error: "OpenAI service temporarily unavailable"
       });
     }
   });
