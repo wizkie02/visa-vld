@@ -2,16 +2,16 @@ import { pgTable, text, serial, integer, boolean, timestamp, jsonb, varchar, ind
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// Session storage table for Replit Auth
-export const sessions = pgTable(
-  "sessions",
-  {
-    sid: varchar("sid").primaryKey(),
-    sess: jsonb("sess").notNull(),
-    expire: timestamp("expire").notNull(),
-  },
-  (table) => [index("IDX_session_expire").on(table.expire)],
-);
+// Session storage table disabled - using JWT authentication only
+// export const sessions = pgTable(
+//   "sessions",
+//   {
+//     sid: varchar("sid").primaryKey(),
+//     sess: jsonb("sess").notNull(),
+//     expire: timestamp("expire").notNull(),
+//   },
+//   (table) => [index("IDX_session_expire").on(table.expire)],
+// );
 
 // User storage table for custom authentication
 export const users = pgTable("users", {
