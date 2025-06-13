@@ -447,11 +447,14 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
           {t('preparationTips') || 'Preparation Tips'}
         </h3>
         <ul className="text-sm text-blue-800 space-y-1">
-          <li>• {t('tip1') || 'Ensure all documents are clear and legible'}</li>
-          <li>• {t('tip2') || 'Scan documents in high resolution (300 DPI or higher)'}</li>
-          <li>• {t('tip3') || 'Keep original documents for your appointment'}</li>
-          <li>• {t('tip4') || 'Verify all information matches across documents'}</li>
-          <li>• Always verify requirements with official embassy sources before submission</li>
+          <li>• Ensure all documents are clear, legible, and without any damage or alterations</li>
+          <li>• Scan documents in high resolution (300 DPI minimum) for digital submissions</li>
+          <li>• Keep original documents safe for your visa appointment or interview</li>
+          <li>• Verify all personal information matches exactly across all documents</li>
+          <li>• Submit documents well before your intended travel date to allow processing time</li>
+          <li>• Organize documents in the order specified by the embassy or consulate</li>
+          <li>• Make copies of all documents before submission for your records</li>
+          <li>• Always verify current requirements with official embassy sources before submission</li>
         </ul>
       </div>
 
