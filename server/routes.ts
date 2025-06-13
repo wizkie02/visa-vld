@@ -328,10 +328,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Validate documents against requirements with cross-referencing
       let validationResults;
+      // Extract the required documents array from the requirements structure
+      const requiredDocuments = currentRequirements?.requirements?.requiredDocuments || [];
+      
       try {
-        // Extract the required documents array from the requirements structure
-        const requiredDocuments = currentRequirements?.requirements?.requiredDocuments || [];
-        
         validationResults = await validateDocumentsAgainstRequirements(
           documentAnalyses,
           {
