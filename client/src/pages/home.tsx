@@ -5,6 +5,7 @@ import { Tickets, Shield, Clock, CheckCircle, AlertTriangle, LogOut, User } from
 import { useLanguage } from "@/lib/i18n";
 import { useNewAuth } from "@/hooks/use-new-auth";
 import horizontalLogo from "@assets/horizontal_2@3x_1750492153266.webp";
+import stackedLogo from "@assets/stacked_2@3x_1750496538183.webp";
 
 
 export default function Home() {
@@ -215,10 +216,7 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-4">
-                <div className="w-8 h-8 bg-blue-700 rounded-lg flex items-center justify-center">
-                  <Tickets className="text-white w-4 h-4" />
-                </div>
-                <span className="text-lg font-bold">VisaValidator Pro</span>
+                <img src={stackedLogo} alt="Visa Validator" className="h-12 w-auto" />
               </div>
               <p className="text-gray-400 text-sm">
                 {t("professionalService")}
