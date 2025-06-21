@@ -6,6 +6,7 @@ import { useLanguage } from "@/lib/i18n";
 import { useNewAuth } from "@/hooks/use-new-auth";
 import horizontalLogo from "@assets/horizontal_2@3x_1750492153266.webp";
 import stackedLogo from "@assets/stacked_2@3x_1750496538183.webp";
+import stackedWhiteLogo from "@assets/stacked_white@3x_1750497205092.webp";
 
 
 export default function Home() {
@@ -229,7 +230,7 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-4">
-                <img src={stackedLogo} alt="Visa Validator" className="h-12 w-auto" />
+                <img src={stackedWhiteLogo} alt="Visa Validator" className="h-12 w-auto" />
               </div>
               <p className="text-gray-400 text-sm">
                 {t("professionalService")}
