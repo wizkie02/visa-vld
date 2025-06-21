@@ -14,6 +14,7 @@ export interface DocumentAnalysis {
   dateOfBirth?: string;
   nationality?: string;
   confidence: number;
+  passportValidityWarning?: string; // Warning if passport expires within 6 months
 }
 
 export interface ValidationResult {
@@ -63,7 +64,25 @@ export async function analyzeDocument(fileBuffer: Buffer, filename: string, mime
         response_format: { type: "json_object" },
       });
 
-      return JSON.parse(response.choices[0].message.content || '{}');
+      const analysisResult = JSON.parse(response.choices[0].message.content || '{}');
+      
+      // Add passport validity checking
+      if (analysisResult.documentType === 'passport' && analysisResult.expirationDate) {
+        const expirationDate = new Date(analysisResult.expirationDate);
+        const sixMonthsFromNow = new Date();
+        sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6);
+        
+        if (expirationDate < sixMonthsFromNow) {
+          const monthsRemaining = Math.floor((expirationDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24 * 30));
+          if (monthsRemaining < 0) {
+            analysisResult.passportValidityWarning = "⚠️ CRITICAL: This passport has expired and cannot be used for travel.";
+          } else {
+            analysisResult.passportValidityWarning = `⚠️ WARNING: This passport expires in ${monthsRemaining} month(s). Many countries require at least 6 months validity remaining.`;
+          }
+        }
+      }
+      
+      return analysisResult;
     } else {
       // For text/PDF files, extract text first then analyze
       const textContent = fileBuffer.toString('utf-8');
@@ -89,7 +108,25 @@ export async function analyzeDocument(fileBuffer: Buffer, filename: string, mime
         response_format: { type: "json_object" },
       });
 
-      return JSON.parse(response.choices[0].message.content || '{}');
+      const analysisResult = JSON.parse(response.choices[0].message.content || '{}');
+      
+      // Add passport validity checking for text documents too
+      if (analysisResult.documentType === 'passport' && analysisResult.expirationDate) {
+        const expirationDate = new Date(analysisResult.expirationDate);
+        const sixMonthsFromNow = new Date();
+        sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6);
+        
+        if (expirationDate < sixMonthsFromNow) {
+          const monthsRemaining = Math.floor((expirationDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24 * 30));
+          if (monthsRemaining < 0) {
+            analysisResult.passportValidityWarning = "⚠️ CRITICAL: This passport has expired and cannot be used for travel.";
+          } else {
+            analysisResult.passportValidityWarning = `⚠️ WARNING: This passport expires in ${monthsRemaining} month(s). Many countries require at least 6 months validity remaining.`;
+          }
+        }
+      }
+      
+      return analysisResult;
     }
   } catch (error) {
     console.error('Error analyzing document:', error);

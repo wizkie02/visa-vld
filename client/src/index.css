@@ -1,35 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;900&family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 100%);
-  --foreground: hsl(20, 14.3%, 4.1%);
-  --muted: hsl(60, 4.8%, 95.9%);
-  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  /* Visa Validator Brand Colors from guidelines */
+  --background: hsl(210, 100%, 98%); /* #F2F7FC */
+  --foreground: hsl(207, 68%, 35%); /* #1C4473 */
+  --muted: hsl(0, 0%, 87%); /* #DEDEDE */
+  --muted-foreground: hsl(207, 68%, 35%);
   --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --popover-foreground: hsl(207, 68%, 35%);
   --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(20, 14.3%, 4.1%);
-  --border: hsl(20, 5.9%, 90%);
-  --input: hsl(20, 5.9%, 90%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(211, 100%, 99%);
-  --secondary: hsl(60, 4.8%, 95.9%);
-  --secondary-foreground: hsl(24, 9.8%, 10%);
-  --accent: hsl(60, 4.8%, 95.9%);
-  --accent-foreground: hsl(24, 9.8%, 10%);
+  --card-foreground: hsl(207, 68%, 35%);
+  --border: hsl(0, 0%, 87%); /* #DEDEDE */
+  --input: hsl(0, 0%, 87%); /* #DEDEDE */
+  --primary: hsl(207, 68%, 35%); /* #1C4473 */
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(145, 100%, 48%); /* #1FA947 */
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --accent: hsl(145, 100%, 48%); /* #1FA947 */
+  --accent-foreground: hsl(0, 0%, 100%);
   --destructive: hsl(0, 84.2%, 60.2%);
-  --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(20, 14.3%, 4.1%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --ring: hsl(207, 68%, 35%); /* #1C4473 */
   --radius: 0.5rem;
   
-  /* Custom colors for visa validator */
-  --visa-primary: hsl(222, 84%, 45%);
-  --visa-primary-foreground: hsl(210, 40%, 98%);
-  --visa-secondary: hsl(220, 14%, 41%);
-  --visa-accent: hsl(142, 76%, 36%);
-  --visa-neutral: hsl(210, 40%, 98%);
+  /* Visa Validator specific colors */
+  --visa-primary: hsl(207, 68%, 35%); /* #1C4473 */
+  --visa-accent: hsl(145, 100%, 48%); /* #1FA947 */
+  --visa-background: hsl(210, 100%, 98%); /* #F2F7FC */
+  --visa-surface: hsl(0, 0%, 87%); /* #DEDEDE */
+  --visa-success: hsl(120, 100%, 18%); /* #002400 */
 }
 
 .dark {
@@ -68,8 +71,44 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply antialiased bg-background text-foreground;
     font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 12pt;
+  }
+
+  /* Visa Validator Brand Typography */
+  h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900; /* Black */
+    font-size: 24pt;
+    color: hsl(var(--primary));
+  }
+
+  h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700; /* Bold */
+    font-size: 16pt;
+    color: hsl(var(--primary));
+  }
+
+  h3 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600; /* SemiBold */
+    font-size: 12pt;
+    color: hsl(var(--primary));
+  }
+
+  p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500; /* Medium */
+    font-size: 12pt;
+  }
+
+  .description {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400; /* Regular */
+    font-size: 12pt;
   }
 }
 
