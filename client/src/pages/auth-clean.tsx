@@ -251,11 +251,9 @@ export default function AuthPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-md mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              {t('heroTitle')}
-            </h1>
+            <img src="/attached_assets/stacked_2@3x_1750492153267.webp" alt="Visa Validator" className="h-24 mx-auto mb-4" />
             <p className="text-gray-600 dark:text-gray-300">
-              {t('heroSubtitle')}
+              AI-Powered Document Validation Service
             </p>
           </div>
 

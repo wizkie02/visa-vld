@@ -125,10 +125,10 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
     
     setIsDownloading(true);
     try {
-      const response = await apiRequest('GET', `/api/visa-requirements/${encodeURIComponent(data.country)}/${encodeURIComponent(data.visaType)}/download?nationality=${encodeURIComponent(data.personalInfo?.nationality || '')}`);
+      const response = await apiRequest('GET', `/api/download-checklist/${encodeURIComponent(data.country)}/${encodeURIComponent(data.visaType)}`);
       
       if (!response.ok) {
-        throw new Error('Failed to generate checklist');
+        throw new Error('Failed to generate checklist PDF');
       }
 
       const blob = await response.blob();
@@ -136,7 +136,7 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
-      a.download = `comprehensive-visa-requirements-${data.country}-${data.visaType}.txt`;
+      a.download = `visa-requirements-checklist-${data.country}-${data.visaType}.pdf`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
