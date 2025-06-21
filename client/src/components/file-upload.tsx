@@ -409,7 +409,7 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
           <Button variant="outline" onClick={onPrevious} className="flex-1">
             Previous
           </Button>
-          <Button onClick={onNext} disabled={!canProceed} className="flex-1 bg-blue-700 hover:bg-blue-800">
+          <Button onClick={onNext} disabled={!canProceed} className="flex-1 bg-[#1C4473] hover:bg-[#1C4473]/90">
             Next
           </Button>
         </div>

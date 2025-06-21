@@ -96,77 +96,7 @@ export function generateRequirementsChecklistText(requirements: ComprehensiveVis
 }
 
 export function generateRequirementsChecklistBuffer(requirements: ComprehensiveVisaRequirements): Buffer {
-  // Generate text-based PDF content for now - will be properly formatted
+  // Return text content as plain text for now since PDF generation is complex
   const textContent = generateRequirementsChecklistText(requirements);
-  
-  // Create a simple PDF-like structure (for now using text format)
-  const pdfHeader = `%PDF-1.4
-1 0 obj
-<<
-/Type /Catalog
-/Pages 2 0 R
->>
-endobj
-
-2 0 obj
-<<
-/Type /Pages
-/Kids [3 0 R]
-/Count 1
->>
-endobj
-
-3 0 obj
-<<
-/Type /Page
-/Parent 2 0 R
-/Resources <<
-/Font <<
-/F1 4 0 R
->>
->>
-/MediaBox [0 0 612 792]
-/Contents 5 0 R
->>
-endobj
-
-4 0 obj
-<<
-/Type /Font
-/Subtype /Type1
-/BaseFont /Helvetica
->>
-endobj
-
-5 0 obj
-<<
-/Length ${textContent.length + 100}
->>
-stream
-BT
-/F1 12 Tf
-72 720 Td
-(${textContent.replace(/\n/g, ') Tj T* (')}) Tj
-ET
-endstream
-endobj
-
-xref
-0 6
-0000000000 65535 f 
-0000000009 00000 n 
-0000000074 00000 n 
-0000000120 00000 n 
-0000000179 00000 n 
-0000000364 00000 n 
-trailer
-<<
-/Size 6
-/Root 1 0 R
->>
-startxref
-${400 + textContent.length}
-%%EOF`;
-
-  return Buffer.from(pdfHeader, 'utf-8');
+  return Buffer.from(textContent, 'utf-8');
 }

@@ -233,8 +233,8 @@ export default function Validation() {
       localStorage.setItem('validation_results', JSON.stringify(results));
       
       // Update step and persist to localStorage
-      setCurrentStep(5);
-      localStorage.setItem('validation_current_step', '5');
+      setCurrentStep(6);
+      localStorage.setItem('validation_current_step', '6');
       console.log("Navigating to step 6 - Results display");
       console.log("Validation results set and persisted:", results);
       
@@ -369,6 +369,30 @@ export default function Validation() {
                 </Button>
               </Link>
               <img src={horizontalLogo} alt="Visa Validator" className="h-10" />
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="text-sm text-slate-600">
+                Step {currentStep} of 7
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => {
+                  localStorage.removeItem('validation_data');
+                  localStorage.removeItem('validation_current_step');
+                  localStorage.removeItem('validation_session_id');
+                  localStorage.removeItem('validation_results');
+                  Object.keys(localStorage).forEach(key => {
+                    if (key.startsWith('validation_payment_status_')) {
+                      localStorage.removeItem(key);
+                    }
+                  });
+                  window.location.reload();
+                }}
+                className="text-[#1C4473] border-[#1C4473] hover:bg-[#1C4473] hover:text-white"
+              >
+                Start Over
+              </Button>
             </div>
           </div>
         </div>
