@@ -131,7 +131,7 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
           country: data.country,
           visaType: data.visaType,
           nationality: data.personalInfo?.nationality || 'Unknown',
-          ...requirements
+          ...liveRequirements
         }
       });
       
@@ -144,7 +144,7 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
-      a.download = `visa-requirements-checklist-${data.country}-${data.visaType}.txt`;
+      a.download = `visa-requirements-checklist-${data.country}-${data.visaType}.pdf`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
