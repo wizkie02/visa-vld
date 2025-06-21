@@ -140,7 +140,7 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
-      a.download = `visa-requirements-checklist-${data.country}-${data.visaType}.pdf`;
+      a.download = `visa-requirements-checklist-${data.country}-${data.visaType}.txt`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -280,7 +280,7 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
           type="button"
           onClick={downloadComprehensiveChecklist}
           disabled={isDownloading}
-          className="bg-green-600 hover:bg-green-700 text-white px-6 py-3"
+          className="bg-[#1FA947] hover:bg-[#1FA947]/90 text-white px-6 py-3"
         >
           {isDownloading ? (
             <RefreshCw className="w-4 h-4 mr-2 animate-spin" />

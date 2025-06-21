@@ -201,7 +201,7 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
         
         {/* Upload Area */}
         <div
-          className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-700 transition-colors cursor-pointer"
+          className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-[#1C4473] transition-colors cursor-pointer"
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onClick={() => fileInputRef.current?.click()}

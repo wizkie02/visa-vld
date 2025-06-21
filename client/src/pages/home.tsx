@@ -23,11 +23,11 @@ export default function Home() {
             <div className="flex items-center space-x-4">
               <nav className="hidden md:flex space-x-6">
                 <Link href="/about">
-                  <span className="text-slate-600 hover:text-blue-700 transition-colors cursor-pointer">{t("about")}</span>
+                  <span className="text-slate-600 hover:text-[#1C4473] transition-colors cursor-pointer">{t("about")}</span>
                 </Link>
                 {user?.isAdmin && (
                   <Link href="/admin">
-                    <span className="text-slate-600 hover:text-blue-700 transition-colors cursor-pointer">Admin</span>
+                    <span className="text-slate-600 hover:text-[#1C4473] transition-colors cursor-pointer">Admin</span>
                   </Link>
                 )}
               </nav>
@@ -88,8 +88,8 @@ export default function Home() {
           </Card>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/validate">
-              <Button size="lg" className="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-4 px-8 text-lg transform hover:scale-105 transition-all duration-200 shadow-lg">
+            <Link href="/validation">
+              <Button size="lg" className="bg-[#1C4473] hover:bg-[#1C4473]/90 text-white font-semibold py-4 px-8 text-lg transform hover:scale-105 transition-all duration-200 shadow-lg">
                 {t("startValidation")}
               </Button>
             </Link>
