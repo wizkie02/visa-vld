@@ -18,6 +18,7 @@ import { getVisaSpecificDocuments } from "./dynamic-requirements-service";
 import { generateValidationReportMarkdown, generateRequirementsChecklistMarkdown } from "./markdown-generator-fixed";
 import { generateValidationReportPDF } from "./jspdf-generator";
 import { generateRequirementsChecklistBuffer } from "./simple-pdf-generator";
+import { generateRequirementsChecklistPDF } from "./requirements-pdf-generator";
 import { generateValidationReportHTML, generateRequirementsChecklistHTML } from "./working-pdf-generator";
 import puppeteer from "puppeteer";
 import { checkVFSOutsourcing } from "./vfs-outsourcing-service";
@@ -715,11 +716,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         uploadedDocuments: Array.isArray(session.uploadedFiles) ? session.uploadedFiles : []
       };
 
-      const reportMarkdown = generateValidationReportMarkdown(reportData);
+      const pdfBuffer = generateValidationReportPDF(reportData);
       
-      res.setHeader('Content-Type', 'text/plain');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.txt"`);
-      res.send(Buffer.from(reportMarkdown, 'utf-8'));
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-validation-report-${sessionId}.pdf"`);
+      res.send(pdfBuffer);
     } catch (error: any) {
       console.error("Error generating validation report:", error);
       res.status(500).json({ message: "Error generating report: " + error.message });
@@ -788,10 +789,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         );
       }
       
-      const pdfBuffer = generateRequirementsChecklistBuffer(requirements);
+      const pdfBuffer = generateRequirementsChecklistPDF(requirements);
       
-      res.setHeader('Content-Type', 'text/plain');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.txt"`);
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.pdf"`);
       res.send(pdfBuffer);
     } catch (error: any) {
       console.error("Error generating PDF checklist:", error);
