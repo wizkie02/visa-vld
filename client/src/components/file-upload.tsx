@@ -186,19 +186,10 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
   };
 
   const removeFile = (index: number) => {
+    // Only remove from current upload state, not from persisted uploaded files
     const newFiles = files.filter((_, i) => i !== index);
     setFiles(newFiles);
-    
-    const uploadedFiles = newFiles
-      .filter(f => f.status === 'uploaded')
-      .map(f => ({
-        originalName: f.originalName,
-        mimetype: f.mimetype,
-        size: f.size,
-        uploadedAt: f.uploadedAt,
-      }));
-    
-    onUpdate({ uploadedFiles });
+    // Don't update the uploadedFiles array when removing from current uploads
   };
 
   const getFileIcon = (mimetype: string) => {

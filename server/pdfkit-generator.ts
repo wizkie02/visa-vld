@@ -131,14 +131,18 @@ function generateRequirementsPDF(doc: PDFKit.PDFDocument, requirements: Comprehe
       addSection(doc, category.title);
       
       categoryReqs.forEach((req, index) => {
-        const checkbox = req.required ? '☐ REQUIRED' : '☐ OPTIONAL';
+        const checkbox = req.required ? '☐' : '☐';
+        const status = req.required ? 'REQUIRED' : 'OPTIONAL';
         
         doc.fontSize(11)
            .font('Helvetica-Bold')
-           .fillColor(req.required ? '#DC2626' : '#059669')
+           .fillColor('#1C4473')
            .text(checkbox, { continued: true })
+           .text(` ${req.title}`)
+           .fontSize(9)
+           .fillColor(req.required ? '#1C4473' : '#059669')
+           .text(` (${status})`)
            .fillColor('black')
-           .text(`: ${req.title}`)
            .fontSize(10)
            .font('Helvetica')
            .text(req.description, { indent: 20, width: 480 });
@@ -192,6 +196,25 @@ UPDATES: Requirements change frequently. Always check for the most recent inform
   doc.fontSize(8)
      .font('Helvetica')
      .text(disclaimerText.trim(), { width: 500, align: 'justify' });
+
+  // Official Sources
+  if (requirements.officialSources?.length > 0) {
+    addSection(doc, 'OFFICIAL SOURCES & APPLICATION WEBSITES');
+    doc.fontSize(10)
+       .font('Helvetica')
+       .text('For the most current requirements and to apply online, visit these official sources:')
+       .moveDown(0.5);
+       
+    requirements.officialSources.forEach((source, index) => {
+      doc.fontSize(10)
+         .font('Helvetica-Bold')
+         .fillColor('#1C4473')
+         .text(`${index + 1}. ${source}`)
+         .fillColor('black')
+         .font('Helvetica')
+         .moveDown(0.3);
+    });
+  }
 
   // Footer
   const footerY = doc.page.height - 40;
@@ -372,12 +395,11 @@ function generateValidationReportPDF(doc: PDFKit.PDFDocument, data: ValidationRe
     data.validationResults.issues.forEach((issue, index) => {
       doc.fontSize(11)
          .font('Helvetica-Bold')
-         .fillColor('#DC2626')
-         .text('⚠', { continued: true })
-         .fillColor('black')
-         .text(` ${issue.title}`)
+         .fillColor('#1C4473')
+         .text(`Issue ${index + 1}: ${issue.title}`)
          .fontSize(10)
          .font('Helvetica')
+         .fillColor('black')
          .text(issue.description, { indent: 20, width: 480 })
          .fontSize(9)
          .fillColor('#1FA947')
@@ -385,6 +407,45 @@ function generateValidationReportPDF(doc: PDFKit.PDFDocument, data: ValidationRe
          .fillColor('black')
          .moveDown();
     });
+  }
+
+  // Missing Required Documents Analysis
+  if (data.requirements?.requirements) {
+    const requiredDocs = data.requirements.requirements.filter(req => req.required);
+    const uploadedDocTypes = data.uploadedDocuments.map(doc => doc.analysis?.documentType?.toLowerCase() || '');
+    
+    const missingDocs = requiredDocs.filter(req => {
+      const reqType = req.title.toLowerCase();
+      return !uploadedDocTypes.some(uploaded => {
+        return (
+          reqType.includes(uploaded) ||
+          uploaded.includes('passport') && reqType.includes('passport') ||
+          uploaded.includes('bank') && reqType.includes('financial') ||
+          uploaded.includes('employment') && reqType.includes('employment') ||
+          uploaded.includes('flight') && reqType.includes('itinerary') ||
+          uploaded.includes('hotel') && reqType.includes('accommodation')
+        );
+      });
+    });
+
+    if (missingDocs.length > 0) {
+      addSection(doc, 'MISSING REQUIRED DOCUMENTS');
+      doc.fontSize(10)
+         .font('Helvetica')
+         .text('The following required documents were not uploaded for analysis:')
+         .moveDown(0.5);
+
+      missingDocs.forEach((missingDoc, index) => {
+        doc.fontSize(10)
+           .fillColor('#1C4473')
+           .text(`${index + 1}. ${missingDoc.title}`)
+           .fillColor('black')
+           .fontSize(9)
+           .text(missingDoc.description, { indent: 15, width: 470 })
+           .moveDown(0.5);
+      });
+      doc.moveDown();
+    }
   }
 
   // Individual Document Analysis Results
