@@ -69,7 +69,7 @@ export default function Validation() {
     return "pending";
   });
   
-  const [showLanguageModal, setShowLanguageModal] = useState(false);
+
   const { toast } = useToast();
   const { t } = useLanguage();
   
@@ -117,13 +117,7 @@ export default function Validation() {
     };
   });
 
-  // Check if language has been selected before
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem('preferredLanguage');
-    if (!savedLanguage) {
-      setShowLanguageModal(true);
-    }
-  }, []);
+
 
   const updateValidationData = (updates: Partial<ValidationData>) => {
     setValidationData(prev => {
