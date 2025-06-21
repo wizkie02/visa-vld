@@ -305,44 +305,44 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
                 
                 {file.analysis && (
                   <div className="mt-3 p-3 bg-white rounded border">
-                    <h5 className="font-medium text-gray-800 mb-2">AI Analysis Results</h5>
+                    <h5 className="font-medium text-gray-800 mb-2">AI analysis results</h5>
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       <div>
-                        <span className="font-medium text-gray-600">Document Type:</span>
+                        <span className="font-medium text-gray-600">Document type:</span>
                         <p className="capitalize">{file.analysis.documentType || 'Unknown'}</p>
                       </div>
                       {file.analysis.issuingCountry && (
                         <div>
-                          <span className="font-medium text-gray-600">Issuing Country:</span>
+                          <span className="font-medium text-gray-600">Issuing country:</span>
                           <p>{file.analysis.issuingCountry}</p>
                         </div>
                       )}
                       {file.analysis.fullName && (
                         <div>
-                          <span className="font-medium text-gray-600">Name Found:</span>
+                          <span className="font-medium text-gray-600">Name found:</span>
                           <p>{file.analysis.fullName}</p>
                         </div>
                       )}
                       {file.analysis.documentNumber && (
                         <div>
-                          <span className="font-medium text-gray-600">Document Number:</span>
+                          <span className="font-medium text-gray-600">Document number:</span>
                           <p>{file.analysis.documentNumber}</p>
                         </div>
                       )}
                       {file.analysis.expirationDate && (
                         <div>
-                          <span className="font-medium text-gray-600">Expiry Date:</span>
+                          <span className="font-medium text-gray-600">Expiry date:</span>
                           <p>{file.analysis.expirationDate}</p>
                         </div>
                       )}
                       <div>
-                        <span className="font-medium text-gray-600">AI Confidence:</span>
+                        <span className="font-medium text-gray-600">AI confidence:</span>
                         <p>{Math.round(file.analysis.confidence * 100)}%</p>
                       </div>
                     </div>
                     {file.analysis.extractedText && (
                       <div className="mt-3">
-                        <span className="font-medium text-gray-600">Extracted Text (first 200 chars):</span>
+                        <span className="font-medium text-gray-600">Extracted text (first 200 chars):</span>
                         <p className="text-xs text-gray-500 mt-1 bg-gray-50 p-2 rounded">
                           {file.analysis.extractedText.substring(0, 200)}...
                         </p>

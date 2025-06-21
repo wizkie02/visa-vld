@@ -681,11 +681,7 @@ export default function Validation() {
         </div>
       )}
 
-      {/* Language Selection Modal */}
-      <LanguageSelectionModal
-        isOpen={showLanguageModal}
-        onClose={() => setShowLanguageModal(false)}
-      />
+
     </div>
   );
 }
