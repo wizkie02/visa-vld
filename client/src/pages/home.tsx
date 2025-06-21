@@ -62,39 +62,6 @@ export default function Home() {
           <p className="text-xl text-slate-600 mb-8 max-w-3xl mx-auto">
             {t("homeSubtitle")}
           </p>
-          
-          {/* Legal Disclaimer Card */}
-          <Card className="bg-red-50 border-red-200 mb-8 max-w-3xl mx-auto">
-            <CardContent className="pt-6">
-              <div className="flex items-start space-x-3 text-left">
-                <AlertTriangle className="text-red-600 text-lg mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="font-semibold text-red-800 mb-3">{t("criticalLegalDisclaimer")}</h3>
-                  <div className="text-sm text-red-700 leading-relaxed space-y-2">
-                    <p><strong>{t("noGuaranteeTitle")}</strong> {t("noGuaranteeText")}</p>
-                    <p><strong>{t("accuracyLimitationsTitle")}</strong> {t("accuracyLimitationsText")}</p>
-                    <p><strong>{t("notOfficialGuidanceTitle")}</strong> {t("notOfficialGuidanceText")}</p>
-                    <p><strong>{t("individualResponsibilityTitle")}</strong> {t("individualResponsibilityText")}</p>
-                  </div>
-                  <div className="mt-3 pt-3 border-t border-red-200">
-                    <Link href="/about">
-                      <span className="text-red-600 hover:text-red-800 underline text-sm font-medium cursor-pointer">
-                        {t("readFullDisclaimer")}
-                      </span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/validation">
-              <Button size="lg" className="bg-[#1C4473] hover:bg-[#1C4473]/90 text-white font-semibold py-4 px-8 text-lg transform hover:scale-105 transition-all duration-200 shadow-lg">
-                {t("startValidation")}
-              </Button>
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -138,6 +105,45 @@ export default function Home() {
               <h4 className="font-semibold text-gray-900 mb-2">{t("step5")}</h4>
               <p className="text-sm text-slate-600">{t("step5Desc")}</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Hero Section Continued */}
+      <section className="bg-gradient-to-br from-blue-50 to-emerald-50 pt-8 pb-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          
+          {/* Legal Disclaimer Card */}
+          <Card className="bg-red-50 border-red-200 mb-8 max-w-3xl mx-auto">
+            <CardContent className="pt-6">
+              <div className="flex items-start space-x-3 text-left">
+                <AlertTriangle className="text-red-600 text-lg mt-1 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-red-800 mb-3">{t("criticalLegalDisclaimer")}</h3>
+                  <div className="text-sm text-red-700 leading-relaxed space-y-2">
+                    <p><strong>{t("noGuaranteeTitle")}</strong> {t("noGuaranteeText")}</p>
+                    <p><strong>{t("accuracyLimitationsTitle")}</strong> {t("accuracyLimitationsText")}</p>
+                    <p><strong>{t("notOfficialGuidanceTitle")}</strong> {t("notOfficialGuidanceText")}</p>
+                    <p><strong>{t("individualResponsibilityTitle")}</strong> {t("individualResponsibilityText")}</p>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-red-200">
+                    <Link href="/about">
+                      <span className="text-red-600 hover:text-red-800 underline text-sm font-medium cursor-pointer">
+                        {t("readFullDisclaimer")}
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/validation">
+              <Button size="lg" className="bg-[#1C4473] hover:bg-[#1C4473]/90 text-white font-semibold py-4 px-8 text-lg transform hover:scale-105 transition-all duration-200 shadow-lg">
+                {t("startValidation")}
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
