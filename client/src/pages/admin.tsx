@@ -204,10 +204,11 @@ export default function AdminPanel() {
 
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList>
-            <TabsTrigger value="overview">{t("overview")}</TabsTrigger>
-            <TabsTrigger value="users">{t("users")}</TabsTrigger>
-            <TabsTrigger value="documents">{t("documents")}</TabsTrigger>
-            <TabsTrigger value="revenue">{t("revenue")}</TabsTrigger>
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="users">Users</TabsTrigger>
+            <TabsTrigger value="documents">Documents</TabsTrigger>
+            <TabsTrigger value="reports">Final Reports</TabsTrigger>
+            <TabsTrigger value="revenue">Revenue</TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
@@ -461,6 +462,23 @@ export default function AdminPanel() {
                     </TableBody>
                   </Table>
                 )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Final Reports Tab */}
+          <TabsContent value="reports">
+            <Card>
+              <CardHeader>
+                <CardTitle>Final Validation Reports</CardTitle>
+                <CardDescription>
+                  Completed validation reports stored permanently (documents auto-deleted after 24 hours)
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center py-8 text-muted-foreground">
+                  Final reports storage coming soon - documents are auto-deleted after 24 hours for privacy
+                </div>
               </CardContent>
             </Card>
           </TabsContent>

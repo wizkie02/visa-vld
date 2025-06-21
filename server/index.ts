@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { storage } from "./storage";
 
 const app = express();
 
@@ -41,6 +42,22 @@ app.use((req, res, next) => {
 
   next();
 });
+
+// Document cleanup service - runs every hour to delete documents older than 24 hours
+async function cleanupOldDocuments() {
+  try {
+    const deletedCount = await storage.deleteOldDocuments();
+    if (deletedCount > 0) {
+      log(`Auto-deleted ${deletedCount} documents older than 24 hours`);
+    }
+  } catch (error) {
+    log(`Error during document cleanup: ${error}`);
+  }
+}
+
+// Start cleanup service
+setInterval(cleanupOldDocuments, 60 * 60 * 1000); // Run every hour
+cleanupOldDocuments(); // Run immediately on startup
 
 (async () => {
   const server = await registerRoutes(app);
