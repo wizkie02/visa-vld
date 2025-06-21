@@ -9,7 +9,7 @@ import FileUpload from "@/components/file-upload";
 import PersonalInfoForm from "@/components/personal-info-form";
 import PaymentModal from "@/components/payment-modal";
 import VisaRequirementsDisplay from "@/components/visa-requirements-display";
-import LanguageSelectionModal from "@/components/language-selection-modal";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
