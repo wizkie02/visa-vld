@@ -153,11 +153,23 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
         console.log("New files count:", newFiles.length);
         console.log("Total files after upload:", existingFiles.length + newFiles.length);
         
-        onUpdate({
-          uploadedFiles: [...existingFiles, ...newFiles]
+        // Ensure no duplicates based on file name and size
+        const allFiles = [...existingFiles];
+        newFiles.forEach((newFile: any) => {
+          const isDuplicate = existingFiles.some(existing => 
+            existing.originalName === newFile.originalName && 
+            existing.size === newFile.size
+          );
+          if (!isDuplicate) {
+            allFiles.push(newFile);
+          }
         });
         
-        // Clear the current upload state since files are now persisted
+        onUpdate({
+          uploadedFiles: allFiles
+        });
+        
+        // Clear only the current upload state (temp files), not persisted files
         setFiles([]);
         
         toast({
