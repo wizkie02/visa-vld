@@ -10,12 +10,11 @@ export default function StepIndicator({ currentStep, onStepClick }: StepIndicato
   
   const steps = [
     { number: 1, label: 'Destination' },
-    { number: 2, label: 'Nationality' },
-    { number: 3, label: 'Requirements' },
-    { number: 4, label: 'Upload Documents' },
-    { number: 5, label: 'Personal Information' },
-    { number: 6, label: 'Review' },
-    { number: 7, label: 'Payment' },
+    { number: 2, label: 'Requirements' },
+    { number: 3, label: 'Upload Documents' },
+    { number: 4, label: 'Personal Information' },
+    { number: 5, label: 'Review' },
+    { number: 6, label: 'Payment' },
   ];
 
   return (

@@ -338,23 +338,20 @@ export default function Validation() {
       case 1:
         return validationData.country && validationData.visaType;
       case 2:
-        return validationData.personalInfo.nationality;
-      case 3:
         return true; // Required documents review step
-      case 4:
+      case 3:
         return validationData.uploadedFiles.length > 0;
-      case 5:
+      case 4:
         return (
           validationData.personalInfo.applicantName &&
           validationData.personalInfo.passportNumber &&
           validationData.personalInfo.dateOfBirth &&
-          validationData.personalInfo.nationality &&
           validationData.personalInfo.travelDate &&
           validationData.personalInfo.stayDuration > 0
         );
-      case 6:
+      case 5:
         return true;
-      case 7:
+      case 6:
         return true;
       default:
         return false;
@@ -374,15 +371,7 @@ export default function Validation() {
                   Back
                 </Button>
               </Link>
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-blue-700 rounded-lg flex items-center justify-center">
-                  <Ticket className="text-white text-lg" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold text-gray-900">VisaValidator Pro</h1>
-                  <p className="text-xs text-slate-600">Document Validation Service</p>
-                </div>
-              </div>
+              <img src="/attached_assets/horizontal_2@3x_1750492153266.webp" alt="Visa Validator" className="h-10" />
             </div>
           </div>
         </div>
@@ -403,16 +392,6 @@ export default function Validation() {
         )}
 
         {currentStep === 2 && (
-          <NationalitySelection
-            data={validationData}
-            onUpdate={updateValidationData}
-            onNext={handleNext}
-            onPrevious={handlePrevious}
-            canProceed={!!canProceed()}
-          />
-        )}
-
-        {currentStep === 3 && (
           <RequiredDocumentsDisplay
             data={validationData}
             onNext={handleNext}
@@ -420,7 +399,7 @@ export default function Validation() {
           />
         )}
 
-        {currentStep === 4 && (
+        {currentStep === 3 && (
           <FileUpload
             data={validationData}
             onUpdate={updateValidationData}
@@ -430,7 +409,7 @@ export default function Validation() {
           />
         )}
 
-        {currentStep === 5 && (
+        {currentStep === 4 && (
           <div className="space-y-8">
             <PersonalInfoForm
               data={validationData}
