@@ -95,6 +95,7 @@ export function generateRequirementsChecklistText(requirements: ComprehensiveVis
 }
 
 export function generateRequirementsChecklistBuffer(requirements: ComprehensiveVisaRequirements): Buffer {
-  const textContent = generateRequirementsChecklistText(requirements);
-  return Buffer.from(textContent, 'utf-8');
+  // Use the existing jsPDF generator instead of plain text
+  const { generateRequirementsChecklistPDF } = require('./jspdf-generator');
+  return generateRequirementsChecklistPDF(requirements);
 }

@@ -15,6 +15,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/lib/i18n";
 import { apiRequest } from "@/lib/queryClient";
+import horizontalLogo from "@assets/horizontal_2@3x_1750492153266.webp";
 
 export interface ValidationData {
   country: string;
