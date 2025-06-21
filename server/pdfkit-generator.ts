@@ -435,13 +435,13 @@ function generateValidationReportPDF(doc: PDFKit.PDFDocument, data: ValidationRe
          .text('The following required documents were not uploaded for analysis:')
          .moveDown(0.5);
 
-      missingDocs.forEach((missingDoc, index) => {
+      missingDocs.forEach((missingDocument, index) => {
         doc.fontSize(10)
            .fillColor('#1C4473')
-           .text(`${index + 1}. ${missingDoc.title}`)
+           .text(`${index + 1}. ${missingDocument.title}`)
            .fillColor('black')
            .fontSize(9)
-           .text(missingDoc.description, { indent: 15, width: 470 })
+           .text(missingDocument.description, { indent: 15, width: 470 })
            .moveDown(0.5);
       });
       doc.moveDown();
@@ -520,8 +520,8 @@ function generateValidationReportPDF(doc: PDFKit.PDFDocument, data: ValidationRe
         }
 
       } else {
-        doc.fillColor('#DC2626')
-           .text('⚠ Analysis Failed: Document could not be processed', { indent: 15 })
+        doc.fillColor('#1C4473')
+           .text('Analysis Failed: Document could not be processed', { indent: 15 })
            .text('This document was not included in validation calculations', { indent: 15 })
            .fillColor('black');
       }
@@ -530,8 +530,28 @@ function generateValidationReportPDF(doc: PDFKit.PDFDocument, data: ValidationRe
     });
   }
 
-  // Add comprehensive disclaimer
-  doc.addPage();
+  // Official Sources for Application
+  const officialSources = data.requirements?.officialSources;
+  if (officialSources && officialSources.length > 0) {
+    addSection(doc, 'OFFICIAL SOURCES & APPLICATION WEBSITES');
+    doc.fontSize(10)
+       .font('Helvetica')
+       .text('For current requirements and online applications, visit these official sources:')
+       .moveDown(0.5);
+       
+    officialSources.forEach((source, index) => {
+      doc.fontSize(10)
+         .font('Helvetica-Bold')
+         .fillColor('#1C4473')
+         .text(`${index + 1}. ${source}`)
+         .fillColor('black')
+         .font('Helvetica')
+         .moveDown(0.3);
+    });
+    doc.moveDown();
+  }
+
+  // Add comprehensive disclaimer (no page break to reduce blank space)
   addSection(doc, 'IMPORTANT DISCLAIMER & LEGAL NOTICE');
   
   const validationDisclaimerText = `
