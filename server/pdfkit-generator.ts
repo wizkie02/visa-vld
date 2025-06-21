@@ -206,14 +206,15 @@ UPDATES: Requirements change frequently. Always check for the most recent inform
        .moveDown(0.5);
        
     requirements.officialSources.forEach((source, index) => {
-      doc.fontSize(10)
+      doc.fontSize(9)
          .font('Helvetica-Bold')
          .fillColor('#1C4473')
-         .text(`${index + 1}. ${source}`)
+         .text(`${index + 1}. ${source}`, { width: 480 })
          .fillColor('black')
          .font('Helvetica')
-         .moveDown(0.3);
+         .moveDown(0.2);
     });
+    doc.moveDown();
   }
 
   // Footer
