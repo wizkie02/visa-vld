@@ -288,70 +288,59 @@ function generateValidationReportPDF(doc: PDFKit.PDFDocument, data: ValidationRe
     doc.moveDown();
   }
 
-  // Document Upload Analysis
-  addSection(doc, 'DOCUMENT UPLOAD ANALYSIS');
+  // Document Processing Summary
+  addSection(doc, 'DOCUMENT PROCESSING SUMMARY');
   
-  // Analyze uploaded documents vs required documents
-  const uploadedDocTypes = data.uploadedDocuments.map(doc => doc.analysis?.documentType || 'unknown');
-  const requiredDocs = data.requirements?.requirements || [];
-  
-  doc.fontSize(10)
+  doc.fontSize(12)
      .font('Helvetica-Bold')
-     .text(`Documents Successfully Uploaded & Analyzed (${data.uploadedDocuments.length} total):`)
-     .font('Helvetica');
-  
+     .fillColor('#1C4473')
+     .text(`Total Documents Processed: ${data.uploadedDocuments.length}`)
+     .fillColor('black')
+     .font('Helvetica')
+     .fontSize(10);
+
   if (data.uploadedDocuments.length > 0) {
+    const successfulAnalyses = data.uploadedDocuments.filter(doc => doc.analysis).length;
+    const failedAnalyses = data.uploadedDocuments.length - successfulAnalyses;
+    
+    doc.text(`Successfully Analyzed: ${successfulAnalyses}`)
+       .text(`Analysis Failures: ${failedAnalyses}`)
+       .moveDown();
+
+    // Quick overview of all documents
+    doc.font('Helvetica-Bold')
+       .text('Document Overview:')
+       .font('Helvetica');
+
     data.uploadedDocuments.forEach((uploadedDoc, index) => {
-      const docType = uploadedDoc.analysis?.documentType || 'Unknown type';
+      const docType = uploadedDoc.analysis?.documentType || 'Analysis failed';
       const confidence = uploadedDoc.analysis?.confidence || 0;
-      const confidenceColor = confidence >= 0.8 ? '#059669' : confidence >= 0.6 ? '#D97706' : '#DC2626';
+      const statusIcon = uploadedDoc.analysis ? '✓' : '⚠';
+      const statusColor = uploadedDoc.analysis ? '#059669' : '#DC2626';
       
-      doc.fontSize(10)
-         .fillColor('#059669')
-         .text('✓', { continued: true })
+      doc.fontSize(9)
+         .fillColor(statusColor)
+         .text(statusIcon, { continued: true })
          .fillColor('black')
-         .font('Helvetica-Bold')
-         .text(` Document ${index + 1}: ${uploadedDoc.originalName}`)
-         .font('Helvetica')
-         .fontSize(9)
-         .text(`   Type: ${docType}`, { indent: 15 })
-         .fillColor(confidenceColor)
-         .text(`   Analysis Confidence: ${Math.round(confidence * 100)}%`, { indent: 15 })
-         .fillColor('black')
-         .text(`   File Size: ${Math.round(uploadedDoc.size / 1024)} KB`, { indent: 15 })
-         .text(`   Uploaded: ${new Date(uploadedDoc.uploadedAt).toLocaleDateString()}`, { indent: 15 });
+         .text(` ${index + 1}. ${uploadedDoc.originalName} → ${docType}`, { width: 480 });
       
-      // Add extracted information if available
-      if (uploadedDoc.analysis) {
-        const analysis = uploadedDoc.analysis;
-        if (analysis.fullName) {
-          doc.text(`   Extracted Name: ${analysis.fullName}`, { indent: 15 });
-        }
-        if (analysis.documentNumber) {
-          doc.text(`   Document Number: ${analysis.documentNumber}`, { indent: 15 });
-        }
-        if (analysis.expirationDate) {
-          doc.text(`   Expiration Date: ${analysis.expirationDate}`, { indent: 15 });
-        }
-        if (analysis.issuingCountry) {
-          doc.text(`   Issuing Country: ${analysis.issuingCountry}`, { indent: 15 });
-        }
-        if (analysis.nationality) {
-          doc.text(`   Document Nationality: ${analysis.nationality}`, { indent: 15 });
-        }
-        
-        // Add a brief summary of extracted content
-        if (analysis.extractedText && analysis.extractedText.length > 50) {
-          const summary = analysis.extractedText.substring(0, 150) + "...";
-          doc.fontSize(8)
-             .fillColor('#666666')
-             .text(`   Content Summary: ${summary}`, { indent: 15, width: 450 })
-             .fillColor('black')
-             .fontSize(9);
-        }
+      if (uploadedDoc.analysis && confidence > 0) {
+        const confidenceColor = confidence >= 0.8 ? '#059669' : confidence >= 0.6 ? '#D97706' : '#DC2626';
+        doc.fillColor(confidenceColor)
+           .text(`   (${Math.round(confidence * 100)}% confidence)`, { indent: 20 })
+           .fillColor('black');
       }
-      doc.moveDown(0.5);
     });
+    
+    doc.moveDown();
+    
+    // Summary statement
+    doc.fontSize(10)
+       .fillColor('#1FA947')
+       .text(`All ${data.uploadedDocuments.length} uploaded documents have been processed and included in this validation analysis.`)
+       .fillColor('black')
+       .moveDown();
+
   } else {
     doc.fontSize(9)
        .fillColor('#DC2626')
@@ -395,6 +384,88 @@ function generateValidationReportPDF(doc: PDFKit.PDFDocument, data: ValidationRe
          .text(`Recommendation: ${issue.recommendation}`, { indent: 20, width: 480 })
          .fillColor('black')
          .moveDown();
+    });
+  }
+
+  // Individual Document Analysis Results
+  if (data.uploadedDocuments.length > 0) {
+    addSection(doc, 'DETAILED DOCUMENT ANALYSIS');
+    
+    data.uploadedDocuments.forEach((uploadedDoc, index) => {
+      doc.fontSize(12)
+         .font('Helvetica-Bold')
+         .fillColor('#1C4473')
+         .text(`Document ${index + 1}: ${uploadedDoc.originalName}`)
+         .fillColor('black')
+         .font('Helvetica')
+         .fontSize(10);
+
+      if (uploadedDoc.analysis) {
+        const analysis = uploadedDoc.analysis;
+        const confidenceColor = analysis.confidence >= 0.8 ? '#059669' : 
+                                analysis.confidence >= 0.6 ? '#D97706' : '#DC2626';
+        
+        // Analysis summary
+        doc.text(`Document Type: ${analysis.documentType}`, { indent: 15 })
+           .fillColor(confidenceColor)
+           .text(`Analysis Confidence: ${Math.round(analysis.confidence * 100)}%`, { indent: 15 })
+           .fillColor('black');
+
+        // Validation contribution
+        const docType = analysis.documentType.toLowerCase();
+        let contribution = 'Document processed and included in validation';
+        
+        if (docType.includes('passport')) {
+          contribution = 'Primary identity verification - Essential for all applications';
+        } else if (docType.includes('bank') || docType.includes('financial')) {
+          contribution = 'Financial evidence - Demonstrates financial capability';
+        } else if (docType.includes('hotel') || docType.includes('accommodation')) {
+          contribution = 'Accommodation proof - Confirms travel arrangements';
+        } else if (docType.includes('flight') || docType.includes('itinerary')) {
+          contribution = 'Travel documentation - Validates travel intentions';
+        } else if (docType.includes('employment') || docType.includes('work')) {
+          contribution = 'Employment verification - Confirms professional status';
+        }
+
+        doc.fillColor('#1FA947')
+           .text(`Validation Role: ${contribution}`, { indent: 15 })
+           .fillColor('black');
+
+        // Extracted data
+        if (analysis.fullName || analysis.documentNumber || analysis.expirationDate) {
+          doc.text('Extracted Information:', { indent: 15 });
+          if (analysis.fullName) {
+            doc.text(`• Full Name: ${analysis.fullName}`, { indent: 25 });
+          }
+          if (analysis.documentNumber) {
+            doc.text(`• Document Number: ${analysis.documentNumber}`, { indent: 25 });
+          }
+          if (analysis.expirationDate) {
+            doc.text(`• Expiration Date: ${analysis.expirationDate}`, { indent: 25 });
+          }
+          if (analysis.issuingCountry) {
+            doc.text(`• Issuing Country: ${analysis.issuingCountry}`, { indent: 25 });
+          }
+          if (analysis.nationality) {
+            doc.text(`• Nationality: ${analysis.nationality}`, { indent: 25 });
+          }
+        }
+
+        // Special warnings
+        if (analysis.passportValidityWarning) {
+          doc.fillColor('#D97706')
+             .text(`⚠ Important: ${analysis.passportValidityWarning}`, { indent: 15 })
+             .fillColor('black');
+        }
+
+      } else {
+        doc.fillColor('#DC2626')
+           .text('⚠ Analysis Failed: Document could not be processed', { indent: 15 })
+           .text('This document was not included in validation calculations', { indent: 15 })
+           .fillColor('black');
+      }
+
+      doc.moveDown(1);
     });
   }
 

@@ -232,7 +232,10 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
           <p className="text-slate-600 mb-4">{t('dragDropFiles')}</p>
           <p className="text-sm text-gray-500">{t('supportedFormats')}</p>
           <div className="bg-blue-50 border border-blue-200 rounded p-3 mt-4 text-sm text-blue-700">
-            💡 Tip: Select multiple files at once using Ctrl+Click (Windows) or Cmd+Click (Mac)
+            <div className="font-medium mb-1">Multi-Document Upload Instructions:</div>
+            <div>• Hold Ctrl (Windows) or Cmd (Mac) while clicking to select multiple files</div>
+            <div>• All selected documents will be uploaded and analyzed together</div>
+            <div>• Each document will appear individually in your validation report</div>
           </div>
           <Button variant="outline" className="mt-4">
             {t('uploadFiles')}
