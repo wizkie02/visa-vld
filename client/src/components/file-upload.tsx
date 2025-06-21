@@ -145,6 +145,9 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
         onUpdate({
           uploadedFiles: [...existingFiles, ...newFiles]
         });
+        
+        // Clear the current upload state since files are now persisted
+        setFiles([]);
       }
     });
   };

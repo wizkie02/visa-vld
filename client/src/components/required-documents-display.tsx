@@ -125,7 +125,11 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
     
     setIsDownloading(true);
     try {
-      const response = await apiRequest('GET', `/api/download-checklist/${encodeURIComponent(data.country)}/${encodeURIComponent(data.visaType)}`);
+      const response = await apiRequest('POST', `/api/generate-pdf-checklist`, {
+        country: data.country,
+        visaType: data.visaType,
+        nationality: data.personalInfo?.nationality || 'Unknown'
+      });
       
       if (!response.ok) {
         throw new Error('Failed to generate checklist PDF');
