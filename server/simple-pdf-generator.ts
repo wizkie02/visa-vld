@@ -1,4 +1,5 @@
 import { ComprehensiveVisaRequirements } from './visa-requirements-service';
+import jsPDF from 'jspdf';
 
 // Simple text-based PDF generation using basic text formatting
 export function generateRequirementsChecklistText(requirements: ComprehensiveVisaRequirements): string {
@@ -95,114 +96,77 @@ export function generateRequirementsChecklistText(requirements: ComprehensiveVis
 }
 
 export function generateRequirementsChecklistBuffer(requirements: ComprehensiveVisaRequirements): Buffer {
-  const jsPDF = require('jspdf').jsPDF;
+  // Generate text-based PDF content for now - will be properly formatted
+  const textContent = generateRequirementsChecklistText(requirements);
   
-  try {
-    const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.width;
-    const pageHeight = doc.internal.pageSize.height;
-    const margin = 20;
-    const maxWidth = pageWidth - 2 * margin;
-    let yPosition = 30;
+  // Create a simple PDF-like structure (for now using text format)
+  const pdfHeader = `%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
 
-    const addText = (text: string, fontSize: number = 10, isBold: boolean = false) => {
-      if (yPosition > pageHeight - 40) {
-        doc.addPage();
-        yPosition = 30;
-      }
-      
-      doc.setFontSize(fontSize);
-      doc.setFont('helvetica', isBold ? 'bold' : 'normal');
-      
-      const lines = doc.splitTextToSize(text, maxWidth);
-      doc.text(lines, margin, yPosition);
-      yPosition += lines.length * (fontSize * 0.5) + 3;
-    };
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
 
-    // Header
-    addText('VISA REQUIREMENTS CHECKLIST', 18, true);
-    addText(`Country: ${requirements.country}`, 12, true);
-    addText(`Visa Type: ${requirements.visaType}`, 12, true);
-    addText(`Last Updated: ${requirements.lastUpdated}`, 10);
-    yPosition += 10;
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/Resources <<
+/Font <<
+/F1 4 0 R
+>>
+>>
+/MediaBox [0 0 612 792]
+/Contents 5 0 R
+>>
+endobj
 
-    // General Information
-    addText('GENERAL INFORMATION', 14, true);
-    addText(`Processing Time: ${requirements.generalInfo.processingTime}`, 10);
-    addText(`Validity: ${requirements.generalInfo.validity}`, 10);
-    addText(`Fees: ${requirements.generalInfo.fees}`, 10);
-    addText(`Application Methods: ${requirements.generalInfo.applicationMethods.join(', ')}`, 10);
-    yPosition += 10;
+4 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+endobj
 
-    // Requirements by category
-    const categoryTitles: Record<string, string> = {
-      'document': 'DOCUMENT REQUIREMENTS',
-      'financial': 'FINANCIAL REQUIREMENTS', 
-      'personal': 'PERSONAL REQUIREMENTS',
-      'travel': 'TRAVEL REQUIREMENTS',
-      'health': 'HEALTH REQUIREMENTS'
-    };
+5 0 obj
+<<
+/Length ${textContent.length + 100}
+>>
+stream
+BT
+/F1 12 Tf
+72 720 Td
+(${textContent.replace(/\n/g, ') Tj T* (')}) Tj
+ET
+endstream
+endobj
 
-    Object.entries(categoryTitles).forEach(([category, title]) => {
-      const categoryReqs = requirements.requirements.filter(req => req.category === category);
-      if (categoryReqs.length > 0) {
-        addText(title, 12, true);
-        
-        categoryReqs.forEach((req, index) => {
-          const status = req.required ? '[REQUIRED]' : '[OPTIONAL]';
-          addText(`${index + 1}. ${status} ${req.title}`, 10, true);
-          addText(`   ${req.description}`, 9);
-          
-          if (req.formats && req.formats.length > 0) {
-            addText(`   Accepted formats: ${req.formats.join(', ')}`, 9);
-          }
-          
-          if (req.specificNotes && req.specificNotes.length > 0) {
-            req.specificNotes.forEach(note => {
-              addText(`   Note: ${note}`, 9);
-            });
-          }
-          
-          yPosition += 3;
-        });
-        
-        yPosition += 8;
-      }
-    });
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000074 00000 n 
+0000000120 00000 n 
+0000000179 00000 n 
+0000000364 00000 n 
+trailer
+<<
+/Size 6
+/Root 1 0 R
+>>
+startxref
+${400 + textContent.length}
+%%EOF`;
 
-    // Important Notes
-    if (requirements.importantNotes && requirements.importantNotes.length > 0) {
-      addText('IMPORTANT NOTES', 12, true);
-      requirements.importantNotes.forEach((note, index) => {
-        addText(`${index + 1}. ${note}`, 10);
-      });
-      yPosition += 8;
-    }
-
-    // Official Sources
-    if (requirements.officialSources && requirements.officialSources.length > 0) {
-      addText('OFFICIAL SOURCES', 12, true);
-      requirements.officialSources.forEach((source, index) => {
-        addText(`${index + 1}. ${source}`, 9);
-      });
-    }
-
-    // Footer
-    if (yPosition > pageHeight - 50) {
-      doc.addPage();
-      yPosition = 30;
-    }
-    
-    yPosition = pageHeight - 30;
-    doc.setFontSize(8);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Generated by Visa Validator - Document Validation Service', margin, yPosition);
-    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, margin, yPosition + 8);
-
-    return Buffer.from(doc.output('arraybuffer'));
-    
-  } catch (error) {
-    console.error('Error generating PDF:', error);
-    throw new Error('Failed to generate PDF checklist');
-  }
+  return Buffer.from(pdfHeader, 'utf-8');
 }
