@@ -271,6 +271,7 @@ function generateValidationReportPDF(doc: PDFKit.PDFDocument, data: ValidationRe
      .text(`Passport: ${data.personalInfo.passportNumber || 'Not provided'}`)
      .text(`Travel Date: ${data.personalInfo.travelDate ? new Date(data.personalInfo.travelDate).toLocaleDateString() : 'Not provided'}`)
      .text(`Documents Uploaded: ${data.uploadedDocuments.length}`)
+     .text(`Validation Completed: ${new Date(data.validationResults.completedAt).toLocaleString()}`)
      .moveDown();
 
   // Verified Items
@@ -331,6 +332,22 @@ function generateValidationReportPDF(doc: PDFKit.PDFDocument, data: ValidationRe
         }
         if (analysis.expirationDate) {
           doc.text(`   Expiration Date: ${analysis.expirationDate}`, { indent: 15 });
+        }
+        if (analysis.issuingCountry) {
+          doc.text(`   Issuing Country: ${analysis.issuingCountry}`, { indent: 15 });
+        }
+        if (analysis.nationality) {
+          doc.text(`   Document Nationality: ${analysis.nationality}`, { indent: 15 });
+        }
+        
+        // Add a brief summary of extracted content
+        if (analysis.extractedText && analysis.extractedText.length > 50) {
+          const summary = analysis.extractedText.substring(0, 150) + "...";
+          doc.fontSize(8)
+             .fillColor('#666666')
+             .text(`   Content Summary: ${summary}`, { indent: 15, width: 450 })
+             .fillColor('black')
+             .fontSize(9);
         }
       }
       doc.moveDown(0.5);

@@ -116,7 +116,9 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
       return;
     }
 
-    const newFiles: UploadFile[] = filesArray.map(file => ({
+    console.log(`Processing ${filesArray.length} files for upload`);
+
+    const newFiles: UploadFile[] = filesArray.map((file, index) => ({
       file,
       originalName: file.name,
       mimetype: file.type,
@@ -128,19 +130,28 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
 
     setFiles(prev => [...prev, ...newFiles]);
 
-    // Upload files immediately
+    // Upload files immediately - all at once
     const formData = new FormData();
-    filesArray.forEach(file => {
-      console.log("Adding file to FormData:", file.name, file.type);
+    filesArray.forEach((file, index) => {
+      console.log(`Adding file ${index + 1}/${filesArray.length} to FormData:`, file.name, file.type);
       formData.append('files', file);
     });
     
-    console.log("FormData entries:", Array.from(formData.entries()));
+    console.log("FormData entries count:", Array.from(formData.entries()).length);
+    console.log("FormData file entries:", Array.from(formData.entries()).map(([key, value]) => ({ key, fileName: value instanceof File ? value.name : 'not a file' })));
+    
     uploadMutation.mutate(formData, {
       onSuccess: (response) => {
+        console.log("Upload response received:", response);
+        console.log("Response files count:", response.files?.length || 0);
+        
         // Keep existing uploaded files and add new ones
         const existingFiles = data.uploadedFiles || [];
         const newFiles = response.files || [];
+        
+        console.log("Existing files count:", existingFiles.length);
+        console.log("New files count:", newFiles.length);
+        console.log("Total files after upload:", existingFiles.length + newFiles.length);
         
         onUpdate({
           uploadedFiles: [...existingFiles, ...newFiles]
@@ -148,6 +159,16 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
         
         // Clear the current upload state since files are now persisted
         setFiles([]);
+        
+        toast({
+          title: "Upload Successful",
+          description: `${newFiles.length} document${newFiles.length === 1 ? '' : 's'} uploaded and analyzed`,
+          variant: "default",
+        });
+      },
+      onError: (error) => {
+        console.error("Upload failed:", error);
+        setFiles(prev => prev.map(f => ({ ...f, status: 'error' as const })));
       }
     });
   };
@@ -210,6 +231,9 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
           <h4 className="text-lg font-semibold text-gray-700 mb-2">{t('selectFiles')}</h4>
           <p className="text-slate-600 mb-4">{t('dragDropFiles')}</p>
           <p className="text-sm text-gray-500">{t('supportedFormats')}</p>
+          <div className="bg-blue-50 border border-blue-200 rounded p-3 mt-4 text-sm text-blue-700">
+            💡 Tip: Select multiple files at once using Ctrl+Click (Windows) or Cmd+Click (Mac)
+          </div>
           <Button variant="outline" className="mt-4">
             {t('uploadFiles')}
           </Button>
