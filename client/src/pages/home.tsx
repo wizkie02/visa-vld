@@ -69,41 +69,48 @@ export default function Home() {
       <section id="how-it-works" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">{t("howItWorks")}</h3>
-          <div className="grid md:grid-cols-5 gap-6">
+          <div className="grid md:grid-cols-6 gap-4">
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-700">1</span>
+              <div className="w-16 h-16 bg-[#1C4473] rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-white">1</span>
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">{t("step1")}</h4>
-              <p className="text-sm text-slate-600">{t("step1Desc")}</p>
+              <h4 className="font-semibold text-gray-900 mb-2">Select Destination</h4>
+              <p className="text-sm text-slate-600">Choose your destination country and visa type</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-700">2</span>
+              <div className="w-16 h-16 bg-[#1C4473] rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-white">2</span>
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">{t("step2")}</h4>
-              <p className="text-sm text-slate-600">{t("step2Desc")}</p>
+              <h4 className="font-semibold text-gray-900 mb-2">Review Requirements</h4>
+              <p className="text-sm text-slate-600">See current visa requirements and download checklist</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-700">3</span>
+              <div className="w-16 h-16 bg-[#1C4473] rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-white">3</span>
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">{t("step3")}</h4>
-              <p className="text-sm text-slate-600">{t("step3Desc")}</p>
+              <h4 className="font-semibold text-gray-900 mb-2">Upload Documents</h4>
+              <p className="text-sm text-slate-600">Upload your travel documents for AI analysis</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-700">4</span>
+              <div className="w-16 h-16 bg-[#1C4473] rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-white">4</span>
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">{t("step4")}</h4>
-              <p className="text-sm text-slate-600">{t("step4Desc")}</p>
+              <h4 className="font-semibold text-gray-900 mb-2">Personal Information</h4>
+              <p className="text-sm text-slate-600">Enter your travel details and consent</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-700">5</span>
+              <div className="w-16 h-16 bg-[#1C4473] rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-white">5</span>
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">{t("step5")}</h4>
-              <p className="text-sm text-slate-600">{t("step5Desc")}</p>
+              <h4 className="font-semibold text-gray-900 mb-2">Review & Pay</h4>
+              <p className="text-sm text-slate-600">Review information and complete secure payment</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-[#1FA947] rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-white">6</span>
+              </div>
+              <h4 className="font-semibold text-gray-900 mb-2">Get Results</h4>
+              <p className="text-sm text-slate-600">Receive detailed validation report with recommendations</p>
             </div>
           </div>
         </div>
