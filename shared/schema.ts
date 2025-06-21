@@ -61,11 +61,30 @@ export const documentAnalysisLogs = pgTable("document_analysis_logs", {
   extractedText: text("extracted_text"),
   confidenceScore: integer("confidence_score"), // 0-100
   analysisResults: jsonb("analysis_results"),
+  shouldDelete: boolean("should_delete").notNull().default(true),
+  deletedAt: timestamp("deleted_at"),
   uploadedAt: timestamp("uploaded_at").defaultNow().notNull(),
+});
+
+// Final reports storage - permanent storage for completed validation reports
+export const finalReports = pgTable("final_reports", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id),
+  sessionId: text("session_id").notNull(),
+  country: text("country").notNull(),
+  visaType: text("visa_type").notNull(),
+  applicantName: text("applicant_name").notNull(),
+  validationScore: integer("validation_score").notNull(),
+  reportData: jsonb("report_data").notNull(), // Full validation results and recommendations
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export const insertUserSchema = createInsertSchema(users);
 export const insertDocumentAnalysisLogSchema = createInsertSchema(documentAnalysisLogs);
+export const insertFinalReportSchema = createInsertSchema(finalReports).omit({
+  id: true,
+  createdAt: true,
+});
 
 export const insertValidationSessionSchema = createInsertSchema(validationSessions).omit({
   id: true,

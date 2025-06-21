@@ -1,4 +1,4 @@
-import { validationSessions, users, documentAnalysisLogs, type ValidationSession, type InsertValidationSession, type User, type InsertUser, type RegisterData, type DocumentAnalysisLog, type InsertDocumentAnalysisLog } from "@shared/schema";
+import { validationSessions, users, documentAnalysisLogs, finalReports, type ValidationSession, type InsertValidationSession, type User, type InsertUser, type RegisterData, type DocumentAnalysisLog, type InsertDocumentAnalysisLog } from "@shared/schema";
 import { db } from "./db";
 import { eq, sql } from "drizzle-orm";
 
@@ -24,6 +24,12 @@ export interface IStorage {
   createDocumentAnalysisLog(log: InsertDocumentAnalysisLog): Promise<DocumentAnalysisLog>;
   getUserDocumentAnalysisLogs(userId: number): Promise<DocumentAnalysisLog[]>;
   getAllDocumentAnalysisLogs(): Promise<DocumentAnalysisLog[]>;
+  deleteOldDocuments(): Promise<number>; // Returns number of deleted documents
+  
+  // Final reports operations
+  createFinalReport(reportData: any): Promise<any>;
+  getAllFinalReports(): Promise<any[]>;
+  getFinalReportsByUser(userId: number): Promise<any[]>;
   
   // Password operations
   resetUserPassword(userId: number, newPassword: string): Promise<User | undefined>;
@@ -162,6 +168,41 @@ export class DatabaseStorage implements IStorage {
 
   async getAllDocumentAnalysisLogs(): Promise<DocumentAnalysisLog[]> {
     return await db.select().from(documentAnalysisLogs);
+  }
+
+  async deleteOldDocuments(): Promise<number> {
+    // Delete documents older than 24 hours
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    
+    const result = await db
+      .update(documentAnalysisLogs)
+      .set({ 
+        extractedText: 'DELETED',
+        analysisResults: null,
+        deletedAt: new Date()
+      })
+      .where(
+        sql`${documentAnalysisLogs.uploadedAt} < ${twentyFourHoursAgo} AND ${documentAnalysisLogs.shouldDelete} = true AND ${documentAnalysisLogs.deletedAt} IS NULL`
+      );
+    
+    return result.rowCount || 0;
+  }
+
+  // Final reports operations
+  async createFinalReport(reportData: any): Promise<any> {
+    const [report] = await db
+      .insert(finalReports)
+      .values(reportData)
+      .returning();
+    return report;
+  }
+
+  async getAllFinalReports(): Promise<any[]> {
+    return await db.select().from(finalReports);
+  }
+
+  async getFinalReportsByUser(userId: number): Promise<any[]> {
+    return await db.select().from(finalReports).where(eq(finalReports.userId, userId));
   }
 
   async upsertUser(userData: any): Promise<User> {

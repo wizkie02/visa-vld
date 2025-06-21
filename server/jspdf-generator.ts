@@ -173,7 +173,7 @@ export function generateValidationReportPDF(data: ReportData): Buffer {
   yPosition += 3;
   
   // Country-specific official websites
-  const officialSites = {
+  const officialSites: Record<string, string> = {
     'Australia': 'https://immi.homeaffairs.gov.au/visas',
     'United States': 'https://travel.state.gov/content/travel/en/us-visas.html',
     'United Kingdom': 'https://www.gov.uk/browse/visas-immigration',
@@ -200,7 +200,7 @@ export function generateValidationReportPDF(data: ReportData): Buffer {
     key.toLowerCase().includes(data.country.toLowerCase())
   );
   
-  if (countryKey && officialSites[countryKey]) {
+  if (countryKey) {
     addText(`${data.country} Official Visa Website:`, 11, true);
     addText(`${officialSites[countryKey]}`);
   } else {
