@@ -230,11 +230,10 @@ export default function Home() {
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">{t("service")}</h4>
+              <h4 className="font-semibold mb-4">Service</h4>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#how-it-works" className="hover:text-white transition-colors">{t("howItWorksNav")}</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">{t("supportedCountries")}</a></li>
-                <li><a href="#pricing" className="hover:text-white transition-colors">{t("pricing")}</a></li>
+                <li><a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a></li>
+                <li><a href="#pricing" className="hover:text-white transition-colors">Pricing</a></li>
               </ul>
             </div>
             <div>

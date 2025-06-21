@@ -9,8 +9,21 @@ import { Label } from "@/components/ui/label";
 export default function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    alert("Thank you for your message. We'll get back to you within 24 hours.");
+    // Extract form data
+    const formData = new FormData(e.target as HTMLFormElement);
+    const subject = formData.get('subject');
+    const message = formData.get('message');
+    const firstName = formData.get('firstName');
+    const lastName = formData.get('lastName');
+    const email = formData.get('email');
+    
+    // Create mailto link
+    const mailtoLink = `mailto:contact@visavalidator.com?subject=${encodeURIComponent(subject as string)}&body=${encodeURIComponent(`From: ${firstName} ${lastName} (${email})\n\nMessage:\n${message}`)}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    alert("Your email client will open to send this message to contact@visavalidator.com");
   };
 
   return (
@@ -44,25 +57,8 @@ export default function Contact() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 mb-2">For general inquiries and support:</p>
-                  <p className="font-semibold text-blue-600">support@visavalidator.pro</p>
-                  <p className="text-gray-600 mt-4 mb-2">For technical issues:</p>
-                  <p className="font-semibold text-blue-600">tech@visavalidator.pro</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Phone className="w-5 h-5 text-green-600" />
-                    Phone Support
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 mb-2">Customer Service:</p>
-                  <p className="font-semibold text-green-600">+1 (555) 123-4567</p>
-                  <p className="text-gray-600 mt-4 mb-2">Technical Support:</p>
-                  <p className="font-semibold text-green-600">+1 (555) 765-4321</p>
+                  <p className="text-gray-600 mb-2">For all inquiries, technical issues, and complaints:</p>
+                  <p className="font-semibold text-blue-600">contact@visavalidator.com</p>
                 </CardContent>
               </Card>
 
@@ -76,36 +72,13 @@ export default function Contact() {
                 <CardContent>
                   <div className="space-y-2">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Monday - Friday:</span>
-                      <span className="font-semibold">9:00 AM - 6:00 PM EST</span>
+                      <span className="text-gray-600">Monday - Sunday:</span>
+                      <span className="font-semibold">8:00 AM - 8:00 PM Indo-Pacific Time</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Saturday:</span>
-                      <span className="font-semibold">10:00 AM - 4:00 PM EST</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Sunday:</span>
-                      <span className="font-semibold">Closed</span>
-                    </div>
+                    <p className="text-sm text-gray-500 mt-2">
+                      Email responses within 24 hours
+                    </p>
                   </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-red-600" />
-                    Office Address
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <address className="not-italic text-gray-600">
-                    VisaValidator Pro Inc.<br />
-                    123 Business Avenue<br />
-                    Suite 456<br />
-                    New York, NY 10001<br />
-                    United States
-                  </address>
                 </CardContent>
               </Card>
             </div>
@@ -123,28 +96,29 @@ export default function Contact() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" required />
+                      <Input id="firstName" name="firstName" required />
                     </div>
                     <div>
                       <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" required />
+                      <Input id="lastName" name="lastName" required />
                     </div>
                   </div>
 
                   <div>
                     <Label htmlFor="email">Email Address</Label>
-                    <Input id="email" type="email" required />
+                    <Input id="email" name="email" type="email" required />
                   </div>
 
                   <div>
                     <Label htmlFor="subject">Subject</Label>
-                    <Input id="subject" required />
+                    <Input id="subject" name="subject" required />
                   </div>
 
                   <div>
                     <Label htmlFor="message">Message</Label>
                     <Textarea 
                       id="message" 
+                      name="message"
                       rows={6} 
                       placeholder="Please describe your inquiry or issue..."
                       required 
