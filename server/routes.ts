@@ -767,6 +767,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // PDF Checklist Generation Route
+  app.post("/api/generate-pdf-checklist", requireNewAuth, async (req, res) => {
+    try {
+      const { country, visaType, nationality } = req.body;
+      
+      console.log(`Generating PDF checklist for ${visaType} visa to ${country}`);
+      
+      const requirements = await fetchCurrentVisaRequirements(
+        country, 
+        visaType, 
+        nationality || 'Unknown'
+      );
+      
+      // Check for VFS Global outsourcing
+      const vfsInfo = checkVFSOutsourcing(country, visaType);
+      if (vfsInfo.isOutsourced) {
+        requirements.importantNotes.unshift(
+          `⚠️ IMPORTANT: ${country} ${visaType} visa applications are processed through ${vfsInfo.provider} instead of the embassy. You must submit your application at ${vfsInfo.applicationCenter}. Visit: ${vfsInfo.website} to book an appointment and find your nearest location.`
+        );
+      }
+      
+      const pdfBuffer = generateRequirementsChecklistBuffer(requirements);
+      
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.pdf"`);
+      res.send(pdfBuffer);
+    } catch (error: any) {
+      console.error("Error generating PDF checklist:", error);
+      res.status(500).json({ message: "Error generating PDF checklist: " + error.message });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
