@@ -313,7 +313,10 @@ const baseKeys = {
   readPrivacyPolicy: "Read our Privacy Policy",
   readyToStart: "Ready to Validate Your Documents?",
   loginRequired: "Create an account or sign in to access our professional visa document validation service.",
-  signInNow: "Sign In Now"
+  signInNow: "Sign In Now",
+  
+  // Missing translation keys
+  reviewRequiredDocs: "Review Required Documents"
 };
 
 const languages = [

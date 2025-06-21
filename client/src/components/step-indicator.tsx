@@ -9,12 +9,12 @@ export default function StepIndicator({ currentStep, onStepClick }: StepIndicato
   const { t } = useLanguage();
   
   const steps = [
-    { number: 1, label: 'Destination' },
-    { number: 2, label: 'Requirements' },
-    { number: 3, label: 'Upload Documents' },
-    { number: 4, label: 'Personal Information' },
-    { number: 5, label: 'Review' },
-    { number: 6, label: 'Payment' },
+    { number: 1, label: t('stepDestination') },
+    { number: 2, label: t('stepRequirements') },
+    { number: 3, label: t('stepUpload') },
+    { number: 4, label: t('stepInformation') },
+    { number: 5, label: t('stepReview') },
+    { number: 6, label: t('stepPayment') },
   ];
 
   return (
