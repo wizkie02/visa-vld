@@ -341,7 +341,9 @@ export default function Validation() {
       case 2:
         return true; // Required documents review step
       case 3:
-        return validationData.uploadedFiles.length > 0;
+        // Allow proceeding if user has uploaded files OR checked documents (but warn them)
+        return validationData.uploadedFiles.length > 0 || 
+               (validationData.checkedDocuments && Object.values(validationData.checkedDocuments).some(checked => checked));
       case 4:
         return (
           validationData.personalInfo.applicantName &&
@@ -372,7 +374,7 @@ export default function Validation() {
                   Back
                 </Button>
               </Link>
-              <img src="/attached_assets/horizontal_2@3x_1750492153266.webp" alt="Visa Validator" className="h-10" />
+              <img src={horizontalLogo} alt="Visa Validator" className="h-10" />
             </div>
           </div>
         </div>

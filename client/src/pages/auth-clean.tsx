@@ -12,6 +12,7 @@ import { useNewAuth } from "@/hooks/use-new-auth";
 import { useLanguage } from "@/lib/i18n";
 import { registerSchema, loginSchema, type RegisterData, type LoginData } from "@shared/schema";
 import { Link, useLocation } from "wouter";
+import stackedLogo from "@assets/stacked_2@3x_1750492153267.webp";
 
 const nationalities = [
   { value: "afghan", label: "Afghan" },
@@ -251,7 +252,7 @@ export default function AuthPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-md mx-auto">
           <div className="text-center mb-8">
-            <img src="/attached_assets/stacked_2@3x_1750492153267.webp" alt="Visa Validator" className="h-24 mx-auto mb-4" />
+            <img src={stackedLogo} alt="Visa Validator" className="h-24 mx-auto mb-4" />
             <p className="text-gray-600 dark:text-gray-300">
               AI-Powered Document Validation Service
             </p>
