@@ -82,7 +82,7 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
       console.error("Upload error:", error);
       setFiles(prev => prev.map(f => ({ ...f, status: 'error' as const })));
       toast({
-        title: "Upload failed",
+        title: t('uploadFailed'),
         description: error.message,
         variant: "destructive",
       });
@@ -95,8 +95,8 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
     
     if (selectedFiles.length === 0) {
       toast({
-        title: "No files selected",
-        description: "Please select at least one file to upload.",
+        title: t('noFilesSelected'),
+        description: t('pleaseSelectAtLeastOneFile'),
         variant: "destructive",
       });
       return;
@@ -109,8 +109,8 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
     const invalidFiles = filesArray.filter(file => !allowedTypes.includes(file.type));
     if (invalidFiles.length > 0) {
       toast({
-        title: "Invalid file type",
-        description: `Please upload only PDF, JPG, PNG, DOCX, DOC, or TXT files. Invalid files: ${invalidFiles.map(f => f.name).join(', ')}`,
+        title: t('invalidFileType'),
+        description: `${t('pleaseUploadValidFiles')} ${invalidFiles.map(f => f.name).join(', ')}`,
         variant: "destructive",
       });
       return;

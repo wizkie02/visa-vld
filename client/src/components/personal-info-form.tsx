@@ -371,7 +371,7 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
               </Button>
               <Button 
                 type="submit" 
-                className="flex-1 bg-blue-700 hover:bg-blue-800"
+                className="flex-1 bg-[#1C4473] hover:bg-[#1C4473]/90"
                 disabled={!form.watch('dataProcessingConsent')}
               >
                 {t('next')}

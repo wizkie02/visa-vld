@@ -316,7 +316,11 @@ const baseKeys = {
   signInNow: "Sign In Now",
   
   // Missing translation keys
-  reviewRequiredDocs: "Review Required Documents"
+  reviewRequiredDocs: "Review Required Documents",
+  noFilesSelected: "No files selected",
+  pleaseSelectAtLeastOneFile: "Please select at least one file to upload",
+  invalidFileType: "Invalid file type",
+  pleaseUploadValidFiles: "Please upload only PDF, JPG, PNG, DOCX, DOC, or TXT files. Invalid files:"
 };
 
 const languages = [
