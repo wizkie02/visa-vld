@@ -214,7 +214,7 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
 
   // Auto-populate form with user data when available
   useEffect(() => {
-    if (userData && (userData as any).firstName && (userData as any).lastName && (userData as any).nationality) {
+    if (userData && (userData as any).nationality) {
       const currentValues = form.getValues();
       
       // Only auto-populate if fields are empty
@@ -236,7 +236,18 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
   }, [userData, form, onUpdate, data.personalInfo]);
 
   const onSubmit = (values: PersonalInfo) => {
-    onUpdate({ personalInfo: values });
+    console.log('Form submission values:', values);
+    console.log('Current validation data before update:', data);
+    
+    // Ensure nationality is included from user data if not in form
+    const updatedValues = {
+      ...values,
+      nationality: values.nationality || (userData as any)?.nationality || ''
+    };
+    
+    console.log('Updated values with nationality:', updatedValues);
+    onUpdate({ personalInfo: updatedValues });
+    console.log('Form data updated, proceeding to next step');
     onNext();
   };
 
@@ -290,14 +301,25 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
                 )}
               />
               
-              {/* Nationality auto-populated from user account */}
-              <div>
-                <FormLabel>Nationality</FormLabel>
-                <div className="p-3 bg-gray-50 border rounded-md text-gray-700">
-                  {(userData as any)?.nationality || 'Loading...'}
-                  <span className="text-sm text-gray-500 ml-2">(from your account)</span>
-                </div>
-              </div>
+              <FormField
+                control={form.control}
+                name="nationality"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nationality</FormLabel>
+                    <FormControl>
+                      <div>
+                        <div className="p-3 bg-gray-50 border rounded-md text-gray-700">
+                          {(userData as any)?.nationality || 'Loading...'}
+                          <span className="text-sm text-gray-500 ml-2">(from your account)</span>
+                        </div>
+                        <input type="hidden" {...field} />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               
               <FormField
                 control={form.control}

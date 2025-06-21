@@ -196,6 +196,9 @@ export default function Validation() {
   const handleValidate = async () => {
     setIsValidating(true);
     try {
+      console.log('Attempting to create validation session with data:', validationData);
+      console.log('Personal info specifically:', validationData.personalInfo);
+      
       // Create validation session first
       const sessionResponse = await apiRequest("POST", "/api/create-validation-session", validationData);
       const sessionResult = await sessionResponse.json();
