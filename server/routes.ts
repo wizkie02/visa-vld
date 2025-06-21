@@ -726,6 +726,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Download checklist as PDF
+  app.get("/api/download-checklist/:country/:visaType", async (req, res) => {
+    const { country, visaType } = req.params;
+    
+    try {
+      const requirements = await fetchCurrentVisaRequirements(country, visaType);
+      if (!requirements) {
+        return res.status(404).json({ message: "Requirements not found" });
+      }
+
+      const pdfBuffer = generateRequirementsChecklistBuffer(requirements);
+      
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-checklist-${country}-${visaType}.pdf"`);
+      res.send(pdfBuffer);
+    } catch (error: any) {
+      console.error("Error generating checklist:", error);
+      res.status(500).json({ message: "Error generating checklist: " + error.message });
+    }
+  });
+
   // Webhook for Stripe payment confirmation
   app.post("/api/stripe-webhook", async (req, res) => {
     try {

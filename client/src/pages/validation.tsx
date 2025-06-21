@@ -238,8 +238,8 @@ export default function Validation() {
       localStorage.setItem('validation_results', JSON.stringify(results));
       
       // Update step and persist to localStorage
-      setCurrentStep(6);
-      localStorage.setItem('validation_current_step', '6');
+      setCurrentStep(5);
+      localStorage.setItem('validation_current_step', '5');
       console.log("Navigating to step 6 - Results display");
       console.log("Validation results set and persisted:", results);
       
@@ -426,7 +426,7 @@ export default function Validation() {
           </div>
         )}
 
-        {currentStep === 6 && (
+        {currentStep === 5 && (
           <Card className="bg-white rounded-xl shadow-lg">
             <CardContent className="p-8">
               <h3 className="text-2xl font-semibold text-gray-900 mb-6">Review Your Information</h3>

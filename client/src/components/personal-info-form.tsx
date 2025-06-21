@@ -222,11 +222,18 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
         form.setValue('applicantName', `${(userData as any).firstName} ${(userData as any).lastName}`);
       }
       
-      if (!currentValues.nationality && (userData as any).nationality) {
-        form.setValue('nationality', (userData as any).nationality);
-      }
+      // Always set nationality from user account
+      form.setValue('nationality', (userData as any).nationality);
+      
+      // Update parent component with nationality
+      onUpdate({ 
+        personalInfo: { 
+          ...data.personalInfo, 
+          nationality: (userData as any).nationality 
+        } 
+      });
     }
-  }, [userData, form]);
+  }, [userData, form, onUpdate, data.personalInfo]);
 
   const onSubmit = (values: PersonalInfo) => {
     onUpdate({ personalInfo: values });
@@ -283,30 +290,14 @@ export default function PersonalInfoForm({ data, onUpdate, onNext, onPrevious }:
                 )}
               />
               
-              <FormField
-                control={form.control}
-                name="nationality"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('nationality')}</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={t('selectNationalityPlaceholder')} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {nationalities.map((nationality) => (
-                          <SelectItem key={nationality.value} value={nationality.value}>
-                            {nationality.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              {/* Nationality auto-populated from user account */}
+              <div>
+                <FormLabel>Nationality</FormLabel>
+                <div className="p-3 bg-gray-50 border rounded-md text-gray-700">
+                  {(userData as any)?.nationality || 'Loading...'}
+                  <span className="text-sm text-gray-500 ml-2">(from your account)</span>
+                </div>
+              </div>
               
               <FormField
                 control={form.control}
