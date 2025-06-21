@@ -296,18 +296,44 @@ function generateValidationReportPDF(doc: PDFKit.PDFDocument, data: ValidationRe
   
   doc.fontSize(10)
      .font('Helvetica-Bold')
-     .text('Documents Successfully Uploaded & Analyzed:')
+     .text(`Documents Successfully Uploaded & Analyzed (${data.uploadedDocuments.length} total):`)
      .font('Helvetica');
   
   if (data.uploadedDocuments.length > 0) {
     data.uploadedDocuments.forEach((uploadedDoc, index) => {
       const docType = uploadedDoc.analysis?.documentType || 'Unknown type';
       const confidence = uploadedDoc.analysis?.confidence || 0;
-      doc.fontSize(9)
+      const confidenceColor = confidence >= 0.8 ? '#059669' : confidence >= 0.6 ? '#D97706' : '#DC2626';
+      
+      doc.fontSize(10)
          .fillColor('#059669')
          .text('✓', { continued: true })
          .fillColor('black')
-         .text(` ${uploadedDoc.originalName} (${docType}, confidence: ${Math.round(confidence * 100)}%)`, { width: 480 });
+         .font('Helvetica-Bold')
+         .text(` Document ${index + 1}: ${uploadedDoc.originalName}`)
+         .font('Helvetica')
+         .fontSize(9)
+         .text(`   Type: ${docType}`, { indent: 15 })
+         .fillColor(confidenceColor)
+         .text(`   Analysis Confidence: ${Math.round(confidence * 100)}%`, { indent: 15 })
+         .fillColor('black')
+         .text(`   File Size: ${Math.round(uploadedDoc.size / 1024)} KB`, { indent: 15 })
+         .text(`   Uploaded: ${new Date(uploadedDoc.uploadedAt).toLocaleDateString()}`, { indent: 15 });
+      
+      // Add extracted information if available
+      if (uploadedDoc.analysis) {
+        const analysis = uploadedDoc.analysis;
+        if (analysis.fullName) {
+          doc.text(`   Extracted Name: ${analysis.fullName}`, { indent: 15 });
+        }
+        if (analysis.documentNumber) {
+          doc.text(`   Document Number: ${analysis.documentNumber}`, { indent: 15 });
+        }
+        if (analysis.expirationDate) {
+          doc.text(`   Expiration Date: ${analysis.expirationDate}`, { indent: 15 });
+        }
+      }
+      doc.moveDown(0.5);
     });
   } else {
     doc.fontSize(9)

@@ -224,10 +224,21 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
           onChange={(e) => e.target.files && handleFileSelect(e.target.files)}
         />
         
-        {/* All Uploaded Documents - Real-time List */}
+        {/* All Uploaded Documents - Enhanced Display */}
         {(data.uploadedFiles && data.uploadedFiles.length > 0) && (
           <div className="mt-6">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">{t('uploadedDocuments')} ({data.uploadedFiles.length})</h4>
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">
+              {t('uploadedDocuments')} ({data.uploadedFiles.length} {data.uploadedFiles.length === 1 ? 'document' : 'documents'})
+            </h4>
+            <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4 text-sm">
+              <div className="flex items-center space-x-2 text-green-700">
+                <CheckCircle className="w-4 h-4" />
+                <span>All {data.uploadedFiles.length} documents have been uploaded and analyzed successfully</span>
+              </div>
+              <div className="mt-2 text-xs text-green-600">
+                Ready for validation - these documents will be analyzed against visa requirements
+              </div>
+            </div>
             <div className="space-y-3">
               {data.uploadedFiles.map((file: any, index: number) => (
                 <div key={index} className="bg-blue-50 border border-blue-200 rounded-lg p-4">
@@ -235,12 +246,21 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
                     <div className="flex items-center space-x-3">
                       {getFileIcon(file.mimetype)}
                       <div>
-                        <span className="font-medium text-blue-900">{file.originalName}</span>
+                        <span className="font-medium text-blue-900">
+                          Document {index + 1}: {file.originalName}
+                        </span>
                         <span className="text-sm text-blue-700 ml-2">({formatFileSize(file.size)})</span>
                         {file.analysis && (
-                          <div className="text-xs text-blue-600 mt-1">
-                            {t('documentType')}: {file.analysis.documentType}
-                            {file.analysis.confidence && ` (${Math.round(file.analysis.confidence * 100)}% ${t('confidence')})`}
+                          <div className="text-xs text-blue-600 mt-1 space-y-1">
+                            <div>{t('documentType')}: {file.analysis.documentType}</div>
+                            {file.analysis.confidence && (
+                              <div className={`${file.analysis.confidence >= 0.8 ? 'text-green-600' : file.analysis.confidence >= 0.6 ? 'text-yellow-600' : 'text-red-600'}`}>
+                                Analysis Confidence: {Math.round(file.analysis.confidence * 100)}%
+                              </div>
+                            )}
+                            {file.analysis.fullName && <div>Name: {file.analysis.fullName}</div>}
+                            {file.analysis.documentNumber && <div>Number: {file.analysis.documentNumber}</div>}
+                            {file.analysis.expirationDate && <div>Expires: {file.analysis.expirationDate}</div>}
                           </div>
                         )}
                       </div>
