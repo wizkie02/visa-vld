@@ -1,4 +1,7 @@
 import { useLanguage } from "@/lib/i18n";
+import { Link } from "wouter";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function PrivacyPolicy() {
   const { t } = useLanguage();
@@ -6,6 +9,14 @@ export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
       <div className="max-w-4xl mx-auto">
+        <div className="mb-6">
+          <Link href="/">
+            <Button variant="ghost" className="gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Home
+            </Button>
+          </Link>
+        </div>
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
             {t('privacyPolicy')}

@@ -135,9 +135,7 @@ export default function TermsOfService() {
               <p className="mb-4">
                 For questions about these terms, contact us at:
                 <br />
-                Email: legal@visavalidator.pro
-                <br />
-                Address: [Company Address]
+                Email: contact@visavalidator.com
               </p>
             </section>
           </CardContent>
