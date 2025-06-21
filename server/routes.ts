@@ -20,6 +20,7 @@ import { generateValidationReportPDF } from "./jspdf-generator";
 import { generateRequirementsChecklistBuffer } from "./simple-pdf-generator";
 import { generateRequirementsChecklistPDF } from "./requirements-pdf-generator";
 import { generateValidationReportHTML, generateRequirementsChecklistHTML } from "./working-pdf-generator";
+import { generatePDF } from "./pdfkit-generator";
 import puppeteer from "puppeteer";
 import { checkVFSOutsourcing } from "./vfs-outsourcing-service";
 
@@ -765,6 +766,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ received: true });
     } catch (error: any) {
       res.status(400).json({ message: "Webhook error: " + error.message });
+    }
+  });
+
+  // Universal PDF Generation Endpoint
+  app.post("/api/generate-pdf", requireNewAuth, async (req, res) => {
+    try {
+      const { type, data } = req.body;
+      
+      if (!type || !data) {
+        return res.status(400).json({ message: "Missing type or data in request" });
+      }
+
+      console.log(`Generating ${type} PDF with PDFKit`);
+      
+      const pdfBuffer = await generatePDF({ type, data });
+      
+      const filename = type === 'requirements' 
+        ? `visa-requirements-${data.country}-${data.visaType}.pdf`
+        : `visa-validation-report-${new Date().toISOString().split('T')[0]}.pdf`;
+      
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.send(pdfBuffer);
+    } catch (error: any) {
+      console.error("Error generating PDF:", error);
+      res.status(500).json({ message: "Error generating PDF: " + error.message });
     }
   });
 

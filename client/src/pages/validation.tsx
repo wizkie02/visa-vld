@@ -296,11 +296,21 @@ export default function Validation() {
   };
 
   const downloadValidationReport = async () => {
-    if (!sessionId) return;
+    if (!sessionId || !validationResults) return;
     
     try {
-      // Use apiRequest to ensure proper authentication headers
-      const response = await apiRequest("GET", `/api/validation-report/${sessionId}/download`);
+      // Use the new PDFKit endpoint for better PDF generation
+      const response = await apiRequest("POST", `/api/generate-pdf`, {
+        type: 'validation-report',
+        data: {
+          validationResults,
+          personalInfo: validationData.personalInfo,
+          country: validationData.country,
+          visaType: validationData.visaType,
+          nationality: validationData.personalInfo.nationality,
+          uploadedDocuments: validationData.uploadedFiles || []
+        }
+      });
       
       if (!response.ok) {
         throw new Error('Failed to download professional report');

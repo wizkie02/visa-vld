@@ -125,10 +125,14 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
     
     setIsDownloading(true);
     try {
-      const response = await apiRequest('POST', `/api/generate-pdf-checklist`, {
-        country: data.country,
-        visaType: data.visaType,
-        nationality: data.personalInfo?.nationality || 'Unknown'
+      const response = await apiRequest('POST', `/api/generate-pdf`, {
+        type: 'requirements',
+        data: {
+          country: data.country,
+          visaType: data.visaType,
+          nationality: data.personalInfo?.nationality || 'Unknown',
+          ...requirements
+        }
       });
       
       if (!response.ok) {
