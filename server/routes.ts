@@ -788,10 +788,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         );
       }
       
-      const pdfBuffer = generateRequirementsChecklistPDF(requirements);
+      const pdfBuffer = generateRequirementsChecklistBuffer(requirements);
       
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.pdf"`);
+      res.setHeader('Content-Type', 'text/plain');
+      res.setHeader('Content-Disposition', `attachment; filename="visa-requirements-${country}-${visaType}.txt"`);
       res.send(pdfBuffer);
     } catch (error: any) {
       console.error("Error generating PDF checklist:", error);

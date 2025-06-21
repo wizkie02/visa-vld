@@ -24,7 +24,7 @@
   --accent-foreground: hsl(0, 0%, 100%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(0, 0%, 100%);
-  --ring: hsl(207, 68%, 35%); /* #1C4473 */
+  --ring: hsl(145, 100%, 48%); /* #1FA947 */
   --radius: 0.5rem;
   
   /* Visa Validator specific colors */
