@@ -42,9 +42,12 @@ export class ValidationService {
     uploadedFiles: any[];
     checkedDocuments: Record<string, boolean>;
   }): Promise<{ sessionId: string }> {
-    const response = await apiRequest('/api/create-validation-session', {
+    const response = await fetch('/api/create-validation-session', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+      },
       body: JSON.stringify(data),
     });
 
@@ -56,9 +59,12 @@ export class ValidationService {
   }
 
   static async validateDocuments(sessionId: string): Promise<{ validationResults: ValidationResult }> {
-    const response = await apiRequest('/api/validate', {
+    const response = await fetch('/api/validate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+      },
       body: JSON.stringify({ sessionId }),
     });
 
@@ -70,9 +76,12 @@ export class ValidationService {
   }
 
   static async generatePDF(type: 'requirements' | 'validation-report', data: any): Promise<Blob> {
-    const response = await apiRequest('/api/generate-pdf', {
+    const response = await fetch('/api/generate-pdf', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+      },
       body: JSON.stringify({ type, data }),
     });
 

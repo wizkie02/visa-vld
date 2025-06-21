@@ -67,8 +67,28 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
       
       setFiles(analyzedFiles);
       
-      // Update validation data
-      onUpdate({ uploadedFiles: result.files });
+      // Merge with existing files to maintain persistence
+      const existingFiles = data.uploadedFiles || [];
+      const newFiles = result.files || [];
+      
+      // Prevent duplicates while preserving all previously uploaded files
+      const mergedFiles = [...existingFiles];
+      newFiles.forEach((newFile: any) => {
+        const isDuplicate = existingFiles.some(existing => 
+          existing.originalName === newFile.originalName && 
+          existing.size === newFile.size
+        );
+        if (!isDuplicate) {
+          mergedFiles.push(newFile);
+        }
+      });
+      
+      console.log("Files before merge:", existingFiles.length);
+      console.log("New files:", newFiles.length);
+      console.log("Files after merge:", mergedFiles.length);
+      
+      // Update with merged files
+      onUpdate({ uploadedFiles: mergedFiles });
       
       const successCount = result.files.filter((f: any) => f.analysis && !f.error).length;
       const errorCount = result.files.filter((f: any) => f.error).length;
