@@ -46,6 +46,39 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
   const { toast } = useToast();
   const { t } = useLanguage();
 
+  // Get visa type context for better UX
+  const getVisaTypeDisplay = () => {
+    if (data.visaType && data.country) {
+      const visaTypeName = data.visaType.replace(/_/g, ' ').replace(/\b\w/g, (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+      return `${visaTypeName} Visa to ${data.country.charAt(0).toUpperCase() + data.country.slice(1).toLowerCase()}`;
+    }
+    return 'Visa Application';
+  };
+
+  // Get document requirements hint based on visa type
+  const getRequiredDocumentsHint = () => {
+    const visaType = data.visaType?.toLowerCase();
+    const country = data.country?.toLowerCase();
+
+    if (visaType?.includes('tourist')) {
+      return `Passport (6+ months validity), Flight itinerary, Hotel reservations, Travel insurance ($30,000+ coverage), Bank statements`;
+    }
+    if (visaType?.includes('business')) {
+      return `Passport, Invitation letter, Company registration documents, Business itinerary, Proof of funds`;
+    }
+    if (visaType?.includes('student')) {
+      return `Passport, Acceptance letter, Academic transcripts, Proof of tuition payment, Study plan`;
+    }
+    if (visaType?.includes('work')) {
+      return `Passport, Work permit approval, Employment contract, Professional qualifications, Company documents`;
+    }
+    if (visaType?.includes('transit')) {
+      return `Passport, Onward ticket, Visa for final destination`;
+    }
+
+    return `Valid passport, Application form, Supporting documents as required`;
+  };
+
   const uploadMutation = useMutation({
     mutationFn: async (formData: FormData) => {
       console.log("Uploading files:", Array.from(formData.entries()));
@@ -242,7 +275,13 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
   return (
     <Card className="bg-white rounded-xl shadow-lg">
       <CardContent className="p-8">
-        <h3 className="text-2xl font-semibold text-gray-900 mb-6">{t('uploadFiles')}</h3>
+        <div className="mb-6">
+          <h3 className="text-2xl font-semibold text-gray-900 mb-2">{t('uploadFiles')}</h3>
+          <div className="text-sm text-gray-600 bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <div className="font-medium text-blue-800">📋 Upload Documents for:</div>
+            <div className="text-blue-700 mt-1">{getVisaTypeDisplay()}</div>
+          </div>
+        </div>
         
         {/* Upload Area */}
         <div
@@ -256,10 +295,16 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
           <p className="text-slate-600 mb-4">{t('dragDropFiles')}</p>
           <p className="text-sm text-gray-500">{t('supportedFormats')}</p>
           <div className="bg-blue-50 border border-blue-200 rounded p-3 mt-4 text-sm text-blue-700">
-            <div className="font-medium mb-1">Multi-Document Upload Instructions:</div>
+            <div className="font-medium mb-2">💡 Multi-Document Upload Instructions:</div>
             <div>• Hold Ctrl (Windows) or Cmd (Mac) while clicking to select multiple files</div>
             <div>• All selected documents will be uploaded and analyzed together</div>
             <div>• Each document will appear individually in your validation report</div>
+            <div className="mt-2 pt-2 border-t border-blue-300">
+              <div className="font-medium text-blue-800">📋 Required Documents for {getVisaTypeDisplay()}:</div>
+              <div className="text-blue-700 mt-1">
+                {getRequiredDocumentsHint()}
+              </div>
+            </div>
           </div>
           <Button variant="outline" className="mt-4">
             {t('uploadFiles')}
