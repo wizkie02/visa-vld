@@ -48,7 +48,11 @@ export const validationSessions = pgTable("validation_sessions", {
   stripePaymentIntentId: text("stripe_payment_intent_id"),
   dataProcessingConsent: boolean("data_processing_consent").notNull().default(false),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  userIdIdx: index("validation_sessions_user_id_idx").on(table.userId),
+  sessionIdIdx: index("validation_sessions_session_id_idx").on(table.sessionId),
+  createdAtIdx: index("validation_sessions_created_at_idx").on(table.createdAt),
+}));
 
 export const documentAnalysisLogs = pgTable("document_analysis_logs", {
   id: serial("id").primaryKey(),
@@ -64,7 +68,12 @@ export const documentAnalysisLogs = pgTable("document_analysis_logs", {
   shouldDelete: boolean("should_delete").notNull().default(true),
   deletedAt: timestamp("deleted_at"),
   uploadedAt: timestamp("uploaded_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  userIdIdx: index("document_analysis_logs_user_id_idx").on(table.userId),
+  sessionIdIdx: index("document_analysis_logs_session_id_idx").on(table.sessionId),
+  uploadedAtIdx: index("document_analysis_logs_uploaded_at_idx").on(table.uploadedAt),
+  shouldDeleteIdx: index("document_analysis_logs_should_delete_idx").on(table.shouldDelete),
+}));
 
 // Final reports storage - permanent storage for completed validation reports
 export const finalReports = pgTable("final_reports", {

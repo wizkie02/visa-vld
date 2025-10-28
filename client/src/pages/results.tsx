@@ -16,10 +16,10 @@ export default function Results() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--background)] flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin w-8 h-8 border-4 border-blue-700 border-t-transparent rounded-full mx-auto mb-4"></div>
-          <p className="text-slate-600">Loading validation results...</p>
+          <div className="animate-spin w-12 h-12 border-4 border-[var(--visa-primary)] border-t-transparent rounded-full mx-auto mb-6"></div>
+          <p className="text-xl text-[var(--visa-text-secondary)]">Loading validation results...</p>
         </div>
       </div>
     );
@@ -27,27 +27,27 @@ export default function Results() {
 
   if (error || !results) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <Card className="max-w-md mx-4">
-          <CardContent className="pt-6 text-center">
-            <XCircle className="w-8 h-8 text-red-500 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Results Not Found</h2>
-            <p className="text-slate-600 mb-4">
+      <div className="min-h-screen bg-[var(--background)] flex items-center justify-center">
+        <div className="card-enterprise p-8 max-w-md mx-4">
+          <div className="text-center">
+            <XCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-[var(--visa-text-primary)] mb-3">Results Not Found</h2>
+            <p className="text-[var(--visa-text-secondary)] mb-6">
               The validation results could not be loaded. This may be because the session has expired or the validation is still processing.
             </p>
             <Link href="/">
-              <Button>Return to Home</Button>
+              <button className="btn-primary">Return to Home</button>
             </Link>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[var(--background)]">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
+      <header className="glass border-b border-[var(--visa-border)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">

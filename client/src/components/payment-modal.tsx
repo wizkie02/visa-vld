@@ -7,6 +7,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CreditCard, X, Download } from "lucide-react";
+import LoadingSpinner from "@/components/loading-spinner";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/lib/i18n";
@@ -211,8 +212,11 @@ export default function PaymentModal({ data, sessionId, onClose, onPaymentSucces
       <Dialog open onOpenChange={onClose}>
         <DialogContent className="max-w-md">
           <div className="text-center py-8">
-            <div className="animate-spin w-8 h-8 border-4 border-blue-700 border-t-transparent rounded-full mx-auto mb-4"></div>
-            <p className="text-slate-600">Initializing payment...</p>
+            <LoadingSpinner
+              size="lg"
+              text="Initializing payment..."
+              className="mb-4"
+            />
           </div>
         </DialogContent>
       </Dialog>

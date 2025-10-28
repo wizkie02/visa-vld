@@ -9,6 +9,8 @@ import FileUpload from "@/components/file-upload";
 import PersonalInfoForm from "@/components/personal-info-form";
 import PaymentModal from "@/components/payment-modal";
 import VisaRequirementsDisplay from "@/components/visa-requirements-display";
+import FlagIconReal from "@/components/flag-icon-real";
+import LoadingSpinner, { CardLoader, ButtonLoading } from "@/components/loading-spinner";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,6 +18,382 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/lib/i18n";
 import { apiRequest } from "@/lib/queryClient";
 import horizontalLogo from "@assets/horizontal_2@3x_1750492153266.webp";
+
+// 🚀 Country flag mapping with emoji flags
+const COUNTRY_FLAGS: Record<string, string> = {
+  'afghanistan': '🇦🇫',
+  'albania': '🇦🇱',
+  'algeria': '🇩🇿',
+  'andorra': '🇦🇩',
+  'angola': '🇦🇴',
+  'argentina': '🇦🇷',
+  'armenia': '🇦🇲',
+  'australia': '🇦🇺',
+  'austria': '🇦🇹',
+  'azerbaijan': '🇦🇿',
+  'bahrain': '🇧🇭',
+  'bangladesh': '🇧🇩',
+  'belarus': '🇧🇾',
+  'belgium': '🇧🇪',
+  'belize': '🇧🇿',
+  'benin': '🇧🇯',
+  'bhutan': '🇧🇹',
+  'bolivia': '🇧🇴',
+  'bosnia': '🇧🇦',
+  'botswana': '🇧🇼',
+  'brazil': '🇧🇷',
+  'brunei': '🇧🇳',
+  'bulgaria': '🇧🇬',
+  'burkina-faso': '🇧🇫',
+  'burundi': '🇧🇮',
+  'cambodia': '🇰🇭',
+  'cameroon': '🇨🇲',
+  'canada': '🇨🇦',
+  'cape-verde': '🇨🇻',
+  'chad': '🇹🇩',
+  'chile': '🇨🇱',
+  'china': '🇨🇳',
+  'colombia': '🇨🇴',
+  'comoros': '🇰🇲',
+  'congo': '🇨🇬',
+  'costa-rica': '🇨🇷',
+  'croatia': '🇭🇷',
+  'cuba': '🇨🇺',
+  'cyprus': '🇨🇾',
+  'czech-republic': '🇨🇿',
+  'denmark': '🇩🇰',
+  'djibouti': '🇩🇯',
+  'dominican-republic': '🇩🇴',
+  'ecuador': '🇪🇨',
+  'egypt': '🇪🇬',
+  'el-salvador': '🇸🇻',
+  'estonia': '🇪🇪',
+  'eswatini': '🇸🇿',
+  'ethiopia': '🇪🇹',
+  'fiji': '🇫🇯',
+  'finland': '🇫🇮',
+  'france': '🇫🇷',
+  'gabon': '🇬🇦',
+  'gambia': '🇬🇲',
+  'georgia': '🇬🇪',
+  'germany': '🇩🇪',
+  'ghana': '🇬🇭',
+  'greece': '🇬🇷',
+  'guatemala': '🇬🇹',
+  'guinea': '🇬🇳',
+  'guyana': '🇬🇾',
+  'haiti': '🇭🇹',
+  'honduras': '🇭🇳',
+  'hungary': '🇭🇺',
+  'iceland': '🇮🇸',
+  'india': '🇮🇳',
+  'indonesia': '🇮🇩',
+  'iran': '🇮🇷',
+  'iraq': '🇮🇶',
+  'ireland': '🇮🇪',
+  'israel': '🇮🇱',
+  'italy': '🇮🇹',
+  'ivory-coast': '🇨🇮',
+  'jamaica': '🇯🇲',
+  'japan': '🇯🇵',
+  'jordan': '🇯🇴',
+  'kazakhstan': '🇰🇿',
+  'kenya': '🇰🇪',
+  'kuwait': '🇰🇼',
+  'kyrgyzstan': '🇰🇬',
+  'laos': '🇱🇦',
+  'latvia': '🇱🇻',
+  'lebanon': '🇱🇧',
+  'lesotho': '🇱🇸',
+  'liberia': '🇱🇷',
+  'libya': '🇱🇾',
+  'lithuania': '🇱🇹',
+  'luxembourg': '🇱🇺',
+  'madagascar': '🇲🇬',
+  'malawi': '🇲🇼',
+  'malaysia': '🇲🇾',
+  'maldives': '🇲🇻',
+  'mali': '🇲🇱',
+  'malta': '🇲🇹',
+  'mauritania': '🇲🇷',
+  'mauritius': '🇲🇺',
+  'mexico': '🇲🇽',
+  'moldova': '🇲🇩',
+  'monaco': '🇲🇨',
+  'mongolia': '🇲🇳',
+  'montenegro': '🇲🇪',
+  'morocco': '🇲🇦',
+  'mozambique': '🇲🇿',
+  'myanmar': '🇲🇲',
+  'namibia': '🇳🇦',
+  'nepal': '🇳🇵',
+  'netherlands': '🇳🇱',
+  'new-zealand': '🇳🇿',
+  'nicaragua': '🇳🇮',
+  'niger': '🇳🇪',
+  'nigeria': '🇳🇬',
+  'north-korea': '🇰🇵',
+  'north-macedonia': '🇲🇰',
+  'norway': '🇳🇴',
+  'oman': '🇴🇲',
+  'pakistan': '🇵🇰',
+  'panama': '🇵🇦',
+  'papua-new-guinea': '🇵🇬',
+  'paraguay': '🇵🇾',
+  'peru': '🇵🇪',
+  'philippines': '🇵🇭',
+  'poland': '🇵🇱',
+  'portugal': '🇵🇹',
+  'qatar': '🇶🇦',
+  'romania': '🇷🇴',
+  'russia': '🇷🇺',
+  'rwanda': '🇷🇼',
+  'samoa': '🇼🇸',
+  'san-marino': '🇸🇲',
+  'saudi-arabia': '🇸🇦',
+  'senegal': '🇸🇳',
+  'serbia': '🇷🇸',
+  'seychelles': '🇸🇨',
+  'sierra-leone': '🇸🇱',
+  'singapore': '🇸🇬',
+  'slovakia': '🇸🇰',
+  'slovenia': '🇸🇮',
+  'solomon-islands': '🇸🇧',
+  'somalia': '🇸🇴',
+  'south-africa': '🇿🇦',
+  'south-korea': '🇰🇷',
+  'south-sudan': '🇸🇸',
+  'spain': '🇪🇸',
+  'sri-lanka': '🇱🇰',
+  'sudan': '🇸🇩',
+  'suriname': '🇸🇷',
+  'sweden': '🇸🇪',
+  'switzerland': '🇨🇭',
+  'syria': '🇸🇾',
+  'taiwan': '🇹🇼',
+  'tajikistan': '🇹🇯',
+  'tanzania': '🇹🇿',
+  'thailand': '🇹🇭',
+  'timor-leste': '🇹🇱',
+  'togo': '🇹🇬',
+  'tonga': '🇹🇴',
+  'trinidad-tobago': '🇹🇹',
+  'tunisia': '🇹🇳',
+  'turkey': '🇹🇷',
+  'turkmenistan': '🇹🇲',
+  'uganda': '🇺🇬',
+  'ukraine': '🇺🇦',
+  'uae': '🇦🇪',
+  'uk': '🇬🇧',
+  'usa': '🇺🇸',
+  'uruguay': '🇺🇾',
+  'uzbekistan': '🇺🇿',
+  'vanuatu': '🇻🇺',
+  'vatican': '🇻🇦',
+  'venezuela': '🇻🇪',
+  'vietnam': '🇻🇳',
+  'yemen': '🇾🇪',
+  'zambia': '🇿🇲',
+  'zimbabwe': '🇿🇼'
+};
+
+// Helper function to capitalize first letter of each word
+const capitalizeWords = (str: string): string => {
+  return str
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
+
+// 🚀 Full country names mapping
+const FULL_COUNTRY_NAMES: Record<string, string> = {
+  'afghanistan': 'Afghanistan',
+  'albania': 'Albania',
+  'algeria': 'Algeria',
+  'andorra': 'Andorra',
+  'angola': 'Angola',
+  'argentina': 'Argentina',
+  'armenia': 'Armenia',
+  'australia': 'Australia',
+  'austria': 'Austria',
+  'azerbaijan': 'Azerbaijan',
+  'bahrain': 'Bahrain',
+  'bangladesh': 'Bangladesh',
+  'belarus': 'Belarus',
+  'belgium': 'Belgium',
+  'belize': 'Belize',
+  'benin': 'Benin',
+  'bhutan': 'Bhutan',
+  'bolivia': 'Bolivia',
+  'bosnia': 'Bosnia and Herzegovina',
+  'botswana': 'Botswana',
+  'brazil': 'Brazil',
+  'brunei': 'Brunei Darussalam',
+  'bulgaria': 'Bulgaria',
+  'burkina-faso': 'Burkina Faso',
+  'burundi': 'Burundi',
+  'cambodia': 'Cambodia',
+  'cameroon': 'Cameroon',
+  'canada': 'Canada',
+  'cape-verde': 'Cape Verde',
+  'chad': 'Chad',
+  'chile': 'Chile',
+  'china': 'China',
+  'colombia': 'Colombia',
+  'comoros': 'Comoros',
+  'congo': 'Congo',
+  'costa-rica': 'Costa Rica',
+  'croatia': 'Croatia',
+  'cuba': 'Cuba',
+  'cyprus': 'Cyprus',
+  'czech-republic': 'Czech Republic',
+  'denmark': 'Denmark',
+  'djibouti': 'Djibouti',
+  'dominican-republic': 'Dominican Republic',
+  'ecuador': 'Ecuador',
+  'egypt': 'Egypt',
+  'el-salvador': 'El Salvador',
+  'estonia': 'Estonia',
+  'eswatini': 'Eswatini',
+  'ethiopia': 'Ethiopia',
+  'fiji': 'Fiji',
+  'finland': 'Finland',
+  'france': 'France',
+  'gabon': 'Gabon',
+  'gambia': 'Gambia',
+  'georgia': 'Georgia',
+  'germany': 'Germany',
+  'ghana': 'Ghana',
+  'greece': 'Greece',
+  'guatemala': 'Guatemala',
+  'guinea': 'Guinea',
+  'guyana': 'Guyana',
+  'haiti': 'Haiti',
+  'honduras': 'Honduras',
+  'hungary': 'Hungary',
+  'iceland': 'Iceland',
+  'india': 'India',
+  'indonesia': 'Indonesia',
+  'iran': 'Iran',
+  'iraq': 'Iraq',
+  'ireland': 'Ireland',
+  'israel': 'Israel',
+  'italy': 'Italy',
+  'ivory-coast': 'Ivory Coast',
+  'jamaica': 'Jamaica',
+  'japan': 'Japan',
+  'jordan': 'Jordan',
+  'kazakhstan': 'Kazakhstan',
+  'kenya': 'Kenya',
+  'kuwait': 'Kuwait',
+  'kyrgyzstan': 'Kyrgyzstan',
+  'laos': 'Laos',
+  'latvia': 'Latvia',
+  'lebanon': 'Lebanon',
+  'lesotho': 'Lesotho',
+  'liberia': 'Liberia',
+  'libya': 'Libya',
+  'lithuania': 'Lithuania',
+  'luxembourg': 'Luxembourg',
+  'madagascar': 'Madagascar',
+  'malawi': 'Malawi',
+  'malaysia': 'Malaysia',
+  'maldives': 'Maldives',
+  'mali': 'Mali',
+  'malta': 'Malta',
+  'mauritania': 'Mauritania',
+  'mauritius': 'Mauritius',
+  'mexico': 'Mexico',
+  'moldova': 'Moldova',
+  'monaco': 'Monaco',
+  'mongolia': 'Mongolia',
+  'montenegro': 'Montenegro',
+  'morocco': 'Morocco',
+  'mozambique': 'Mozambique',
+  'myanmar': 'Myanmar',
+  'namibia': 'Namibia',
+  'nepal': 'Nepal',
+  'netherlands': 'Netherlands',
+  'new-zealand': 'New Zealand',
+  'nicaragua': 'Nicaragua',
+  'niger': 'Niger',
+  'nigeria': 'Nigeria',
+  'north-korea': 'North Korea',
+  'north-macedonia': 'North Macedonia',
+  'norway': 'Norway',
+  'oman': 'Oman',
+  'pakistan': 'Pakistan',
+  'panama': 'Panama',
+  'papua-new-guinea': 'Papua New Guinea',
+  'paraguay': 'Paraguay',
+  'peru': 'Peru',
+  'philippines': 'Philippines',
+  'poland': 'Poland',
+  'portugal': 'Portugal',
+  'qatar': 'Qatar',
+  'romania': 'Romania',
+  'russia': 'Russia',
+  'rwanda': 'Rwanda',
+  'samoa': 'Samoa',
+  'san-marino': 'San Marino',
+  'saudi-arabia': 'Saudi Arabia',
+  'senegal': 'Senegal',
+  'serbia': 'Serbia',
+  'seychelles': 'Seychelles',
+  'sierra-leone': 'Sierra Leone',
+  'singapore': 'Singapore',
+  'slovakia': 'Slovakia',
+  'slovenia': 'Slovenia',
+  'solomon-islands': 'Solomon Islands',
+  'somalia': 'Somalia',
+  'south-africa': 'South Africa',
+  'south-korea': 'South Korea',
+  'south-sudan': 'South Sudan',
+  'spain': 'Spain',
+  'sri-lanka': 'Sri Lanka',
+  'sudan': 'Sudan',
+  'suriname': 'Suriname',
+  'sweden': 'Sweden',
+  'switzerland': 'Switzerland',
+  'syria': 'Syria',
+  'taiwan': 'Taiwan',
+  'tajikistan': 'Tajikistan',
+  'tanzania': 'Tanzania',
+  'thailand': 'Thailand',
+  'timor-leste': 'Timor-Leste',
+  'togo': 'Togo',
+  'tonga': 'Tonga',
+  'trinidad-tobago': 'Trinidad and Tobago',
+  'tunisia': 'Tunisia',
+  'turkey': 'Turkey',
+  'turkmenistan': 'Turkmenistan',
+  'uganda': 'Uganda',
+  'ukraine': 'Ukraine',
+  'uae': 'United Arab Emirates',
+  'uk': 'United Kingdom',
+  'usa': 'United States',
+  'uruguay': 'Uruguay',
+  'uzbekistan': 'Uzbekistan',
+  'vanuatu': 'Vanuatu',
+  'vatican': 'Vatican City',
+  'venezuela': 'Venezuela',
+  'vietnam': 'Vietnam',
+  'yemen': 'Yemen',
+  'zambia': 'Zambia',
+  'zimbabwe': 'Zimbabwe'
+};
+
+// Helper function to get country display with flag
+const getCountryDisplay = (countryKey: string) => {
+  const fullName = FULL_COUNTRY_NAMES[countryKey] || capitalizeWords(countryKey.replace(/-/g, ' '));
+  return fullName;
+};
+
+// Helper function to get nationality display with flag
+const getNationalityDisplay = (nationalityKey: string) => {
+  const fullName = FULL_COUNTRY_NAMES[nationalityKey] || nationalityKey;
+  return fullName;
+};
 
 export interface ValidationData {
   country: string;
@@ -369,27 +747,27 @@ export default function Validation() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+    <div className="min-h-screen bg-[var(--background)]">
+      {/* 🚀 Enterprise Header 2.0 */}
+      <header className="glass border-b border-[var(--visa-border)]">
+        <div className="container-premium">
+          <div className="flex justify-between items-center h-16 py-3">
             <div className="flex items-center space-x-3">
               <Link href="/">
-                <Button variant="ghost" size="sm">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back
-                </Button>
+                <button className="btn-secondary flex items-center space-x-2 px-4 py-2">
+                  <ArrowLeft className="h-4 w-4" />
+                  <span>Back</span>
+                </button>
               </Link>
-              <img src={horizontalLogo} alt="Visa Validator" className="h-10" />
+              <img src={horizontalLogo} alt="Visa Validator" className="h-10 w-auto" />
             </div>
             <div className="flex items-center space-x-4">
-              <div className="text-sm text-slate-600">
-                Step {currentStep} of 7
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[var(--visa-primary-light)] border border-[var(--visa-primary)]">
+                <div className="w-1.5 h-1.5 bg-[var(--visa-primary)] rounded-full animate-pulse"></div>
+                <span className="text-sm font-semibold text-[var(--visa-primary-dark)]">Step {currentStep} of 7</span>
               </div>
-              <Button 
-                variant="outline" 
-                size="sm"
+              <button
+                className="btn-secondary flex items-center space-x-2 px-4 py-2"
                 onClick={() => {
                   localStorage.removeItem('validation_data');
                   localStorage.removeItem('validation_current_step');
@@ -402,17 +780,20 @@ export default function Validation() {
                   });
                   window.location.reload();
                 }}
-                className="text-[#1C4473] border-[#1C4473] hover:bg-[#1C4473] hover:text-white"
               >
-                Start Over
-              </Button>
+                <span>Start Over</span>
+              </button>
             </div>
           </div>
         </div>
       </header>
 
       {/* Step Indicator */}
-      <StepIndicator currentStep={currentStep} onStepClick={handleStepClick} />
+      <StepIndicator
+        currentStep={currentStep}
+        onStepClick={handleStepClick}
+        validationData={validationData}
+      />
 
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -469,8 +850,14 @@ export default function Validation() {
                 {/* Destination Summary */}
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                   <h4 className="font-semibold text-blue-900 mb-2">Destination & Visa Type</h4>
-                  <p className="text-blue-800">
-                    Country: {validationData.country} • Visa Type: {validationData.visaType}
+                  <p className="text-blue-800 flex items-center gap-2">
+                    <span>Country:</span>
+                    <span className="flex items-center gap-1">
+                      <FlagIconReal country={validationData.country} size="sm" />
+                      <span>{getCountryDisplay(validationData.country)}</span>
+                    </span>
+                    <span className="mx-2">•</span>
+                    <span>Visa Type: {validationData.visaType}</span>
                   </p>
                 </div>
 
@@ -478,7 +865,7 @@ export default function Validation() {
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                   <h4 className="font-semibold text-green-900 mb-2">Uploaded Documents</h4>
                   <p className="text-green-800">
-                    {validationData.uploadedFiles.length} document(s) uploaded
+                    {validationData.uploadedFiles.length} Document{validationData.uploadedFiles.length !== 1 ? 's' : ''} Uploaded
                   </p>
                   <ul className="text-sm text-green-700 mt-2">
                     {validationData.uploadedFiles.map((file, index) => (
@@ -493,7 +880,13 @@ export default function Validation() {
                   <div className="text-purple-800 text-sm space-y-1">
                     <p>Name: {validationData.personalInfo.applicantName}</p>
                     <p>Passport: {validationData.personalInfo.passportNumber}</p>
-                    <p>Nationality: {validationData.personalInfo.nationality}</p>
+                    <p className="flex items-center gap-1">
+                    <span>Nationality:</span>
+                    <span className="flex items-center gap-1">
+                      <FlagIconReal country={validationData.personalInfo.nationality} size="sm" />
+                      <span>{getNationalityDisplay(validationData.personalInfo.nationality)}</span>
+                    </span>
+                  </p>
                     <p>Travel Date: {validationData.personalInfo.travelDate}</p>
                     <p>Duration: {validationData.personalInfo.stayDuration} days</p>
                   </div>
@@ -514,14 +907,15 @@ export default function Validation() {
                 <Button type="button" variant="outline" onClick={handlePrevious} className="flex-1">
                   Previous
                 </Button>
-                <Button 
-                  type="button"
-                  onClick={handleValidate} 
+                <ButtonLoading
+                  loading={isValidating}
+                  onClick={handleValidate}
                   disabled={isValidating}
-                  className="flex-1 bg-blue-700 hover:bg-blue-800"
+                  className="flex-1"
+                  size="lg"
                 >
-                  {isValidating ? "Analyzing Documents..." : "Start Validation"}
-                </Button>
+                  Start Validation
+                </ButtonLoading>
               </div>
             </CardContent>
           </Card>
@@ -594,15 +988,15 @@ export default function Validation() {
                       <p className="text-green-700 text-sm">Your professional validation report is now ready for download.</p>
                     </div>
                     
-                    <Button 
-                      type="button"
-                      onClick={downloadValidationReport} 
+                    <ButtonLoading
+                      loading={false}
+                      onClick={downloadValidationReport}
                       className="w-full bg-green-600 hover:bg-green-700"
                       size="lg"
                     >
                       <Download className="w-4 h-4 mr-2" />
                       Download Complete Report
-                    </Button>
+                    </ButtonLoading>
                     
                     <div className="flex space-x-4">
                       <Button type="button" variant="outline" onClick={handlePrevious} className="flex-1">
@@ -622,9 +1016,14 @@ export default function Validation() {
                       <Button type="button" variant="outline" onClick={handlePrevious} className="flex-1">
                         Back to Review
                       </Button>
-                      <Button type="button" onClick={handlePayment} className="flex-1 bg-blue-700 hover:bg-blue-800">
+                      <ButtonLoading
+                        loading={false}
+                        onClick={handlePayment}
+                        className="flex-1 bg-blue-700 hover:bg-blue-800"
+                        size="lg"
+                      >
                         Pay & Get Full Report
-                      </Button>
+                      </ButtonLoading>
                     </div>
                     
                     <p className="text-xs text-gray-500 text-center">
@@ -677,6 +1076,36 @@ export default function Validation() {
           </Card>
         )}
       </main>
+
+      {/* Loading Overlay for Validation */}
+      {isValidating && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-8 max-w-md w-full mx-4 loading-enterprise">
+            <div className="text-center">
+              <LoadingSpinner
+                size="lg"
+                text="Analyzing Your Documents..."
+                className="mb-4"
+              />
+              <div className="space-y-3 text-sm text-gray-600">
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span>Scanning document content</span>
+                </div>
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <span>Cross-referencing visa requirements</span>
+                </div>
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                  <span>Generating validation report</span>
+                </div>
+              </div>
+              <p className="text-xs text-gray-500 mt-4">This usually takes 10-30 seconds</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Payment Modal */}
       {showPaymentModal && sessionId && (

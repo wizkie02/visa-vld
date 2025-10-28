@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, FileText, AlertCircle, CheckCircle2 } from "lucide-react";
+import { FileText, AlertCircle, CheckCircle2 } from "lucide-react";
+import LoadingSpinner from "@/components/loading-spinner";
 import { useLanguage } from "@/lib/i18n";
 
 interface DocumentRequirement {
@@ -118,10 +119,10 @@ export default function RequiredDocumentsChecklist({
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-8">
-            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-            <span className="ml-2 text-muted-foreground">
-              {t('loadingDocumentRequirements')}
-            </span>
+            <LoadingSpinner
+              size="md"
+              text={t('loadingDocumentRequirements') || 'Loading document requirements...'}
+            />
           </div>
         </CardContent>
       </Card>

@@ -1,68 +1,238 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;900&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* 🚀 Custom Loading Animations */
+@keyframes bounce-loading {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-bounce {
+  animation: bounce-loading 1.4s infinite ease-in-out both;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 1;
+  }
+  40% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
+
+.pulse-ring {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* 🚀 Enterprise Loading States */
+.loading-enterprise {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.loading-pulse-soft {
+  animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* 🚀 Visa-themed Loading Colors */
+.visa-loading-gradient {
+  background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 🚀 Smooth transitions for loading states */
+.loading-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 🚀 Enterprise card loading effect */
+.card-loading-skeleton {
+  background: linear-gradient(90deg, #f3f4f6 0px, #e5e7eb 40px, #f3f4f6 80px);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
 :root {
-  /* Visa Validator Brand Colors from guidelines */
-  --background: hsl(210, 100%, 98%); /* #F2F7FC */
-  --foreground: hsl(207, 68%, 35%); /* #1C4473 */
-  --muted: hsl(0, 0%, 87%); /* #DEDEDE */
-  --muted-foreground: hsl(207, 68%, 35%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(207, 68%, 35%);
-  --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(207, 68%, 35%);
-  --border: hsl(0, 0%, 87%); /* #DEDEDE */
-  --input: hsl(0, 0%, 87%); /* #DEDEDE */
-  --primary: hsl(207, 68%, 35%); /* #1C4473 */
-  --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(145, 100%, 48%); /* #1FA947 */
-  --secondary-foreground: hsl(0, 0%, 100%);
-  --accent: hsl(145, 100%, 48%); /* #1FA947 */
-  --accent-foreground: hsl(0, 0%, 100%);
-  --destructive: hsl(0, 84.2%, 60.2%);
-  --destructive-foreground: hsl(0, 0%, 100%);
-  --ring: hsl(145, 100%, 48%); /* #1FA947 */
-  --radius: 0.5rem;
-  
-  /* Visa Validator specific colors */
-  --visa-primary: hsl(207, 68%, 35%); /* #1C4473 */
-  --visa-accent: hsl(145, 100%, 48%); /* #1FA947 */
-  --visa-background: hsl(210, 100%, 98%); /* #F2F7FC */
-  --visa-surface: hsl(0, 0%, 87%); /* #DEDEDE */
-  --visa-success: hsl(120, 100%, 18%); /* #002400 */
+  /* 🚀 Enterprise Visa Validator 2.0 - Premium Green & White Theme */
+
+  /* Core Brand Colors - Professional Green Palette */
+  --background: #FAFAFA; /* Pure white with subtle warmth */
+  --foreground: #1A1A1A; /* Deep charcoal for premium contrast */
+
+  --muted: #F8F9FA; /* Clean light gray background */
+  --muted-foreground: #6C757D; /* Sophisticated gray text */
+
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A1A;
+
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+
+  --border: #E9ECEF; /* Subtle border color */
+  --input: #F8F9FA; /* Clean input background */
+
+  /* Primary Green - Modern Trust & Success */
+  --primary: #10B981; /* Emerald 500 - Professional green */
+  --primary-hover: #059669; /* Emerald 600 - Darker on hover */
+  --primary-light: #ECFDF5; /* Emerald 50 - Light green background */
+  --primary-foreground: #FFFFFF;
+
+  /* Secondary - Sophisticated Accent */
+  --secondary: #F3F4F6; /* Gray 100 - Premium light gray */
+  --secondary-hover: #E5E7EB; /* Gray 200 */
+  --secondary-light: #FAFAFA; /* Ultra light background */
+  --secondary-foreground: #1F2937; /* Gray 800 */
+
+  /* Accent Colors - Modern Gradient Support */
+  --accent: #D1FAE5; /* Emerald 100 - Soft accent */
+  --accent-foreground: #065F46; /* Emerald 800 - Deep green */
+
+  /* Status Colors */
+  --destructive: #EF4444; /* Red 500 */
+  --destructive-foreground: #FFFFFF;
+
+  --warning: #F59E0B; /* Amber 500 */
+  --warning-foreground: #FFFFFF;
+
+  --success: #10B981; /* Emerald 500 */
+  --success-foreground: #FFFFFF;
+
+  --info: #3B82F6; /* Blue 500 */
+  --info-foreground: #FFFFFF;
+
+  /* Design System */
+  --ring: #10B981; /* Focus ring matches primary green */
+  --radius: 0.875rem; /* Modern rounded corners */
+
+  /* Enterprise Color Variants */
+  --visa-primary: #10B981; /* Main brand green */
+  --visa-primary-dark: #059669; /* Dark green */
+  --visa-primary-light: #ECFDF5; /* Light green */
+  --visa-accent: #6366F1; /* Indigo 500 - Modern accent */
+  --visa-surface: #FFFFFF; /* Pure white surfaces */
+  --visa-surface-alt: #F9FAFB; /* Alternative surface */
+  --visa-border: #E5E7EB; /* Professional border */
+  --visa-text-primary: #111827; /* Gray 900 */
+  --visa-text-secondary: #6B7280; /* Gray 500 */
+  --visa-text-muted: #9CA3AF; /* Gray 400 */
+
+  /* Gradient Definitions */
+  --gradient-primary: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  --gradient-hero: linear-gradient(135deg, #ECFDF5 0%, #FFFFFF 50%, #F3F4F6 100%);
+  --gradient-accent: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  --gradient-success: linear-gradient(135deg, #10B981 0%, #059669 50%, #047857 100%);
+
+  /* Shadow System */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 20px rgba(16, 185, 129, 0.15);
 }
 
 .dark {
-  --background: hsl(240, 10%, 3.9%);
-  --foreground: hsl(0, 0%, 98%);
-  --muted: hsl(240, 3.7%, 15.9%);
-  --muted-foreground: hsl(240, 5%, 64.9%);
-  --popover: hsl(240, 10%, 3.9%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(240, 10%, 3.9%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(240, 3.7%, 15.9%);
-  --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(211, 100%, 99%);
-  --secondary: hsl(240, 3.7%, 15.9%);
-  --secondary-foreground: hsl(0, 0%, 98%);
-  --accent: hsl(240, 3.7%, 15.9%);
-  --accent-foreground: hsl(0, 0%, 98%);
-  --destructive: hsl(0, 62.8%, 30.6%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(240, 4.9%, 83.9%);
-  --radius: 0.5rem;
-  
-  /* Dark mode custom colors */
-  --visa-primary: hsl(222, 84%, 55%);
-  --visa-primary-foreground: hsl(210, 40%, 98%);
-  --visa-secondary: hsl(220, 14%, 61%);
-  --visa-accent: hsl(142, 76%, 46%);
-  --visa-neutral: hsl(240, 10%, 3.9%);
+  /* Dark mode for enterprise theme */
+  --background: #0F172A; /* Slate 900 */
+  --foreground: #F8FAFC; /* Slate 50 */
+  --muted: #1E293B; /* Slate 800 */
+  --muted-foreground: #94A3B8; /* Slate 400 */
+  --popover: #1E293B; /* Slate 800 */
+  --popover-foreground: #F8FAFC; /* Slate 50 */
+  --card: #1E293B; /* Slate 800 */
+  --card-foreground: #F8FAFC; /* Slate 50 */
+  --border: #334155; /* Slate 700 */
+  --input: #334155; /* Slate 700 */
+  --primary: #10B981; /* Keep emerald green in dark */
+  --primary-foreground: #FFFFFF;
+  --secondary: #334155; /* Slate 700 */
+  --secondary-foreground: #F8FAFC; /* Slate 50 */
+  --accent: #064E3B; /* Emerald 900 */
+  --accent-foreground: #ECFDF5; /* Emerald 50 */
+  --destructive: #DC2626; /* Red 600 */
+  --destructive-foreground: #FFFFFF;
+  --warning: #D97706; /* Amber 600 */
+  --warning-foreground: #FFFFFF;
+  --success: #10B981; /* Emerald 500 */
+  --success-foreground: #FFFFFF;
+  --info: #2563EB; /* Blue 600 */
+  --info-foreground: #FFFFFF;
+  --ring: #10B981; /* Emerald 500 */
+  --radius: 0.875rem;
+
+  /* Dark mode enterprise variants */
+  --visa-primary: #10B981;
+  --visa-primary-dark: #059669;
+  --visa-primary-light: #064E3B;
+  --visa-accent: #6366F1;
+  --visa-surface: #1E293B;
+  --visa-surface-alt: #0F172A;
+  --visa-border: #334155;
+  --visa-text-primary: #F8FAFC;
+  --visa-text-secondary: #CBD5E1;
+  --visa-text-muted: #64748B;
+
+  /* Dark mode gradients */
+  --gradient-primary: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  --gradient-hero: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%);
+  --gradient-accent: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  --gradient-success: linear-gradient(135deg, #10B981 0%, #059669 50%, #047857 100%);
+
+  /* Dark mode shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 20px rgba(16, 185, 129, 0.3);
 }
 
 @layer base {
@@ -72,76 +242,359 @@
 
   body {
     @apply antialiased bg-background text-foreground;
-    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    font-weight: 500;
-    font-size: 12pt;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Visa Validator Brand Typography */
+  /* 🚀 Enterprise Typography 2.0 - Premium & Professional */
   h1 {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 900; /* Black */
-    font-size: 24pt;
-    color: hsl(var(--primary));
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    color: var(--visa-text-primary);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   h2 {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 700; /* Bold */
-    font-size: 16pt;
-    color: hsl(var(--primary));
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--visa-text-primary);
   }
 
   h3 {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 600; /* SemiBold */
-    font-size: 12pt;
-    color: hsl(var(--primary));
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.125rem, 1.8vw, 1.5rem);
+    line-height: 1.4;
+    letter-spacing: -0.012em;
+    color: var(--visa-text-primary);
+  }
+
+  h4 {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1rem, 1.3vw, 1.25rem);
+    line-height: 1.5;
+    color: var(--visa-text-primary);
   }
 
   p {
     font-family: 'Inter', sans-serif;
-    font-weight: 500; /* Medium */
-    font-size: 12pt;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--visa-text-secondary);
   }
 
   .description {
     font-family: 'Inter', sans-serif;
-    font-weight: 400; /* Regular */
-    font-size: 12pt;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--visa-text-muted);
+  }
+
+  /* Enterprise smooth transitions */
+  * {
+    transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
 @layer utilities {
+  /* 🚀 Enterprise 2.0 Utility Classes - Premium Design System */
+
+  /* Brand Colors */
   .bg-visa-primary {
     background-color: var(--visa-primary);
   }
-  
+
   .text-visa-primary {
     color: var(--visa-primary);
   }
-  
+
   .border-visa-primary {
     border-color: var(--visa-primary);
   }
-  
-  .bg-visa-secondary {
-    background-color: var(--visa-secondary);
+
+  .bg-visa-green {
+    background-color: var(--visa-primary);
   }
-  
-  .text-visa-secondary {
-    color: var(--visa-secondary);
+
+  .text-visa-green {
+    color: var(--visa-primary);
   }
-  
-  .bg-visa-accent {
-    background-color: var(--visa-accent);
+
+  /* Modern Glass Morphism */
+  .glass {
+    backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow-lg);
   }
-  
-  .text-visa-accent {
-    color: var(--visa-accent);
+
+  .glass-dark {
+    backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow-xl);
   }
-  
-  .bg-visa-neutral {
-    background-color: var(--visa-neutral);
+
+  /* Premium Gradients */
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .gradient-accent {
+    background: var(--gradient-accent);
+  }
+
+  .gradient-success {
+    background: var(--gradient-success);
+  }
+
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Enterprise Card System */
+  .card-premium {
+    background: var(--visa-surface);
+    border: 1px solid var(--visa-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-premium:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-4px);
+  }
+
+  .card-enterprise {
+    background: var(--visa-surface);
+    border: 1px solid var(--visa-border);
+    border-radius: calc(var(--radius) * 1.5);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-enterprise::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+  }
+
+  .card-enterprise:hover {
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    transform: translateY(-2px);
+  }
+
+  /* Modern Button System */
+  .btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: calc(var(--radius) * 0.75);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    box-shadow: var(--shadow);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-primary:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: var(--visa-surface);
+    color: var(--visa-text-primary);
+    border: 1px solid var(--visa-border);
+    border-radius: calc(var(--radius) * 0.75);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-secondary:hover {
+    background: var(--visa-surface-alt);
+    box-shadow: var(--shadow);
+    transform: translateY(-1px);
+  }
+
+  /* Animation Classes */
+  .btn-scale {
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-scale:active {
+    transform: scale(0.98);
+  }
+
+  .btn-scale:hover {
+    transform: scale(1.02);
+  }
+
+  /* Focus Rings */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    focus-ring-color: var(--visa-primary);
+    ring-offset-color: var(--visa-surface);
+  }
+
+  /* Enterprise Status Badges */
+  .badge-success {
+    background: var(--visa-primary-light);
+    color: var(--visa-primary-dark);
+    border: 1px solid var(--visa-primary);
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: calc(var(--radius) * 0.5);
+    font-size: 0.875rem;
+  }
+
+  .badge-warning {
+    background: #FEF3C7;
+    color: #92400E;
+    border: 1px solid #F59E0B;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: calc(var(--radius) * 0.5);
+    font-size: 0.875rem;
+  }
+
+  .badge-error {
+    background: #FEE2E2;
+    color: #991B1B;
+    border: 1px solid #EF4444;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: calc(var(--radius) * 0.5);
+    font-size: 0.875rem;
+  }
+
+  .badge-info {
+    background: #DBEAFE;
+    color: #1E40AF;
+    border: 1px solid #3B82F6;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: calc(var(--radius) * 0.5);
+    font-size: 0.875rem;
+  }
+
+  /* Modern Animations */
+  .fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .slide-up {
+    animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .scale-in {
+    animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .float-animation {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Keyframes */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Container Classes */
+  .container-enterprise {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .container-premium {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Text Shadows */
+  .text-shadow-sm {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
 }

@@ -3,6 +3,9 @@ import cookieParser from "cookie-parser";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { storage } from "./storage";
+import { passportIndexCache } from "./passport-index-loader";
+import CacheOptimizer from "./enhanced-cache-service";
+import PerformanceMonitor, { performanceTracking, BackgroundMonitor } from "./performance-monitor";
 
 const app = express();
 
@@ -12,6 +15,9 @@ app.set('trust proxy', 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Add performance tracking middleware
+app.use(performanceTracking);
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -59,7 +65,37 @@ async function cleanupOldDocuments() {
 setInterval(cleanupOldDocuments, 60 * 60 * 1000); // Run every hour
 cleanupOldDocuments(); // Run immediately on startup
 
+// ✅ Initialize Passport Index CSV cache on server start
+async function initializeRAGSystem() {
+  try {
+    log('[RAG] Initializing Passport Index CSV cache...');
+    await passportIndexCache.init();
+    log('[RAG] ✅ CSV cache initialized successfully');
+  } catch (error) {
+    log(`[RAG] ⚠️ Warning: Could not initialize CSV cache: ${error}`);
+    log('[RAG] System will fallback to API-only mode');
+  }
+}
+
 (async () => {
+  // Initialize RAG system before starting server
+  await initializeRAGSystem();
+
+  // Initialize Enhanced Cache Optimizer
+  const cacheOptimizer = CacheOptimizer.getInstance();
+  cacheOptimizer.start();
+  log("[CACHE] Enhanced cache optimizer started");
+
+  // Initialize Background Performance Monitor
+  const backgroundMonitor = BackgroundMonitor.getInstance();
+  backgroundMonitor.start();
+  log("[PERF] Background performance monitor started");
+
+  // Visa Data Manager will be available later via API
+  // visaDataManager.initialize().catch(error => {
+  //   log(`[VISA-DATA] Failed to initialize visa data manager: ${error}`);
+  // });
+
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
@@ -82,12 +118,21 @@ cleanupOldDocuments(); // Run immediately on startup
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
-  const port = 5000;
-  server.listen({
+  const port = process.env.PORT || 5000;
+
+  // Windows doesn't support reusePort, use conditional config
+  const isWindows = process.platform === 'win32';
+  const listenOptions: any = {
     port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
+    host: "0.0.0.0"
+  };
+
+  // Only add reusePort on non-Windows platforms
+  if (!isWindows) {
+    listenOptions.reusePort = true;
+  }
+
+  server.listen(listenOptions, () => {
     log(`serving on port ${port}`);
   });
 })();

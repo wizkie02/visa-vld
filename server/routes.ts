@@ -1,4 +1,5 @@
 import type { Express } from "express";
+import express from "express";
 import { createServer, type Server } from "http";
 import { scrypt, randomBytes } from "crypto";
 import { promisify } from "util";
@@ -7,19 +8,37 @@ import multer from "multer";
 import { storage } from "./storage";
 import { setupNewAuth, requireNewAuth, requireNewAdmin } from "./new-auth";
 import { personalInfoSchema } from "@shared/schema";
+import {
+  apiLimiter,
+  uploadLimiter,
+  validationLimiter,
+  requirementsLimiter,
+  authLimiter
+} from "./rate-limiter";
+import {
+  getCachedVisaRequirements,
+  getCachedVisaTypes,
+  clearAllCaches,
+  getCacheStats
+} from "./cache";
+import { smartVisaService } from "./smart-visa-service";
+import { setupVisaDataAPI } from "./visa-data-api";
+import { visaDataManager } from "./visa-data-manager";
+import { logger } from "./logger";
+import PerformanceMonitor from "./performance-monitor";
+import { visaRequirementsCache, visaTypesCache, officialDataCache } from "./enhanced-cache-service";
 
 const scryptAsync = promisify(scrypt);
 import { nanoid } from "nanoid";
 import { analyzeDocument, validateDocumentsAgainstRequirements, getVisaRequirementsOnline } from "./openai-service";
-import { fetchCurrentVisaRequirements, generateRequirementsChecklist } from "./visa-requirements-service";
 import { generateValidationReport, generateRequirementsChecklist as generateChecklistHtml } from "./document-generator";
 import { fetchAvailableVisaTypes } from "./visa-types-service";
+import { fetchAvailableVisaTypesFast } from "./fast-visa-types-service";
 import { getVisaSpecificDocuments } from "./dynamic-requirements-service";
 import { generateValidationReportMarkdown, generateRequirementsChecklistMarkdown } from "./markdown-generator-fixed";
 import { generateValidationReportPDF } from "./jspdf-generator";
 import { generateRequirementsChecklistBuffer } from "./simple-pdf-generator";
 import { generateRequirementsChecklistPDF } from "./requirements-pdf-generator";
-import { generateValidationReportHTML, generateRequirementsChecklistHTML } from "./working-pdf-generator";
 import { generatePDF } from "./pdfkit-generator";
 import puppeteer from "puppeteer";
 import { checkVFSOutsourcing } from "./vfs-outsourcing-service";
@@ -60,6 +79,9 @@ const upload = multer({
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Apply general API rate limiting to all /api routes
+  app.use('/api/', apiLimiter);
+
   // Auth middleware - setupNewAuth with Authorization headers
   setupNewAuth(app);
 
@@ -150,40 +172,137 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Visa types API endpoint - supports both query and path parameters
-  app.get("/api/visa-types", async (req, res) => {
-    console.log("Visa types API endpoint hit - GET /api/visa-types");
+  // Performance monitoring endpoint for admin
+  app.get("/api/admin/performance", requireNewAdmin, async (req, res) => {
+    try {
+      const monitor = PerformanceMonitor.getInstance();
+      const systemHealth = monitor.getSystemHealth();
+      const metrics = monitor.getMetrics();
+      const slowestEndpoints = monitor.getSlowestEndpoints(5);
+      const highestErrors = monitor.getHighestErrorEndpoints(5);
+
+      // Get cache statistics
+      const reqCacheStats = visaRequirementsCache.getStats();
+      const typesCacheStats = visaTypesCache.getStats();
+      const officialCacheStats = officialDataCache.getStats();
+
+      res.json({
+        systemHealth,
+        metrics,
+        slowestEndpoints,
+        highestErrors,
+        cacheStats: {
+          visaRequirements: reqCacheStats,
+          visaTypes: typesCacheStats,
+          officialData: officialCacheStats
+        },
+        performanceSummary: monitor.getPerformanceSummary()
+      });
+    } catch (error) {
+      console.error("Error fetching performance metrics:", error);
+      res.status(500).json({ message: "Failed to fetch performance metrics" });
+    }
+  });
+
+  // Clear cache endpoint for admin
+  app.post("/api/admin/clear-cache", requireNewAdmin, async (req, res) => {
+    try {
+      const { cacheType } = req.body;
+
+      if (cacheType === 'all') {
+        visaRequirementsCache.clear();
+        visaTypesCache.clear();
+        officialDataCache.clear();
+        clearAllCaches();
+        logger.info("[ADMIN] All caches cleared");
+        res.json({ message: "All caches cleared successfully" });
+      } else if (cacheType === 'requirements') {
+        visaRequirementsCache.clear();
+        logger.info("[ADMIN] Visa requirements cache cleared");
+        res.json({ message: "Visa requirements cache cleared successfully" });
+      } else if (cacheType === 'visa-types') {
+        visaTypesCache.clear();
+        logger.info("[ADMIN] Visa types cache cleared");
+        res.json({ message: "Visa types cache cleared successfully" });
+      } else if (cacheType === 'official-data') {
+        officialDataCache.clear();
+        logger.info("[ADMIN] Official data cache cleared");
+        res.json({ message: "Official data cache cleared successfully" });
+      } else {
+        res.status(400).json({ message: "Invalid cache type. Use 'all', 'requirements', 'visa-types', or 'official-data'" });
+      }
+    } catch (error) {
+      console.error("Error clearing cache:", error);
+      res.status(500).json({ message: "Failed to clear cache" });
+    }
+  });
+
+  // Reset performance metrics
+  app.post("/api/admin/reset-metrics", requireNewAdmin, async (req, res) => {
+    try {
+      const monitor = PerformanceMonitor.getInstance();
+      monitor.resetMetrics();
+      logger.info("[ADMIN] Performance metrics reset");
+      res.json({ message: "Performance metrics reset successfully" });
+    } catch (error) {
+      console.error("Error resetting metrics:", error);
+      res.status(500).json({ message: "Failed to reset metrics" });
+    }
+  });
+
+  // Visa types API endpoint - SIMPLE APPROACH
+  app.get("/api/visa-types", requirementsLimiter, async (req, res) => {
+    logger.info("[SIMPLE-VISA-TYPES] Hit - GET /api/visa-types");
     try {
       const country = req.query.country;
-      
-      console.log(`Visa types API called with country: ${country}`);
-      
+
       if (!country || typeof country !== 'string') {
-        console.log("Missing country parameter, returning error");
+        logger.warn("[SIMPLE-VISA-TYPES] Missing country parameter");
         return res.status(400).json({ message: "Country parameter is required" });
       }
-      
-      console.log(`Fetching visa types for: ${country}`);
-      
-      // Test OpenAI integration directly first
-      if (!process.env.OPENAI_API_KEY) {
-        console.error("OpenAI API key not found");
-        return res.status(500).json({ 
-          error: "OpenAI API key not configured",
-          country: country,
-          visaTypes: [],
-          categories: { tourist: [], business: [], transit: [], student: [], work: [], family: [], other: [] }
-        });
+
+      logger.info(`[SIMPLE-VISA-TYPES] Fetching for: ${country}`);
+
+      // 🔍 Get user data from authentication for nationality
+      let userNationality = req.query.nationality as string;
+
+      if (!userNationality) {
+        // Try to get from authenticated user
+        const authHeader = req.headers.authorization;
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+          try {
+            const token = authHeader.split(' ')[1];
+            const jwtPayload = JSON.parse(atob(token.split('.')[1])); // Simple JWT decode
+            userNationality = jwtPayload.nationality;
+            logger.info(`[SIMPLE-VISA-TYPES] Extracted nationality from JWT: ${userNationality}`);
+          } catch (error) {
+            logger.warn('[SIMPLE-VISA-TYPES] Could not extract nationality from JWT');
+          }
+        }
       }
-      
-      const visaTypes = await fetchAvailableVisaTypes(country);
-      console.log(`Successfully fetched ${visaTypes.visaTypes.length} visa types for ${country}`);
-      
+
+      // If still no nationality, try to get from authenticated user data
+      if (!userNationality && (req as any).user) {
+        userNationality = (req as any).user.nationality;
+        logger.info(`[SIMPLE-VISA-TYPES] Extracted nationality from authenticated user: ${userNationality}`);
+      }
+
+      if (!userNationality) {
+        logger.warn('[SIMPLE-VISA-TYPES] No nationality available, using template approach');
+      }
+
+      // 🚀 Use SIMPLE service with real-time verification (3-10s first time)
+      // Force reload the module with cache busting
+      const timestamp = Date.now();
+      const { getVisaTypes } = await import(`./simple-visa-types?t=${timestamp}`);
+      const visaTypes = await getVisaTypes(country, req.query.nationality as string);
+
+      logger.info(`[SIMPLE-VISA-TYPES] ✅ Returned ${visaTypes.visaTypes.length} visa types for ${country} from ${visaTypes.source}`);
       res.json(visaTypes);
     } catch (error) {
-      console.error("Error fetching visa types:", error);
-      
-      // Return error with fallback structure
+      logger.error("[SIMPLE-VISA-TYPES] Error", error as Error);
+      logger.error(`[SIMPLE-VISA-TYPES] Error details:`, error);
+
       res.status(500).json({
         country: req.query.country,
         lastUpdated: new Date().toISOString(),
@@ -197,7 +316,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
           family: [],
           other: []
         },
-        error: `Failed to fetch visa types: ${(error as Error).message}`
+        error: `Failed to fetch visa types: ${(error as Error).message}`,
+        debug: {
+          errorName: (error as Error).name,
+          errorMessage: (error as Error).message,
+          stack: (error as Error).stack
+        }
       });
     }
   });
@@ -205,34 +329,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/visa-types/:country", async (req, res) => {
     try {
       const country = req.params.country || req.query.country;
-      
-      console.log(`Visa types API called with country: ${country}`);
-      
+      const nationality = req.query.nationality as string;
+
+      console.log(`Visa types API called with country: ${country}, nationality: ${nationality || 'not provided'}`);
+
       if (!country || typeof country !== 'string') {
         console.log("Missing country parameter, returning error");
         return res.status(400).json({ message: "Country parameter is required" });
       }
-      
-      console.log(`Fetching visa types for: ${country}`);
-      
-      // Test OpenAI integration directly first
-      if (!process.env.OPENAI_API_KEY) {
-        console.error("OpenAI API key not found");
-        return res.status(500).json({ 
-          error: "OpenAI API key not configured",
-          country: country,
-          visaTypes: [],
-          categories: { tourist: [], business: [], transit: [], student: [], work: [], family: [], other: [] }
-        });
+
+      console.log(`Fetching visa types for: ${country}${nationality ? ` with nationality: ${nationality}` : ''}`);
+
+      // ✅ FAST APPROACH: Use Travel Buddy + Predefined Data (2-3 seconds)
+      let visaTypes;
+      try {
+        visaTypes = await fetchAvailableVisaTypesFast(country, nationality);
+        console.log(`✅ FAST: Successfully fetched ${visaTypes.visaTypes.length} visa types for ${country} using Travel Buddy + Predefined data`);
+        console.log(`📊 Source: ${visaTypes.source}, Confidence: ${visaTypes.confidence}, Based on: ${visaTypes.basedOn}`);
+      } catch (fastError) {
+        console.warn(`FAST approach failed for ${country}, falling back to GPT:`, fastError);
+
+        // Fallback to original GPT approach if fast approach fails
+        if (!process.env.OPENAI_API_KEY) {
+          console.error("OpenAI API key not found and fast approach failed");
+          return res.status(500).json({
+            error: "Both Fast API and OpenAI unavailable",
+            country: country,
+            visaTypes: [],
+            categories: { tourist: [], business: [], transit: [], student: [], work: [], family: [], other: [] }
+          });
+        }
+
+        visaTypes = await fetchAvailableVisaTypes(country, nationality);
+        console.log(`⚠️ FALLBACK: Successfully fetched ${visaTypes.visaTypes.length} visa types for ${country} using GPT`);
       }
-      
-      const visaTypes = await fetchAvailableVisaTypes(country);
-      console.log(`Successfully fetched ${visaTypes.visaTypes.length} visa types for ${country}`);
-      
+
       res.json(visaTypes);
     } catch (error) {
       console.error("Error fetching visa types:", error);
-      
+
       // Return error with fallback structure
       res.status(500).json({
         country: req.params.country || req.query.country,
@@ -344,18 +479,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // File upload endpoint with OpenAI analysis
-  app.post("/api/upload", requireNewAuth, upload.array("files", 10), async (req: any, res) => {
+  // File upload endpoint with OpenAI analysis (rate limited)
+  app.post("/api/upload", requireNewAuth, uploadLimiter, upload.array("files", 10), async (req: any, res) => {
     try {
-      console.log("Upload request received");
-      
+      logger.info("Upload request received");
+
       if (!req.files || !Array.isArray(req.files) || req.files.length === 0) {
-        console.log("No files found in request");
+        logger.warn("No files found in upload request");
         return res.status(400).json({ message: "No files uploaded" });
       }
 
       const sessionId = req.body.sessionId || `temp-${Date.now()}`;
-      console.log(`Analyzing ${req.files.length} documents with OpenAI...`);
+      logger.info(`Analyzing ${req.files.length} documents with OpenAI...`);
       
       // Analyze each document with OpenAI and log metadata (no file storage)
       const analyzedFiles = await Promise.all(
@@ -419,8 +554,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Validate documents using OpenAI
-  app.post("/api/validate", requireNewAuth, async (req, res) => {
+  // Validate documents using OpenAI (rate limited)
+  app.post("/api/validate", requireNewAuth, validationLimiter, async (req, res) => {
     try {
       const { sessionId } = req.body;
       
@@ -599,23 +734,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get real-time visa requirements
-  app.get("/api/visa-requirements/:country/:visaType", requireNewAuth, async (req, res) => {
+  // ✅ Get real-time visa requirements with RAG (Retrieval-Augmented Generation)
+  // This endpoint now uses the hybrid approach: Free API + GPT-5
+  app.get("/api/visa-requirements/:country/:visaType", requireNewAuth, requirementsLimiter, async (req, res) => {
     try {
       const { country, visaType } = req.params;
       const { nationality } = req.query;
-      
-      console.log(`Fetching real-time requirements for ${visaType} visa to ${country}${nationality ? ` for ${nationality} citizens` : ''}`);
-      
-      const requirements = await fetchCurrentVisaRequirements(
-        country, 
-        visaType, 
-        nationality as string
+
+      logger.info(`[RAG-ENDPOINT] Fetching requirements: ${visaType} visa to ${country}${nationality ? ` for ${nationality} citizens` : ''}`);
+
+      // ✅ Use ENHANCED RAG pipeline with better data integration
+      // This will:
+      // 1. Get comprehensive data from multiple sources
+      // 2. Structure data properly for GPT processing
+      // 3. Return merged result with detailed requirements
+      const { getEnhancedVisaRequirements } = await import('./enhanced-rag-service');
+      const forceRefresh = req.query.refresh === 'true';
+      const requirements = await getEnhancedVisaRequirements(
+        country,
+        visaType,
+        nationality as string,
+        forceRefresh
       );
-      
+
+      // Log RAG metadata for monitoring
+      if (requirements.ragMetadata) {
+        logger.info(`[RAG-ENDPOINT] ✅ Approach: ${requirements.ragMetadata.approach}, Confidence: ${requirements.ragMetadata.confidence}`);
+      }
+
       res.json(requirements);
     } catch (error: any) {
-      console.error("Error fetching visa requirements:", error);
+      logger.error("[RAG-ENDPOINT] Error fetching visa requirements", error);
       res.status(500).json({ message: "Error fetching visa requirements: " + error.message });
     }
   });
@@ -627,10 +776,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { nationality } = req.query;
       
       console.log(`Generating downloadable checklist for ${visaType} visa to ${country}`);
-      
-      const requirements = await fetchCurrentVisaRequirements(
-        country, 
-        visaType, 
+
+      const requirements = await getVisaRequirementsOnline(
+        country,
+        visaType,
         nationality as string
       );
       
@@ -733,7 +882,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const { country, visaType } = req.params;
     
     try {
-      const requirements = await fetchCurrentVisaRequirements(country, visaType);
+      const requirements = await getCachedVisaRequirements(country, visaType);
       if (!requirements) {
         return res.status(404).json({ message: "Requirements not found" });
       }
@@ -749,23 +898,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Webhook for Stripe payment confirmation
-  app.post("/api/stripe-webhook", async (req, res) => {
-    try {
-      const event = req.body;
+  // Webhook for Stripe payment confirmation with signature verification
+  app.post("/api/stripe-webhook", express.raw({type: 'application/json'}), async (req, res) => {
+    const sig = req.headers['stripe-signature'];
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
+    if (!endpointSecret) {
+      console.error("STRIPE_WEBHOOK_SECRET not configured");
+      return res.status(500).json({ message: "Webhook secret not configured" });
+    }
+
+    if (!sig) {
+      return res.status(400).json({ message: "Missing stripe-signature header" });
+    }
+
+    try {
+      // Verify webhook signature
+      const event = stripe.webhooks.constructEvent(
+        req.body,
+        sig,
+        endpointSecret
+      );
+
+      // Handle verified event
       if (event.type === "payment_intent.succeeded") {
-        const paymentIntent = event.data.object;
+        const paymentIntent = event.data.object as any;
         const sessionId = paymentIntent.metadata.sessionId;
-        
+
         if (sessionId) {
           await storage.updatePaymentStatus(sessionId, "completed", paymentIntent.id);
+          console.log(`Payment completed for session: ${sessionId}`);
         }
       }
 
       res.json({ received: true });
     } catch (error: any) {
-      res.status(400).json({ message: "Webhook error: " + error.message });
+      console.error(`Webhook signature verification failed: ${error.message}`);
+      return res.status(400).json({ message: `Webhook Error: ${error.message}` });
     }
   });
 
@@ -802,7 +971,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log(`Generating PDF checklist for ${visaType} visa to ${country}`);
       
-      const requirements = await fetchCurrentVisaRequirements(
+      const requirements = await getCachedVisaRequirements(
         country, 
         visaType, 
         nationality || 'Unknown'
@@ -826,6 +995,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Error generating PDF checklist: " + error.message });
     }
   });
+
+  // 🌐 Setup Visa Data API endpoints
+  setupVisaDataAPI(app);
 
   const httpServer = createServer(app);
   return httpServer;

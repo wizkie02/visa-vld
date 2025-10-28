@@ -14,7 +14,12 @@ declare global {
 }
 
 const scryptAsync = promisify(scrypt);
-const JWT_SECRET = process.env.SESSION_SECRET || "your-jwt-secret-key-here";
+
+// Require JWT_SECRET - no fallback for security
+const JWT_SECRET = process.env.JWT_SECRET || process.env.SESSION_SECRET;
+if (!JWT_SECRET) {
+  throw new Error("JWT_SECRET environment variable is required for authentication");
+}
 
 async function hashPassword(password: string) {
   const salt = randomBytes(16).toString("hex");

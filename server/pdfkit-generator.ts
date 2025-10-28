@@ -98,10 +98,10 @@ function generateRequirementsPDF(doc: PDFKit.PDFDocument, requirements: Comprehe
   addSection(doc, 'GENERAL INFORMATION');
   doc.fontSize(10)
      .font('Helvetica')
-     .text(`Processing Time: ${requirements.generalInfo.processingTime}`)
-     .text(`Validity: ${requirements.generalInfo.validity}`)
-     .text(`Fees: ${requirements.generalInfo.fees}`)
-     .text(`Application Methods: ${requirements.generalInfo.applicationMethods.join(', ')}`)
+     .text(`Processing Time: ${requirements.generalInfo?.processingTime || 'Not specified'}`)
+     .text(`Validity: ${requirements.generalInfo?.validity || 'Not specified'}`)
+     .text(`Fees: ${requirements.generalInfo?.fees || 'Not specified'}`)
+     .text(`Application Methods: ${requirements.generalInfo?.applicationMethods?.join(', ') || 'Not specified'}`)
      .moveDown();
 
   // Important Notes

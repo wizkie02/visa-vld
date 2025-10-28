@@ -1,7 +1,19 @@
 import OpenAI from "openai";
 import { getComprehensiveVisaData } from "./comprehensive-visa-data";
+import { getCountryVisaStats } from "./visa-api-service";
+import { logger } from "./logger";
+
+// DEBUG: Track rate limiter status
+const RATE_LIMITER_DEBUG = {
+  lastAccess: 0,
+  queueSize: 0,
+  activeRequests: 0
+};
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+// ✅ Using GPT-4o-mini for fast responses
+const GPT_MODEL = "gpt-4o-mini";
 
 export interface VisaType {
   id: string;
@@ -30,99 +42,280 @@ export interface CountryVisaTypes {
   };
 }
 
-export async function fetchAvailableVisaTypes(country: string): Promise<CountryVisaTypes> {
+/**
+ * ✅ RAG APPROACH for Visa Types
+ *
+ * STEP 1: Get ground truth from Passport Index (what visas exist globally)
+ * STEP 2: GPT-5 enhances with detailed info (fees, processing, descriptions)
+ * STEP 3: Return verified + enhanced data
+ */
+export async function fetchAvailableVisaTypes(country: string, nationality?: string): Promise<CountryVisaTypes> {
+  const functionStartTime = Date.now();
+  logger.info(`[RAG-VISA-TYPES] === FUNCTION START === Fetching for ${country} at ${new Date().toISOString()}`);
+  RATE_LIMITER_DEBUG.lastAccess = functionStartTime;
+  RATE_LIMITER_DEBUG.activeRequests++;
+
   try {
-    console.log(`Fetching real-time visa types for ${country} from official government sources`);
-    
-    // Add timeout to OpenAI request
-    const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('OpenAI request timeout')), 15000)
+    // STEP 1: Try to get ground truth from Passport API
+    let groundTruthContext = '';
+    let hasApiData = false;
+    try {
+      const stats = await getCountryVisaStats(country.toUpperCase());
+      hasApiData = true;
+      groundTruthContext = `
+VERIFIED DATA from Passport Index (Government-sourced):
+- Visa Free destinations: ${stats.visaFree}
+- Visa on Arrival: ${stats.visaOnArrival}
+- eVisa destinations: ${stats.eVisa}
+- Visa Required: ${stats.visaRequired}
+- Total destinations tracked: ${stats.total}
+
+This shows ${country} issues these visa categories to travelers.
+`;
+      logger.info(`[RAG-VISA-TYPES] Got Passport API stats for ${country}: VF=${stats.visaFree}, VOA=${stats.visaOnArrival}, EV=${stats.eVisa}, VR=${stats.visaRequired}`);
+    } catch (error) {
+      logger.warn(`[RAG-VISA-TYPES] Could not get Passport API stats for ${country}`, error as Error);
+      groundTruthContext = `Note: Travel Buddy API data unavailable for ${country}. Using GPT-4o-mini knowledge with fallback.`;
+    }
+
+    // DEBUG: Log the exact prompt being sent to GPT
+    const systemPrompt = `You are a visa information expert. Your task is to provide accurate, comprehensive visa type information for ${country}.
+
+CONTEXT DATA (for grounding):
+${groundTruthContext}
+
+Your role is to:
+1. Use the VERIFIED DATA above as ground truth about visa categories
+2. Provide detailed, accurate visa type information based on your knowledge of ${country}'s immigration system
+3. Include official visa codes, fees, processing times, and requirements
+4. Be transparent if certain information may not be current
+5. Organize visa types by standard categories
+
+Return factual, well-structured information with appropriate disclaimers about verification.`;
+
+    const userPrompt = `CRITICAL: You MUST provide the EXHAUSTIVE, COMPLETE list of ALL visa types for ${country}.
+
+${groundTruthContext ? 'Use the VERIFIED DATA above to understand what visa categories this country offers.' : ''}
+
+**MANDATORY REQUIREMENT - READ CAREFULLY:**
+- DO NOT provide only "popular" or "common" visas
+- You MUST include ALL visa subclasses, even if they're rarely used
+- For Australia: Include ALL subclasses from 100-990 series
+- For USA: Include ALL A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W visa categories
+- For Canada: Include ALL visitor, student, work, family, and permanent residency classes
+- For UK: Include ALL Standard, Visit, Work, Study, Family routes
+
+**For ${country.toUpperCase()}, you MUST include:**
+
+${country.toLowerCase() === 'australia' ? `
+**AUSTRALIA - ALL SUBCLASSES REQUIRED:**
+
+**VISITOR VISAS (Required):**
+- Subclass 600 (All streams: Tourist, Sponsored Family, Business Visitor, etc.)
+- Subclass 601 (Electronic Travel Authority)
+- Subclass 651 (eVisitor)
+- Subclass 444 (Special Category)
+- Subclass 090 (Special Purpose)
+
+**STUDENT VISAS (Required):**
+- Subclass 500 (All streams: Independent, Schools, ELICOS, VET, Higher Education, Postgraduate Research, Non-award, Foreign Affairs, Defence)
+- Subclass 590 (Student Guardian)
+
+**WORK VISAS (Required - ALL OF THEM):**
+- Subclass 400 (Temporary Work - Short Stay)
+- Subclass 402 (Training and Research)
+- Subclass 403 (Temporary Work - International Relations)
+- Subclass 405 (Investor Retirement)
+- Subclass 407 (Training)
+- Subclass 408 (Temporary Activity - All streams)
+- Subclass 410 (Retirement)
+- Subclass 417 (Working Holiday)
+- Subclass 462 (Work and Holiday)
+- Subclass 476 (Skilled - Recognised Graduate)
+- Subclass 482 (Temporary Skill Shortage - All streams)
+- Subclass 485 (Temporary Graduate)
+- Subclass 489 (Skilled - Regional (Provisional))
+- Subclass 491 (Skilled Work Regional (Provisional))
+- Subclass 494 (Skilled Employer Sponsored Regional (Provisional))
+- Subclass 870 (Parent Visa - Sponsored)
+- Subclass 887 (Skilled Regional)
+- Subclass 888 (Business Innovation and Investment)
+- Subclass 890 (Business Owner)
+- Subclass 891 (Investor)
+- Subclass 892 (State/Territory Sponsored Business Owner)
+- Subclass 893 (State/Territory Sponsored Investor)
+- Subclass 994 (Medical Practitioner)
+
+**FAMILY VISAS (Required - ALL OF THEM):**
+- Subclass 100 (Partner)
+- Subclass 101 (Parent)
+- Subclass 103 (Parent)
+- Subclass 115 (Remaining Relative)
+- Subclass 116 (Carer)
+- Subclass 143 (Contributory Parent)
+- Subclass 173 (Contributory Parent (Temporary))
+- Subclass 300 (Prospective Marriage)
+- Subclass 309 (Partner (Provisional))
+- Subclass 310 (Partner (Temporary))
+- Subclass 445 (Dependent Child)
+- Subclass 461 (New Zealand Citizen Family Relationship)
+
+**PERMANENT RESIDENCY (Required):**
+- Subclass 132 (Business Talent)
+- Subclass 186 (Employer Nomination Scheme)
+- Subclass 187 (Regional Sponsored Migration Scheme)
+- Subclass 188 (Business Innovation and Investment)
+- Subclass 189 (Skilled Independent)
+- Subclass 190 (Skilled Nominated)
+- Subclass 191 (Skilled Regional)
+
+**SPECIAL VISAS (Required):**
+- Subclass 151 (Former Resident)
+- Subclass 152 (Former Resident)
+- Subclass 155 (Resident Return)
+- Subclass 157 (Resident Return)
+- Subclass 159 (Resident Return)
+- Subclass 160 (Resident Return)
+- Subclass 161 (Resident Return)
+- Subclass 162 (Resident Return)
+- Subclass 163 (Resident Return)
+- Subclass 165 (Resident Return)
+- Subclass 167 (Resident Return)
+- Subclass 168 (Resident Return)
+
+**TRANSIT VISAS (Required):**
+- Subclass 771 (Transit)
+- Subclass 671 (Transit - Sponsored Family)
+
+**BRIDGING VISAS (Required):**
+- Subclass 010 (Bridging Visa A)
+- Subclass 020 (Bridging Visa B)
+- Subclass 030 (Bridging Visa C)
+- Subclass 050 (Bridging Visa E)
+- Subclass 051 (Bridging Visa D)
+` : ''}
+
+**MANDATORY OUTPUT FORMAT:**
+{
+  "visaTypes": [
+    {
+      "id": "official-subclass-number",
+      "name": "EXACT OFFICIAL VISA NAME WITH SUBCLASS",
+      "category": "tourist|business|student|work|family|transit|other",
+      "duration": "Exact duration",
+      "purpose": "Official purpose",
+      "description": "Detailed description",
+      "processingTime": "Current processing time",
+      "fees": "Current fee with currency",
+      "requirements": ["Requirement 1", "Requirement 2", "Requirement 3"],
+      "applicationMethods": ["Method 1", "Method 2"]
+    }
+  ],
+  "source": "Government official source",
+  "lastUpdated": "${new Date().toISOString().split('T')[0]}",
+  "totalVisaTypes": "NUMBER OF VISAS INCLUDED"
+}
+
+**CRITICAL INSTRUCTIONS:**
+- Return MINIMUM 25-50 visa types for Australia
+- Include ALL subclasses listed above
+- NEVER use "Not specified" - provide real data
+- Include ALL streams for visas with multiple streams
+- Use exact official names with subclass numbers
+- Provide real fees and processing times
+- This is for immigration purposes - accuracy is CRITICAL
+- Missing visa types will cause serious immigration issues
+
+Current date: ${new Date().toISOString().split('T')[0]}`;
+
+    // DEBUG: Log prompt lengths and content
+    logger.info(`[DEBUG] GPT PROMPT ANALYSIS for ${country}:`);
+    logger.info(`[DEBUG] System prompt length: ${systemPrompt.length} characters`);
+    logger.info(`[DEBUG] User prompt length: ${userPrompt.length} characters`);
+    logger.info(`[DEBUG] Total prompt length: ${(systemPrompt + userPrompt).length} characters`);
+    logger.info(`[DEBUG] Ground Truth Context: ${groundTruthContext ? '✅ Available' : '❌ Missing'}`);
+    logger.info(`[DEBUG] Context content: ${groundTruthContext.substring(0, 200)}...`);
+
+    // DEBUG: Log the exact prompts being sent
+    logger.info(`[DEBUG] === SYSTEM PROMPT START ===`);
+    logger.info(systemPrompt);
+    logger.info(`[DEBUG] === SYSTEM PROMPT END ===`);
+
+    logger.info(`[DEBUG] === USER PROMPT START ===`);
+    logger.info(userPrompt);
+    logger.info(`[DEBUG] === USER PROMPT END ===`);
+
+    // Add timeout to OpenAI request (30 seconds)
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('OpenAI request timeout')), 30000)
     );
 
-    // Enhanced prompt to fetch from official government websites only
+    // STEP 2: GPT-4o-mini enhances with detailed visa type information
+    const startTime = Date.now();
+    logger.info(`[RAG-VISA-TYPES] Calling GPT-4o-mini with context from ${hasApiData ? 'Travel Buddy/Passport Index' : 'fallback'} at ${new Date().toISOString()}`);
+
     const openaiPromise = openai.chat.completions.create({
-      model: "gpt-4o",
+      model: GPT_MODEL,
       messages: [
         {
           role: "system",
-          content: `You are an expert visa information specialist with access to official government immigration websites. Your task is to provide ONLY verified, current visa information directly from official government sources. Never use outdated information or general knowledge - only pull from the most current official government immigration websites and departments.
-
-          For each country, you must access their official immigration/visa department website:
-          - Australia: Department of Home Affairs (homeaffairs.gov.au)
-          - USA: State Department (travel.state.gov) and USCIS
-          - UK: GOV.UK visa section
-          - Canada: Immigration, Refugees and Citizenship Canada (IRCC)
-          - Germany: Federal Foreign Office and local embassies
-          - France: France-Visas official portal
-          - And equivalent official sources for all other countries
-
-          Return comprehensive, up-to-date visa information with exact official names, subclass numbers, current fees, and processing times as published on official government websites.`
+          content: systemPrompt
         },
         {
           role: "user",
-          content: `Access the official government immigration website for ${country} RIGHT NOW and extract ALL currently available visa types. This must be the complete, up-to-date list from their official immigration department website.
-
-          For ${country}, provide the COMPLETE official list of visa types currently available on their government immigration website, including:
-
-          **Essential Information Required:**
-          - Exact official visa names as listed on government website
-          - Official visa numbers/subclass codes where applicable
-          - Current processing times from official source
-          - Current fees in official currency
-          - Exact purpose and eligibility criteria
-          - Valid duration periods
-
-          **Categories to Include (if available):**
-          1. **Tourist/Visitor Visas** - All tourism, short-term visit options
-          2. **Business Visas** - Business meetings, conferences, short-term work
-          3. **Student Visas** - All study-related visas and permits
-          4. **Work Visas** - Employment, skilled worker, temporary work permits
-          5. **Family/Partner Visas** - Spouse, family reunion, dependent visas
-          6. **Transit Visas** - Airport transit, short stopovers
-          7. **Humanitarian Visas** - Refugee, asylum, humanitarian permits
-          8. **Special Categories** - Diplomatic, crew, medical treatment, etc.
-
-          Return JSON format:
-          {
-            "visaTypes": [
-              {
-                "id": "official-visa-code",
-                "name": "Official Visa Name from Government Website",
-                "category": "tourist|business|student|work|family|transit|humanitarian|other",
-                "duration": "Exact duration from official source",
-                "purpose": "Official purpose description",
-                "description": "Detailed description from government website",
-                "processingTime": "Current processing time from official source",
-                "fees": "Current fee in official currency",
-                "subclass": "Official subclass/code if applicable"
-              }
-            ],
-            "source": "Official government website URL",
-            "lastUpdated": "Date information was retrieved"
-          }
-
-          **CRITICAL:** Only use information directly from the official government immigration website for ${country}. Do not use general knowledge or outdated information. Access their current website and provide the most up-to-date visa list available today.`
+          content: userPrompt
         }
       ],
       response_format: { type: "json_object" },
-      temperature: 0.1, // Lower temperature for more factual responses
+      temperature: 0.2, // Low temperature for factual accuracy
     });
+
+    logger.info(`[DEBUG] OpenAI request sent, waiting for response...`);
 
     const openaiResponse = await Promise.race([openaiPromise, timeoutPromise]) as any;
 
+    const responseTime = Date.now() - startTime;
+    logger.info(`[DEBUG] OpenAI response received in ${responseTime}ms (${(responseTime/1000).toFixed(1)} seconds)`);
+
     const rawContent = openaiResponse.choices[0].message.content || '{}';
-    console.log(`Official government visa data for ${country}:`, rawContent.substring(0, 500) + '...');
-    
-    const result = JSON.parse(rawContent);
-    console.log(`Retrieved ${result.visaTypes?.length || 0} visa types from official sources for ${country}`);
+    logger.info(`[DEBUG] === GPT RESPONSE START ===`);
+    logger.info(`[DEBUG] Raw response length: ${rawContent.length} characters`);
+    logger.info(`[DEBUG] Raw response preview: ${rawContent.substring(0, 1000)}...`);
+
+    // DEBUG: Check if response looks like valid JSON
+    const isValidJSON = rawContent.trim().startsWith('{') && rawContent.trim().endsWith('}');
+    logger.info(`[DEBUG] Response appears to be valid JSON: ${isValidJSON ? '✅ Yes' : '❌ No'}`);
+
+    logger.info(`[DEBUG] Full GPT response:`);
+    logger.info(rawContent);
+    logger.info(`[DEBUG] === GPT RESPONSE END ===`);
+
+    let result;
+    try {
+      result = JSON.parse(rawContent);
+      logger.info(`[DEBUG] ✅ JSON parsing successful`);
+      logger.info(`[DEBUG] Response structure: ${Object.keys(result).join(', ')}`);
+      logger.info(`[DEBUG] Visa types array length: ${result.visaTypes?.length || 0}`);
+
+      if (result.visaTypes && result.visaTypes.length > 0) {
+        logger.info(`[DEBUG] First visa type sample: ${JSON.stringify(result.visaTypes[0], null, 2)}`);
+      }
+    } catch (parseError) {
+      logger.error(`[DEBUG] ❌ JSON parsing failed: ${parseError.message}`);
+      logger.error(`[DEBUG] Attempted to parse: ${rawContent.substring(0, 200)}...`);
+      throw new Error(`Invalid JSON response from GPT: ${parseError.message}`);
+    }
+
+    logger.info(`[RAG-VISA-TYPES] ✅ Retrieved ${result.visaTypes?.length || 0} visa types for ${country} (enhanced by GPT-4o-mini)`);
 
     // Validate and structure the response
     const visaTypes: VisaType[] = result.visaTypes || [];
     
     if (visaTypes.length === 0) {
-      console.warn(`No visa types received from official sources for ${country}, checking fallback data`);
+      logger.warn(`[RAG-VISA-TYPES] No visa types from GPT-5 for ${country}, checking fallback`);
     }
-    
+
+    // STEP 3: Structure and categorize the enhanced data
     const categorizedVisas: CountryVisaTypes = {
       country: country,
       lastUpdated: new Date().toISOString(),
@@ -138,30 +331,28 @@ export async function fetchAvailableVisaTypes(country: string): Promise<CountryV
       }
     };
 
-    console.log(`Categorized visa types for ${country}:`, {
-      total: categorizedVisas.visaTypes.length,
-      tourist: categorizedVisas.categories.tourist.length,
-      business: categorizedVisas.categories.business.length,
-      student: categorizedVisas.categories.student.length,
-      work: categorizedVisas.categories.work.length,
-      family: categorizedVisas.categories.family.length,
-      transit: categorizedVisas.categories.transit.length,
-      other: categorizedVisas.categories.other.length
-    });
+    logger.info(`[RAG-VISA-TYPES] Categorized for ${country}: Total=${categorizedVisas.visaTypes.length}, Tourist=${categorizedVisas.categories.tourist.length}, Work=${categorizedVisas.categories.work.length}, Student=${categorizedVisas.categories.student.length}`);
+
+    const totalTime = Date.now() - functionStartTime;
+    logger.info(`[RAG-VISA-TYPES] === FUNCTION END === Total time: ${totalTime}ms (${(totalTime/1000).toFixed(1)}s) for ${country}`);
+    RATE_LIMITER_DEBUG.activeRequests--;
 
     return categorizedVisas;
   } catch (error) {
-    console.error('Error fetching official visa types for', country, ':', error);
-    
+    const totalTime = Date.now() - functionStartTime;
+    logger.error(`[RAG-VISA-TYPES] === FUNCTION ERROR === Error for ${country} after ${totalTime}ms`, error as Error);
+    RATE_LIMITER_DEBUG.activeRequests--;
+    logger.error(`[DEBUG] Rate limiter status: Active=${RATE_LIMITER_DEBUG.activeRequests}, Last access=${Date.now() - RATE_LIMITER_DEBUG.lastAccess}ms ago`);
+
     // Check for comprehensive visa data fallback
     const comprehensiveData = getComprehensiveVisaData(country);
     if (comprehensiveData) {
-      console.log(`Using comprehensive visa data fallback for ${country}: ${comprehensiveData.visaTypes.length} visa types`);
+      logger.info(`[RAG-VISA-TYPES] Using fallback data for ${country}: ${comprehensiveData.visaTypes.length} visa types`);
       return comprehensiveData;
     }
-    
+
     // Return error indication to frontend for fallback handling
-    throw new Error(`Failed to fetch official visa types for ${country}: ${(error as Error).message}`);
+    throw new Error(`Failed to fetch visa types for ${country}: ${(error as Error).message}`);
   }
 }
 

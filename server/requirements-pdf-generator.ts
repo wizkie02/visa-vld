@@ -47,10 +47,10 @@ export function generateRequirementsChecklistPDF(requirements: ComprehensiveVisa
 
   // General Information
   addText('GENERAL INFORMATION', 14, true);
-  addText(`Processing Time: ${requirements.generalInfo.processingTime}`);
-  addText(`Validity: ${requirements.generalInfo.validity}`);
-  addText(`Fees: ${requirements.generalInfo.fees}`);
-  addText(`Application Methods: ${requirements.generalInfo.applicationMethods.join(', ')}`);
+  addText(`Processing Time: ${requirements.generalInfo?.processingTime || 'Not specified'}`);
+  addText(`Validity: ${requirements.generalInfo?.validity || 'Not specified'}`);
+  addText(`Fees: ${requirements.generalInfo?.fees || 'Not specified'}`);
+  addText(`Application Methods: ${requirements.generalInfo?.applicationMethods?.join(', ') || 'Not specified'}`);
   yPosition += 10;
 
   // Important Notes

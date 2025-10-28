@@ -14,10 +14,10 @@ export function generateRequirementsChecklistText(requirements: ComprehensiveVis
   
   // General Information
   content += `GENERAL INFORMATION:\n`;
-  content += `Processing Time: ${requirements.generalInfo.processingTime}\n`;
-  content += `Validity: ${requirements.generalInfo.validity}\n`;
-  content += `Fees: ${requirements.generalInfo.fees}\n`;
-  content += `Application Methods: ${requirements.generalInfo.applicationMethods.join(', ')}\n\n`;
+  content += `Processing Time: ${requirements.generalInfo?.processingTime || 'Not specified'}\n`;
+  content += `Validity: ${requirements.generalInfo?.validity || 'Not specified'}\n`;
+  content += `Fees: ${requirements.generalInfo?.fees || 'Not specified'}\n`;
+  content += `Application Methods: ${requirements.generalInfo?.applicationMethods?.join(', ') || 'Not specified'}\n\n`;
   
   // Requirements by category
   const categories = {

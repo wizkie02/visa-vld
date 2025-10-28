@@ -109,34 +109,30 @@ export default function Documents() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-[var(--background)]">
       <PersistentLanguageSelector />
-      
-      <div className="container mx-auto px-4 py-8">
+
+      <div className="container-premium py-8">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold gradient-text mb-4">
               {t("myDocuments")}
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-xl text-[var(--visa-text-secondary)]">
               {t("manageUploadedDocuments")}
             </p>
           </div>
 
           {/* Stats Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center space-x-2">
-                  <FileText className="w-5 h-5 text-blue-500" />
-                  <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{t("totalDocuments")}</p>
-                    <p className="text-2xl font-bold">{documents.length}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
+            <div className="card-enterprise p-4 text-center">
+              <div className="flex items-center justify-center space-x-2 mb-2">
+                <FileText className="w-6 h-6 text-[var(--visa-primary)]" />
+              </div>
+              <p className="text-sm text-[var(--visa-text-muted)]">{t("totalDocuments")}</p>
+              <p className="text-2xl font-bold gradient-text">{documents.length}</p>
+            </div>
 
             <Card>
               <CardContent className="p-4">

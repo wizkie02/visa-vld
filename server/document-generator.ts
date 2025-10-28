@@ -631,15 +631,15 @@ export function generateRequirementsChecklist(requirements: ComprehensiveVisaReq
             <div class="info-grid">
                 <div class="info-item">
                     <div class="info-label">Processing Time</div>
-                    <div class="info-value">${requirements.generalInfo.processingTime}</div>
+                    <div class="info-value">${requirements.generalInfo?.processingTime || 'Not specified'}</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Visa Validity</div>
-                    <div class="info-value">${requirements.generalInfo.validity}</div>
+                    <div class="info-value">${requirements.generalInfo?.validity || 'Not specified'}</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Application Fee</div>
-                    <div class="info-value">${requirements.generalInfo.fees}</div>
+                    <div class="info-value">${requirements.generalInfo?.fees || 'Not specified'}</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Last Updated</div>
@@ -691,7 +691,7 @@ export function generateRequirementsChecklist(requirements: ComprehensiveVisaReq
             <div class="important-notes">
                 <h3>📋 Application Methods</h3>
                 <ul class="notes-list">
-                    ${requirements.generalInfo.applicationMethods.map(method => `<li>${method}</li>`).join('')}
+                    ${requirements.generalInfo?.applicationMethods?.map(method => `<li>${method}</li>`).join('') || '<li>Not specified</li>'}
                 </ul>
             </div>
         </div>

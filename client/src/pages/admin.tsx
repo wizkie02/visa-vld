@@ -184,22 +184,22 @@ export default function AdminPanel() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-[var(--background)]">
       <PersistentLanguageSelector />
-      <div className="container mx-auto px-4 py-8">
+      <div className="container-premium py-8">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-12">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-4xl font-bold gradient-text mb-2">
               {t("adminDashboard")}
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-xl text-[var(--visa-text-secondary)]">
               {t("manageUsersAndMonitor")}
             </p>
           </div>
-          <Button onClick={() => logoutMutation.mutate()} variant="outline">
+          <button onClick={() => logoutMutation.mutate()} className="btn-secondary">
             {t("logout")}
-          </Button>
+          </button>
         </div>
 
         <Tabs defaultValue="overview" className="space-y-6">

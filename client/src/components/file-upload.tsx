@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { CloudUpload, FileText, Image, X, CheckCircle, AlertTriangle } from "lucide-react";
+import LoadingSpinner from "@/components/loading-spinner";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/lib/i18n";
@@ -358,8 +359,8 @@ export default function FileUpload({ data, onUpdate, onNext, onPrevious, canProc
                     )}
                     {file.status === 'uploading' && (
                       <div className="flex items-center text-blue-600">
-                        <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mr-1"></div>
-                        <span className="text-sm">{t('analyzing')}</span>
+                        <LoadingSpinner size="sm" className="mr-2" />
+                        <span className="text-sm">{t('analyzing') || 'Analyzing...'}</span>
                       </div>
                     )}
                     {file.status === 'error' && (

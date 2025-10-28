@@ -5,6 +5,36 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle, AlertTriangle, FileText, Clock, DollarSign } from "lucide-react";
 import type { ValidationData } from "@/pages/validation";
 
+// Helper function to safely render values that might be objects or strings
+const renderValue = (value: any): string => {
+  if (!value) return '';
+  if (typeof value === 'string') return value;
+  if (typeof value === 'object') {
+    // Handle fees object with amount, currency, paymentMethods
+    if (value.amount || value.currency) {
+      const parts = [];
+      if (value.amount && value.currency) {
+        parts.push(`${value.currency} ${value.amount}`);
+      } else if (value.amount) {
+        parts.push(value.amount);
+      } else if (value.currency) {
+        parts.push(value.currency);
+      }
+      if (value.paymentMethods && Array.isArray(value.paymentMethods)) {
+        parts.push(`(${value.paymentMethods.join(', ')})`);
+      }
+      return parts.join(' ');
+    }
+    // Handle other objects
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return String(value);
+    }
+  }
+  return String(value);
+};
+
 interface VisaRequirement {
   id: string;
   title: string;
@@ -33,17 +63,54 @@ export default function VisaRequirementsDisplay({ data }: VisaRequirementsDispla
   const fetchRequirements = async () => {
     setLoading(true);
     try {
-      // Get specific requirements based on destination, visa type, and nationality
-      const requirementsData = getSpecificRequirements(
-        data.country, 
-        data.visaType, 
-        data.personalInfo.nationality
+      // Call API to get requirements from our OpenAI service
+    const response = await fetch(
+        `/api/visa-requirements/${data.country.toLowerCase()}/${data.visaType.toLowerCase()}?nationality=${data.personalInfo.nationality}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken') || ''}`
+          }
+        }
       );
-      
-      setRequirements(requirementsData.requirements);
-      setProcessingInfo(requirementsData.processingInfo);
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch requirements: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      // Set requirements from API response
+      if (data.requirements && Array.isArray(data.requirements)) {
+        // Transform API requirements to component format
+        const transformedRequirements = data.requirements.map((req: any, index: number) => ({
+          id: req.id || `req_${index}`,
+          title: req.title || `Document ${index + 1}`,
+          description: req.description || 'Document description',
+          required: req.required || false,
+          category: req.category || 'other',
+          notes: req.notes || []
+        }));
+        setRequirements(transformedRequirements);
+      }
+
+      // Set processing info from API response
+      setProcessingInfo(data.processingInfo || {
+        processingTime: data.processingTime || "Processing time varies",
+        fees: data.fees || { amount: "Fee varies", currency: "USD" },
+        specialNotes: data.specialNotes || []
+      });
     } catch (error) {
       console.error("Error fetching requirements:", error);
+      // Fallback to basic hardcoded requirements if API fails
+      const fallbackData = getSpecificRequirements(
+        data.country,
+        data.visaType,
+        data.personalInfo.nationality
+      );
+      setRequirements(fallbackData.requirements);
+      setProcessingInfo(fallbackData.processingInfo);
     } finally {
       setLoading(false);
     }
@@ -339,7 +406,7 @@ export default function VisaRequirementsDisplay({ data }: VisaRequirementsDispla
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-2xl font-bold text-green-600">{processingInfo.fees}</p>
+              <p className="text-2xl font-bold text-green-600">{renderValue(processingInfo.fees)}</p>
               <p className="text-sm text-gray-600 mt-1">Consular fee</p>
             </CardContent>
           </Card>

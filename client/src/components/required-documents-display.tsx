@@ -74,6 +74,36 @@ const getCategoryColor = (category: string) => {
   }
 };
 
+// Helper function to safely render values that might be objects or strings
+const renderValue = (value: any): string => {
+  if (!value) return 'Not specified';
+  if (typeof value === 'string') return value;
+  if (typeof value === 'object') {
+    // Handle fees object with amount, currency, paymentMethods
+    if (value.amount || value.currency || value.paymentMethods) {
+      const parts = [];
+      if (value.amount && value.currency) {
+        parts.push(`${value.currency} ${value.amount}`);
+      } else if (value.amount) {
+        parts.push(value.amount);
+      } else if (value.currency) {
+        parts.push(value.currency);
+      }
+      if (value.paymentMethods && Array.isArray(value.paymentMethods)) {
+        parts.push(`(${value.paymentMethods.join(', ')})`);
+      }
+      return parts.join(' ');
+    }
+    // For other objects, try to stringify
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return String(value);
+    }
+  }
+  return String(value);
+};
+
 export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: RequiredDocumentsDisplayProps) {
   const { t } = useLanguage();
   const { toast } = useToast();
@@ -88,7 +118,13 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
       });
       return;
     }
-    // Clear the specific query cache and refetch
+
+    toast({
+      title: "Refreshing Requirements",
+      description: "Fetching latest visa requirements with enhanced specificity...",
+    });
+
+    // Clear the specific query cache and refetch with force refresh
     queryClient.removeQueries({
       queryKey: ['/api/visa-requirements', data.country, data.visaType]
     });
@@ -102,11 +138,12 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
       if (!data.country || !data.visaType) {
         throw new Error('Country and visa type are required');
       }
-      const response = await apiRequest('GET', `/api/visa-requirements/${encodeURIComponent(data.country)}/${encodeURIComponent(data.visaType)}?nationality=${encodeURIComponent(data.personalInfo?.nationality || '')}`);
+      const nationalityParam = data.personalInfo?.nationality ? `&nationality=${encodeURIComponent(data.personalInfo.nationality)}` : '';
+      const response = await apiRequest('GET', `/api/visa-requirements/${encodeURIComponent(data.country)}/${encodeURIComponent(data.visaType)}?${nationalityParam}`);
       return await response.json();
     },
     enabled: !!(data.country && data.visaType), // Only run query when we have valid data
-    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+    staleTime: 30 * 60 * 1000, // Consider data fresh for 30 minutes (reduced cache time)
     refetchOnWindowFocus: false,
   });
 
@@ -260,19 +297,19 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
                 <span className="font-semibold text-blue-800">Processing Time:</span>
-                <p className="text-blue-700">{liveRequirements.generalInfo.processingTime}</p>
+                <p className="text-blue-700">{liveRequirements.generalInfo?.processingTime || 'Not specified'}</p>
               </div>
               <div>
                 <span className="font-semibold text-blue-800">Visa Validity:</span>
-                <p className="text-blue-700">{liveRequirements.generalInfo.validity}</p>
+                <p className="text-blue-700">{liveRequirements.generalInfo?.validity || 'Not specified'}</p>
               </div>
               <div>
                 <span className="font-semibold text-blue-800">Application Fees:</span>
-                <p className="text-blue-700">{liveRequirements.generalInfo.fees}</p>
+                <p className="text-blue-700">{renderValue(liveRequirements.generalInfo?.fees)}</p>
               </div>
               <div>
                 <span className="font-semibold text-blue-800">Application Methods:</span>
-                <p className="text-blue-700">{liveRequirements.generalInfo.applicationMethods.join(', ')}</p>
+                <p className="text-blue-700">{liveRequirements.generalInfo?.applicationMethods?.join(', ') || 'Not specified'}</p>
               </div>
             </div>
           </CardContent>
@@ -394,14 +431,14 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
       </div>
 
       {/* Important Notes Section */}
-      {liveRequirements && liveRequirements.importantNotes.length > 0 && (
+      {liveRequirements && liveRequirements.importantNotes?.length > 0 && (
         <Card className="bg-orange-50 border-orange-200">
           <CardHeader>
             <CardTitle className="text-orange-900">Important Notes</CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="text-sm text-orange-800 space-y-2">
-              {liveRequirements.importantNotes.map((note, index) => (
+              {liveRequirements.importantNotes?.map((note, index) => (
                 <li key={index} className="flex items-start space-x-2">
                   <span className="text-orange-600 mt-1">•</span>
                   <span>{note}</span>
@@ -413,14 +450,14 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
       )}
 
       {/* Recent Changes Section */}
-      {liveRequirements && liveRequirements.recentChanges && liveRequirements.recentChanges.length > 0 && (
+      {liveRequirements && liveRequirements.recentChanges && liveRequirements.recentChanges?.length > 0 && (
         <Card className="bg-purple-50 border-purple-200">
           <CardHeader>
             <CardTitle className="text-purple-900">Recent Changes (2024-2025)</CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="text-sm text-purple-800 space-y-2">
-              {liveRequirements.recentChanges.map((change, index) => (
+              {liveRequirements.recentChanges?.map((change, index) => (
                 <li key={index} className="flex items-start space-x-2">
                   <span className="text-purple-600 mt-1">•</span>
                   <span>{change}</span>
@@ -432,14 +469,14 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
       )}
 
       {/* Official Sources */}
-      {liveRequirements && liveRequirements.officialSources.length > 0 && (
+      {liveRequirements && liveRequirements.officialSources?.length > 0 && (
         <Card className="bg-gray-50 border-gray-200">
           <CardHeader>
             <CardTitle className="text-gray-900">Official Sources</CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="text-sm text-gray-700 space-y-1">
-              {liveRequirements.officialSources.map((source, index) => (
+              {liveRequirements.officialSources?.map((source, index) => (
                 <li key={index} className="flex items-start space-x-2">
                   <span className="text-gray-500 mt-1">•</span>
                   <span>{source}</span>
