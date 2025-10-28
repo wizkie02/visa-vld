@@ -22,11 +22,18 @@ interface VisaRequirement {
   additionalInfo?: string;
 }
 
+interface OfficialSource {
+  name: string;
+  website: string;
+  email?: string;
+  phone?: string;
+}
+
 interface ComprehensiveVisaRequirements {
   country: string;
   visaType: string;
   lastUpdated: string;
-  officialSources: string[];
+  officialSources: OfficialSource[] | string[];
   requirements: VisaRequirement[];
   generalInfo: {
     processingTime: string;
@@ -476,12 +483,32 @@ export default function RequiredDocumentsDisplay({ data, onNext, onPrevious }: R
           </CardHeader>
           <CardContent>
             <ul className="text-sm text-gray-700 space-y-1">
-              {liveRequirements.officialSources?.map((source, index) => (
+              {liveRequirements.officialSources?.map((source, index) => {
+              // Handle both string and object formats
+              const isString = typeof source === 'string';
+              return (
                 <li key={index} className="flex items-start space-x-2">
                   <span className="text-gray-500 mt-1">•</span>
-                  <span>{source}</span>
+                  <div>
+                    {isString ? (
+                      <span>{source}</span>
+                    ) : (
+                      <>
+                        <div className="font-medium">{source.name}</div>
+                        {source.website && (
+                          <a href={source.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">
+                            {source.website}
+                          </a>
+                        )}
+                        {source.email && (
+                          <div className="text-gray-600 text-sm">Email: {source.email}</div>
+                        )}
+                      </>
+                    )}
+                  </div>
                 </li>
-              ))}
+              );
+            })}
             </ul>
           </CardContent>
         </Card>
