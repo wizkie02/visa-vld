@@ -1,5 +1,5 @@
 /**
- * 🚀 ENHANCED RAG SERVICE
+ * ENHANCED RAG SERVICE - FIXED VERSION
  *
  * Fixes the data loss issue between API calls and ChatGPT
  * Ensures API data is properly structured and fed to GPT
@@ -37,18 +37,18 @@ export async function getEnhancedVisaRequirements(
   return enhancedRagLimiter.schedule(async () => {
     try {
       // Check cache first (unless force refresh)
-      const cacheKey = buildCacheKey('requirements', country, visaType, nationality || 'any');
+      const requirementsCacheKey = buildCacheKey('requirements', country, visaType, nationality || 'any');
 
       if (!forceRefresh) {
-        const cached = visaRequirementsCache.get<any>(cacheKey);
+        const cached = visaRequirementsCache.get<any>(requirementsCacheKey);
         if (cached) {
-          logger.info(`[ENHANCED-RAG] ✅ Cache hit for ${cacheKey} (source: ${cached.ragMetadata?.approach || 'unknown'})`);
+          logger.info(`[ENHANCED-RAG] ✅ Cache hit for ${requirementsCacheKey} (source: ${cached.ragMetadata?.approach || 'unknown'})`);
           return cached;
         }
       } else {
         // Clear cache for this specific request when force refresh is requested
-        visaRequirementsCache.del(cacheKey);
-        logger.info(`[ENHANCED-RAG] 🔄 Cache cleared for ${cacheKey} - forcing fresh data`);
+        visaRequirementsCache.del(requirementsCacheKey);
+        logger.info(`[ENHANCED-RAG] 🔄 Cache cleared for ${requirementsCacheKey} - forcing fresh data`);
       }
 
       logger.info(`[ENHANCED-RAG] Getting requirements: ${nationality} → ${country} (${visaType})`);
@@ -140,13 +140,13 @@ DATA STRUCTURE REQUIREMENTS:
     }
 
     // Cache the result (using existing cacheKey from above)
-    visaRequirementsCache.set(cacheKey, finalResult, {
+    visaRequirementsCache.set(requirementsCacheKey, finalResult, {
       ttl: enhancedData ? 43200 : 3600, // 12h if official data, 1h if GPT-only
       source: enhancedData ? 'rag-with-official-data' : 'gpt-only',
       confidence: finalResult.ragMetadata?.confidence || 0.70
     });
 
-    logger.info(`[ENHANCED-RAG] ✅ Cached result for ${cacheKey}`);
+    logger.info(`[ENHANCED-RAG] ✅ Cached result for ${requirementsCacheKey}`);
 
     return finalResult;
 
@@ -253,7 +253,7 @@ REQUIRED JSON STRUCTURE:
   "officialSources": [
     {
       "name": "Embassy of ${country}",
-      "website": "${enhancedData?.travelBuddyData?.destination?.embassy_url || 'URL'}",
+      "website": "https://example.com",
       "email": "contact@embassy.gov",
       "phone": "+1-234-567-890"
     }
@@ -321,25 +321,13 @@ function mergeOfficialWithGPT(
   };
 }
 
-/**
- * Helper functions
- */
-function getCountryCode(countryName: string): string | null {
-  const codes: Record<string, string> = {
-    'usa': 'US', 'united states': 'US', 'uk': 'GB', 'united kingdom': 'GB',
-    'canada': 'CA', 'australia': 'AU', 'japan': 'JP', 'germany': 'DE',
-    'france': 'FR', 'italy': 'IT', 'spain': 'ES', 'singapore': 'SG',
-    'vietnam': 'VN', 'china': 'CN', 'india': 'IN', 'brazil': 'BR',
-    // Add more as needed
-  };
-
-  return codes[countryName.toLowerCase()] || null;
-}
-
 function getCategoryEmoji(code: string): string {
   const mapping: Record<string, string> = {
-    VF: '✅', VOA: '🛬', EV: '💻', VR: '📄', NA: '⛔',
+    VF: '✅',
+    VOA: '🛬',
+    EV: '💻',
+    VR: '📄',
+    NA: '⛔',
   };
   return mapping[code] || '❓';
 }
-
